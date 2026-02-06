@@ -15,7 +15,13 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  // app.enableCors();  <-- Is purani line ki jagah niche wala block use karein
+
+  app.enableCors({
+    origin: true, // Sabhi origins allow karne ke liye (ya specific Vercel URL dalein)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
