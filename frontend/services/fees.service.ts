@@ -17,6 +17,14 @@ class FeesService {
   }
 
   /**
+   * Get fee dashboard statistics
+   */
+  async getDashboardStats(): Promise<any> {
+    const response = await apiClient.get<any>(`${API_ENDPOINTS.FEES}/dashboard`);
+    return response.data || response;
+  }
+
+  /**
    * Get fee by ID
    */
   async getFeeById(id: string): Promise<Fee> {

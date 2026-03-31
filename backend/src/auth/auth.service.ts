@@ -42,16 +42,19 @@ export class AuthService {
       },
     });
 
-    // Generate token
-    const payload = {
-      sub: user.id,
-      email: user.email,
-      role: user.role,
-      schoolId: user.schoolId || null,
-    };
+    // Generate tokens
+    const tokens = await this.getTokens(
+      user.id,
+      user.email,
+      user.role,
+      user.schoolId || null,
+    );
+    
+    // In a production app, we would hash & save the refresh token to DB here.
+    // await this.updateRefreshToken(user.id, tokens.refresh_token);
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      ...tokens,
       user: {
         id: user.id,
         email: user.email,
@@ -71,27 +74,20 @@ export class AuthService {
       where: { email },
     });
 
-    if (!user) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // Check password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-
-    // Generate token
-    const payload = {
-      sub: user.id,
-      email: user.email,
-      role: user.role,
-      schoolId: user.schoolId || null,
-    };
+    // Generate tokens
+    const tokens = await this.getTokens(
+      user.id,
+      user.email,
+      user.role,
+      user.schoolId || null,
+    );
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      ...tokens,
       user: {
         id: user.id,
         email: user.email,
@@ -104,8 +100,51 @@ export class AuthService {
   }
 
   async refreshToken(refreshToken: string) {
-    // TODO: Implement refresh token logic using the refresh token strategy
-    return { message: 'Refresh token logic pending implementation' };
+    try {
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+      });
+
+      const user = await this.prisma.user.findUnique({
+        where: { id: payload.sub },
+      });
+
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      // Generate new tokens
+      const tokens = await this.getTokens(
+        user.id,
+        user.email,
+        user.role,
+        user.schoolId || null,
+      );
+
+      return tokens;
+    } catch (e) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+  }
+
+  private async getTokens(userId: string, email: string, role: string, schoolId: string | null) {
+    const payload = { sub: userId, email, role, schoolId };
+
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload, {
+        secret: this.configService.get<string>('JWT_SECRET'),
+        expiresIn: '1h', // Access token expires in 1 hour
+      }),
+      this.jwtService.signAsync(payload, {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        expiresIn: '7d', // Refresh token expires in 7 days
+      }),
+    ]);
+
+    return {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    };
   }
 
   async getProfile(user: any) {
@@ -122,22 +161,67 @@ export class AuthService {
   }
 
   async forgotPassword(email: string) {
-    // Mock implementation for development
-    // In production, this should generate a token and send an email
-    console.log(`[Mock] Password reset requested for ${email}`);
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      // Return same message for security (don't reveal user existence)
+      return { message: 'If the email exists, a password reset link has been sent.' };
+    }
+
+    // Generate a random token
+    const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const expires = new Date();
+    expires.setHours(expires.getHours() + 1); // 1 hour expiry
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        resetToken: token,
+        resetTokenExpires: expires,
+      },
+    });
+
+    // 📧 IN PROD: Send actual email here.
+    // FOR NOW: Log to console as a "Real-Mock" to allow developer testing.
+    console.log(`[AUTH-SECURITY] CRITICAL: Password reset link for ${email}: http://localhost:3001/auth/reset-password?token=${token}`);
+    
     return { message: 'If the email exists, a password reset link has been sent.' };
   }
 
   async resetPassword(resetDto: any) {
-    // Mock implementation for development
-    console.log(`[Mock] Password reset with token: ${resetDto.token}`);
+    const { token, password } = resetDto;
+    
+    const user = await this.prisma.user.findFirst({
+      where: {
+        resetToken: token,
+        resetTokenExpires: { gt: new Date() },
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetToken: null,
+        resetTokenExpires: null,
+      },
+    });
+
     return { message: 'Password has been reset successfully.' };
   }
 
   async verifyOTP(otp: string) {
-    // Mock implementation
-    console.log(`[Mock] Verify OTP: ${otp}`);
-    return { valid: true };
+    // Basic logic for a fixed test OTP or could be linked to a user
+    // Implementing a "dummy-but-functional" version that requires specific code '123456' for now
+    // until we link it to a full SMS/Email service.
+    const isValid = otp === '123456'; 
+    console.log(`[AUTH-SECURITY] OTP Verification attempt: ${otp} -> ${isValid ? 'VALID' : 'INVALID'}`);
+    return { valid: isValid };
   }
 
   async changePassword(changePasswordDto: any) {

@@ -82,56 +82,43 @@ export class AttendanceService {
       );
     }
 
-    // Check for duplicate attendance for the same day
-    const existingAttendance = await this.prisma.attendance.findMany({
-      where: {
-        studentId: { in: studentIds },
-        date: attendanceDate,
-      },
-    });
-
-    if (existingAttendance.length > 0) {
-      const duplicateStudents = existingAttendance.map((a) => a.studentId);
-      throw new ConflictException(
-        `Attendance already marked for student(s) on ${date}`,
-      );
-    }
-
-    // Create attendance records in transaction
+    // Create or update attendance records in transaction
     return await this.prisma.$transaction(async (tx) => {
-      const attendanceRecords = await Promise.all(
-        students.map((student) =>
-          tx.attendance.create({
-            data: {
+      const results = await Promise.all(
+        students.map(async (student) => {
+          // Check if record exists
+          const existing = await tx.attendance.findFirst({
+            where: {
               studentId: student.studentId,
               date: attendanceDate,
-              status: student.status,
             },
-            include: {
-              student: {
-                include: {
-                  user: {
-                    select: {
-                      id: true,
-                      firstName: true,
-                      lastName: true,
-                    },
-                  },
-                },
+          });
+
+          if (existing) {
+            return tx.attendance.update({
+              where: { id: existing.id },
+              data: { status: student.status },
+            });
+          } else {
+            return tx.attendance.create({
+              data: {
+                studentId: student.studentId,
+                date: attendanceDate,
+                status: student.status,
               },
-            },
-          }),
-        ),
+            });
+          }
+        }),
       );
 
       return {
-        message: `Attendance marked for ${attendanceRecords.length} student(s)`,
+        message: `Attendance synchronized for ${results.length} student(s)`,
         date: attendanceDate,
         class: {
           id: classEntity.id,
           name: classEntity.name,
         },
-        records: attendanceRecords,
+        records: results,
       };
     });
   }

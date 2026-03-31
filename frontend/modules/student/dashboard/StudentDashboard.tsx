@@ -86,6 +86,8 @@ export default function StudentDashboard() {
         );
     }
 
+    if (!data) return null;
+
     return (
         <StudentLayout>
             <div className="space-y-8 animate-in fade-in duration-500 pb-12">
@@ -227,44 +229,68 @@ export default function StudentDashboard() {
                 {/* Bottom Section: Class Schedule & School Alerts */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Class Schedule */}
-                    <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+                    <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 transition-all hover:shadow-md">
                         <div className="flex items-center gap-2 mb-6">
                             <Calendar size={20} className="text-emerald-500" />
                             <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Classes Today</h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            {[
-                                { time: '09:00 AM', name: 'Mathematics', room: 'Room 302', status: 'ACTIVE' },
-                                { time: '10:45 AM', name: 'World History', room: 'Room 104', status: 'NEXT' },
-                                { time: '01:00 PM', name: 'Physics Lab', room: 'Room 205', status: 'PENDING' },
-                            ].map((item, i) => (
-                                <div key={i} className={`p-4 rounded-xl border-2 transition-all ${item.status === 'ACTIVE' ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-slate-100 dark:border-slate-800'}`}>
-                                    <div className="flex justify-between items-start mb-2">
-                                        <span className="text-xs font-bold text-slate-900 dark:text-white">{item.time}</span>
-                                        <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${item.status === 'ACTIVE' ? 'bg-primary text-white animate-pulse' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>{item.status}</span>
-                                    </div>
-                                    <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">{item.name}</h4>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.room}</p>
+                            {(data?.stats?.todaySchedule || []).length > 0 ? (
+                                data.stats.todaySchedule.map((item: any, i: number) => {
+                                    const now = new Date();
+                                    const currentHour = now.getHours();
+                                    const currentMinute = now.getMinutes();
+                                    const [itemHour, itemMinute] = item.time.split(':').map(Number);
+                                    
+                                    let status = 'PENDING';
+                                    if (itemHour === currentHour) status = 'ACTIVE';
+                                    else if (itemHour > currentHour) status = 'NEXT';
+
+                                    return (
+                                        <div key={i} className={`p-4 rounded-xl border-2 transition-all ${status === 'ACTIVE' ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-slate-100 dark:border-slate-800'}`}>
+                                            <div className="flex justify-between items-start mb-2">
+                                                <span className="text-xs font-bold text-slate-900 dark:text-white">{item.time}</span>
+                                                <span className={`text-[9px] font-black px-1.5 py-0.5 rounded tracking-tighter ${status === 'ACTIVE' ? 'bg-primary text-white animate-pulse' : 'bg-slate-50 dark:bg-slate-800 text-slate-500'}`}>{status}</span>
+                                            </div>
+                                            <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1 truncate">{item.subject}</h4>
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate">{item.room} • {item.teacher}</p>
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div className="col-span-full py-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
+                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">No classes scheduled for today</p>
                                 </div>
-                            ))}
+                            )}
                         </div>
                         <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800/50 flex items-center gap-3">
                             <Clock size={16} className="text-slate-400" />
-                            <p className="text-xs font-medium text-slate-500">More schedule data will sync from Timetable module soon.</p>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Live timetable sync active</p>
                         </div>
                     </div>
 
                     {/* School Announcement Card */}
-                    <div className="bg-primary p-6 rounded-xl shadow-xl shadow-primary/20 relative overflow-hidden group">
+                    <div className="bg-primary p-6 rounded-2xl shadow-xl shadow-primary/20 relative overflow-hidden group transition-all hover:scale-[1.02]">
                         <div className="absolute -top-10 -right-10 size-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
                         <div className="relative z-10 flex flex-col h-full justify-between">
                             <div>
                                 <Zap className="text-white mb-4 animate-pulse" size={24} />
-                                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-2 italic">School News</h3>
-                                <p className="text-xs font-bold text-blue-100 opacity-80 leading-relaxed">Science Fair starts soon! Register by tomorrow.</p>
+                                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-4 italic">School Alerts</h3>
+                                <div className="space-y-4">
+                                    {(data?.stats?.notices || []).length > 0 ? (
+                                        data.stats.notices.map((notice: any, i: number) => (
+                                            <div key={i} className="border-l-2 border-white/20 pl-3">
+                                                <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-0.5">{notice.title}</h4>
+                                                <p className="text-xs text-blue-100 opacity-80 leading-relaxed line-clamp-2">{notice.message}</p>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="text-xs font-bold text-blue-100 opacity-80 italic">No new announcements today.</p>
+                                    )}
+                                </div>
                             </div>
-                            <button className="mt-6 text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                Learn More
+                            <button className="mt-8 text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all border-t border-white/10 pt-4">
+                                Open Notice Board
                                 <ChevronRight size={14} />
                             </button>
                         </div>

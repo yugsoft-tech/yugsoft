@@ -33,13 +33,14 @@ import { toast } from 'react-hot-toast';
 export default function StaffAttendance() {
     const [attendance, setAttendance] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+    const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
 
     const fetchAttendance = async () => {
         setLoading(true);
         try {
             const data = await attendanceService.getTeacherAttendance({ date });
-            setAttendance(data.data || data);
+            const registry = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
+            setAttendance(registry);
         } catch (error: any) {
             toast.error(error.message || 'Failed to fetch attendance registry');
         } finally {
@@ -132,16 +133,16 @@ export default function StaffAttendance() {
                                         <td colSpan={4} className="py-20 text-center italic text-slate-400 text-xs font-black uppercase tracking-widest">No Attendance Nodes Detected for this Temporal Cycle</td>
                                     </tr>
                                 ) : (
-                                    attendance.map((att) => (
-                                        <tr key={att.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+                                    (attendance || []).filter(att => att && (att.teacherId || att.id)).map((att) => (
+                                        <tr key={att.id || att.teacherId} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
                                             <td className="px-10 py-6 text-left">
                                                 <div className="flex items-center gap-3">
                                                     <div className="size-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 font-black text-[10px]">
-                                                        {att.teacherName?.substring(0, 2) || 'ST'}
+                                                        {String(att?.teacherName || '').substring(0, 2) || 'ST'}
                                                     </div>
                                                     <div>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{att.teacherName}</p>
-                                                        <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest italic">ID: {att.teacherId}</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{att?.teacherName || 'Unknown Faculty'}</p>
+                                                        <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest italic">ID: {att?.teacherId || 'N/A'}</p>
                                                     </div>
                                                 </div>
                                             </td>

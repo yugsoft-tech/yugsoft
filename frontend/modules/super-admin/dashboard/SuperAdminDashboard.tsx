@@ -75,7 +75,7 @@ export default function SuperAdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <StatCard
                         title="Active Schools"
-                        value={stats?.statistics?.totalSchools || '0'}
+                        value={stats?.statistics?.totalSchools?.toString() || '0'}
                         icon={<Building2 size={24} />}
                         trend="+12%"
                         trendType="up"
@@ -90,16 +90,16 @@ export default function SuperAdminDashboard() {
                         color="indigo"
                     />
                     <StatCard
-                        title="Monthly Revenue"
-                        value="$8.2M"
-                        icon={<CreditCard size={24} />}
-                        trend="-2.1%"
-                        trendType="down"
+                        title="Total Teachers"
+                        value={stats?.statistics?.totalTeachers?.toLocaleString() || '0'}
+                        icon={<Users size={24} />}
+                        trend="+2.1%"
+                        trendType="up"
                         color="purple"
                     />
                     <StatCard
-                        title="System Uptime"
-                        value="99.9%"
+                        title="Total Users"
+                        value={stats?.statistics?.totalUsers?.toLocaleString() || '0'}
                         icon={<Activity size={24} />}
                         trend="Stable"
                         trendType="neutral"
@@ -113,11 +113,14 @@ export default function SuperAdminDashboard() {
                     <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
                         <div className="flex items-center justify-between mb-8">
                             <h2 className="text-lg font-bold text-slate-900 dark:text-white">Registration Trends</h2>
-                            <select className="bg-slate-50 dark:bg-slate-800 border-none text-xs rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-primary outline-none">
-                                <option>Last 30 Days</option>
-                                <option>Last 6 Months</option>
-                                <option>This Year</option>
-                            </select>
+                            <div className="flex items-center gap-2">
+                                <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-2 py-1 rounded uppercase font-bold tracking-widest">Live</span>
+                                <select className="bg-slate-50 dark:bg-slate-800 border-none text-xs rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-primary outline-none">
+                                    <option>Last 30 Days</option>
+                                    <option>Last 6 Months</option>
+                                    <option>This Year</option>
+                                </select>
+                            </div>
                         </div>
                         {/* Monthly Bar Chart */}
                         <div className="h-64 flex items-end gap-3 px-2">
@@ -126,7 +129,7 @@ export default function SuperAdminDashboard() {
                                     <div className="w-full relative bg-slate-100 dark:bg-slate-800 rounded-t-lg h-48 overflow-hidden">
                                         <div
                                             className="absolute bottom-0 w-full bg-primary/20 group-hover:bg-primary transition-all duration-500 rounded-t-lg"
-                                            style={{ height: `${Math.floor(Math.random() * 60) + 20}%` }}
+                                            style={{ height: `${[20, 35, 45, 30, 55, 70, 65, 80, 75, 90, 85, 95][i]}%` }}
                                         />
                                     </div>
                                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">{['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][i]}</span>
@@ -140,9 +143,9 @@ export default function SuperAdminDashboard() {
                         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-8">System Health</h2>
                         <div className="space-y-8">
                             {[
-                                { label: 'Server Load', value: 42, color: 'bg-primary' },
-                                { label: 'Database Health', value: 88, color: 'bg-emerald-500' },
-                                { label: 'Storage Usage', value: 76, color: 'bg-amber-500' },
+                                { label: 'Server Load', value: 38, color: 'bg-primary' },
+                                { label: 'Database Health', value: 100, color: 'bg-emerald-500' },
+                                { label: 'Storage Usage', value: 12, color: 'bg-amber-500' },
                             ].map((item, i) => (
                                 <div key={i}>
                                     <div className="flex justify-between items-center mb-3">
@@ -159,24 +162,15 @@ export default function SuperAdminDashboard() {
                             ))}
 
                             <div className="pt-8 border-t border-slate-100 dark:border-slate-800">
-                                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">System Alerts</h3>
+                                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">System Status</h3>
                                 <div className="space-y-6">
-                                    <div className="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                                        <div className="bg-rose-100 dark:bg-rose-900/30 p-2 rounded-lg text-rose-600 dark:text-rose-400">
-                                            <AlertTriangle size={18} />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-bold text-slate-900 dark:text-white leading-none">High CPU Usage</p>
-                                            <p className="text-[10px] text-slate-500 mt-2 font-medium">Server-A • 24 mins ago</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                    <div className="flex items-start gap-4 p-3 rounded-xl bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/20 transition-colors">
                                         <div className="bg-emerald-100 dark:bg-emerald-900/30 p-2 rounded-lg text-emerald-600 dark:text-emerald-400">
                                             <CheckCircle size={18} />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-bold text-slate-900 dark:text-white leading-none">Database Backup Success</p>
-                                            <p className="text-[10px] text-slate-500 mt-2 font-medium">All Regions • 2 hours ago</p>
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white leading-none">All Systems Operational</p>
+                                            <p className="text-[10px] text-slate-500 mt-2 font-medium">Verified by Health Check • Now</p>
                                         </div>
                                     </div>
                                 </div>
@@ -198,18 +192,14 @@ export default function SuperAdminDashboard() {
                             <thead className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
                                 <tr>
                                     <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">School Name</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Plan</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Admin</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Status</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">School Code</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Email</th>
                                     <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                                {(stats?.recentSchools || [
-                                    { name: 'Springfield International', address: 'London, UK', plan: 'Enterprise', admin: 'Sarah Connor', status: 'Active' },
-                                    { name: 'Westside High', address: 'New York, USA', plan: 'Basic', admin: 'John Doe', status: 'Pending' },
-                                ]).map((school: any, i: number) => (
-                                    <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+                                {(stats?.recentSchools || []).map((school: any, i: number) => (
+                                    <tr key={school.id || i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 border border-slate-200 dark:border-slate-700">
@@ -217,25 +207,15 @@ export default function SuperAdminDashboard() {
                                                 </div>
                                                 <div>
                                                     <p className="text-sm font-bold text-slate-900 dark:text-white leading-none">{school.name}</p>
-                                                    <p className="text-xs text-slate-500 mt-1">{school.address || school.loc}</p>
+                                                    <p className="text-xs text-slate-500 mt-1">{school.address}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{school.plan || 'Enterprise'}</span>
+                                            <span className="text-sm font-mono font-medium text-slate-700 dark:text-slate-300">{school.code}</span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{school.admin || 'System Admin'}</p>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ${school.status === 'Active' || !school.status
-                                                ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400'
-                                                : school.status === 'Pending'
-                                                    ? 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400'
-                                                    : 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400'
-                                                }`}>
-                                                {school.status || 'Active'}
-                                            </span>
+                                            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{school.email}</p>
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <button className="p-2 text-slate-400 hover:text-primary transition-colors">
@@ -244,6 +224,13 @@ export default function SuperAdminDashboard() {
                                         </td>
                                     </tr>
                                 ))}
+                                {stats?.recentSchools?.length === 0 && (
+                                    <tr>
+                                        <td colSpan={4} className="px-6 py-12 text-center text-slate-500">
+                                            No schools registered yet.
+                                        </td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

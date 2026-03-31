@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParent } from '@/contexts/ParentContext';
 import {
     Users,
@@ -13,15 +13,35 @@ import {
     BookOpen,
     Download,
     ArrowRight,
-    RefreshCw
+    Loader2
 } from 'lucide-react';
 import StatCard from '@/components/ui/StatCard';
 import ParentLayout from '@/components/layouts/ParentLayout';
 import { toast } from 'react-hot-toast';
+import { statsService } from '@/services/stats.service';
 
 export default function ParentDashboard() {
-    const { selectedChildId, childrenList } = useParent();
+    const { selectedChildId, childrenList, loading: contextLoading } = useParent();
     const [isUpdating, setIsUpdating] = useState(false);
+    const [dashboardData, setDashboardData] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+
+    const fetchDashboardData = async () => {
+        try {
+            setLoading(true);
+            const data = await statsService.getStats('PARENT');
+            setDashboardData(data);
+        } catch (error) {
+            console.error('Error fetching parent dashboard:', error);
+            toast.error('Failed to load dashboard statistics');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchDashboardData();
+    }, []);
 
     const handleDownloadReports = () => {
         toast.promise(
@@ -36,38 +56,42 @@ export default function ParentDashboard() {
         });
     };
 
-    const handleCheckUpdates = () => {
+    const handleCheckUpdates = async () => {
         setIsUpdating(true);
-        setTimeout(() => {
-            setIsUpdating(false);
-            toast.success('Your data is now up to date.');
-        }, 1500);
+        await fetchDashboardData();
+        setIsUpdating(false);
+        toast.success('Your data is now up to date.');
     };
 
-    const handlePayNow = () => {
-        toast.loading('Redirecting to secure gateway...');
-        setTimeout(() => {
-            toast.dismiss();
-            toast.success('Fee payment process initiated.');
-        }, 1500);
-    };
-
-    // Mock Data Generators based on Context
     const getStats = () => {
+        if (!dashboardData) return [];
+
         if (selectedChildId === 'ALL') {
             return [
                 { label: 'Total Wards', value: childrenList.length.toString(), icon: <Users size={24} />, sub: 'ACTIVE', color: 'blue' as const },
-                { label: 'Pending Dues', value: '$1,250', icon: <AlertCircle size={24} />, sub: 'URGENT', color: 'orange' as const },
-                { label: 'Avg Attendance', value: '94%', icon: <Activity size={24} />, sub: 'OPTIMAL', color: 'emerald' as const },
+                { label: 'Pending Dues', value: `₹${dashboardData.totalPendingFees?.toLocaleString() || '0'}`, icon: <AlertCircle size={24} />, sub: 'TOTAL', color: 'orange' as const },
+                { label: 'Avg Attendance', value: `${Math.round(childrenList.reduce((acc, c) => acc + (c.attendanceRate || 0), 0) / (childrenList.length || 1))}%`, icon: <Activity size={24} />, sub: 'OPTIMAL', color: 'emerald' as const },
             ];
         }
-        // Child Specific Stats
+        
+        const child = childrenList.find(c => c.id === selectedChildId);
         return [
-            { label: 'Attendance', value: '96%', icon: <CheckCircle2 size={24} />, sub: 'EXCELLENT', color: 'emerald' as const },
-            { label: 'Upcoming Exam', value: 'Math', icon: <Calendar size={24} />, sub: 'IN 2 DAYS', color: 'blue' as const },
-            { label: 'Assignments', value: '03', icon: <BookOpen size={24} />, sub: 'PENDING', color: 'indigo' as const },
+            { label: 'Attendance', value: `${child?.attendanceRate || 0}%`, icon: <CheckCircle2 size={24} />, sub: (child?.attendanceRate || 0) >= 75 ? 'GOOD' : 'POOR', color: 'emerald' as const },
+            { label: 'Pending Fee', value: `₹${child?.pendingFees?.toLocaleString() || '0'}`, icon: <AlertCircle size={24} />, sub: child?.pendingFees ? 'PAYMENT DUE' : 'UP TO DATE', color: 'orange' as const },
+            { label: 'Class', value: child?.class || 'N/A', icon: <GraduationCap size={24} />, sub: 'CURRENT GRADE', color: 'indigo' as const },
         ];
     };
+
+    if (loading || contextLoading) {
+        return (
+            <ParentLayout>
+                <div className="h-[60vh] flex flex-col items-center justify-center space-y-4">
+                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                    <p className="text-slate-500 font-medium animate-pulse uppercase tracking-widest text-xs">Loading Family Data...</p>
+                </div>
+            </ParentLayout>
+        );
+    }
 
     return (
         <ParentLayout>
@@ -75,10 +99,10 @@ export default function ParentDashboard() {
                 {/* Welcome Section */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-                            {selectedChildId === 'ALL' ? 'Family Overview' : `Student Overview: ${childrenList.find(c => c.id === selectedChildId)?.name}`}
+                        <h1 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">
+                            {selectedChildId === 'ALL' ? 'Family Overview' : `Student: ${childrenList.find(c => c.id === selectedChildId)?.name}`}
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400 mt-1">
+                        <p className="text-slate-500 dark:text-slate-400 mt-1 font-medium">
                             {selectedChildId === 'ALL'
                                 ? 'Monitor academic progress and school notifications for all your children.'
                                 : 'Detailed academic reports and attendance records for this student.'}
@@ -87,16 +111,16 @@ export default function ParentDashboard() {
                     <div className="flex gap-3">
                         <button 
                             onClick={handleDownloadReports}
-                            className="inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                            <Download size={18} className="mr-2" />
-                            Download Reports
+                            className="inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-xs font-black uppercase tracking-widest text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                            <Download size={16} className="mr-2" />
+                            Reports
                         </button>
                         <button 
                             onClick={handleCheckUpdates}
                             disabled={isUpdating}
-                            className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-lg shadow-primary/20 text-sm font-medium text-white bg-primary hover:bg-indigo-700 transition-all transform hover:-translate-y-0.5 disabled:opacity-50">
-                            <Activity size={18} className={`mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
-                            {isUpdating ? 'Checking...' : 'Check Updates'}
+                            className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-lg shadow-primary/20 text-xs font-black uppercase tracking-widest text-white bg-primary hover:bg-indigo-700 transition-all transform hover:-translate-y-0.5 disabled:opacity-50">
+                            <Activity size={16} className={`mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
+                            {isUpdating ? 'Updating...' : 'Sync Data'}
                         </button>
                     </div>
                 </div>
@@ -110,7 +134,7 @@ export default function ParentDashboard() {
                             value={stat.value}
                             icon={stat.icon}
                             trend={stat.sub}
-                            trendType={stat.sub === 'URGENT' ? 'down' : 'up'}
+                            trendType={stat.sub === 'POOR' || stat.sub === 'PAYMENT DUE' ? 'down' : 'up'}
                             color={stat.color}
                         />
                     ))}
@@ -119,64 +143,78 @@ export default function ParentDashboard() {
                 {/* Content switching based on context */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Activity Stream */}
-                    <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
+                    <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 transition-all hover:shadow-md">
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-none">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight italic">
                                 {selectedChildId === 'ALL' ? 'Recent Activity' : 'Academic Timeline'}
                             </h3>
-                            <button className="text-xs font-bold text-primary hover:underline flex items-center gap-1 group">
+                            <button className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline flex items-center gap-1 group">
                                 View History
                                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                             </button>
                         </div>
 
                         <div className="space-y-8">
-                            {[1, 2, 3].map((_, i) => (
-                                <div key={i} className="flex gap-6 group">
-                                    <div className="flex flex-col items-center">
-                                        <div className={`size-3 rounded-full border-2 border-white dark:border-slate-900 z-10 ${i === 0 ? 'bg-primary' : 'bg-slate-200 dark:bg-slate-700'}`} />
-                                        {i !== 2 && <div className="w-0.5 h-full bg-slate-100 dark:bg-slate-800 -mt-1" />}
-                                    </div>
-                                    <div className="pb-8 flex-1">
-                                        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 group-hover:border-primary/20 transition-all">
-                                            <div className="flex items-center justify-between mb-3">
-                                                <span className="text-[10px] font-black text-primary uppercase tracking-widest">Academics</span>
-                                                <span className="text-[10px] font-medium text-slate-400">2h ago</span>
+                            {(dashboardData?.recentActivities || []).length > 0 ? (
+                                dashboardData.recentActivities.map((act: any, i: number) => (
+                                    <div key={i} className="flex gap-6 group">
+                                        <div className="flex flex-col items-center">
+                                            <div className={`size-3 rounded-full border-2 border-white dark:border-slate-900 z-10 ${i === 0 ? 'bg-primary animate-pulse' : 'bg-slate-200 dark:bg-slate-700'}`} />
+                                            {i !== (dashboardData.recentActivities.length - 1) && <div className="w-0.5 h-full bg-slate-100 dark:bg-slate-800 -mt-1" />}
+                                        </div>
+                                        <div className="pb-8 flex-1">
+                                            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 group-hover:border-primary/20 transition-all">
+                                                <div className="flex items-center justify-between mb-3">
+                                                    <span className="text-[10px] font-black text-primary uppercase tracking-widest">{act.type}</span>
+                                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{new Date(act.date).toLocaleDateString()}</span>
+                                                </div>
+                                                <p className="text-sm font-black text-slate-900 dark:text-white mb-2 italic uppercase tracking-tight">{act.title}</p>
+                                                <p className="text-xs text-slate-500 font-medium leading-relaxed">{act.detail}</p>
                                             </div>
-                                            <p className="text-sm font-bold text-slate-900 dark:text-white mb-2">Math Assignment: Calculus I</p>
-                                            <p className="text-xs text-slate-500 font-medium">Assignment has been graded and is available for review.</p>
                                         </div>
                                     </div>
+                                ))
+                            ) : (
+                                <div className="py-12 text-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+                                    <Clock size={32} className="mx-auto text-slate-300 mb-3 opacity-50" />
+                                    <p className="text-xs font-black uppercase tracking-widest text-slate-400">No recent activities found</p>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </div>
 
                     {/* Side Widgets */}
                     <div className="space-y-6">
                         {/* Fee Reminder Card */}
-                        <div className="bg-slate-900 dark:bg-white rounded-2xl p-8 text-white dark:text-slate-900 shadow-xl relative overflow-hidden group">
-                            <div className="relative z-10 flex flex-col h-full justify-between min-h-[240px]">
+                        <div className="bg-slate-900 dark:bg-slate-800 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden group transition-all hover:scale-[1.02]">
+                            <div className="relative z-10 flex flex-col h-full justify-between min-h-[260px]">
                                 <div>
-                                    <h3 className="text-xl font-black uppercase tracking-tight italic mb-3">Fee Reminder</h3>
-                                    <p className="text-slate-400 dark:text-slate-500 text-xs font-semibold leading-relaxed">Payment for Term 2 is now due. Please process to avoid late charges.</p>
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <AlertCircle className="text-orange-500" size={20} />
+                                        <h3 className="text-xl font-black uppercase tracking-tight italic">Fee Notice</h3>
+                                    </div>
+                                    <p className="text-slate-400 text-xs font-semibold leading-relaxed">Ensure all pending dues are settled to maintain uninterrupted academic services for your children.</p>
                                 </div>
 
-                                <div>
+                                <div className="mt-auto">
                                     <div className="flex items-end justify-between mb-6">
                                         <div>
-                                            <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest leading-none mb-2">Balance Due</p>
-                                            <p className="text-3xl font-black italic">$1,250</p>
+                                            <p className="text-[10px] uppercase font-black text-slate-500 tracking-widest leading-none mb-2">Current Balance</p>
+                                            <p className="text-4xl font-black italic">₹{dashboardData?.totalPendingFees?.toLocaleString() || '0'}</p>
                                         </div>
-                                        <span className="px-3 py-1 bg-red-500 text-[10px] font-black italic rounded-lg text-white animate-pulse">DUE SOON</span>
+                                        {dashboardData?.totalPendingFees > 0 && (
+                                            <span className="px-3 py-1 bg-red-600 text-[10px] font-black italic rounded-lg text-white animate-pulse uppercase tracking-widest">DUE</span>
+                                        )}
                                     </div>
 
-                                    <button className="w-full bg-primary text-white font-black uppercase tracking-widest text-[10px] py-4 rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-primary/20">
-                                        Pay Now
+                                    <button 
+                                        disabled={!dashboardData?.totalPendingFees}
+                                        className="w-full bg-primary text-white font-black uppercase tracking-widest text-xs py-4 rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Proceed to Pay
                                     </button>
                                 </div>
                             </div>
-                            <div className="absolute -bottom-10 -right-10 size-40 bg-primary opacity-20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
+                            <div className="absolute -top-10 -right-10 size-48 bg-primary/20 rounded-full blur-[100px] pointer-events-none group-hover:scale-150 transition-transform duration-1000"></div>
                         </div>
                     </div>
                 </div>

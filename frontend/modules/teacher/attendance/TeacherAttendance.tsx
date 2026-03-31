@@ -31,7 +31,7 @@ export default function TeacherAttendance() {
     const [selectedClassId, setSelectedClassId] = useState('');
     const [students, setStudents] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+    const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
 
     // Fetch classes on mount
     useEffect(() => {
@@ -39,9 +39,10 @@ export default function TeacherAttendance() {
             try {
                 // Using classesService to get available classes
                 const data = await classesService.getAll();
-                setClasses(data || []);
-                if (data && data.length > 0) {
-                    setSelectedClassId(data[0].id);
+                const safeData = Array.isArray(data) ? data : [];
+                setClasses(safeData);
+                if (safeData.length > 0) {
+                    setSelectedClassId(safeData.at(0)?.id || '');
                 }
             } catch (error) {
                 console.error(error);
@@ -57,7 +58,6 @@ export default function TeacherAttendance() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                // Parallel fetch: Students (master list) and Attendance (for date)
                 const [studentsModule, attendanceModule] = await Promise.all([
                     import('@/services/students.service'),
                     import('@/services/attendance.service')
@@ -69,25 +69,33 @@ export default function TeacherAttendance() {
                 ]);
 
                 // Handle student list (backend might return array or object with data)
-                const studentList = Array.isArray(studentsResponse) ? studentsResponse : (studentsResponse as any).data || [];
+                const studentList = Array.isArray(studentsResponse) ? studentsResponse : (studentsResponse as any)?.data || [];
 
                 // Handle attendance records
-                const attendanceRecords = attendanceResponse.data || attendanceResponse || [];
-                const attendanceMap = new Map(attendanceRecords.map((r: any) => [r.studentId, r.status]));
+                const attendanceRecords = Array.isArray(attendanceResponse?.data) ? attendanceResponse.data : [];
+                const attendanceMap = new Map<string, string>(
+                    attendanceRecords
+                        .filter(r => r && r.studentId)
+                        .map((r: any) => [String(r.studentId), String(r.status)] as [string, string])
+                );
 
-                // Merge: Master list + Attendance Status
-                const mergedData = studentList.map((student: any) => ({
-                    ...student,
-                    id: student.id,
-                    name: `${student.firstName} ${student.lastName}`,
-                    status: attendanceMap.get(student.id) || 'PRESENT', // Default to PRESENT if not marked
-                    studentId: student.admissionNumber || student.id
-                }));
+                // Merge: Master list + Attendance Status (Filter Boolean to be safe)
+                const mergedData = studentList
+                    .filter((s: any) => s && (s.id || s._id))
+                    .map((student: any) => {
+                        const id = student?.id || student?._id;
+                        return {
+                            ...student,
+                            id,
+                            name: `${student?.firstName || ''} ${student?.lastName || ''}`.trim() || 'Unknown Student',
+                            status: attendanceMap.get(id) || 'PRESENT',
+                            studentId: student?.admissionNumber || student?.rollNumber || id
+                        };
+                    });
 
-                setStudents(mergedData);
+                setStudents(mergedData || []);
             } catch (error: any) {
-                console.error(error);
-                // toast.error('Failed to synchronize attendance nodes.');
+                console.error('Attendance sync error:', error);
                 setStudents([]);
             } finally {
                 setLoading(false);
@@ -105,11 +113,12 @@ export default function TeacherAttendance() {
             await attendanceService.markBulkAttendance({
                 classId: selectedClassId,
                 date,
-                attendance: students.map(s => ({ studentId: s.id, status: s.status }))
+                students: students.map(s => ({ studentId: s.id, status: s.status }))
             });
-            toast.success('Attendance successfully saved.');
+            toast.success('Attendance records synchronized.');
         } catch (error: any) {
-            toast.error('Failed to save attendance.');
+            console.error('Save attendance error:', error);
+            toast.error('Failed to sync attendance records.');
         }
     };
 
@@ -130,8 +139,8 @@ export default function TeacherAttendance() {
                         className="bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-4 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all shadow-sm"
                     >
                         {classes.length === 0 && <option>Loading...</option>}
-                        {classes.map(c => (
-                            <option key={c.id} value={c.id}>{c.name}</option>
+                        {(classes || []).filter(Boolean).map(c => (
+                            <option key={c?.id} value={c?.id}>{c?.name}</option>
                         ))}
                     </select>
                     <input
@@ -192,16 +201,16 @@ export default function TeacherAttendance() {
                                         </tr>
                                     ))
                                 ) : (
-                                    students.map((student) => (
+                                    (students || []).filter(s => s && s.id).map((student) => (
                                         <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
                                             <td className="px-10 py-6 text-left">
                                                 <div className="flex items-center gap-3">
                                                     <div className="size-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 font-black text-[10px]">
-                                                        {student.name?.substring(0, 2) || 'ST'}
+                                                        {String(student?.name || '').substring(0, 2) || 'ST'}
                                                     </div>
                                                     <div>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{student.name}</p>
-                                                        <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest italic">ID: {student.studentId || student.rollNumber}</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{student?.name}</p>
+                                                        <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest italic">ID: {student?.studentId || student?.rollNumber}</p>
                                                     </div>
                                                 </div>
                                             </td>

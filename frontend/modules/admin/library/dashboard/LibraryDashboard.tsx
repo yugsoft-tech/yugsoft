@@ -135,15 +135,24 @@ export default function LibraryDashboard() {
                                 </div>
                             </div>
                             <div className="flex gap-3 overflow-x-auto pb-1 lg:pb-0">
-                                <button className="flex-shrink-0 flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm shadow-primary/30">
+                                <button 
+                                    onClick={() => alert('Book Issue system coming soon!')}
+                                    className="flex-shrink-0 flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm shadow-primary/30"
+                                >
                                     <span className="material-symbols-outlined text-xl">outbound</span>
                                     <span>Issue Book</span>
                                 </button>
-                                <button className="flex-shrink-0 flex items-center gap-2 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 px-6 py-3 rounded-xl font-bold transition-all shadow-sm">
+                                <button 
+                                    onClick={() => alert('Book Return system coming soon!')}
+                                    className="flex-shrink-0 flex items-center gap-2 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 px-6 py-3 rounded-xl font-bold transition-all shadow-sm"
+                                >
                                     <span className="material-symbols-outlined text-xl">input</span>
                                     <span>Return Book</span>
                                 </button>
-                                <button className="flex-shrink-0 flex items-center gap-2 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 px-6 py-3 rounded-xl font-bold transition-all shadow-sm">
+                                <button 
+                                    onClick={() => alert('Add Title system coming soon!')}
+                                    className="flex-shrink-0 flex items-center gap-2 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 px-6 py-3 rounded-xl font-bold transition-all shadow-sm"
+                                >
                                     <span className="material-symbols-outlined text-xl">add</span>
                                     <span>Add Title</span>
                                 </button>
@@ -159,7 +168,12 @@ export default function LibraryDashboard() {
                                         <span className="material-symbols-outlined text-red-500">warning</span>
                                         Overdue Items
                                     </h2>
-                                    <Link href="#" className="text-sm font-medium text-primary hover:text-blue-600 hover:underline">View All</Link>
+                                    <button 
+                                        onClick={() => alert('Complete overdue list coming soon!')}
+                                        className="text-sm font-medium text-primary hover:text-blue-600 hover:underline"
+                                    >
+                                        View All
+                                    </button>
                                 </div>
                                 <div className="bg-white dark:bg-[#1e2936] rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
                                     <div className="overflow-x-auto">
@@ -196,7 +210,12 @@ export default function LibraryDashboard() {
                                                         </td>
                                                         <td className="px-6 py-4 text-sm text-slate-700 dark:text-slate-300 font-bold">{item.fine}</td>
                                                         <td className="px-6 py-4 text-right">
-                                                            <button className="text-primary hover:bg-primary/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">Remind</button>
+                                                            <button 
+                                                                onClick={() => alert('Reminder sent to ' + item.borrower.name)}
+                                                                className="text-primary hover:bg-primary/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                                                            >
+                                                                Remind
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -250,7 +269,10 @@ export default function LibraryDashboard() {
                                         </div>
                                     </div>
                                 ))}
-                                <div className="group relative aspect-[2/3] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <div 
+                                    onClick={() => alert('Multiple book addition coming soon!')}
+                                    className="group relative aspect-[2/3] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                >
                                     <span className="material-symbols-outlined text-3xl text-slate-400">add</span>
                                     <span className="text-sm font-medium text-slate-500">Add New</span>
                                 </div>

@@ -23,6 +23,16 @@ import { Role } from '@prisma/client';
 export class FeesController {
   constructor(private readonly feesService: FeesService) {}
 
+  @Get('dashboard')
+  @Roles(Role.SCHOOL_ADMIN)
+  getDashboardStats(@CurrentUser() user: any) {
+    return this.feesService.getDashboardStats({
+      userId: user.userId,
+      role: user.role,
+      schoolId: user.schoolId,
+    });
+  }
+
   @Post()
   @Roles(Role.SCHOOL_ADMIN)
   create(

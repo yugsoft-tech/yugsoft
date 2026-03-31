@@ -26,8 +26,20 @@ export default function StudentsList() {
     params,
     setPage,
     setSearch,
-    setFilter
+    setFilter,
+    deleteStudent
   } = useStudents();
+
+  const handleDelete = async (id: string, name: string) => {
+    if (window.confirm(`Are you sure you want to delete student ${name}?`)) {
+      const success = await deleteStudent(id);
+      if (success) {
+        alert('Student deleted successfully');
+      } else {
+        alert('Failed to delete student');
+      }
+    }
+  };
 
   const columns: Column<Student>[] = [
     {
@@ -95,7 +107,10 @@ export default function StudentsList() {
           >
             <Edit3 size={18} />
           </Link>
-          <button className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-500/5 rounded-lg transition-all">
+          <button 
+            onClick={() => handleDelete(student.id, `${student.firstName} ${student.lastName}`)}
+            className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-500/5 rounded-lg transition-all"
+          >
             <Trash2 size={18} />
           </button>
         </div>
@@ -142,11 +157,17 @@ export default function StudentsList() {
             </div>
 
             <div className="flex items-center gap-3 w-full lg:w-auto ml-auto">
-              <button className="flex items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm font-bold text-slate-500 hover:text-primary transition-all active:scale-95">
+              <button 
+                onClick={() => alert('Filter system coming soon!')}
+                className="flex items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm font-bold text-slate-500 hover:text-primary transition-all active:scale-95"
+              >
                 <Filter size={18} />
                 Filters
               </button>
-              <button className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-slate-400 hover:text-primary transition-all active:scale-95">
+              <button 
+                onClick={() => alert('More options coming soon!')}
+                className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-slate-400 hover:text-primary transition-all active:scale-95"
+              >
                 <MoreHorizontal size={18} />
               </button>
             </div>

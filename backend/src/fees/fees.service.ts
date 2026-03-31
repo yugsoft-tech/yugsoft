@@ -645,7 +645,6 @@ export class FeesService {
       throw new NotFoundException(`Fee with ID ${id} not found`);
     }
 
-    // Verify fee belongs to school admin's school
     if (fee.student.schoolId !== currentUser.schoolId) {
       throw new ForbiddenException(
         'Access denied. You can only delete fees for students in your school',
@@ -658,6 +657,116 @@ export class FeesService {
 
     return {
       message: 'Fee deleted successfully',
+    };
+  }
+
+  /**
+   * Get fee dashboard statistics for a school
+   */
+  async getDashboardStats(currentUser: {
+    userId: string;
+    role: Role;
+    schoolId?: string;
+  }) {
+    if (!currentUser.schoolId) {
+      throw new ForbiddenException('User must be associated with a school');
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // 1. Total Fees Collected (All time for this school)
+    const totalCollected = await this.prisma.fee.aggregate({
+      where: {
+        student: { schoolId: currentUser.schoolId },
+        status: FeeStatus.PAID,
+      },
+      _sum: { amount: true },
+    });
+
+    // 2. Outstanding Balance (Pending + Overdue)
+    const outstandingBalance = await this.prisma.fee.aggregate({
+      where: {
+        student: { schoolId: currentUser.schoolId },
+        status: { in: [FeeStatus.PENDING, FeeStatus.OVERDUE] },
+      },
+      _sum: { amount: true },
+    });
+
+    // 3. Today's Collection
+    const todayCollection = await this.prisma.fee.aggregate({
+      where: {
+        student: { schoolId: currentUser.schoolId },
+        status: FeeStatus.PAID,
+        updatedAt: { gte: today, lt: tomorrow },
+      },
+      _sum: { amount: true },
+    });
+
+    // 5. Recent Transactions
+    const recentTransactions = await this.prisma.fee.findMany({
+      where: {
+        student: { schoolId: currentUser.schoolId },
+      },
+      orderBy: { updatedAt: 'desc' },
+      take: 5,
+      include: {
+        student: {
+          include: {
+            user: {
+              select: { firstName: true, lastName: true },
+            },
+            class: {
+              select: { name: true },
+            },
+          },
+        },
+      },
+    });
+
+    // 6. Monthly Overview (Simple last 6 months)
+    const monthlyOverview = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date();
+      d.setMonth(d.getMonth() - i);
+      d.setDate(1);
+      d.setHours(0, 0, 0, 0);
+      
+      const nextMonth = new Date(d);
+      nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+      const monthSum = await this.prisma.fee.aggregate({
+        where: {
+          student: { schoolId: currentUser.schoolId },
+          status: FeeStatus.PAID,
+          updatedAt: { gte: d, lt: nextMonth },
+        },
+        _sum: { amount: true },
+      });
+
+      monthlyOverview.push({
+        month: d.toLocaleString('default', { month: 'short' }),
+        amount: monthSum._sum.amount || 0,
+      });
+    }
+
+    return {
+      statistics: {
+        totalCollected: totalCollected._sum.amount || 0,
+        outstandingBalance: outstandingBalance._sum.amount || 0,
+        todayCollection: todayCollection._sum.amount || 0,
+      },
+      recentTransactions: (recentTransactions as any[]).map(t => ({
+        id: t.id,
+        studentName: `${t.student.user.firstName} ${t.student.user.lastName}`,
+        class: t.student.class?.name || 'N/A',
+        amount: t.amount,
+        status: t.status,
+        date: t.updatedAt || t.createdAt,
+      })),
+      monthlyOverview,
     };
   }
 }

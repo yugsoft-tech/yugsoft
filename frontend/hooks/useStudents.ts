@@ -32,6 +32,17 @@ export function useStudents(initialParams: PaginationParams = { page: 1, limit: 
     const setSearch = (search: string) => setParams(prev => ({ ...prev, search, page: 1 }));
     const setFilter = (filters: any) => setParams(prev => ({ ...prev, ...filters, page: 1 }));
 
+    const deleteStudent = async (id: string) => {
+        try {
+            await studentsService.delete(id);
+            await fetchStudents();
+            return true;
+        } catch (err: any) {
+            setError(err.message || 'Failed to delete student');
+            return false;
+        }
+    };
+
     return {
         students: data,
         total,
@@ -42,6 +53,7 @@ export function useStudents(initialParams: PaginationParams = { page: 1, limit: 
         setLimit,
         setSearch,
         setFilter,
+        deleteStudent,
         refetch: fetchStudents
     };
 }

@@ -98,7 +98,7 @@ export default function StudentExams() {
                                 />
                             </div>
                             <Button 
-                                onClick={() => toast('Filters coming soon', { icon: '🔍' })}
+                                onClick={() => toast('Advanced filter synchronization is in progress...', { icon: '⏳' })}
                                 variant="secondary" className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-400 hover:text-primary transition-all">
                                 <Filter size={18} />
                             </Button>

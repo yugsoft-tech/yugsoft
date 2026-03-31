@@ -15,10 +15,12 @@ async function bootstrap() {
     }),
   );
 
-  // app.enableCors();  <-- Is purani line ki jagah niche wala block use karein
+  const allowedOrigins = process.env.ALLOWED_ORIGINS 
+    ? process.env.ALLOWED_ORIGINS.split(',') 
+    : ['http://localhost:3001', 'http://localhost:3000', 'https://school-erp-frontend.vercel.app'];
 
   app.enableCors({
-    origin: true, // Sabhi origins allow karne ke liye (ya specific Vercel URL dalein)
+    origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });

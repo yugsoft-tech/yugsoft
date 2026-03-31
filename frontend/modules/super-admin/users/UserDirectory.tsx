@@ -91,7 +91,7 @@ export default function UserDirectory() {
                                 <td className="px-8 py-4">
                                     <div className="flex items-center gap-4">
                                         <div className="size-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 font-bold">
-                                            {user.name[0]}
+                                            {user.name?.[0] || 'U'}
                                         </div>
                                         <div>
                                             <p className="font-bold text-sm text-slate-900 dark:text-white">{user.name}</p>
@@ -119,7 +119,7 @@ export default function UserDirectory() {
                                             variant="ghost" 
                                             size="sm" 
                                             className="text-slate-400 hover:text-indigo-500"
-                                            onClick={() => toast('Edit User Profile UI coming soon', { icon: '✏️' })}
+                                            onClick={() => toast('Profile editor is currently under scheduled maintenance.', { icon: '⚙️' })}
                                         >
                                             <Shield size={16} />
                                         </Button>

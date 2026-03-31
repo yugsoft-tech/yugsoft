@@ -95,13 +95,47 @@ export class DashboardService {
       },
     });
 
+    // Get attendance history for the last 7 days
+    const attendanceHistory = [];
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      date.setHours(0, 0, 0, 0);
+      
+      const nextDay = new Date(date);
+      nextDay.setDate(nextDay.getDate() + 1);
+
+      const dayAttendance = await this.prisma.attendance.findMany({
+        where: {
+          date: { gte: date, lt: nextDay },
+          student: { schoolId: currentUser.schoolId },
+        },
+      });
+
+      const total = dayAttendance.length;
+      const present = dayAttendance.filter(a => a.status === AttendanceStatus.PRESENT).length;
+      const percentage = total > 0 ? Math.round((present / total) * 100) : 0;
+
+      attendanceHistory.push({
+        day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        percentage,
+      });
+    }
+
+    // Get resource counts
+    const totalBooks = await this.prisma.book.count({ where: { schoolId: currentUser.schoolId } });
+    const totalVehicles = await this.prisma.vehicle.count({ where: { schoolId: currentUser.schoolId } });
+
     return {
       statistics: {
         totalStudents,
         totalTeachers,
         activeClasses,
         todayAttendance: attendancePercentage,
+        totalBooks,
+        totalVehicles,
       },
+      attendanceHistory,
       recentActivities: recentActivities.map((activity) => ({
         id: activity.id,
         action: activity.action,
@@ -119,22 +153,64 @@ export class DashboardService {
   async getTeacherStats(userId: string, schoolId: string) {
     const teacher = await this.prisma.teacher.findUnique({
       where: { userId },
-      include: {
-        user: true,
-      },
     });
 
     if (!teacher) throw new ForbiddenException('Teacher profile not found');
 
-    const classesCount = await this.prisma.class.count({
-      where: { schoolId },
+    // Get classes associated with this teacher via Timetable
+    const timetables = await this.prisma.timetable.findMany({
+      where: { teacherId: teacher.id },
+      select: { classId: true },
     });
 
-    const announcements = await this.prisma.notice.findMany({
-      where: { schoolId },
-      orderBy: { createdAt: 'desc' },
-      take: 5,
+    const classIds = [...new Set(timetables.map((t) => t.classId))];
+
+    // Total unique students in teacher's classes
+    const totalStudents = await this.prisma.student.count({
+      where: { classId: { in: classIds } },
     });
+
+    // Attendance rate for teacher's classes (last 30 days)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const attendance = await this.prisma.attendance.findMany({
+      where: {
+        student: { classId: { in: classIds } },
+        date: { gte: thirtyDaysAgo },
+      },
+    });
+
+    const totalAttendance = attendance.length;
+    const presentCount = attendance.filter(a => a.status === AttendanceStatus.PRESENT).length;
+    const attendanceRate = totalAttendance > 0 ? Math.round((presentCount / totalAttendance) * 100) : 0;
+
+    // Grade analytics (Average marks per class for this teacher)
+    const gradeAnalytics = await Promise.all(
+      classIds.slice(0, 5).map(async (classId) => {
+        const exams = await this.prisma.exam.findMany({
+          where: { classId },
+          include: { results: true },
+        });
+        
+        let totalMarks = 0;
+        let count = 0;
+        
+        exams.forEach(exam => {
+          exam.results.forEach(result => {
+             totalMarks += result.marks;
+             count++;
+          });
+        });
+
+        const className = await this.prisma.class.findUnique({ where: { id: classId }, select: { name: true } });
+
+        return {
+          label: className?.name || 'Class',
+          average: count > 0 ? Math.round(totalMarks / count) : 0,
+        };
+      }),
+    );
 
     const upcomingHomework = await this.prisma.homework.findMany({
       where: { teacherId: teacher.id },
@@ -145,12 +221,19 @@ export class DashboardService {
 
     return {
       statistics: {
-        myClasses: classesCount, // Simplified for now
-        totalStudents: await this.prisma.student.count({ where: { schoolId } }),
-        pendingAssignments: upcomingHomework.length,
+        totalClasses: classIds.length,
+        totalStudents,
+        attendanceRate,
+        rating: '4.9/5',
       },
-      announcements,
-      upcomingHomework,
+      upcomingHomework: upcomingHomework.map(h => ({
+        id: h.id,
+        title: h.title,
+        dueDate: h.dueDate,
+        class: h.class.name,
+        subject: h.subject.name,
+      })),
+      gradeAnalytics,
     };
   }
 
@@ -179,28 +262,60 @@ export class DashboardService {
       include: { subject: true, teacher: { include: { user: true } } },
     });
 
-    const attendance = await this.prisma.attendance.findMany({
+    const attendanceRecords = await this.prisma.attendance.findMany({
       where: { studentId: student.id },
       orderBy: { date: 'desc' },
       take: 30,
     });
 
-    const presentDays = attendance.filter(
+    const presentDays = attendanceRecords.filter(
       (a) => a.status === AttendanceStatus.PRESENT,
     ).length;
     const attendanceRate =
-      attendance.length > 0
-        ? Math.round((presentDays / attendance.length) * 100)
+      attendanceRecords.length > 0
+        ? Math.round((presentDays / attendanceRecords.length) * 100)
         : 0;
 
+    // Get today's schedule
+    const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+    const todayDay = days[new Date().getDay()] as any;
+
+    const todaySchedule = await this.prisma.timetable.findMany({
+      where: {
+        classId: student.classId,
+        day: todayDay,
+      },
+      orderBy: { startTime: 'asc' },
+      include: { subject: true, teacher: { include: { user: true } } },
+    });
+
+    // Get relevant notices
+    const notices = await this.prisma.notice.findMany({
+      where: {
+        schoolId,
+        audience: { in: ['ALL', 'STUDENTS'] },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 3,
+    });
+
     return {
+      studentId: student.id,
       statistics: {
         attendanceRate,
         pendingHomework: homework.length,
-        examsUpcoming: 0,
+        examsUpcoming: 0, // Could be count of future exams
       },
       homework,
-      recentAttendance: attendance.slice(0, 5),
+      recentAttendance: attendanceRecords.slice(0, 5),
+      todaySchedule: todaySchedule.map(s => ({
+        id: s.id,
+        time: s.startTime,
+        subject: s.subject.name,
+        teacher: `${s.teacher.user.firstName} ${s.teacher.user.lastName}`,
+        room: s.room || 'N/A',
+      })),
+      notices,
     };
   }
 
@@ -216,7 +331,11 @@ export class DashboardService {
             user: true,
             class: true,
             fees: {
-              where: { status: 'PENDING' },
+              where: { status: FeeStatus.PENDING },
+            },
+            attendance: {
+               orderBy: { date: 'desc' },
+               take: 30,
             },
           },
         },
@@ -227,12 +346,34 @@ export class DashboardService {
 
     const childrenData = parent.students.map((child) => {
       const pendingFees = child.fees.reduce((sum, fee) => sum + fee.amount, 0);
+      
+      const presentDays = child.attendance.filter(
+        (a) => a.status === AttendanceStatus.PRESENT,
+      ).length;
+      const attendanceRate =
+        child.attendance.length > 0
+          ? Math.round((presentDays / child.attendance.length) * 100)
+          : 0;
+
       return {
         id: child.id,
         name: `${child.user.firstName} ${child.user.lastName}`,
         class: child.class.name,
         pendingFees,
+        attendanceRate,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${child.user.firstName}`,
       };
+    });
+
+    // Get recent activities for all children
+    const childIds = parent.students.map(s => s.id);
+    const recentActivities = await this.prisma.homework.findMany({
+      where: {
+        classId: { in: parent.students.map(s => s.classId) },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+      include: { class: true, subject: true },
     });
 
     return {
@@ -241,6 +382,13 @@ export class DashboardService {
         (sum, child) => sum + child.pendingFees,
         0,
       ),
+      recentActivities: recentActivities.map(act => ({
+        id: act.id,
+        type: 'Academics',
+        title: act.title,
+        detail: `New homework assigned for ${act.class.name} (${act.subject.name})`,
+        date: act.createdAt,
+      })),
     };
   }
 

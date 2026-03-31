@@ -1,3 +1,5 @@
+import { Student, Teacher } from '@/utils/types';
+
 /**
  * Data mappers - Transform raw API data to frontend models
  * All API responses must be transformed via mappers before use in UI
@@ -16,29 +18,43 @@ export const mapUser = (data: any) => ({
 });
 
 // Add more mappers as needed
-export const mapStudent = (data: any) => ({
-  id: data.id,
-  firstName: data.firstName || data.first_name,
-  lastName: data.lastName || data.last_name,
-  email: data.email,
-  phone: data.phone,
-  admissionNumber: data.admissionNumber || data.admission_number,
-  classId: data.classId || data.class_id,
-  class: data.class ? { id: data.class.id, name: data.class.name } : undefined,
-  sectionId: data.sectionId || data.section_id,
-  // Add more fields as needed
-});
+export const mapStudent = (data: any): Student => {
+  const user = data.user || {};
+  return {
+    id: data.id,
+    user: {
+      id: user.id || '',
+      email: user.email || '',
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: 'STUDENT',
+      isActive: user.isActive,
+    },
+    firstName: user.firstName || data.firstName || '',
+    lastName: user.lastName || data.lastName || '',
+    email: user.email || data.email,
+    phone: user.phone || data.phone,
+    admissionNumber: data.rollNumber || data.admissionNumber || '',
+    classId: data.classId || '',
+    class: data.class ? { id: data.class.id, name: data.class.name } : undefined,
+    sectionId: data.sectionId,
+    status: user.isActive ? 'ACTIVE' : 'INACTIVE',
+  };
+};
 
-export const mapTeacher = (data: any) => ({
-  id: data.id,
-  firstName: data.firstName || data.first_name,
-  lastName: data.lastName || data.last_name,
-  email: data.email,
-  phone: data.phone,
-  employeeId: data.employeeId || data.employee_id,
-  subjects: data.subjects || [],
-  // Add more fields as needed
-});
+export const mapTeacher = (data: any): Teacher => {
+  const user = data.user || {};
+  return {
+    id: data.id,
+    firstName: user.firstName || data.firstName || '',
+    lastName: user.lastName || data.lastName || '',
+    email: user.email || data.email || '',
+    phone: user.phone || data.phone,
+    employeeId: data.employeeId || '',
+    subjects: data.subjects || [],
+    status: user.isActive ? 'ACTIVE' : 'INACTIVE',
+  };
+};
 
 // Generic mapper for arrays
 export const mapArray = <T>(mapper: (item: any) => T) => (data: any[]): T[] => {

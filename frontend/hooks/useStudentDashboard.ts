@@ -61,16 +61,11 @@ export function useStudentDashboard() {
         try {
             // 1. Fetch Basic Stats (already filtered for current student in backend)
             const stats = await statsService.getStats('STUDENT');
+            const studentId = stats.studentId;
 
             let results = { results: [], statistics: {} };
-            let studentId = null;
 
-            // 2. Try to get studentId from recent attendance
-            if (stats.recentAttendance && stats.recentAttendance.length > 0) {
-                studentId = stats.recentAttendance[0].studentId;
-            }
-
-            // 3. If we have studentId, fetch detailed results for GPA and charts
+            // 2. If we have studentId, fetch detailed results for GPA and charts
             if (studentId) {
                 results = await examsService.generateReportCard(studentId, ''); // Using empty academicYearId for now
             }
@@ -101,7 +96,11 @@ export function useStudentDashboard() {
             }));
 
             setData({
-                stats,
+                stats: {
+                    ...stats,
+                    todaySchedule: stats.todaySchedule || [],
+                    notices: stats.notices || []
+                },
                 results,
                 loading: false,
                 error: null,

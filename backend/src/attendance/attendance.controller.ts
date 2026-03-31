@@ -10,6 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
+import { ReportsService } from '../reports/reports.service';
 import { MarkAttendanceDto } from './dto/mark-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
 import { ViewAttendanceDto } from './dto/view-attendance.dto';
@@ -22,7 +23,10 @@ import { Role } from '@prisma/client';
 @Controller('attendance')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class AttendanceController {
-  constructor(private readonly attendanceService: AttendanceService) { }
+  constructor(
+    private readonly attendanceService: AttendanceService,
+    private readonly reportsService: ReportsService
+  ) { }
 
   @Post('mark')
   @Roles(Role.TEACHER)
@@ -44,6 +48,26 @@ export class AttendanceController {
     @CurrentUser() user: any,
   ) {
     return this.attendanceService.findAll(viewAttendanceDto, {
+      userId: user.userId,
+      role: user.role,
+      schoolId: user.schoolId,
+    });
+  }
+  
+  @Get('reports')
+  @Roles(Role.SCHOOL_ADMIN, Role.SUPER_ADMIN, Role.TEACHER)
+  getReports(
+    @Query() query: any,
+    @CurrentUser() user: any,
+  ) {
+    // Map frontend 'start/end' to 'startDate/endDate' if needed
+    const reportDto = {
+      ...query,
+      startDate: query.startDate || query.start,
+      endDate: query.endDate || query.end
+    };
+    
+    return this.reportsService.getAttendanceReport(reportDto, {
       userId: user.userId,
       role: user.role,
       schoolId: user.schoolId,

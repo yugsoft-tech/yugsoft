@@ -46,16 +46,17 @@ export default function TeacherAttendance() {
     const fetchTeachers = async () => {
       try {
         const data = await teachersService.getAll();
-        const teacherList = data.data || [];
+        const teacherList = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
         setTeachers(teacherList);
 
-        // Initialize attendance map
+        // Initialize attendance map (Defensive)
         const initialMap: Record<string, AttendanceStatus> = {};
-        teacherList.forEach((teacher: Teacher) => {
+        teacherList.filter((t: any) => t && t.id).forEach((teacher: Teacher) => {
           initialMap[teacher.id] = 'PRESENT';
         });
         setAttendanceMap(initialMap);
       } catch (err: any) {
+        console.error('Faculty sync error:', err);
         toast.error('Faculty resource synchronization failed');
       } finally {
         setLoading(false);
@@ -104,9 +105,9 @@ export default function TeacherAttendance() {
     }
   };
 
-  const filteredTeachers = teachers.filter(t =>
-    `${t.firstName} ${t.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    t.employeeId?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredTeachers = (teachers || []).filter(t => t && t.id).filter(t =>
+    `${t?.firstName || ''} ${t?.lastName || ''}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    t?.employeeId?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -233,25 +234,28 @@ export default function TeacherAttendance() {
               </div>
             ) : filteredTeachers.length > 0 ? (
               <div className="divide-y divide-slate-50 dark:divide-slate-800">
-                {filteredTeachers.map((teacher, idx) => (
+                {(filteredTeachers || []).filter(t => t && t.id).map((teacher, idx) => (
                   <div key={teacher.id} className="p-8 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all flex items-center justify-between group">
                     <div className="flex items-center gap-6">
                       <span className="text-xs font-black text-slate-100 dark:text-slate-800 italic group-hover:text-primary transition-colors">#{idx + 1}</span>
                       <div className="size-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all overflow-hidden">
-                        {teacher.profilePicture ? (
+                        {teacher?.profilePicture ? (
                           <img src={teacher.profilePicture} className="size-full object-cover" alt="" />
                         ) : (
-                          <span className="font-black">{teacher.firstName[0]}{teacher.lastName[0]}</span>
+                          <span className="font-black">
+                            {String(teacher?.firstName || '').charAt(0)}
+                            {String(teacher?.lastName || '').charAt(0)}
+                          </span>
                         )}
                       </div>
                       <div className="flex flex-col">
                         <p className="text-lg font-black text-slate-900 dark:text-white leading-none mb-1 group-hover:text-primary transition-colors">
-                          {teacher.firstName} {teacher.lastName}
+                          {teacher?.firstName} {teacher?.lastName}
                         </p>
                         <div className="flex items-center gap-2">
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{teacher.designation || 'Faculty Resource'}</p>
+                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{teacher?.designation || 'Faculty Resource'}</p>
                           <span className="size-1 bg-slate-200 dark:bg-slate-700 rounded-full" />
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{teacher.employeeId}</p>
+                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{teacher?.employeeId || 'N/A'}</p>
                         </div>
                       </div>
                     </div>

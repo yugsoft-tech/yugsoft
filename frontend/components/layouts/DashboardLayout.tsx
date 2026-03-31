@@ -118,7 +118,7 @@ export default function DashboardLayout({ children, sections, role, headerExtra 
                 <div className="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold overflow-hidden shadow-sm uppercase">
-                            {user?.firstName?.[0] || <UserCircle size={24} />}
+                            {user?.firstName?.charAt(0) || <UserCircle size={24} />}
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{user?.firstName} {user?.lastName}</p>
@@ -187,21 +187,22 @@ export default function DashboardLayout({ children, sections, role, headerExtra 
 
                 {/* Mobile Bottom Navigation (Visible for Parent role on small screens) */}
                 <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 px-6 py-3 z-50 flex items-center justify-between shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
-                    {sections.map(section => 
-                        section.items.map(item => {
+                    {(sections || []).filter(Boolean).map(section => 
+                        (section.items || []).filter(Boolean).map(item => {
                             const active = isActive(item.href);
+                            const Icon = item.icon || UserCircle;
                             return (
                                 <Link 
                                     key={item.href} 
                                     href={item.href} 
                                     className={`flex flex-col items-center gap-1 transition-all ${active ? 'text-primary' : 'text-slate-400'}`}
                                 >
-                                    <item.icon size={20} className={active ? 'animate-bounce-short' : ''} />
-                                    <span className="text-[10px] font-black uppercase tracking-tighter">{item.label}</span>
+                                    <Icon size={20} className={active ? 'animate-bounce-short' : ''} />
+                                    <span className="text-[10px] font-black uppercase tracking-tighter">{item.label || 'Menu'}</span>
                                 </Link>
                             );
                         })
-                    ).flat().slice(0, 5)} {/* Limitation to avoid crowding */}
+                    ).flat().slice(0, 5)}
                 </nav>
             </div>
         </div>
