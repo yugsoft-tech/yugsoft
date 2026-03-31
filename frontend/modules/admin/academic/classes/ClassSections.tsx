@@ -69,8 +69,7 @@ export default function ClassSections({ classId }: { classId: string }) {
     const onRegister = async (data: SectionFormValues) => {
         setRegistering(true);
         try {
-            // Assuming sections are managed within classes in the backend or have a specific endpoint
-            // For now, using institutional placeholder pattern for creation
+            await classesService.createSection({ ...data, classId });
             toast.success('Academic Protocol: Section node successfully registered.');
             reset();
             setActiveTab('matrix');
@@ -173,7 +172,7 @@ export default function ClassSections({ classId }: { classId: string }) {
                                             <div className="size-20 rounded-full bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center text-slate-200">
                                                 <Building size={40} />
                                             </div>
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic font-bold">No Segments Detected for this Class Master Node</p>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">No Segments Detected for this Class Master Node</p>
                                         </div>
                                     </div>
                                 ) : (
@@ -213,7 +212,7 @@ export default function ClassSections({ classId }: { classId: string }) {
                                                     <Users size={24} className="text-primary" />
                                                     <div className="text-center">
                                                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Students</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">32 Nodes</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{section._count?.students || 0} Nodes</p>
                                                     </div>
                                                 </div>
                                                 <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">

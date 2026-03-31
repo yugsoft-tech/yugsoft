@@ -205,14 +205,14 @@ export default function ClassesList() {
                                                     <Users size={24} className="text-primary" />
                                                     <div className="text-center">
                                                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Students</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">240 Nodes</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{cls._count?.students || 0} Nodes</p>
                                                     </div>
                                                 </div>
                                                 <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
                                                     <Building size={24} className="text-indigo-500" />
                                                     <div className="text-center">
                                                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Sections</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">04 Active</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{cls._count?.sections || 0} Active</p>
                                                     </div>
                                                 </div>
                                             </div>

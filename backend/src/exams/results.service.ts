@@ -11,7 +11,7 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class ResultsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   /**
    * Calculate grade based on percentage
@@ -35,8 +35,8 @@ export class ResultsService {
     examId: string,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only TEACHER can generate results');
+    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
+      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can generate results');
     }
 
     if (!currentUser.schoolId) {
@@ -86,9 +86,7 @@ export class ResultsService {
 
     // Calculate results with grades
     const results = exam.results.map((result) => {
-      // For now, we'll use marks as percentage (assuming max marks is 100)
-      // In a real scenario, you might want to store maxMarks in Exam model
-      const percentage = result.marks; // Assuming marks are out of 100
+      const percentage = (result.marks / (exam as any).totalMarks) * 100;
       const grade = this.calculateGrade(percentage);
 
       return {
@@ -201,9 +199,15 @@ export class ResultsService {
           'Access denied. You can only view results for students in your school',
         );
       }
+    } else if (currentUser.role === Role.SCHOOL_ADMIN) {
+      if (!currentUser.schoolId || student.schoolId !== currentUser.schoolId) {
+        throw new ForbiddenException(
+          'Access denied. You can only view results for students in your school',
+        );
+      }
     } else {
       throw new ForbiddenException(
-        'Only TEACHER, STUDENT, and PARENT can view results',
+        'Access denied',
       );
     }
 
@@ -234,8 +238,10 @@ export class ResultsService {
     });
 
     // Calculate grades for each result
-    const resultsWithGrades = results.map((result) => {
-      const percentage = result.marks; // Assuming marks are out of 100
+    const resultsWithGrades = await Promise.all(results.map(async (result) => {
+      const examDetail = await this.prisma.exam.findUnique({ where: { id: result.examId } });
+      const totalMarks = (examDetail as any)?.totalMarks || 100;
+      const percentage = (result.marks / totalMarks) * 100;
       const grade = this.calculateGrade(percentage);
 
       return {
@@ -243,7 +249,7 @@ export class ResultsService {
         percentage: percentage.toFixed(2),
         grade,
       };
-    });
+    }));
 
     // Calculate overall statistics
     if (resultsWithGrades.length > 0) {
@@ -329,6 +335,12 @@ export class ResultsService {
           'Access denied. You can only view results for exams in your school',
         );
       }
+    } else if (currentUser.role === Role.SCHOOL_ADMIN) {
+      if (!currentUser.schoolId || exam.class.schoolId !== currentUser.schoolId) {
+        throw new ForbiddenException(
+          'Access denied. You can only view results for exams in your school',
+        );
+      }
     } else if (currentUser.role === Role.STUDENT) {
       const student = await this.prisma.student.findFirst({
         where: {
@@ -369,7 +381,7 @@ export class ResultsService {
 
     // Calculate grades for all results
     const resultsWithGrades = exam.results.map((result) => {
-      const percentage = result.marks; // Assuming marks are out of 100
+      const percentage = (result.marks / (exam as any).totalMarks) * 100;
       const grade = this.calculateGrade(percentage);
 
       return {
@@ -467,6 +479,12 @@ export class ResultsService {
           'Access denied. You can only view results for classes in your school',
         );
       }
+    } else if (currentUser.role === Role.SCHOOL_ADMIN) {
+      if (!currentUser.schoolId || classEntity.schoolId !== currentUser.schoolId) {
+        throw new ForbiddenException(
+          'Access denied. You can only view results for classes in your school',
+        );
+      }
     } else if (currentUser.role === Role.STUDENT) {
       const student = await this.prisma.student.findFirst({
         where: {
@@ -552,7 +570,7 @@ export class ResultsService {
 
     // Calculate grades
     const resultsWithGrades = data.map((result) => {
-      const percentage = result.marks; // Assuming marks are out of 100
+      const percentage = (result.marks / (result.exam as any).totalMarks) * 100;
       const grade = this.calculateGrade(percentage);
 
       return {

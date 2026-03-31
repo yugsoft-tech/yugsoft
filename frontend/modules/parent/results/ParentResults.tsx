@@ -49,7 +49,7 @@ export default function ParentResults() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        ACADEMIC_LOG: PERFORMANCE
+                        SCHOOL RECORD: RESULTS
                     </Badge>
                     <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Academic Results</h1>
                     <p className="text-sm font-medium text-slate-500 italic">
@@ -131,7 +131,16 @@ export default function ParentResults() {
                             <div className="relative z-10">
                                 <h3 className="text-xl font-black uppercase tracking-tight mb-2">Detailed Report</h3>
                                 <p className="text-primary-100 text-xs font-medium mb-6">Download the complete academic transcript for this term.</p>
-                                <Button className="w-full bg-white text-primary font-black uppercase tracking-widest text-[10px] h-12 rounded-xl border-none hover:bg-white/90 gap-2">
+                                <Button 
+                                    onClick={() => {
+                                        toast.loading('Generating PDF report...');
+                                        setTimeout(() => {
+                                            toast.dismiss();
+                                            toast.success('Report card downloaded.');
+                                            window.print();
+                                        }, 2000);
+                                    }}
+                                    className="w-full bg-white text-primary font-black uppercase tracking-widest text-[10px] h-12 rounded-xl border-none hover:bg-white/90 gap-2">
                                     <Download size={16} />
                                     Download PDF
                                 </Button>

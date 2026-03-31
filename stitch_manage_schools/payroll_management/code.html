@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payroll Management - School ERP</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>/* Custom Select Arrow for Tailwind Selects */
+.custom-select {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD9MXG6j-1PdbeUJG2oeT13KRhRwvU7doxWHYbVwJ1eaXdfZXXN4QPFBIvCgYzZsh_9hNAzy1KerxwbgaQuHMSh7o4dyOpA4X514AebtSbjPN7HVvHi7M-nTQbaY4nl9HRrqkYVM2_Ppsyq1suHJNoZ194ys_tA1MabqYNgMwmLRNeE2Ay8oyyDhjvg2lg6Cd4gy3YcF0j80oFW_LV6MTqMgK9Az8t0HyxAIP_kTHdPdkpnyW_KbOBiFjMWrrEwhg0KoSgInvwPcDdB);
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact
+    }
+.dark .custom-select {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDm72EonhWrcIEQlubXV2ZDsoAHk0SBRo5hrQMr2zCotXAaJBanpMNJtr7fmTA0IpiwSt2shtMC2j8jI2BzB5uTdDY7ZxpRjITn0mep_ypXCn4ICG8CfMbzZQuk81TG_nS_ZZL-7qyiOMi-e9pOLsMXJj66_wYxhFQUIIY70oUrUYKtLT08MXanrgD13Jm5p5dDE1VphEaeOnzFOseKHxHSjdZ-Skxj_ZqPce4qIFg0zYp8KysCoMm_Mzl7LtPvg5tekVdA_upVHDev)
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-[#1a2632] border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 h-screen overflow-y-auto hidden md:flex transition-colors duration-300">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 rounded-xl bg-primary flex items-center justify-center text-white shrink-0">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight">EduManage</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">School ERP</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-sm font-medium">Academics</span>
+</a>
+<div class="pt-4 pb-1 px-3">
+<p class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Administration</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined fill-1">payments</span>
+<span class="text-sm font-medium">Payroll &amp; HR</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-600 bg-center bg-cover" data-alt="Admin user profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAHgD48fNoOscxm31vIRlRM9lVk-Zs8f0HXQ80wZmw3mw8xHo73UEYk50iSDutCADPi-hSkZcpkKu_TakhJT67Th27CH7Ow-36kaJy0MHV2uiFR9P5CElVhmwXlFkpuacdGM1LY_gCKaUUyZP5S0rr-Dq-L5gKc7BzWZtdHz3qLDXzLMR1hGH71r5F-ogeP8acHHXjSVQeF0sVc1Fhn6iV4bYB7Jtz3FPrVBoCQjl0UVls0-0LhHrwdC3beLt-3YraWre902PJkORMa');"></div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Jane Anderson</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate">Finance Manager</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Header & Breadcrumbs -->
+<header class="bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 shrink-0 z-10">
+<div class="px-6 py-4 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+<a class="hover:text-primary transition-colors" href="#">Finance</a>
+<span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+<span class="text-slate-900 dark:text-white">Payroll Management</span>
+</nav>
+<!-- Secure Badge -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/50">
+<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-sm">lock</span>
+<span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Secure Connection</span>
+</div>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Payroll Overview</h1>
+<p class="mt-1 text-slate-500 dark:text-slate-400">Process salaries and manage staff deductions for <span class="font-semibold text-primary">October 2023</span>.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+<span>Export Report</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold shadow-sm shadow-primary/30 hover:bg-blue-600 transition-all">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<span>Run Payroll</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6">
+<div class="max-w-[1400px] mx-auto flex flex-col gap-6">
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex items-start justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Payroll Cost</p>
+<div class="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined text-[20px]">attach_money</span>
+</div>
+</div>
+<div>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">$142,500</p>
+<p class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                +2.4% from last month
+                            </p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex items-start justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Pending Approvals</p>
+<div class="p-1.5 rounded-lg bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+</div>
+</div>
+<div>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">12 Staff</p>
+<p class="text-xs text-orange-600 dark:text-orange-400 mt-1">Requires immediate attention</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex items-start justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Processed Slips</p>
+<div class="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+</div>
+<div>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">108 Staff</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">90% completion rate</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex items-start justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Next Pay Date</p>
+<div class="p-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined text-[20px]">event</span>
+</div>
+</div>
+<div>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">Nov 01</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">5 days remaining</p>
+</div>
+</div>
+</div>
+<!-- Filters & Toolbar -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-4">
+<div class="flex flex-col lg:flex-row gap-4 justify-between items-end lg:items-center">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full lg:w-auto flex-1">
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">Search Staff</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400 dark:text-white" placeholder="Name or ID..." type="text"/>
+</div>
+</label>
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">Department</span>
+<select class="custom-select w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all appearance-none dark:text-white cursor-pointer">
+<option>All Departments</option>
+<option>Teaching Staff</option>
+<option>Administration</option>
+<option>Support Staff</option>
+</select>
+</label>
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">Status</span>
+<select class="custom-select w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all appearance-none dark:text-white cursor-pointer">
+<option>All Status</option>
+<option>Paid</option>
+<option>Pending</option>
+<option>Processing</option>
+</select>
+</label>
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">Month</span>
+<select class="custom-select w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all appearance-none dark:text-white cursor-pointer">
+<option>October 2023</option>
+<option>September 2023</option>
+<option>August 2023</option>
+</select>
+</label>
+</div>
+<div class="flex items-center gap-3 w-full lg:w-auto">
+<button class="flex-1 lg:flex-none flex items-center justify-center gap-2 h-[42px] px-4 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                                More Filters
+                            </button>
+</div>
+</div>
+</div>
+<!-- Main Table -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex-1 flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-12">
+<input class="rounded border-slate-300 text-primary focus:ring-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600" type="checkbox"/>
+</th>
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Employee</th>
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Designation</th>
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Basic Pay</th>
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Deductions</th>
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Net Salary</th>
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Status</th>
+<th class="py-4 px-6 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 px-6">
+<input class="rounded border-slate-300 text-primary focus:ring-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of Sarah Jenkins" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvcJPuwIfG_GWRKZOBPCLqkNy8MWI5pxwezj8mP3pheVATdl3sRUlbbIaeksDI0Iqi02X9k1m3g4JL8p7nW0pbNKYJlioUGTZQRX24J4CUc5hQgu3WfUaBCbBcP_Nehpd7G8bBP-lIbPUifWqL9KTzHTMHdn7zah4_ICb4WTuqJZSN-UnYii5NWcuc4MbA5j0giBC8xD_EeLvfBlb-D5jbkr6nR0L6vS2aNDyK6Yat4UkWaO8_s44rCV9qlXOL4sDLLFgVqfWH3L7l');"></div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Sarah Jenkins</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">ID: TCH-042</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                            Senior Teacher
+                                        </span>
+<p class="text-xs text-slate-500 mt-1">Science Dept</p>
+</td>
+<td class="py-4 px-6 text-right text-sm text-slate-600 dark:text-slate-300 font-mono">$4,200.00</td>
+<td class="py-4 px-6 text-right text-sm text-red-500 dark:text-red-400 font-mono">-$320.00</td>
+<td class="py-4 px-6 text-right">
+<p class="text-sm font-bold text-slate-900 dark:text-white font-mono">$3,880.00</p>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            Paid
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="View Breakdown">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Download Slip">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 px-6">
+<input class="rounded border-slate-300 text-primary focus:ring-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of Michael Chen" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCnmkpieJn-NQYlnvNh_8QoJbwoTTWYj8YSjAPM6puJ5lzIAojT4lGKShkgZXZa72WsNLG47UuPU8Xffq9dswpmQWiwgss9j9LGoTG-hYDQAKRf1FL_apFe3B45x3vetrIKUYu_v_qga4eIv3pE-f1CKszNytJ-Uj62dWV8IdMFIfFbv4ldw2aNOHD8g8H9gcmh5OvbStb3mOMlOovJbzmIqQ1NiGz7jOQ4XjPlSPBxq81GxSSn_VSVUugb2B8eaxdnCqN0jJ69xn4');"></div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Michael Chen</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">ID: ADM-103</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                                            Administrator
+                                        </span>
+<p class="text-xs text-slate-500 mt-1">HR Dept</p>
+</td>
+<td class="py-4 px-6 text-right text-sm text-slate-600 dark:text-slate-300 font-mono">$5,100.00</td>
+<td class="py-4 px-6 text-right text-sm text-red-500 dark:text-red-400 font-mono">-$450.00</td>
+<td class="py-4 px-6 text-right">
+<p class="text-sm font-bold text-slate-900 dark:text-white font-mono">$4,650.00</p>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
+                                            Pending
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-primary bg-primary/10 hover:bg-primary/20 transition-colors text-xs font-semibold px-3 py-1.5 h-auto w-auto">
+                                                Approve
+                                            </button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 px-6">
+<input class="rounded border-slate-300 text-primary focus:ring-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of Emma Wilson" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJHv5mrJsjMulehVBYTtiHJhtrpoHiK9c_IEkEPVSvjvq1NU1RSFT4oZyDc6wp_sJ_VUS66UqJpyjotUooDpHVii9yuXgBb9O2s3ukmRJIk4ULLysKhmvsjVgPrl7aJW56YhyrcUYHFDsKj8Zpoo8FVVshbCLvVRhfl7TMhP2C21XxzT6NOlK9fB11qMbIVedfYFXISfd6az7lwvh9eQUbSHlPmJVUndRFC1dSLuRPJdMMhrSvuLe0ElHkqm3UCX2gVFdRPD0_MgOj');"></div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Emma Wilson</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">ID: SUP-005</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                            Support Staff
+                                        </span>
+<p class="text-xs text-slate-500 mt-1">Maintenance</p>
+</td>
+<td class="py-4 px-6 text-right text-sm text-slate-600 dark:text-slate-300 font-mono">$2,800.00</td>
+<td class="py-4 px-6 text-right text-sm text-red-500 dark:text-red-400 font-mono">-$150.00</td>
+<td class="py-4 px-6 text-right">
+<p class="text-sm font-bold text-slate-900 dark:text-white font-mono">$2,650.00</p>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            Paid
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="View Breakdown">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Download Slip">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 px-6">
+<input class="rounded border-slate-300 text-primary focus:ring-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of David Kim" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCF3mAunEbwWgLhhnU-2U-e06LqcBhp1dZgCn_N4wTEjFryTLy2zWFTLrM6lVyltNO6SSEUlxgsv6J2nAiJshMxdy8B5kEtqwl8cR8N6H0zFyfo-JaUsQ3iSekdHV1qz5JSs4ZbMuLTKsfiLR3BAl8LtL_CYh1B9EUZkxwgW45Ab9vjRO_Xinrza1sb5jaApZzp31S_PLC4nMBbQ5Z41G9lEI1mQTBQnfjK8kUCFUH50M4u6DWWrbEomM-oJKwyX7zgw_d8sP9bjZJB');"></div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">David Kim</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">ID: TCH-089</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                            Teacher
+                                        </span>
+<p class="text-xs text-slate-500 mt-1">Math Dept</p>
+</td>
+<td class="py-4 px-6 text-right text-sm text-slate-600 dark:text-slate-300 font-mono">$3,900.00</td>
+<td class="py-4 px-6 text-right text-sm text-red-500 dark:text-red-400 font-mono">-$280.00</td>
+<td class="py-4 px-6 text-right">
+<p class="text-sm font-bold text-slate-900 dark:text-white font-mono">$3,620.00</p>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                            Processing
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<span class="text-xs text-slate-400 italic mr-2">Calculated</span>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-slate-50 dark:bg-slate-800/50 px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+<p class="text-sm text-slate-500 dark:text-slate-400">Showing <span class="font-medium text-slate-900 dark:text-white">1</span> to <span class="font-medium text-slate-900 dark:text-white">4</span> of <span class="font-medium text-slate-900 dark:text-white">128</span> results</p>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded border border-slate-200 dark:border-slate-700 text-sm text-slate-500 disabled:opacity-50 hover:bg-white dark:hover:bg-slate-700 transition-colors">Previous</button>
+<button class="px-3 py-1.5 rounded border border-slate-200 dark:border-slate-700 text-sm text-slate-500 hover:bg-white dark:hover:bg-slate-700 transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

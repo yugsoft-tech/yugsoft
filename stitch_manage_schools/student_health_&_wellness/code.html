@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Health &amp; Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden flex h-screen w-full">
+<!-- Left Sidebar (Contextual Navigation) -->
+<aside class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 z-20">
+<div class="p-6 pb-2">
+<div class="flex gap-4 items-center mb-8">
+<div class="size-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">local_hospital</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Health Module</h1>
+<p class="text-slate-500 text-xs font-normal">Nurse Portal</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">assignment</span>
+<p class="text-sm font-medium">Daily Log</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">calendar_month</span>
+<p class="text-sm font-medium">Appointments</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">folder_shared</span>
+<p class="text-sm font-medium">Student Records</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">vaccines</span>
+<p class="text-sm font-medium">Immunizations</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">medical_mask</span>
+<p class="text-sm font-medium">Inventory</p>
+</a>
+</div>
+</div>
+<div class="mt-auto p-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10" data-alt="Profile picture of school nurse" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGClIaXeqNBvPj9SWjwkkm0S83tAhvmPhZQb2vKZ0iwBO4BJ2WCT9hrXOuFLhip8FZvFUzqHEA4YqKJBBImHVcGJIz9pTDkZtuql69DR-M_mzHZQ1MMwtg_6KXPibEQmgW9q35OJsjqUboYQu_Z39dvO12rU-7y9Pf4oafThf0ejeqMTn1xuaInQ0rud6UGVZegDMg9ZpwCmB6CB8NIz-Cb2jNXfVFWvvFkIbqnmrl75jkUXxH7evNBygfYFDFnnT53DVrg1FwhO-Q");'></div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-white text-sm font-bold">Sarah Jenkins</p>
+<p class="text-slate-500 text-xs">Head Nurse</p>
+</div>
+<button class="ml-auto text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Navigation (Global) -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-8 py-3 shrink-0 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<!-- Global Navigation Links -->
+<div class="hidden lg:flex items-center gap-6 ml-4">
+<a class="text-slate-500 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Academics</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Finance</a>
+<a class="text-slate-900 dark:text-white text-sm font-bold leading-normal border-b-2 border-primary pb-0.5" href="#">Health</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Transport</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800 focus-within:ring-2 ring-primary/20 transition-shadow">
+<div class="text-slate-500 flex border-none items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 border-none bg-transparent h-full placeholder:text-slate-400 px-4 pl-2 text-sm font-normal leading-normal" placeholder="Search students..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-slate-100 dark:border-slate-800"></span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content Body -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Page Header -->
+<div class="flex flex-wrap justify-between items-end gap-3">
+<div class="flex min-w-72 flex-col gap-1">
+<p class="text-slate-900 dark:text-white text-3xl font-extrabold leading-tight tracking-[-0.033em]">Health &amp; Wellness Center</p>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal">Manage student health records and clinic schedules</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-xl h-10 px-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined mr-2 text-[18px]">print</span>
+                            Print Report
+                        </button>
+<button class="flex items-center justify-center rounded-xl h-10 px-5 bg-red-50 text-red-600 hover:bg-red-100 text-sm font-bold shadow-sm border border-red-100 transition-colors">
+<span class="material-symbols-outlined mr-2 text-[18px]">emergency</span>
+                            Emergency Contact
+                        </button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-4">
+<!-- Left Column: Calendar & Main List (8 cols) -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Main Calendar & Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Calendar Widget -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4 px-2">
+<p class="text-slate-900 dark:text-white text-base font-bold">October 2023</p>
+<div class="flex gap-1">
+<button class="size-8 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="size-8 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-7 text-center mb-2">
+<span class="text-xs font-bold text-slate-400 py-2">S</span>
+<span class="text-xs font-bold text-slate-400 py-2">M</span>
+<span class="text-xs font-bold text-slate-400 py-2">T</span>
+<span class="text-xs font-bold text-slate-400 py-2">W</span>
+<span class="text-xs font-bold text-slate-400 py-2">T</span>
+<span class="text-xs font-bold text-slate-400 py-2">F</span>
+<span class="text-xs font-bold text-slate-400 py-2">S</span>
+</div>
+<div class="grid grid-cols-7 gap-y-1">
+<!-- Days -->
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-400">29</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-400">30</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full">1</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full">2</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full relative">
+                                        3
+                                        <span class="absolute bottom-1 size-1 bg-red-500 rounded-full"></span>
+</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full">4</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-white bg-primary font-bold rounded-full shadow-md shadow-primary/30">5</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full">6</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full">7</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full">8</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full relative">
+                                        9
+                                        <span class="absolute bottom-1 size-1 bg-primary rounded-full"></span>
+</button>
+<button class="h-9 w-full flex items-center justify-center text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full">10</button>
+</div>
+</div>
+<!-- Quick Stats -->
+<div class="grid grid-rows-2 gap-6">
+<div class="bg-blue-50 dark:bg-slate-800/50 rounded-xl p-5 border border-blue-100 dark:border-slate-800 flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-2">
+<div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">clinical_notes</span>
+</div>
+<span class="text-slate-600 dark:text-slate-400 font-medium text-sm">Today's Visits</span>
+</div>
+<p class="text-3xl font-extrabold text-slate-900 dark:text-white ml-1">24</p>
+<p class="text-xs text-slate-500 ml-1 mt-1"><span class="text-green-600 font-medium">↑ 12%</span> vs last week</p>
+</div>
+<div class="bg-purple-50 dark:bg-slate-800/50 rounded-xl p-5 border border-purple-100 dark:border-slate-800 flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-2">
+<div class="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg text-purple-600">
+<span class="material-symbols-outlined">vaccines</span>
+</div>
+<span class="text-slate-600 dark:text-slate-400 font-medium text-sm">Pending Vaccines</span>
+</div>
+<p class="text-3xl font-extrabold text-slate-900 dark:text-white ml-1">8</p>
+<p class="text-xs text-slate-500 ml-1 mt-1">Due within 7 days</p>
+</div>
+</div>
+</div>
+<!-- Appointments Queue -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Upcoming Appointments</h3>
+<button class="text-primary text-sm font-bold hover:underline">View All</button>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Appointment Item -->
+<div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-4">
+<div class="flex flex-col items-center justify-center w-16 h-14 bg-slate-100 dark:bg-slate-800 rounded-lg shrink-0">
+<span class="text-xs font-bold text-slate-500 uppercase">Oct</span>
+<span class="text-xl font-bold text-slate-900 dark:text-white">05</span>
+</div>
+<div class="flex items-center gap-4 flex-1">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0" data-alt="Student Portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD669a1PSXr7iQbwA3_1QoTnxP_2nJ3W6-Y-LmpWDpp7QP5wGdaVhuPlaK16r0_WpURE43ZiDeZqJGvNLmSriUegRlsPwX66GPVZH5oa0iFJWDGLw3g__SLMqXz7FuJD6r3bDV-HPU3R4YosA39GIf6cFsjQe7vVUQIoT55z76VpP7mIaptXAJFYg_Ibk6AHtEnqdcPDyfM3bjN1_PuGjOzyI_jxnSzAvxDW_H1V3IRNz6oqIF0E5mntjkFf1y90EC1IGgGNSxw1NWZ");'></div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-sm">Emily Watson <span class="text-slate-400 font-normal ml-2">Grade 10-B</span></h4>
+<p class="text-slate-500 text-sm">Routine Checkup • ID: #882190</p>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                        Confirmed
+                                    </div>
+<div class="text-right pl-4">
+<p class="text-slate-900 dark:text-white font-bold">09:30 AM</p>
+<p class="text-slate-400 text-xs">30 min</p>
+</div>
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full text-slate-400 transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Appointment Item -->
+<div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-4">
+<div class="flex flex-col items-center justify-center w-16 h-14 bg-slate-100 dark:bg-slate-800 rounded-lg shrink-0">
+<span class="text-xs font-bold text-slate-500 uppercase">Oct</span>
+<span class="text-xl font-bold text-slate-900 dark:text-white">05</span>
+</div>
+<div class="flex items-center gap-4 flex-1">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0" data-alt="Student Portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8r16mjtHxfeKMoPZQwODcKusqjIEXmFZlZErBW85RuqTMJ6EhgvxqSH9Cd6p3rSXBje0Yui34qmKPZo2wAutGLCKr3iZQiZt8zCnvhTaYPX3kiC1TzoUiqo1G0ijwSLT9oOeUa9n0sW2Aoaozy229aL5rnJwzr4sjsEPl_24GQKPwIDzzTBUDDV6I4V7uDYr4MuUa3sS2T1jeFMKRadUPeQreiM_0rW3tc3XVGQfDRxEBogCZAGIoDfKnTZ-K3ONLTgr458tl14Hx");'></div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-sm">Michael Chen <span class="text-slate-400 font-normal ml-2">Grade 8-A</span></h4>
+<p class="text-slate-500 text-sm">Asthma Follow-up • ID: #992011</p>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                        Pending
+                                    </div>
+<div class="text-right pl-4">
+<p class="text-slate-900 dark:text-white font-bold">10:15 AM</p>
+<p class="text-slate-400 text-xs">15 min</p>
+</div>
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full text-slate-400 transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Appointment Item -->
+<div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-4">
+<div class="flex flex-col items-center justify-center w-16 h-14 bg-slate-100 dark:bg-slate-800 rounded-lg shrink-0">
+<span class="text-xs font-bold text-slate-500 uppercase">Oct</span>
+<span class="text-xl font-bold text-slate-900 dark:text-white">05</span>
+</div>
+<div class="flex items-center gap-4 flex-1">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0" data-alt="Student Portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9zo6ma-bq9ca__7948BEQTNndO7isfOlLJrhhna_SRXltrbQo0JJ2Oxy5OhouEt3u-zs41r2IwDCdOL8UXqxyCKZQsxxxd554vkOvJYmY_tDm60gs54pfpBzHzlJD8Vj-CLX5JjN_mPBSjcYVzqAaofWF8ArmZjmYncQbJz2OR0x1ed0iIY-bYJ3Y7jMZcZ6MvWc8j0bJTCxdsMjqF_ijgazzk6Ee4XKknN8FB3ATib15AvvjRZrENYSva64myDYp8S5FSlu9mV6z");'></div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-sm">Sophia Rodriguez <span class="text-slate-400 font-normal ml-2">Grade 12-C</span></h4>
+<p class="text-slate-500 text-sm">Sports Physical • ID: #772100</p>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                        Confirmed
+                                    </div>
+<div class="text-right pl-4">
+<p class="text-slate-900 dark:text-white font-bold">01:00 PM</p>
+<p class="text-slate-400 text-xs">45 min</p>
+</div>
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full text-slate-400 transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<button class="w-full py-2.5 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-slate-500 hover:text-primary hover:border-primary hover:bg-primary/5 transition-all text-sm font-medium flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                                    Schedule New Appointment
+                                </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Alerts & Search (4 cols) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Critical Alerts -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5">
+<h3 class="text-slate-900 dark:text-white text-base font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500">warning</span>
+                                Critical Alerts
+                            </h3>
+<div class="space-y-3">
+<div class="bg-red-50 dark:bg-red-900/10 p-3 rounded-lg border border-red-100 dark:border-red-900/30 flex gap-3 items-start">
+<span class="material-symbols-outlined text-red-600 dark:text-red-400 text-[20px] mt-0.5">medication_liquid</span>
+<div>
+<p class="text-red-900 dark:text-red-200 text-sm font-bold">Low Stock: EpiPens</p>
+<p class="text-red-700 dark:text-red-400 text-xs">Only 2 units remaining in Main Clinic.</p>
+</div>
+</div>
+<div class="bg-amber-50 dark:bg-amber-900/10 p-3 rounded-lg border border-amber-100 dark:border-amber-900/30 flex gap-3 items-start">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-[20px] mt-0.5">description</span>
+<div>
+<p class="text-amber-900 dark:text-amber-200 text-sm font-bold">Incomplete Records</p>
+<p class="text-amber-700 dark:text-amber-400 text-xs">5 new students missing vaccination history.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Log -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-5 border-b border-slate-100 dark:border-slate-800">
+<h3 class="text-slate-900 dark:text-white text-base font-bold">Recent Activity</h3>
+</div>
+<div class="max-h-[340px] overflow-y-auto">
+<div class="relative pl-6 pr-4 py-4 before:absolute before:left-[18px] before:top-8 before:bottom-0 before:w-px before:bg-slate-200 dark:before:bg-slate-700">
+<div class="relative z-10 flex gap-3">
+<div class="size-2.5 rounded-full bg-primary mt-1.5 shrink-0 ring-4 ring-white dark:ring-slate-900"></div>
+<div class="flex flex-col gap-0.5">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Administered Insulin</p>
+<p class="text-xs text-slate-500">Student: <strong>Alex Johnson</strong> (ID: 442)</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">10 mins ago</p>
+</div>
+</div>
+</div>
+<div class="relative pl-6 pr-4 py-4 before:absolute before:left-[18px] before:top-0 before:bottom-0 before:w-px before:bg-slate-200 dark:before:bg-slate-700">
+<div class="relative z-10 flex gap-3">
+<div class="size-2.5 rounded-full bg-slate-300 dark:bg-slate-600 mt-1.5 shrink-0 ring-4 ring-white dark:ring-slate-900"></div>
+<div class="flex flex-col gap-0.5">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Updated Allergy Profile</p>
+<p class="text-xs text-slate-500">Student: <strong>Maria Garcia</strong> - Added: Peanuts</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">45 mins ago</p>
+</div>
+</div>
+</div>
+<div class="relative pl-6 pr-4 py-4 before:absolute before:left-[18px] before:top-0 before:bottom-0 before:w-px before:bg-slate-200 dark:before:bg-slate-700">
+<div class="relative z-10 flex gap-3">
+<div class="size-2.5 rounded-full bg-slate-300 dark:bg-slate-600 mt-1.5 shrink-0 ring-4 ring-white dark:ring-slate-900"></div>
+<div class="flex flex-col gap-0.5">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Sick Bay Check-out</p>
+<p class="text-xs text-slate-500">Student: <strong>Tom Hiddleston</strong> - Fever resolved</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">1 hour ago</p>
+</div>
+</div>
+</div>
+<div class="relative pl-6 pr-4 py-4 before:absolute before:left-[18px] before:top-0 before:bottom-8 before:w-px before:bg-slate-200 dark:before:bg-slate-700">
+<div class="relative z-10 flex gap-3">
+<div class="size-2.5 rounded-full bg-green-500 mt-1.5 shrink-0 ring-4 ring-white dark:ring-slate-900"></div>
+<div class="flex flex-col gap-0.5">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Report Generated</p>
+<p class="text-xs text-slate-500">Monthly Health Summary - Sept 2023</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">2 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Find Student -->
+<div class="bg-primary rounded-xl shadow-lg p-5 text-white relative overflow-hidden">
+<!-- Decorative background circle -->
+<div class="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-white/10"></div>
+<div class="relative z-10">
+<h3 class="text-lg font-bold mb-1">Find Medical Record</h3>
+<p class="text-blue-100 text-xs mb-4">Securely access sensitive health data.</p>
+<div class="flex gap-2">
+<input class="w-full rounded-lg bg-white/20 border border-white/30 placeholder:text-blue-100/70 text-sm px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-white/50" placeholder="Enter Student ID..." type="text"/>
+<button class="bg-white text-primary p-2 rounded-lg font-bold hover:bg-blue-50 transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

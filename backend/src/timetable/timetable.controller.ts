@@ -22,7 +22,7 @@ import { Role } from '@prisma/client';
 @Controller('timetable')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class TimetableController {
-  constructor(private readonly timetableService: TimetableService) {}
+  constructor(private readonly timetableService: TimetableService) { }
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN)
@@ -56,6 +56,16 @@ export class TimetableController {
     @CurrentUser() user: any,
   ) {
     return this.timetableService.findAll(viewTimetableDto, {
+      userId: user.userId,
+      role: user.role,
+      schoolId: user.schoolId,
+    });
+  }
+
+  @Get('my-timetable')
+  @Roles(Role.TEACHER)
+  getMyTimetable(@CurrentUser() user: any) {
+    return this.timetableService.getMyTimetable({
       userId: user.userId,
       role: user.role,
       schoolId: user.schoolId,

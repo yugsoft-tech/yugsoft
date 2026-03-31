@@ -32,10 +32,8 @@ import {
 
 const noticeSchema = z.object({
     title: z.string().min(5, 'Announcement title too short'),
-    content: z.string().min(10, 'Context required'),
-    category: z.enum(['GENERAL', 'ACADEMIC', 'EXAM', 'EVENT']).default('GENERAL'),
-    target: z.enum(['ALL', 'STUDENTS', 'STAFF', 'PARENTS']).default('ALL'),
-    expiryDate: z.string().optional(),
+    message: z.string().min(10, 'Context required'),
+    audience: z.enum(['ALL', 'STUDENTS', 'TEACHERS', 'PARENTS']).default('ALL'),
 });
 
 type NoticeFormValues = z.infer<typeof noticeSchema>;
@@ -47,7 +45,7 @@ export default function NoticeBoard() {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm<NoticeFormValues>({
         resolver: zodResolver(noticeSchema),
-        defaultValues: { category: 'GENERAL', target: 'ALL' }
+        defaultValues: { audience: 'ALL' }
     });
 
     useEffect(() => {
@@ -117,40 +115,28 @@ export default function NoticeBoard() {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Context Payload (Description)</label>
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Context Payload (Message)</label>
                                     <textarea
-                                        {...register('content')}
+                                        {...register('message')}
                                         rows={6}
                                         placeholder="Enter institutional announcement metadata..."
                                         className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-3xl py-6 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
                                     ></textarea>
+                                    {errors.message && <p className="text-[10px] text-rose-500 font-black uppercase tracking-widest pl-4 italic">{errors.message.message}</p>}
                                 </div>
                             </div>
 
                             <div className="lg:col-span-4 space-y-8">
                                 <div className="bg-slate-50 dark:bg-slate-800/50 rounded-[2rem] p-8 space-y-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Classification Matrix</label>
-                                        <select
-                                            {...register('category')}
-                                            className="w-full bg-white dark:bg-slate-900 border-none rounded-2xl py-4 px-6 text-[10px] font-black uppercase tracking-widest outline-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-primary appearance-none"
-                                        >
-                                            <option value="GENERAL">Node: General</option>
-                                            <option value="ACADEMIC">Node: Academic</option>
-                                            <option value="EXAM">Node: Performance</option>
-                                            <option value="EVENT">Node: Synergy</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Target Cluster</label>
                                         <select
-                                            {...register('target')}
+                                            {...register('audience')}
                                             className="w-full bg-white dark:bg-slate-900 border-none rounded-2xl py-4 px-6 text-[10px] font-black uppercase tracking-widest outline-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-primary appearance-none"
                                         >
                                             <option value="ALL">Identity: Global</option>
                                             <option value="STUDENTS">Identity: Students</option>
-                                            <option value="STAFF">Identity: Faculty</option>
+                                            <option value="TEACHERS">Identity: Faculty</option>
                                             <option value="PARENTS">Identity: Guardians</option>
                                         </select>
                                     </div>
@@ -188,7 +174,7 @@ export default function NoticeBoard() {
                                     <div key={notice.id} className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-slate-50 dark:border-slate-800 p-8 space-y-6 hover:border-primary/30 transition-all group relative overflow-hidden">
                                         <div className="absolute top-0 right-0 p-8">
                                             <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2">
-                                                {notice.category}
+                                                {notice.audience}
                                             </Badge>
                                         </div>
 
@@ -206,16 +192,16 @@ export default function NoticeBoard() {
                                                 </div>
                                             </div>
                                             <p className="text-sm font-bold text-slate-500 uppercase tracking-wide leading-relaxed line-clamp-3 italic">
-                                                {notice.content}
+                                                {notice.message}
                                             </p>
                                         </div>
 
                                         <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
                                             <div className="flex items-center gap-3">
                                                 <div className="size-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[10px] font-black">
-                                                    {notice.target.charAt(0)}
+                                                    {notice.audience.charAt(0)}
                                                 </div>
-                                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Node: {notice.target}</span>
+                                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Node: {notice.audience}</span>
                                             </div>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>

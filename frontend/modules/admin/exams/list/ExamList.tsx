@@ -14,6 +14,7 @@ import {
     CheckCircle2
 } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/hooks/useAuth';
 import { useExams } from '@/hooks/useExams';
 import Skeleton from '@/components/ui/Skeleton';
 import Button from '@/components/ui/Button';
@@ -27,6 +28,8 @@ import {
 } from '@/components/ui/DropdownMenu';
 
 export default function ExamList() {
+    const { user } = useAuth();
+    const rolePath = user?.role === 'TEACHER' ? 'teacher' : 'admin';
     const [searchTerm, setSearchTerm] = useState('');
     const { exams, loading, pagination, params, setParams, deleteExam } = useExams({
         page: 1,
@@ -47,7 +50,7 @@ export default function ExamList() {
                     <p className="text-sm font-medium text-slate-500 italic">Manage assessment cycles and academic performance metrics.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Link href="/admin/exams/create">
+                    <Link href={`/${rolePath}/exams/create`}>
                         <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20">
                             <Plus size={18} />
                             Initialize Cycle
@@ -130,11 +133,11 @@ export default function ExamList() {
                                             <div className="flex flex-col gap-1">
                                                 <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                                     <Calendar size={12} className="text-primary" />
-                                                    {new Date(exam.startDate).toLocaleDateString()}
+                                                    {new Date(exam.date).toLocaleDateString()}
                                                 </div>
-                                                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest italic opacity-60">
                                                     <Clock size={12} className="text-indigo-500" />
-                                                    {new Date(exam.endDate).toLocaleDateString()}
+                                                    Assessment Phase
                                                 </div>
                                             </div>
                                         </td>
@@ -158,15 +161,21 @@ export default function ExamList() {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl">
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/admin/exams/marks/${exam.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
+                                                        <Link href={`/${rolePath}/exams/edit/${exam.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <Edit2 size={16} className="text-primary" />
-                                                            <span className="text-xs font-black uppercase tracking-widest">Register Marks</span>
+                                                            <span className="text-xs font-black uppercase tracking-widest">Edit Protocol</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/admin/exams/schedule/${exam.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
-                                                            <Calendar size={16} className="text-indigo-500" />
-                                                            <span className="text-xs font-black uppercase tracking-widest">View Schedule</span>
+                                                        <Link href={`/${rolePath}/exams/marks/${exam.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
+                                                            <CheckCircle2 size={16} className="text-emerald-500" />
+                                                            <span className="text-xs font-black uppercase tracking-widest">Enter Marks</span>
+                                                        </Link>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href={`/${rolePath}/exams/results/${exam.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
+                                                            <Target size={16} className="text-indigo-500" />
+                                                            <span className="text-xs font-black uppercase tracking-widest">View Performance</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuSeparator className="my-2" />

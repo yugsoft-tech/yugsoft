@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notification Center - School ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-slate-900 dark:text-white overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-10 py-3 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_535"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64 hidden md:flex">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-400 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-slate-800 focus:border-none h-full placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Search..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="flex gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden lg:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white">Sarah Connor</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Administrator</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-slate-100 dark:ring-slate-800" data-alt="User profile picture of a woman smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAcNf5-_XkhK6MIbTbKwywdtEKipGSETt3NWqX2oHTdpniL05k2Itm4KoxrBil94W2w4Z9KC-XGNuAJyP87zvGZWUfDI1bI8ZQFTXVG8Pj1R-jDzVeyW_Y5pNOGP1Dn0oSDuWTClVwqugfXXnGa1YZBLXnGABOYfBnApTJbbZk6MqdmeN5alNO6urL4uZgggbycN_8F8KJ2SAcrUBpLRxaHBFPmVWl4EcMMhwwROmf2uOVaqoCBfYtq31PDpzRWZQllXTpPEb63ap05");'></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 max-w-[1600px] w-full mx-auto">
+<!-- Sidebar Navigation / Filters -->
+<aside class="w-72 hidden lg:flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[calc(100vh-65px)] sticky top-[65px] overflow-y-auto">
+<div class="p-6 flex flex-col gap-8">
+<!-- Filters Section -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Filters</h3>
+<button class="text-primary text-xs font-semibold hover:underline">Reset</button>
+</div>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary transition-colors">
+<span class="material-symbols-outlined fill-current text-[20px]">inbox</span>
+<span class="text-sm font-semibold">All Notifications</span>
+<span class="ml-auto bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">12</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-slate-900 dark:group-hover:text-white">mark_email_unread</span>
+<span class="text-sm font-medium group-hover:text-slate-900 dark:group-hover:text-white">Unread</span>
+<span class="ml-auto bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold">5</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-slate-900 dark:group-hover:text-white">alternate_email</span>
+<span class="text-sm font-medium group-hover:text-slate-900 dark:group-hover:text-white">Mentions</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-slate-900 dark:group-hover:text-white">warning</span>
+<span class="text-sm font-medium group-hover:text-slate-900 dark:group-hover:text-white">System Alerts</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-slate-900 dark:group-hover:text-white">school</span>
+<span class="text-sm font-medium group-hover:text-slate-900 dark:group-hover:text-white">Academic Updates</span>
+</button>
+</div>
+</div>
+<!-- Calendar Section -->
+<div class="flex flex-col gap-4">
+<h3 class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Date Filter</h3>
+<!-- Integrated Simple Calendar Picker -->
+<div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between mb-2 px-1">
+<button class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="text-sm font-bold text-slate-800 dark:text-slate-200">October 2023</span>
+<button class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7 text-center gap-y-1">
+<span class="text-[10px] font-bold text-slate-400">S</span>
+<span class="text-[10px] font-bold text-slate-400">M</span>
+<span class="text-[10px] font-bold text-slate-400">T</span>
+<span class="text-[10px] font-bold text-slate-400">W</span>
+<span class="text-[10px] font-bold text-slate-400">T</span>
+<span class="text-[10px] font-bold text-slate-400">F</span>
+<span class="text-[10px] font-bold text-slate-400">S</span>
+<!-- Calendar Days -->
+<button class="text-xs text-slate-400 h-7 w-7 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">29</button>
+<button class="text-xs text-slate-400 h-7 w-7 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">30</button>
+<button class="text-xs text-slate-700 dark:text-slate-300 h-7 w-7 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">1</button>
+<button class="text-xs text-slate-700 dark:text-slate-300 h-7 w-7 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">2</button>
+<button class="text-xs text-slate-700 dark:text-slate-300 h-7 w-7 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">3</button>
+<button class="text-xs text-white bg-primary h-7 w-7 flex items-center justify-center rounded-full shadow-sm shadow-primary/50">4</button>
+<button class="text-xs text-slate-700 dark:text-slate-300 h-7 w-7 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">5</button>
+<!-- ... rest of days omitted for brevity but implied structure -->
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col p-6 lg:p-10 max-w-5xl mx-auto w-full">
+<!-- Page Header -->
+<div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Notification Center</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal">Manage your system alerts and messages</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 px-4 h-10 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-4 h-10 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-md shadow-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">done_all</span>
+<span>Mark all as read</span>
+</button>
+</div>
+</div>
+<!-- Urgent Alert Card -->
+<div class="mb-8">
+<div class="relative flex flex-col md:flex-row gap-4 p-5 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 shadow-sm overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500"></div>
+<div class="flex-shrink-0">
+<div class="size-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined text-[28px]">error</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="text-red-900 dark:text-red-100 text-lg font-bold">Severe Weather Warning</h3>
+<span class="text-xs font-bold bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200 px-2 py-0.5 rounded uppercase tracking-wider">Urgent</span>
+</div>
+<p class="text-red-800 dark:text-red-200/80 mt-1 mb-3 text-sm leading-relaxed">School closure expected tomorrow due to heavy snowfall. All classes will be conducted remotely. Please check your email for the detailed remote learning schedule.</p>
+<div class="flex gap-3">
+<button class="text-xs font-bold text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded transition-colors">View Policy</button>
+<button class="text-xs font-bold text-red-700 hover:text-red-900 dark:text-red-300 dark:hover:text-white px-3 py-1.5 rounded transition-colors">Dismiss</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Notifications List -->
+<div class="flex flex-col gap-4">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold mb-2">Today</h3>
+<!-- Notification Item 1 -->
+<div class="group flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-500 rounded-l-xl"></div>
+<div class="size-10 rounded-full bg-amber-50 dark:bg-amber-900/20 flex-shrink-0 flex items-center justify-center text-amber-600 dark:text-amber-400">
+<span class="material-symbols-outlined text-[20px]">build</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-4">
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-base">System Maintenance Scheduled</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5 line-clamp-2">The ERP will be offline for scheduled updates on <span class="font-semibold text-slate-700 dark:text-slate-300">Saturday from 2 AM to 4 AM</span>. Please ensure all data is saved.</p>
+</div>
+<span class="size-2.5 rounded-full bg-primary flex-shrink-0 mt-1.5" title="Unread"></span>
+</div>
+<div class="flex items-center gap-4 mt-3">
+<span class="text-xs text-slate-400 font-medium">2 hours ago</span>
+<span class="text-xs text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded">System</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-4 right-4 bg-white dark:bg-slate-800 pl-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Notification Item 2 -->
+<div class="group flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-l-xl"></div>
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex-shrink-0 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-4">
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Grade Submission Deadline</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Deadline for Term 1 grades is approaching in <span class="font-semibold text-slate-700 dark:text-slate-300">2 days</span>. You have 3 pending classes to finalize.</p>
+</div>
+<span class="size-2.5 rounded-full bg-primary flex-shrink-0 mt-1.5" title="Unread"></span>
+</div>
+<div class="flex items-center gap-4 mt-3">
+<span class="text-xs text-slate-400 font-medium">5 hours ago</span>
+<span class="text-xs text-blue-600 dark:text-blue-400 font-medium bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded">Academic</span>
+<a class="text-xs font-bold text-primary hover:text-blue-700 dark:hover:text-blue-300 ml-auto mr-8" href="#">View Classes</a>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-4 right-4 bg-white dark:bg-slate-800 pl-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Notification Item 3 (Actionable) -->
+<div class="group flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-purple-500 rounded-l-xl"></div>
+<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/20 flex-shrink-0 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-4">
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Leave Request: Mr. Anderson</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Requested casual leave for <span class="font-semibold text-slate-700 dark:text-slate-300">Oct 12th</span>. Reason: Personal family matter.</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-3">
+<button class="px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-bold hover:bg-blue-600 transition-colors">Approve</button>
+<button class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Deny</button>
+<span class="text-xs text-slate-400 font-medium ml-auto mr-8">10:30 AM</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-4 right-4 bg-white dark:bg-slate-800 pl-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold mt-6 mb-2">Yesterday</h3>
+<!-- Notification Item 4 -->
+<div class="group flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 transition-all opacity-80 hover:opacity-100 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm relative">
+<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/20 flex-shrink-0 flex items-center justify-center text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-4">
+<div>
+<h4 class="text-slate-700 dark:text-slate-200 font-bold text-base">Fee Payment Alert</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">150 students have outstanding library dues for the current semester.</p>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-3">
+<span class="text-xs text-slate-400 font-medium">Yesterday</span>
+<span class="text-xs text-green-600 dark:text-green-400 font-medium bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">Finance</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-4 right-4">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Notification Item 5 -->
+<div class="group flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 transition-all opacity-80 hover:opacity-100 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm relative">
+<div class="size-10 rounded-full bg-indigo-50 dark:bg-indigo-900/20 flex-shrink-0 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+<span class="material-symbols-outlined text-[20px]">library_books</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-4">
+<div>
+<h4 class="text-slate-700 dark:text-slate-200 font-bold text-base">New Curriculum Uploaded</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">The science department has uploaded the new syllabus for Grades 9-12.</p>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-3">
+<span class="text-xs text-slate-400 font-medium">Yesterday</span>
+<span class="text-xs text-indigo-600 dark:text-indigo-400 font-medium bg-indigo-50 dark:bg-indigo-900/20 px-2 py-0.5 rounded">Academic</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-4 right-4">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-10 mb-6">
+<button class="flex items-center gap-2 text-primary font-bold text-sm hover:underline px-4 py-2">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                    Load older notifications
+                </button>
+</div>
+</main>
+</div>
+</body></html>

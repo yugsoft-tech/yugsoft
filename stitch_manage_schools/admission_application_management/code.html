@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admission Application Management</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', 'Noto Sans', sans-serif;
+        }
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white">
+<div class="relative flex h-screen w-full overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Sidebar -->
+<aside class="flex w-64 flex-col border-r border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-[#1a2632] flex-shrink-0 transition-all">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<!-- Brand -->
+<div class="flex gap-3 items-center px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shadow-sm" data-alt="School logo with abstract education symbol" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMd3Eq6YaqjKMGkdW2me0hkIrbbPfD3XDLHenkThVmRswD7TzDUymCIruTEH6HG50CXbv1XyfsG3ngiL-lPYTUacGQq-CtDfcXc3FdKUjMBavt3sFRqGT3bmwT7suDz7qaSGgy-pItYwRaZRddZ98GFIAx3FKAfoV0lho5tSqcdgzf0owBa9zVF1DpvyKNQgv8quabitXy1RJv_RByeFqoKkoU7TCJ_pjHHU_owlG8a7octw7KaRsjhW0_DPbnabLu_APZVZG7qqir");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#0d141b] dark:text-white text-base font-bold leading-normal">School ERP</h1>
+<p class="text-[#4c739a] text-xs font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+<!-- Navigation -->
+<div class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-primary fill">person_add</span>
+<p class="text-sm font-medium leading-normal">Admissions</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary">school</span>
+<p class="text-sm font-medium leading-normal">Students</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary">group</span>
+<p class="text-sm font-medium leading-normal">Staff</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary">payments</span>
+<p class="text-sm font-medium leading-normal">Finance</p>
+</a>
+<div class="my-2 border-t border-slate-100 dark:border-gray-700"></div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</div>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-800 cursor-pointer">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8" data-alt="User avatar of administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3S2bRywApK0KsBNytSqSWZbq4uFCHWlDDPq9KXyVVXoDujfjTxe6f0e-xtcWqxof2MdfKSeUyC4CY1BUtqrQc5_uEthUno8cLoc9WsRt4PZb6Jh8MmhTKSqhV2-CTcbFyY11N4Wdts6KkrvJJbJOV9UxCMIVGHqdIzWSUb-oqcL_-8jYuH7tvfdie-RZ8yZaPyXfGdUMI_AOUHtrh8onu-34_DSnkS-W9DW3NZ2PDez_M2VLMFBee4x2Aa4QBfF5h4IXdZOlSXi-6");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-[#0d141b] dark:text-white text-sm font-medium leading-none truncate">Jane Admin</p>
+<p class="text-[#4c739a] text-xs font-normal leading-none mt-1 truncate">Head of Admissions</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header & Breadcrumbs -->
+<header class="w-full bg-white dark:bg-[#1a2632] border-b border-[#e7edf3] dark:border-gray-800 px-6 py-4 flex-shrink-0">
+<div class="flex flex-col gap-2">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 items-center">
+<a class="text-[#4c739a] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Home</a>
+<span class="text-[#4c739a] text-sm font-medium leading-normal">/</span>
+<a class="text-[#4c739a] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Admissions</a>
+<span class="text-[#4c739a] text-sm font-medium leading-normal">/</span>
+<span class="text-[#0d141b] dark:text-white text-sm font-medium leading-normal">Applications</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-4 mt-2">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#0d141b] dark:text-white text-3xl font-bold leading-tight tracking-tight">Admission Applications</h1>
+<p class="text-[#4c739a] text-base font-normal leading-normal">Manage student enrollment pipeline and reviews.</p>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-bold h-10 px-5 shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Create New Application</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-2 rounded-xl p-5 border border-[#e7edf3] dark:border-gray-700 bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] text-sm font-medium">Total Applications</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-[20px]">folder_open</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold">1,240</p>
+<span class="text-[#078838] bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold">+5%</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 border border-[#e7edf3] dark:border-gray-700 bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] text-sm font-medium">Pending Review</p>
+<span class="material-symbols-outlined text-yellow-600 bg-yellow-50 dark:bg-yellow-900/20 p-1.5 rounded-lg text-[20px]">pending</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold">45</p>
+<span class="text-[#078838] bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold">+12%</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 border border-[#e7edf3] dark:border-gray-700 bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] text-sm font-medium">Interview Scheduled</p>
+<span class="material-symbols-outlined text-purple-600 bg-purple-50 dark:bg-purple-900/20 p-1.5 rounded-lg text-[20px]">calendar_month</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold">12</p>
+<span class="text-[#e73908] bg-red-50 dark:bg-red-900/30 px-1.5 py-0.5 rounded text-xs font-bold">-2%</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 border border-[#e7edf3] dark:border-gray-700 bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] text-sm font-medium">Accepted</p>
+<span class="material-symbols-outlined text-green-600 bg-green-50 dark:bg-green-900/20 p-1.5 rounded-lg text-[20px]">check_circle</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold">850</p>
+<span class="text-[#078838] bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold">+8%</span>
+</div>
+</div>
+</div>
+<!-- Main Content Card -->
+<div class="flex flex-col bg-white dark:bg-[#1a2632] rounded-xl border border-[#e7edf3] dark:border-gray-700 shadow-sm overflow-hidden">
+<!-- Toolbar & Filters -->
+<div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 p-4 border-b border-[#e7edf3] dark:border-gray-700">
+<!-- Left: Status Tabs -->
+<div class="flex items-center gap-1 bg-[#f0f4f8] dark:bg-gray-800 p-1 rounded-lg">
+<button class="px-3 py-1.5 rounded-md bg-white dark:bg-[#1a2632] shadow-sm text-[#0d141b] dark:text-white text-sm font-bold">All</button>
+<button class="px-3 py-1.5 rounded-md text-[#4c739a] hover:bg-white/50 dark:hover:bg-gray-700 hover:text-[#0d141b] dark:hover:text-white text-sm font-medium transition-all">New</button>
+<button class="px-3 py-1.5 rounded-md text-[#4c739a] hover:bg-white/50 dark:hover:bg-gray-700 hover:text-[#0d141b] dark:hover:text-white text-sm font-medium transition-all">Reviewing</button>
+<button class="px-3 py-1.5 rounded-md text-[#4c739a] hover:bg-white/50 dark:hover:bg-gray-700 hover:text-[#0d141b] dark:hover:text-white text-sm font-medium transition-all">Accepted</button>
+</div>
+<!-- Right: Actions -->
+<div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+<!-- Search -->
+<div class="relative group flex-grow lg:flex-grow-0">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#4c739a] text-[20px]">search</span>
+<input class="w-full lg:w-64 h-10 pl-10 pr-4 rounded-lg bg-[#f0f4f8] dark:bg-gray-800 border-none text-sm text-[#0d141b] dark:text-white focus:ring-2 focus:ring-primary/50 placeholder-[#4c739a]" placeholder="Search applicant..." type="text"/>
+</div>
+<!-- Academic Year Dropdown Trigger -->
+<button class="h-10 px-3 flex items-center gap-2 rounded-lg border border-[#e7edf3] dark:border-gray-600 hover:bg-[#f0f4f8] dark:hover:bg-gray-800 text-[#0d141b] dark:text-white text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span>2024-2025</span>
+<span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</button>
+<button class="h-10 px-3 flex items-center gap-2 rounded-lg border border-[#e7edf3] dark:border-gray-600 hover:bg-[#f0f4f8] dark:hover:bg-gray-800 text-[#0d141b] dark:text-white text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span class="hidden sm:inline">Filter</span>
+</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg border border-[#e7edf3] dark:border-gray-600 hover:bg-[#f0f4f8] dark:hover:bg-gray-800 text-[#0d141b] dark:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f8fafc] dark:bg-[#151f28] border-b border-[#e7edf3] dark:border-gray-700">
+<th class="py-3 px-4 w-12">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-[#4c739a]">Applicant</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-[#4c739a]">Grade Level</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-[#4c739a]">Applied Date</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-[#4c739a]">Parent Contact</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-[#4c739a]">Status</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-[#4c739a] text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e7edf3] dark:divide-gray-700">
+<!-- Row 1 -->
+<tr class="group hover:bg-[#f0f4f8] dark:hover:bg-gray-800 transition-colors">
+<td class="py-4 px-4">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Portrait of student applicant" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuVBJ85L-PXUNUXfVO_I4RrhXnUK5CaxgTb1QfU6c4LZ5300W8SMqIIKDhJtgFEvxRm0t-tRVUUJTTkBtzDYO57sTl_s6-nPAoS8q7Wq130FTDR9lSUgZxADkFqIhxlgCoWSlVh3j7-h77yHfBnan5jZ28KZa7QOxcnB6eb_sI9SN0gIfqT1UieaWyb9vTUqAxRUo19R4GxR-29-I6let45otkgNaoJgyTZzxmDsNV-96vhtUIOksZHY9EmzqOosvcRmDI1PMGTprQ");'></div>
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white text-sm font-bold">Emma Wilson</span>
+<span class="text-[#4c739a] text-xs">ID: #APP-2024-001</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Grade 5</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Oct 24, 2023</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">emma.parent@gmail.com</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+<span class="size-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                                            New
+                                        </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#4c739a] hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#4c739a] hover:text-green-600 transition-colors" title="Approve">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="text-[#4c739a] hover:text-red-600 transition-colors" title="Reject">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-[#f0f4f8] dark:hover:bg-gray-800 transition-colors">
+<td class="py-4 px-4">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Portrait of student applicant" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkGl67I9SR0Vhna3WP2beA20v773AF6jC81PT-Tt_PW5vrrurgS575aF-16Fd0ojCl8OchORQ5QJ9NwaY4HqSnSOwVIUX-aGC5UTeAHeD6gJREclFCEXGLehlbMTXIWxgi0suvpUCmjSYQe4iVJHG3hI29CJQw9g6cKcpi2frSyE2vsVyJgsPuk-uPRmJHDBIV9Tn0UeNQKF7VNHCHpJnH3nVxY1MnfGNcuEJPA1DMMr6PwwXi0Mb2eQF7qy33ZotzjAjqKPpVvWF8");'></div>
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white text-sm font-bold">Liam Johnson</span>
+<span class="text-[#4c739a] text-xs">ID: #APP-2024-002</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Grade 3</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Oct 23, 2023</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">sarah.j@hotmail.com</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300">
+<span class="size-1.5 rounded-full bg-yellow-600 dark:bg-yellow-400"></span>
+                                            In Review
+                                        </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#4c739a] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#4c739a] hover:text-green-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="text-[#4c739a] hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-[#f0f4f8] dark:hover:bg-gray-800 transition-colors">
+<td class="py-4 px-4">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Portrait of student applicant" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAER9lo4UXDEFqd9oVi1T2kPxyOhqDVWXMxe8m-HYDtbqJlztzJbQSQ0IyGDTGDNxqkag2nEWYCMvc1oIcWC7Xd0boGq7XZmwdnetTqgPcSUGUlYpJUFONikfim6uZ6E0vQ9gDgRDn10d7Eh8Ddh3f8W7s1hYS7rmOz_pSPLR26CeginBjr2mxs6pzgQucFso5y6QLOExTzE4NspX8hTcuG8oUW1-sbg-BrDdg0FQ_j63Jk1sRHVX9t-Q4loPLMRWDzm1ImCwQrRLaY");'></div>
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white text-sm font-bold">Sophia Davis</span>
+<span class="text-[#4c739a] text-xs">ID: #APP-2024-003</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Grade 1</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Oct 22, 2023</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">mdavis@tech.net</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300">
+<span class="size-1.5 rounded-full bg-green-600 dark:bg-green-400"></span>
+                                            Accepted
+                                        </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#4c739a] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#4c739a] hover:text-green-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-[#f0f4f8] dark:hover:bg-gray-800 transition-colors">
+<td class="py-4 px-4">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+                                                OJ
+                                            </div>
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white text-sm font-bold">Oliver James</span>
+<span class="text-[#4c739a] text-xs">ID: #APP-2024-004</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Grade 9</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Oct 20, 2023</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">james.fam@outlook.com</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300">
+<span class="size-1.5 rounded-full bg-red-600 dark:bg-red-400"></span>
+                                            Rejected
+                                        </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#4c739a] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-[#f0f4f8] dark:hover:bg-gray-800 transition-colors">
+<td class="py-4 px-4">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Portrait of student applicant" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUsEG0pMJtCTJSM2kIXxksX5bUzca0ywSUEMGjUqTsBwsT2uVMDW3w9mSyBsxuRf1dsRF4TtpDfNIgOCM03bb_W0Nx5o8nYug5j97Y6UICJja8A5qKZdkZrlPlmOpK05Brt3ZcKbiKTzd_MWLnWQK1fNWSWCEe-mv335dZqwhv0zGByO_pn4NxNveErdzT9ZeBdhjdT9sfFS7o4BD8_5N_fzEoPrISD7w-1Wva64jXBqDBNtuNcHiy8qHv_4QJelIWIWxFsXEE2M5F");'></div>
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white text-sm font-bold">Ava Brown</span>
+<span class="text-[#4c739a] text-xs">ID: #APP-2024-005</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Kindergarten</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">Oct 19, 2023</td>
+<td class="py-4 px-4 text-sm text-[#0d141b] dark:text-gray-300">brown.fam@gmail.com</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+<span class="size-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                                            New
+                                        </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#4c739a] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#4c739a] hover:text-green-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="text-[#4c739a] hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-4 py-3 border-t border-[#e7edf3] dark:border-gray-700 bg-white dark:bg-[#1a2632]">
+<div class="text-sm text-[#4c739a]">
+                            Showing <span class="font-bold text-[#0d141b] dark:text-white">1-5</span> of <span class="font-bold text-[#0d141b] dark:text-white">1,240</span> results
+                        </div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm font-medium rounded border border-[#e7edf3] dark:border-gray-600 text-[#4c739a] hover:bg-[#f0f4f8] dark:hover:bg-gray-800 disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 text-sm font-medium rounded bg-primary text-white">1</button>
+<button class="px-3 py-1 text-sm font-medium rounded border border-[#e7edf3] dark:border-gray-600 text-[#4c739a] hover:bg-[#f0f4f8] dark:hover:bg-gray-800">2</button>
+<button class="px-3 py-1 text-sm font-medium rounded border border-[#e7edf3] dark:border-gray-600 text-[#4c739a] hover:bg-[#f0f4f8] dark:hover:bg-gray-800">3</button>
+<span class="px-2 py-1 text-[#4c739a]">...</span>
+<button class="px-3 py-1 text-sm font-medium rounded border border-[#e7edf3] dark:border-gray-600 text-[#4c739a] hover:bg-[#f0f4f8] dark:hover:bg-gray-800">12</button>
+<button class="px-3 py-1 text-sm font-medium rounded border border-[#e7edf3] dark:border-gray-600 text-[#4c739a] hover:bg-[#f0f4f8] dark:hover:bg-gray-800">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

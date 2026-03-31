@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Financial Reports - School ERP</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Noto+Sans:wght@300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white font-display overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="hidden w-64 flex-col border-r border-[#e7edf3] bg-white dark:bg-[#1a2632] dark:border-slate-700 lg:flex">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10" data-alt="School logo abstract geometric shape" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDhiG3Kcl2VhFoe3fGhEEksDICMyEHF-VccIqTnpJG5Q38q00HgKrHty4V18uxvBbxnrgRBoUpadf5m8UNSpg359NXFkLtbGd-ph0xIhZ1HbewQWReeQL8zrVIQR_i7UXlBErNW22wTh3lJmzYSwPOQ-rhRk5AxJ0w13g4zQZC22VKVCdwaltyO83mal7EanW_qCR8sbPfLtGi_HSYp4bV70yGjFTlfM2KCJxCbX9t6F8LXmSoVIfrME74KvIL7FP_oaDm4dj2RhY4h");'></div>
+<h1 class="text-lg font-bold leading-normal dark:text-white">School ERP</h1>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-[#4c739a] dark:text-slate-400 hover:bg-[#e7edf3] dark:hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-[#0d141b] dark:group-hover:text-white">dashboard</span>
+<p class="text-sm font-medium leading-normal group-hover:text-[#0d141b] dark:group-hover:text-white">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#4c739a] dark:text-slate-400 hover:bg-[#e7edf3] dark:hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-[#0d141b] dark:group-hover:text-white">group</span>
+<p class="text-sm font-medium leading-normal group-hover:text-[#0d141b] dark:group-hover:text-white">Students</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#4c739a] dark:text-slate-400 hover:bg-[#e7edf3] dark:hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-[#0d141b] dark:group-hover:text-white">school</span>
+<p class="text-sm font-medium leading-normal group-hover:text-[#0d141b] dark:group-hover:text-white">Academics</p>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-300" href="#">
+<span class="material-symbols-outlined icon-filled text-primary">payments</span>
+<p class="text-sm font-bold leading-normal">Finance</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#4c739a] dark:text-slate-400 hover:bg-[#e7edf3] dark:hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-[#0d141b] dark:group-hover:text-white">work</span>
+<p class="text-sm font-medium leading-normal group-hover:text-[#0d141b] dark:group-hover:text-white">HR</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#4c739a] dark:text-slate-400 hover:bg-[#e7edf3] dark:hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-[#0d141b] dark:group-hover:text-white">description</span>
+<p class="text-sm font-medium leading-normal group-hover:text-[#0d141b] dark:group-hover:text-white">Documents</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 text-[#4c739a] dark:text-slate-400 hover:bg-[#e7edf3] dark:hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-[#0d141b] dark:group-hover:text-white">settings</span>
+<p class="text-sm font-medium leading-normal group-hover:text-[#0d141b] dark:group-hover:text-white">Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#4c739a] dark:text-slate-400 hover:bg-[#e7edf3] dark:hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-[#0d141b] dark:group-hover:text-white">help</span>
+<p class="text-sm font-medium leading-normal group-hover:text-[#0d141b] dark:group-hover:text-white">Support</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<div class="flex flex-1 flex-col h-full overflow-hidden relative">
+<!-- Top Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-[#e7edf3] dark:border-slate-700 bg-white dark:bg-[#1a2632] px-6 py-3 shrink-0">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="text-[#0d141b] dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="size-8 bg-center bg-cover rounded-full" data-alt="School logo mobile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLGwMks2j8ztJM4urwNXxJH_JliIjyzQ3T8ewRpacIuG9eKcQBDM7Mf4wU_34YEJ2Vbfq-qVhYFM-LJaJ7XI0u-P1QOSKpaqweWfaWtG3w-OST5fgW9L_gWdgA7KkpcdGSeb4LK2wfRBlceSmMKJfkE83C55tZ_LCH3WyV_OpU8_pZFLqYtYqbvZD1v5w3gICD6qtJRP7-2Hq90wzkV7Ot5_jyTMdWiYdq5R-MvOEFcoqW49kayYEpc6Xa5tW3HX39_5He36BV280d");'></div>
+</div>
+<div class="hidden lg:flex items-center gap-4 text-[#0d141b] dark:text-white">
+<!-- Breadcrumbs integration in header for mobile efficiency or just title -->
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Financial Management</h2>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4 lg:gap-8">
+<!-- Search Bar -->
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-[#f0f4f8] dark:bg-slate-700">
+<div class="text-[#4c739a] dark:text-slate-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 bg-transparent border-none h-full placeholder:text-[#4c739a] dark:placeholder:text-slate-400 px-3 text-sm font-normal leading-normal" placeholder="Search reports..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-lg bg-transparent hover:bg-[#e7edf3] dark:hover:bg-slate-700 text-[#0d141b] dark:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-lg bg-transparent hover:bg-[#e7edf3] dark:hover:bg-slate-700 text-[#0d141b] dark:text-white transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-white dark:border-slate-600 shadow-sm" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA-4jDUESk4bOfpo7z3u6jms36peiOj4qexA0sr4t4it32SzO9Pc_xG8YqdxLyd6OuGTmIOGlQTFUcOc7uS9eQCe_Z_9rLqrYMc4SZNQEr1osXcp5fR5qUxlsNBCPWL2wLzIkI1VtTttTj-AZ8yIA1pCcGbgPPE7hBXvwWbSujLNVf6Kg85FVPxxm79CaeJzBF8bp89ln1r-TtmjMTJm9yZHwi-ltlkVzMInlNxW-w4ap5aP3i8vSkp9_bw6bAVwpJDTtuqohQ6ZCir");'></div>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-6">
+<!-- Breadcrumbs & Heading -->
+<div class="flex flex-col gap-2">
+<div class="flex flex-wrap items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Finance</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-[#0d141b] dark:text-white font-medium">Reports</span>
+</div>
+<div class="flex justify-between items-end flex-wrap gap-4">
+<div>
+<h1 class="text-[#0d141b] dark:text-white text-3xl font-bold leading-tight tracking-tight">Financial Reports</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm md:text-base mt-1">Generate balance sheets, income statements, and view financial health.</p>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-sm flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                                Create Custom Report
+                            </button>
+</div>
+</div>
+<!-- KPI Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-[#1a2632] border border-[#e7edf3] dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-primary">
+<span class="material-symbols-outlined icon-filled">account_balance_wallet</span>
+</div>
+<span class="flex items-center text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded text-xs font-bold">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +12.5%
+                                </span>
+</div>
+<div>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium">Total Revenue YTD</p>
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold mt-1">$1,250,000</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-[#1a2632] border border-[#e7edf3] dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-orange-50 dark:bg-orange-900/30 rounded-lg text-orange-500">
+<span class="material-symbols-outlined icon-filled">pending_actions</span>
+</div>
+<span class="flex items-center text-rose-600 bg-rose-50 dark:bg-rose-900/20 px-2 py-1 rounded text-xs font-bold">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_down</span> -2.4%
+                                </span>
+</div>
+<div>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium">Outstanding Fees</p>
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold mt-1">$45,200</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-[#1a2632] border border-[#e7edf3] dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-purple-50 dark:bg-purple-900/30 rounded-lg text-purple-600">
+<span class="material-symbols-outlined icon-filled">pie_chart</span>
+</div>
+<span class="flex items-center text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded text-xs font-bold">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +8.2%
+                                </span>
+</div>
+<div>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium">Net Income</p>
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold mt-1">$850,000</p>
+</div>
+</div>
+</div>
+<!-- Split Section: Generator & Chart -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Report Generator Panel (Left) -->
+<div class="lg:col-span-4 flex flex-col h-full bg-white dark:bg-[#1a2632] rounded-xl border border-[#e7edf3] dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700">
+<h3 class="text-base font-bold text-[#0d141b] dark:text-white">Generate Report</h3>
+</div>
+<div class="p-6 flex flex-col gap-5 flex-1">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#0d141b] dark:text-white">Report Type</label>
+<div class="relative">
+<select class="w-full h-11 rounded-lg border border-[#cfdbe7] dark:border-slate-600 bg-white dark:bg-slate-800 text-[#0d141b] dark:text-white px-3 focus:ring-primary focus:border-primary text-sm appearance-none">
+<option>Balance Sheet</option>
+<option>Income Statement</option>
+<option>Cash Flow Report</option>
+<option>Student Fee Summary</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-gray-500">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#0d141b] dark:text-white">Department / Campus</label>
+<div class="relative">
+<select class="w-full h-11 rounded-lg border border-[#cfdbe7] dark:border-slate-600 bg-white dark:bg-slate-800 text-[#0d141b] dark:text-white px-3 focus:ring-primary focus:border-primary text-sm appearance-none">
+<option>All Campuses</option>
+<option>Main Campus (North)</option>
+<option>Science Wing</option>
+<option>Arts Department</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-gray-500">expand_more</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#0d141b] dark:text-white">Start Date</label>
+<input class="w-full h-11 rounded-lg border border-[#cfdbe7] dark:border-slate-600 bg-white dark:bg-slate-800 text-[#0d141b] dark:text-white px-3 focus:ring-primary focus:border-primary text-sm text-gray-500" type="date" value="2023-01-01"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#0d141b] dark:text-white">End Date</label>
+<input class="w-full h-11 rounded-lg border border-[#cfdbe7] dark:border-slate-600 bg-white dark:bg-slate-800 text-[#0d141b] dark:text-white px-3 focus:ring-primary focus:border-primary text-sm text-gray-500" type="date" value="2023-12-31"/>
+</div>
+</div>
+<div class="mt-auto pt-4">
+<button class="w-full h-11 bg-primary hover:bg-blue-600 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                                        Generate Report
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Visual Insight Chart (Right) -->
+<div class="lg:col-span-8 flex flex-col bg-white dark:bg-[#1a2632] rounded-xl border border-[#e7edf3] dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex justify-between items-center">
+<h3 class="text-base font-bold text-[#0d141b] dark:text-white">Financial Health Overview</h3>
+<div class="flex bg-[#f0f4f8] dark:bg-slate-700 rounded-lg p-1">
+<button class="px-3 py-1 text-xs font-semibold bg-white dark:bg-slate-600 rounded text-[#0d141b] dark:text-white shadow-sm">Monthly</button>
+<button class="px-3 py-1 text-xs font-semibold text-[#4c739a] dark:text-slate-400 hover:text-primary">Quarterly</button>
+<button class="px-3 py-1 text-xs font-semibold text-[#4c739a] dark:text-slate-400 hover:text-primary">Yearly</button>
+</div>
+</div>
+<!-- Custom CSS/HTML Chart Representation -->
+<div class="p-6 flex-1 flex flex-col justify-end min-h-[300px]">
+<div class="flex items-end justify-between gap-2 h-64 w-full">
+<!-- Y Axis Labels roughly -->
+<div class="hidden sm:flex flex-col justify-between h-full text-xs text-[#4c739a] dark:text-slate-400 pb-6 pr-2">
+<span>$100k</span>
+<span>$75k</span>
+<span>$50k</span>
+<span>$25k</span>
+<span>0</span>
+</div>
+<!-- Bars -->
+<!-- Month 1 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[45%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[60%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">Jan</span>
+</div>
+<!-- Month 2 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[35%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[55%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">Feb</span>
+</div>
+<!-- Month 3 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[60%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[75%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">Mar</span>
+</div>
+<!-- Month 4 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[40%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[50%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">Apr</span>
+</div>
+<!-- Month 5 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[50%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[68%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">May</span>
+</div>
+<!-- Month 6 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[30%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[45%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">Jun</span>
+</div>
+<!-- Month 7 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[45%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[80%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">Jul</span>
+</div>
+<!-- Month 8 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="relative w-full max-w-[40px] flex items-end justify-center h-full gap-1 rounded-t-sm">
+<div class="w-1/2 bg-blue-200 dark:bg-blue-900/50 h-[55%] rounded-t-sm group-hover:bg-blue-300 transition-all"></div>
+<div class="w-1/2 bg-primary h-[70%] rounded-t-sm group-hover:bg-blue-600 transition-all shadow-[0_0_10px_rgba(43,140,238,0.3)]"></div>
+</div>
+<span class="text-xs text-[#4c739a] dark:text-slate-400">Aug</span>
+</div>
+</div>
+<div class="flex items-center justify-center gap-6 mt-4">
+<div class="flex items-center gap-2">
+<span class="size-3 rounded-full bg-primary"></span>
+<span class="text-xs font-medium text-[#0d141b] dark:text-white">Income</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="size-3 rounded-full bg-blue-200 dark:bg-blue-900/50"></span>
+<span class="text-xs font-medium text-[#0d141b] dark:text-white">Expenses</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Reports Table -->
+<div class="flex flex-col bg-white dark:bg-[#1a2632] rounded-xl border border-[#e7edf3] dark:border-slate-700 shadow-sm overflow-hidden mb-6">
+<div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex justify-between items-center">
+<h3 class="text-base font-bold text-[#0d141b] dark:text-white">Recent Generated Reports</h3>
+<button class="text-primary text-sm font-bold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-[#f8fafc] dark:bg-[#131d27]">
+<tr>
+<th class="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">Report Name</th>
+<th class="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">Type</th>
+<th class="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">Generated On</th>
+<th class="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e7edf3] dark:divide-slate-700">
+<tr class="hover:bg-[#f8fafc] dark:hover:bg-[#1f2e3d] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-red-50 dark:bg-red-900/20 rounded text-red-500">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<span class="text-sm font-medium text-[#0d141b] dark:text-white">Q3 Balance Sheet.pdf</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#4c739a] dark:text-slate-400">Balance Sheet</td>
+<td class="px-6 py-4 text-sm text-[#0d141b] dark:text-white">Oct 15, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                Completed
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#4c739a] dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-[#f8fafc] dark:hover:bg-[#1f2e3d] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-green-50 dark:bg-green-900/20 rounded text-green-600">
+<span class="material-symbols-outlined text-[20px]">table_view</span>
+</div>
+<span class="text-sm font-medium text-[#0d141b] dark:text-white">Annual Income Stmt.xlsx</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#4c739a] dark:text-slate-400">Income Statement</td>
+<td class="px-6 py-4 text-sm text-[#0d141b] dark:text-white">Oct 12, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                Completed
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#4c739a] dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-[#f8fafc] dark:hover:bg-[#1f2e3d] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-red-50 dark:bg-red-900/20 rounded text-red-500">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<span class="text-sm font-medium text-[#0d141b] dark:text-white">Sep 2023 Cash Flow.pdf</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#4c739a] dark:text-slate-400">Cash Flow</td>
+<td class="px-6 py-4 text-sm text-[#0d141b] dark:text-white">Oct 01, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                                Pending
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#4c739a] dark:text-slate-400 hover:text-primary transition-colors opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-[#f8fafc] dark:hover:bg-[#1f2e3d] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-red-50 dark:bg-red-900/20 rounded text-red-500">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<span class="text-sm font-medium text-[#0d141b] dark:text-white">Student Fees Q2.pdf</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#4c739a] dark:text-slate-400">Fees Summary</td>
+<td class="px-6 py-4 text-sm text-[#0d141b] dark:text-white">Sep 15, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                Completed
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#4c739a] dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

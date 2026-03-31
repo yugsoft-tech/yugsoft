@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-50 font-display overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-white dark:bg-[#18212f] border-r border-slate-200 dark:border-slate-800 flex-col h-full shrink-0 hidden lg:flex">
+<div class="p-6 flex flex-col h-full justify-between">
+<div class="flex flex-col gap-8">
+<!-- User Profile -->
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm" data-alt="Profile picture of a student smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUqJASHBDhzlQYXEB1xI0zIkhLwFlpb2C3Kv9ZM_AIga7ZFfbz36hm06_j-JJm83g1k1xZS6QUN3WxJOXR-RKamIAo3wa1wobg0Cgqrpdh40M4-fA5jFiQrPfQelJ_hueyUjytRve3SuUJ8-2VgvPtf0smNl2NjzkH7GrPdCInUdmtRa91vv6VoGoWG7FkrtURRFb4HFN28TTZoUEru0bFNMvGpjAN3X2ebuYf-zd1VhWGB-SG3YcQFReAQp7EJIj-h9viB6poclrm");'>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-normal">Alex Johnson</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Class 10-A • Student</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary text-white shadow-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-white">dashboard</span>
+<span class="text-sm font-semibold leading-normal">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary">schedule</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium leading-normal">Timetable</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary">assignment</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium leading-normal">Assignments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary">school</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium leading-normal">Grades</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary">check_circle</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium leading-normal">Attendance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary">settings</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium leading-normal">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Logout Button -->
+<button class="flex w-full cursor-pointer items-center gap-3 rounded-lg py-3 px-3 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-bold leading-normal">Log Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 h-full overflow-y-auto bg-background-light dark:bg-background-dark">
+<div class="max-w-[1400px] mx-auto p-4 md:p-8 flex flex-col gap-6">
+<!-- Mobile Header (Visible only on small screens) -->
+<div class="lg:hidden flex justify-between items-center pb-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10" data-alt="Profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBllD4RqMCYRJxOr9sIAPAyXnQIGTuC2RvITn6TMRUqQdKZT6742CJQtw7_EfDPRW105rrTy94E3bw4P7qL8Q0iaaYQ8MAE56TeymWIcqMg3NhiRSEsbGhClBpneQqq5p84xW4MDTTctCn8imESTbEg04YTwxnAnyDLHWuONU3uSW7pYOuOnLV1T8wjLxFpmP88FLaBtm2MVyGUBNlVcJfYuJ493NnYRip9nSJXyKMR3XZoWyMsPZ7d6Ak6N2hy06F7JLosyDiaSWsl");'></div>
+<h1 class="font-bold text-lg">Alex Johnson</h1>
+</div>
+<button class="p-2 bg-white dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Page Heading & Welcome -->
+<div class="flex flex-col md:flex-row justify-between md:items-end gap-4 bg-white dark:bg-[#18212f] p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex flex-col gap-2">
+<p class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Good Morning, Alex! ☀️</p>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal">You have <span class="text-primary font-bold">3 classes</span> remaining today.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+<span class="truncate">View Full Schedule</span>
+</button>
+</div>
+</div>
+<!-- Stats Row -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#18212f] shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Current GPA</p>
+<span class="material-symbols-outlined text-primary">school</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">3.8</p>
+<span class="text-green-600 text-xs font-bold bg-green-100 dark:bg-green-900/30 px-1.5 py-0.5 rounded">+0.2%</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#18212f] shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Attendance</p>
+<span class="material-symbols-outlined text-primary">person_check</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">96%</p>
+<span class="text-green-600 text-xs font-bold bg-green-100 dark:bg-green-900/30 px-1.5 py-0.5 rounded">+1.0%</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#18212f] shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Assignments Due</p>
+<span class="material-symbols-outlined text-orange-500">warning</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">4</p>
+<span class="text-slate-400 text-xs">This week</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#18212f] shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Library Books</p>
+<span class="material-symbols-outlined text-primary">book_2</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">1</p>
+<span class="text-red-500 text-xs font-bold bg-red-100 dark:bg-red-900/30 px-1.5 py-0.5 rounded">Overdue</span>
+</div>
+</div>
+</div>
+<!-- Main Grid: Timetable/Assignments (Left) & Sidebar Widgets (Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column (Wide) -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Timeline Section -->
+<div class="bg-white dark:bg-[#18212f] rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold">Today's Schedule</h2>
+<span class="text-slate-400 text-sm">Oct 24, 2023</span>
+</div>
+<div class="grid grid-cols-[40px_1fr] gap-x-4">
+<!-- Item 1 -->
+<div class="flex flex-col items-center gap-1 pt-1">
+<div class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[20px]">calculate</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-full grow min-h-[40px]"></div>
+</div>
+<div class="flex flex-1 flex-col pb-6">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-white text-base font-bold">Mathematics - Algebra II</p>
+<span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold rounded">Completed</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">10:00 AM - 11:30 AM | Room 302</p>
+<div class="flex items-center gap-2 mt-2">
+<div class="size-6 bg-slate-200 rounded-full bg-cover" data-alt="Teacher portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDuuD07H-wH4BwrOKibA1e9eXdeX0SXmvKlNka0eUu4GWvQMLnR3MuEW2FglEGSu1Lh8ZXi2_hiXz_mBF6coMILCdSuN0BkJf8mMOnp6OOpG84PGZmn0MK6VQBpQuoClDsD52_m3UYSstqW0iiv8xVj_0OGme8T-P6pRU8e0LiKrLK8R330x3uCtFAEzbCO5jWqx5_ktd8xw8ELmTGmR-5-qJ1mMMRfAgE1JSTRu7SQ4AkwzFsEdVaohI0gsbWuHcr1iY1vt59TGF-g");'></div>
+<span class="text-xs text-slate-500">Mrs. Smith</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-2"></div>
+<div class="p-2 rounded-full bg-primary text-white shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">science</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-full grow min-h-[40px]"></div>
+</div>
+<div class="flex flex-1 flex-col pb-6">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-white text-base font-bold">Physics - Lab Session</p>
+<span class="px-2 py-1 bg-primary/10 text-primary text-xs font-bold rounded animate-pulse">Now</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">12:00 PM - 01:30 PM | Lab B</p>
+<div class="flex items-center gap-2 mt-2">
+<div class="size-6 bg-slate-200 rounded-full bg-cover" data-alt="Teacher portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChsssXV27CAgCw_1b8EEb2ppOGCLvxuJT-aVBWaoVB_ebJD234czbm__RVsOGwBGKyzM4VfxXazwrPDiBDI_z6ZiU-3FpmifS6EZNPGrjawLdyks1b8B6j3wtV0oghG8G5i0JsDH0KRan900RjZoZMW_7ODlr6F-JtRDy0MZV83nC7_a2PRyC52OW6q-ME8POm5C_6o6SUhGAFIwS-9sWYy0qS4cX9A8Nta0__VB9IetFh-UhXnvf4deduwAsPjHoxeAN3eRg5yEwy");'></div>
+<span class="text-xs text-slate-500">Mr. Davis</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-2"></div>
+<div class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col pt-1">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-white text-base font-bold">English Literature</p>
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs font-bold rounded">Upcoming</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">02:00 PM - 03:00 PM | Room 104</p>
+</div>
+</div>
+</div>
+<!-- Assignments Tracker -->
+<div class="bg-white dark:bg-[#18212f] rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold">Pending Assignments</h2>
+<button class="text-primary text-sm font-semibold hover:underline">View All</button>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Task 1 -->
+<div class="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-red-100 dark:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<div>
+<h3 class="text-slate-900 dark:text-white font-bold text-sm">History Essay: World War II</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5">Due Tomorrow, 11:59 PM</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-bold rounded-full">High Priority</span>
+</div>
+<!-- Task 2 -->
+<div class="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">functions</span>
+</div>
+<div>
+<h3 class="text-slate-900 dark:text-white font-bold text-sm">Algebra Problem Set 4</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5">Due Oct 26</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full">Medium</span>
+</div>
+<!-- Task 3 -->
+<div class="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-green-100 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined">biotech</span>
+</div>
+<div>
+<h3 class="text-slate-900 dark:text-white font-bold text-sm">Biology Lab Report</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5">Due Oct 30</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs font-bold rounded-full">Low</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Widgets) -->
+<div class="flex flex-col gap-6">
+<!-- Attendance Visual -->
+<div class="bg-white dark:bg-[#18212f] rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 flex flex-col items-center">
+<h2 class="text-slate-900 dark:text-white text-lg font-bold w-full text-left mb-4">Overall Attendance</h2>
+<div class="relative size-40">
+<!-- Conic gradient for donut chart visual -->
+<div class="size-full rounded-full" style="background: conic-gradient(#2b8cee 96%, #e2e8f0 96% 100%);"></div>
+<div class="absolute inset-4 bg-white dark:bg-[#18212f] rounded-full flex flex-col items-center justify-center">
+<span class="text-3xl font-black text-slate-900 dark:text-white">96%</span>
+<span class="text-xs text-slate-500 font-medium">Present</span>
+</div>
+</div>
+<div class="w-full mt-6 flex justify-between text-sm">
+<div class="flex flex-col items-center">
+<span class="font-bold text-slate-900 dark:text-white">180</span>
+<span class="text-xs text-slate-500">Total Days</span>
+</div>
+<div class="w-[1px] bg-slate-200 dark:bg-slate-700 h-8"></div>
+<div class="flex flex-col items-center">
+<span class="font-bold text-green-600">172</span>
+<span class="text-xs text-slate-500">Present</span>
+</div>
+<div class="w-[1px] bg-slate-200 dark:bg-slate-700 h-8"></div>
+<div class="flex flex-col items-center">
+<span class="font-bold text-red-500">8</span>
+<span class="text-xs text-slate-500">Absent</span>
+</div>
+</div>
+</div>
+<!-- Announcements -->
+<div class="bg-white dark:bg-[#18212f] rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 flex-1">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-slate-900 dark:text-white text-lg font-bold">Announcements</h2>
+<button class="p-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+<div class="shrink-0 pt-1">
+<div class="size-2 rounded-full bg-red-500"></div>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-xs font-bold text-primary uppercase tracking-wide">Sports</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-snug">Annual Sports Day registration closes this Friday!</p>
+<p class="text-xs text-slate-400">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+<div class="shrink-0 pt-1">
+<div class="size-2 rounded-full bg-transparent"></div>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-xs font-bold text-orange-500 uppercase tracking-wide">Exam</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-snug">Mid-term exam schedule has been released.</p>
+<p class="text-xs text-slate-400">Yesterday</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="shrink-0 pt-1">
+<div class="size-2 rounded-full bg-transparent"></div>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-xs font-bold text-green-500 uppercase tracking-wide">Holiday</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-snug">School will be closed on Nov 1st for local elections.</p>
+<p class="text-xs text-slate-400">2 days ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Advisors Contact -->
+<div class="bg-primary/5 dark:bg-slate-800/50 rounded-xl p-6 border border-primary/10 dark:border-slate-700">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">Class Advisor</h3>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover" data-alt="Advisor portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBWD4c5VCJXkQTgjshAQVu2Re2Ekot1h7Xw71XqGteEaF6juttKCg6GeR0qdBpo45UJDKdlC2thZdgKPsBh7RKEz7X1Y1ExUS_4F4xA8waKamaOZM1pRkjI2gHgBVtmDX_ZSkXPuEci3gFo1--bsiPLNad6gUoe5UncMU6lUl2S1QxJOo_vnZe6rcPDso-0Y1mbFR914vdmTfDrIv3QVEjFelWCbtf1CYIxCGFJsjdzDOgZX-CDEbQOP08R93jJuY1YCvXpm3Rg8SzJ");'></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Ms. Rebecca</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">rebecca@school.edu</p>
+</div>
+<button class="ml-auto size-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 text-primary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -113,11 +113,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
         };
 
-        // Run initialization
+        // Run initialization with immediate safety timeout
+        const timeoutId = setTimeout(() => {
+            if (mounted && loading) {
+                console.warn('[AuthContext] Initialization timeout, forcing loading=false');
+                setLoading(false);
+            }
+        }, 5000); // 5 seconds safety timeout
+
         initAuth();
 
         return () => {
             mounted = false;
+            clearTimeout(timeoutId);
         };
     }, []);
 

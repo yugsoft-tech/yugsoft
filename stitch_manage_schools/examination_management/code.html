@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Examination Management - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-row overflow-x-hidden">
+<!-- Side Navigation -->
+<div class="w-72 flex-none border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#151f2b] hidden lg:block sticky top-0 h-screen overflow-y-auto">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- User/Brand -->
+<div class="flex gap-3 items-center px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm" data-alt="School logo abstract geometric" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0TkJNNz4hpFRbUy84nX9pJg5tRYBN-N-kPwwreXnn_i_gigpN5NFa_VMWhCzORwg6VlsTEZLEHX-hHke1oYQeHMRuvMArzfIhmrHqJfJ8Qxz5dcpxqK8DJHphy4ulMdzGr5UzlBkqNQP0ffzCUaKlYJ_IFCoU9Hw9cGMkil5bOU2e0bZ_yE2HBcSsPo1ojcWr3eKUwDrlUWdTpFv-d1nK-PoNrW_s7GtSyZ49NefY3bu5TZqS-M3MLN4GyI5xbylfgRe4mhXgYBuG");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-normal">School ERP</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+<!-- Nav Links -->
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal group-hover:text-primary transition-colors">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">book</span>
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal group-hover:text-primary transition-colors">Academics</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">school</span>
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal group-hover:text-primary transition-colors">Students</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">description</span>
+<p class="text-sm font-semibold leading-normal">Exams</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">payments</span>
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal group-hover:text-primary transition-colors">Finance</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal group-hover:text-primary transition-colors">Settings</p>
+</a>
+</div>
+</div>
+<!-- Bottom Profile -->
+<div class="flex items-center gap-3 px-3 py-4 border-t border-slate-100 dark:border-slate-800 mt-4">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 bg-center bg-cover" data-alt="User profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8uCaKDMem_00g68dIaU8P7nU9XX_A2qcIvEnsemmjMWSDTOyu7F4qGhSZPjaPiKVyB1oBhO7mSOwRYbd_5rKUGrDlFiL-jvh7byGMQl5gRj3wVPUAPCGcTwoVfJbucd3m2gmNsZS55m6Wd17-lxndjCC0uqeWcW8ue1We3ShywnPiOrcVv_poziMCDExYV00HeYCh_nmTogeY5rSES5GSjz2GO3rHFTCucrhvoKb3HDBMPzX8zRKGPRkkdkiBvmmzzaJepZ2II2kO')"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Jane Admin</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">View Profile</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-full min-h-screen">
+<!-- Mobile Header Placeholder (visible only on small screens) -->
+<div class="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-[#151f2b] border-b border-slate-200 dark:border-slate-800 sticky top-0 z-20">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-200">menu</span>
+<span class="font-bold text-lg">School ERP</span>
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-200">account_circle</span>
+</div>
+<div class="p-6 md:p-10 w-full max-w-[1400px] mx-auto flex flex-col gap-6">
+<!-- Breadcrumbs & Header -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap gap-2 text-sm text-slate-500 dark:text-slate-400 items-center">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Academics</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Exams</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">Examination Management</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base">Manage schedules, question papers, and results efficiently.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="text-sm font-medium">Export Report</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="text-sm font-medium">Create New Exam</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#151f2b] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 dark:opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-6xl">calendar_month</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Upcoming Exams</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold">12</p>
+<div class="flex items-center gap-1 mt-2 text-xs text-amber-600 dark:text-amber-500 font-medium">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>Mid-terms start in 3 days</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#151f2b] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 dark:opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-6xl">pending_actions</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Papers Pending</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold">3</p>
+<div class="flex items-center gap-1 mt-2 text-xs text-slate-400">
+<span>Requires immediate review</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#151f2b] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 dark:opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-6xl">publish</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Results to Publish</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold">5</p>
+<div class="flex items-center gap-1 mt-2 text-xs text-green-600 dark:text-green-500 font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>All graded</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#151f2b] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 dark:opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-6xl">groups</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Students</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold">1,250</p>
+<div class="flex items-center gap-1 mt-2 text-xs text-slate-400">
+<span>Across all active streams</span>
+</div>
+</div>
+</div>
+<!-- Tabs & Filters -->
+<div class="flex flex-col gap-4">
+<div class="border-b border-slate-200 dark:border-slate-700">
+<nav aria-label="Tabs" class="-mb-px flex space-x-8">
+<a class="border-primary text-primary whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                                Schedule
+                            </a>
+<a class="border-transparent text-slate-500 dark:text-slate-400 hover:border-slate-300 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">quiz</span>
+                                Question Bank
+                            </a>
+<a class="border-transparent text-slate-500 dark:text-slate-400 hover:border-slate-300 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">grading</span>
+                                Grading &amp; Results
+                            </a>
+<a class="border-transparent text-slate-500 dark:text-slate-400 hover:border-slate-300 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">bar_chart</span>
+                                Reports
+                            </a>
+</nav>
+</div>
+<!-- Filters Toolbar -->
+<div class="flex flex-wrap items-center gap-4 bg-white dark:bg-[#151f2b] p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="relative flex-1 min-w-[200px]">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Search exams by name or ID..." type="text"/>
+</div>
+<div class="flex items-center gap-3 overflow-x-auto">
+<select class="rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-2.5 pl-3 pr-10 text-sm text-slate-700 dark:text-slate-200 focus:border-primary focus:ring-0 outline-none appearance-none cursor-pointer min-w-[140px]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-klRljRf_OvqpYkLmF--crlk47jIKtT8OMsMFtuXUCCgg3zkSE4e5tmpnINuBudBJUJr2fZrb-rny12pQU688UN-Ypi8zQ8EzC92LFv2N4ktEZcjdEszhlGjJOkrRMu5bq4MYZ-VFHa7tGf4gcq-WM8-3hfD4c3OQhvhX30NNkPFq1R1V4cmn7_HLg0STuF9oSWb2oj91gP6RmIqmucN5LIfGudvzi_c5OF6yuHglrv2p6ea_jxDUPcfnW4E-pF2w7u2ggegcScsH'); background-repeat: no-repeat; background-position: right 0.7rem top 50%; background-size: 0.65em auto;">
+<option>Academic Year</option>
+<option selected="">2023-2024</option>
+<option>2022-2023</option>
+</select>
+<select class="rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-2.5 pl-3 pr-10 text-sm text-slate-700 dark:text-slate-200 focus:border-primary focus:ring-0 outline-none appearance-none cursor-pointer min-w-[120px]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDDqbI-RnbkLEZTLWTCFvHynbI8y20wu7R5o_m521hv_mJUgTmmRmwCdq6eJNJGo503dSYiDkkrcYERUCFWFBhVZFf9_W8h9I6T11FL3XC6huaRwgvLaYCB-uWAxwLslu_y2-9OK8-VyqBteXikQwoEZa-oUoOm9agtA9V08s3MDq5c6c3-ZKxoWoI3dTxuOrE69jyw6EZ0TXvXAOgSfEDYfITd6ELMVEBY0tgeNj4PSceQS89ifNVn0zaXB_Hv6jSjqChWxFE2JneG'); background-repeat: no-repeat; background-position: right 0.7rem top 50%; background-size: 0.65em auto;">
+<option>Class</option>
+<option>Class 10</option>
+<option>Class 12</option>
+</select>
+<select class="rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-2.5 pl-3 pr-10 text-sm text-slate-700 dark:text-slate-200 focus:border-primary focus:ring-0 outline-none appearance-none cursor-pointer min-w-[120px]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCK-OjOWXYzFtl9ODTeafDCXngw_ejiO3K8IIQSTUDTNqPd4Sspr-m5k3pEdjgXn-fsQijuKcnjScZgaUY2SNCCaEMb2UhOdmtxQ6r4r8BfciJ09z_8qVT5phQ4O_g2cRcymNoAueUy4c_gFJceQni5LHYi_Kq43PCdxXYY6tD8LL-JP1i9s0ZLOvmBphHxH1lF-y0si8M8Apw1lNSqG0EoWAsXQ6Is4R0I-0-Ul-XLEc2iGZaq1atGeQ6Y3eOieecg1sMSIh7XKjgF'); background-repeat: no-repeat; background-position: right 0.7rem top 50%; background-size: 0.65em auto;">
+<option>Status</option>
+<option>Scheduled</option>
+<option>Draft</option>
+<option>Live</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Main Data Table -->
+<div class="bg-white dark:bg-[#151f2b] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col flex-1">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<th class="p-4 w-10 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" type="checkbox"/>
+</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Exam Title &amp; Subject</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Class &amp; Section</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Date &amp; Time</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Status</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="p-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Mid-Term Mathematics</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Code: MATH-101</span>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-700 dark:text-slate-300">Class 10 - A, B</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 24, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">09:00 AM - 12:00 PM</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Scheduled
+                                        </span>
+</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors" title="View Students">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors" title="More">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="p-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">English Literature Final</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Code: ENG-304</span>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-700 dark:text-slate-300">Class 12 - All Sections</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 26, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">10:00 AM - 01:00 PM</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+                                            Draft
+                                        </span>
+</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="p-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Physics Practicals</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Code: PHY-LAB-01</span>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-700 dark:text-slate-300">Class 12 - Science</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 20, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">08:00 AM - 04:00 PM</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                            Grading
+                                        </span>
+</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="p-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">History World War II</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Code: HIS-202</span>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-700 dark:text-slate-300">Class 9 - C</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 15, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Finished</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                            Completed
+                                        </span>
+</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="flex items-center justify-between p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20">
+<p class="text-sm text-slate-500 dark:text-slate-400">Showing <span class="font-medium text-slate-900 dark:text-white">1</span> to <span class="font-medium text-slate-900 dark:text-white">4</span> of <span class="font-medium text-slate-900 dark:text-white">24</span> results</p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1.5 rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

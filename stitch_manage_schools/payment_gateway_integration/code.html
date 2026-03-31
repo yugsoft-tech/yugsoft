@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Gateway Integration - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-hidden h-screen flex w-full">
+<!-- Side Navigation -->
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-[#1A2633] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full z-20">
+<div class="p-6 pb-2">
+<h1 class="text-slate-900 dark:text-white text-xl font-bold leading-normal tracking-tight">School ERP</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Admin Portal</p>
+</div>
+<div class="flex flex-col gap-1 p-3 overflow-y-auto flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">school</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">menu_book</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium">Academics</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-primary/20 group transition-colors" href="#">
+<span class="material-symbols-outlined text-primary fill">payments</span>
+<span class="text-primary text-sm font-medium">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium">HR</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-slate-700 dark:text-slate-200 text-sm font-medium">Settings</span>
+</a>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Admin User Profile Picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADrP-m-VnoQmj8K8q_qlgPmgEczpj6st5FIAnvQzgIm_YHLfo-e9f3pnl6jitpS1Rtzj_FrBh7CpkGB5VtKbinswNuv15gN7o1gCw-JTExHI4XF0Iltkj-Ey4kOmpKB8foSN7RjKtgyV1M5UO7J2i7sMtLqwyaCX_pwXg2-zR63iEL6QYbsd1bxcWQxpU0KiGmjbAicYZFpi6cCt8hxgVjB0ido_dQQhokZBdnCJnNI5paB8Z1GKhA2WUn-V31psLL7dSHuWkEJXUk');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Alex Morgan</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">School Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header -->
+<header class="h-16 bg-white dark:bg-[#1A2633] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 flex-shrink-0 z-10">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white hidden md:block">Payment Gateway Integration</h2>
+<div class="flex items-center gap-6 ml-auto">
+<!-- Search -->
+<div class="relative hidden md:flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary text-slate-900 dark:text-white placeholder-slate-500" placeholder="Search settings..." type="text"/>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-[#1A2633]"></span>
+</button>
+<button class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 bg-background-light dark:bg-background-dark">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Breadcrumbs -->
+<nav class="flex text-sm text-slate-500 dark:text-slate-400">
+<ol class="flex items-center gap-2">
+<li><a class="hover:text-primary transition-colors" href="#">Home</a></li>
+<li><span class="material-symbols-outlined text-[16px] align-middle">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Finance</a></li>
+<li><span class="material-symbols-outlined text-[16px] align-middle">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Settings</a></li>
+<li><span class="material-symbols-outlined text-[16px] align-middle">chevron_right</span></li>
+<li class="font-medium text-slate-900 dark:text-white">Payment Gateways</li>
+</ol>
+</nav>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">Payment Gateway Integration</h1>
+<p class="text-slate-500 dark:text-slate-400 max-w-2xl text-lg">Manage third-party payment processors for tuition, fees, and other transactions securely.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                            View Documentation
+                        </button>
+</div>
+</div>
+<!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Active Gateways</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">2</h3>
+<div class="flex items-center gap-1 mt-2 text-xs text-green-600 dark:text-green-400 font-medium bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full w-fit">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                Operational
+                            </div>
+</div>
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">hub</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Transactions (Today)</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">$12,450</h3>
+<div class="flex items-center gap-1 mt-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="text-green-600 dark:text-green-400 font-medium flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 12%
+                                </span>
+                                vs yesterday
+                            </div>
+</div>
+<div class="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">System Health</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">98%</h3>
+<div class="flex items-center gap-1 mt-2 text-xs text-slate-500 dark:text-slate-400">
+                                API Response Time: <span class="font-semibold text-slate-700 dark:text-slate-200">120ms</span>
+</div>
+</div>
+<div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+</div>
+</div>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Left Column: Provider List & Logs -->
+<div class="xl:col-span-2 flex flex-col gap-8">
+<!-- Integration Cards -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Available Integrations</h3>
+<div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+<button class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-700 shadow-sm rounded-md text-slate-900 dark:text-white">All</button>
+<button class="px-3 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Active</button>
+<button class="px-3 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Inactive</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Stripe Card (Active & Selected) -->
+<div class="relative group cursor-pointer border-2 border-primary bg-white dark:bg-[#1A2633] p-5 rounded-xl shadow-md transition-all">
+<div class="absolute top-4 right-4">
+<div class="w-4 h-4 rounded-full border-4 border-primary bg-white"></div>
+</div>
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-[#635BFF] flex items-center justify-center text-white text-xl font-bold">S</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-lg">Stripe</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Credit Card &amp; Wallets</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-sm font-medium text-green-600 dark:text-green-400">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                            Active
+                                        </div>
+<span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300">Live Mode</span>
+</div>
+</div>
+<!-- Razorpay Card (Active) -->
+<div class="relative group cursor-pointer border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1A2633] p-5 rounded-xl hover:border-primary/50 hover:shadow-md transition-all">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-[#072654] flex items-center justify-center text-white text-xl font-bold">R</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-lg">Razorpay</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">UPI &amp; Netbanking</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-sm font-medium text-green-600 dark:text-green-400">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                            Active
+                                        </div>
+<span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300">Live Mode</span>
+</div>
+</div>
+<!-- PayPal Card (Inactive) -->
+<div class="relative group cursor-pointer border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1A2633] p-5 rounded-xl hover:border-primary/50 hover:shadow-md transition-all opacity-80 hover:opacity-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-[#003087] flex items-center justify-center text-white text-xl font-bold italic">P</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-lg">PayPal</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">International Payments</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-sm font-medium text-slate-400">
+<span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+                                            Inactive
+                                        </div>
+<button class="text-xs font-bold text-primary hover:underline">Connect</button>
+</div>
+</div>
+<!-- Square Card (Inactive) -->
+<div class="relative group cursor-pointer border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1A2633] p-5 rounded-xl hover:border-primary/50 hover:shadow-md transition-all opacity-80 hover:opacity-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-[#000000] flex items-center justify-center text-white text-xl font-bold">Sq</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-lg">Square</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">POS Integration</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-sm font-medium text-slate-400">
+<span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+                                            Inactive
+                                        </div>
+<button class="text-xs font-bold text-primary hover:underline">Connect</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Logs Section -->
+<div class="flex flex-col gap-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Recent Transaction Logs</h3>
+<div class="bg-white dark:bg-[#1A2633] border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
+<tr>
+<th class="px-6 py-4 font-medium">Timestamp</th>
+<th class="px-6 py-4 font-medium">Gateway</th>
+<th class="px-6 py-4 font-medium">Event</th>
+<th class="px-6 py-4 font-medium">Amount</th>
+<th class="px-6 py-4 font-medium">Status</th>
+<th class="px-6 py-4 font-medium">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300">Oct 24, 10:42 AM</td>
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#635BFF]"></div> Stripe
+                                                </td>
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300">Tuition Fee Payment</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$1,200.00</td>
+<td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Success</span></td>
+<td class="px-6 py-4 text-slate-400"><button class="hover:text-primary"><span class="material-symbols-outlined text-lg">info</span></button></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300">Oct 24, 10:15 AM</td>
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#072654]"></div> Razorpay
+                                                </td>
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300">Library Fine</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$15.00</td>
+<td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Success</span></td>
+<td class="px-6 py-4 text-slate-400"><button class="hover:text-primary"><span class="material-symbols-outlined text-lg">info</span></button></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300">Oct 24, 09:30 AM</td>
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#635BFF]"></div> Stripe
+                                                </td>
+<td class="px-6 py-4 text-slate-700 dark:text-slate-300">Cafeteria Top-up</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$50.00</td>
+<td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Failed</span></td>
+<td class="px-6 py-4 text-slate-400"><button class="hover:text-primary"><span class="material-symbols-outlined text-lg">info</span></button></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-xs text-center text-slate-500 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                                    View All Logs
+                                </div>
+</div>
+</div>
+</div>
+<!-- Right Column: Configuration Panel -->
+<div class="xl:col-span-1">
+<div class="bg-white dark:bg-[#1A2633] rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg sticky top-6">
+<!-- Header -->
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-[#635BFF] flex items-center justify-center text-white text-lg font-bold">S</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white">Stripe Configuration</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">v3.4.1 (Latest)</p>
+</div>
+</div>
+<div class="relative">
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+</div>
+<!-- Config Form -->
+<div class="p-6 space-y-6">
+<!-- Mode Switch -->
+<div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-800">
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Live Mode</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Processing real transactions</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Keys -->
+<div class="space-y-4">
+<div class="space-y-1">
+<label class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wide">Publishable Key</label>
+<div class="relative">
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm px-4 py-2.5 text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary" readonly="" type="text" value="pk_live_51J9..."/>
+<button class="absolute right-3 top-2.5 text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wide">Secret Key</label>
+<div class="relative">
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm px-4 py-2.5 text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary" type="password" value="sk_live_51J98230948203948203948..."/>
+<button class="absolute right-10 top-2.5 text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="absolute right-3 top-2.5 text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+</div>
+<p class="text-xs text-amber-600 mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> Never share your secret key.
+                                        </p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wide">Webhook Secret</label>
+<div class="relative">
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm px-4 py-2.5 text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary" type="password" value="whsec_..."/>
+<button class="absolute right-3 top-2.5 text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+</div>
+</div>
+</div>
+<hr class="border-slate-200 dark:border-slate-800"/>
+<!-- Fee Mapping -->
+<div class="space-y-3">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Fee Type Mapping</h4>
+<div class="space-y-2">
+<label class="flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="ml-3 text-sm font-medium text-slate-700 dark:text-slate-300">Tuition Fees</span>
+</label>
+<label class="flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="ml-3 text-sm font-medium text-slate-700 dark:text-slate-300">Transport Fees</span>
+</label>
+<label class="flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="ml-3 text-sm font-medium text-slate-700 dark:text-slate-300">Library Fines</span>
+</label>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="pt-4 flex gap-3">
+<button class="flex-1 bg-primary hover:bg-blue-600 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors shadow-sm shadow-blue-200 dark:shadow-none">Save Changes</button>
+<button class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium py-2.5 px-4 rounded-lg text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">Test Connection</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Spacing -->
+<div class="h-10"></div>
+</div>
+</main>
+</body></html>

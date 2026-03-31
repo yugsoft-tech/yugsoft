@@ -12,7 +12,7 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   /**
    * Send message
@@ -54,56 +54,35 @@ export class ChatService {
       );
     }
 
-    // TODO: Once Message model is added to schema, use this structure:
-    // const savedMessage = await this.prisma.message.create({
-    //   data: {
-    //     senderId: currentUser.userId,
-    //     receiverId,
-    //     message,
-    //     type: type || 'text',
-    //     schoolId: currentUser.schoolId,
-    //   },
-    //   include: {
-    //     sender: {
-    //       select: {
-    //         id: true,
-    //         firstName: true,
-    //         lastName: true,
-    //         email: true,
-    //       },
-    //     },
-    //     receiver: {
-    //       select: {
-    //         id: true,
-    //         firstName: true,
-    //         lastName: true,
-    //         email: true,
-    //       },
-    //     },
-    //   },
-    // });
-    // return savedMessage;
+    const savedMessage = await this.prisma.message.create({
+      data: {
+        senderId: currentUser.userId,
+        receiverId,
+        message,
+        type: type || 'text',
+        schoolId: currentUser.schoolId,
+      },
+      include: {
+        sender: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+        receiver: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+      },
+    });
 
-    // For now, return the message structure ready for storage
-    return {
-      senderId: currentUser.userId,
-      receiverId,
-      message,
-      type: type || 'text',
-      schoolId: currentUser.schoolId,
-      sender: {
-        id: currentUser.userId,
-        // Add sender details from current user if needed
-      },
-      receiver: {
-        id: receiver.id,
-        firstName: receiver.firstName,
-        lastName: receiver.lastName,
-        email: receiver.email,
-      },
-      createdAt: new Date(),
-      note: 'Message model needs to be added to schema.prisma for persistent storage. Structure is ready for integration.',
-    };
+    return savedMessage;
   }
 
   /**
@@ -117,80 +96,67 @@ export class ChatService {
     const { page = 1, limit = 10, receiverId } = listMessagesDto;
     const skip = (page - 1) * limit;
 
-    // TODO: Once Message model is added to schema, use this structure:
-    // const where: any = {
-    //   OR: [
-    //     { senderId: currentUser.userId },
-    //     { receiverId: currentUser.userId },
-    //   ],
-    //   schoolId: currentUser.schoolId,
-    // };
-    //
-    // if (receiverId) {
-    //   where.AND = [
-    //     {
-    //       OR: [
-    //         {
-    //           senderId: currentUser.userId,
-    //           receiverId,
-    //         },
-    //         {
-    //           senderId: receiverId,
-    //           receiverId: currentUser.userId,
-    //         },
-    //       ],
-    //     },
-    //   ];
-    // }
-    //
-    // const [data, total] = await Promise.all([
-    //   this.prisma.message.findMany({
-    //     where,
-    //     skip,
-    //     take: limit,
-    //     include: {
-    //       sender: {
-    //         select: {
-    //           id: true,
-    //           firstName: true,
-    //           lastName: true,
-    //           email: true,
-    //         },
-    //       },
-    //       receiver: {
-    //         select: {
-    //           id: true,
-    //           firstName: true,
-    //           lastName: true,
-    //           email: true,
-    //         },
-    //       },
-    //     },
-    //     orderBy: { createdAt: 'desc' },
-    //   }),
-    //   this.prisma.message.count({ where }),
-    // ]);
-    //
-    // return {
-    //   data,
-    //   meta: {
-    //     page,
-    //     limit,
-    //     total,
-    //     totalPages: Math.ceil(total / limit),
-    //   },
-    // };
+    const where: any = {
+      OR: [
+        { senderId: currentUser.userId },
+        { receiverId: currentUser.userId },
+      ],
+      schoolId: currentUser.schoolId,
+    };
 
-    // For now, return empty structure
+    if (receiverId) {
+      where.AND = [
+        {
+          OR: [
+            {
+              senderId: currentUser.userId,
+              receiverId,
+            },
+            {
+              senderId: receiverId,
+              receiverId: currentUser.userId,
+            },
+          ],
+        },
+      ];
+    }
+
+    const [data, total] = await Promise.all([
+      this.prisma.message.findMany({
+        where,
+        skip,
+        take: limit,
+        include: {
+          sender: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true,
+            },
+          },
+          receiver: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true,
+            },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.message.count({ where }),
+    ]);
+
     return {
-      data: [],
+      data,
       meta: {
         page,
         limit,
-        total: 0,
-        totalPages: 0,
+        total,
+        totalPages: Math.ceil(total / limit),
       },
-      note: 'Message model needs to be added to schema.prisma for message listing. Structure is ready for integration.',
     };
   }
 
@@ -217,64 +183,51 @@ export class ChatService {
       );
     }
 
-    // TODO: Once Message model is added to schema, use this structure:
-    // const messages = await this.prisma.message.findMany({
-    //   where: {
-    //     OR: [
-    //       {
-    //         senderId: currentUser.userId,
-    //         receiverId: otherUserId,
-    //       },
-    //       {
-    //         senderId: otherUserId,
-    //         receiverId: currentUser.userId,
-    //       },
-    //     ],
-    //     schoolId: currentUser.schoolId,
-    //   },
-    //   include: {
-    //     sender: {
-    //       select: {
-    //         id: true,
-    //         firstName: true,
-    //         lastName: true,
-    //         email: true,
-    //       },
-    //     },
-    //     receiver: {
-    //       select: {
-    //         id: true,
-    //         firstName: true,
-    //         lastName: true,
-    //         email: true,
-    //       },
-    //     },
-    //   },
-    //   orderBy: { createdAt: 'asc' },
-    // });
-    //
-    // return {
-    //   otherUser: {
-    //     id: otherUser.id,
-    //     firstName: otherUser.firstName,
-    //     lastName: otherUser.lastName,
-    //     email: otherUser.email,
-    //   },
-    //   messages,
-    //   total: messages.length,
-    // };
+    const messages = await this.prisma.message.findMany({
+      where: {
+        OR: [
+          {
+            senderId: currentUser.userId,
+            receiverId: otherUserId,
+          },
+          {
+            senderId: otherUserId,
+            receiverId: currentUser.userId,
+          },
+        ],
+        schoolId: currentUser.schoolId,
+      },
+      include: {
+        sender: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+        receiver: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'asc' },
+    });
 
-    // For now, return structure ready for integration
     return {
       otherUser: {
         id: otherUser.id,
         firstName: otherUser.firstName,
         lastName: otherUser.lastName,
         email: otherUser.email,
+        role: otherUser.role,
       },
-      messages: [],
-      total: 0,
-      note: 'Message model needs to be added to schema.prisma for conversation viewing. Structure is ready for integration.',
+      messages,
+      total: messages.length,
     };
   }
 }

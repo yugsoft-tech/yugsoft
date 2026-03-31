@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduManage ERP - Online Admission</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "primary-hover": "#1a7bd9",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2632",
+                        "border-light": "#e7edf3",
+                        "border-dark": "#2d3b48",
+                        "text-main-light": "#0d141b",
+                        "text-main-dark": "#ffffff",
+                        "text-secondary-light": "#4c739a",
+                        "text-secondary-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark transition-colors duration-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-border-light dark:border-b-border-dark px-10 py-3 bg-card-light dark:bg-card-dark sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-10 flex items-center justify-center rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h2 class="text-text-main-light dark:text-text-main-dark text-lg font-bold leading-tight tracking-[-0.015em]">EduManage ERP</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-text-main-light dark:text-text-main-dark hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-medium leading-normal transition-colors" href="#">Admissions</a>
+<a class="text-text-main-light dark:text-text-main-dark hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Students</a>
+<a class="text-text-main-light dark:text-text-main-dark hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Finance</a>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-white dark:ring-gray-800 shadow-sm" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCSV_m_wXYUGJE2xTwBGhhW8knvL9UVRG4goC_CLNTaAEH4hyPjWt55j1BfnL0kQ4sjUEPzL51sbA4h6uZFWmRXJ1bCVccJBxMHhJBEy0MbxcxKHisf-BxZhDnGkj3hTmet9me1uu-586m3UitTLjPY94Ys74r72WGAlOVeWzMuEz-lEK7zxU92tfZYncf1ey5s_p76P9wZLAkglnlj2kgIbQ-9YZ5diS6OlmDHe9nQsfW31q5Ppvh_e3n-9qw51jcOL8gDkq6HXp9R");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="layout-container flex h-full grow flex-col pb-20">
+<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between gap-3 px-4 pb-6">
+<div class="flex min-w-72 flex-col gap-2">
+<h1 class="text-text-main-light dark:text-text-main-dark text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Online Admission Application</h1>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Academic Year 2024-2025</p>
+</div>
+<div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark bg-white dark:bg-card-dark px-3 py-1.5 rounded-full border border-border-light dark:border-border-dark shadow-sm">
+<span class="material-symbols-outlined text-base">cloud_done</span>
+<span>Auto-saved 2 mins ago</span>
+</div>
+</div>
+<!-- Progress Stepper -->
+<div class="flex flex-col gap-3 px-4 mb-8">
+<div class="flex gap-6 justify-between items-end">
+<p class="text-primary text-base font-bold leading-normal">Student Information</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Step 1 of 4</p>
+</div>
+<div class="rounded-full bg-border-light dark:bg-border-dark overflow-hidden h-2.5">
+<div class="h-full rounded-full bg-primary transition-all duration-500" style="width: 25%;"></div>
+</div>
+<div class="flex justify-between text-xs text-text-secondary-light dark:text-text-secondary-dark font-medium mt-1">
+<span class="text-primary">Personal</span>
+<span>Contact</span>
+<span>Academic</span>
+<span>Uploads</span>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
+<!-- Section 1: Personal Details -->
+<div class="p-6 md:p-8 border-b border-border-light dark:border-border-dark">
+<h2 class="text-text-main-light dark:text-text-main-dark text-xl font-bold leading-tight mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">person</span>
+                                Personal Details
+                            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-text-main-light dark:text-text-main-dark text-sm font-medium leading-normal">First Name <span class="text-red-500">*</span></span>
+<input class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-text-main-light dark:text-text-main-dark placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base" placeholder="Enter first name" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-text-main-light dark:text-text-main-dark text-sm font-medium leading-normal">Last Name <span class="text-red-500">*</span></span>
+<input class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-text-main-light dark:text-text-main-dark placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base" placeholder="Enter last name" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-text-main-light dark:text-text-main-dark text-sm font-medium leading-normal">Date of Birth <span class="text-red-500">*</span></span>
+<div class="relative">
+<input class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-text-main-light dark:text-text-main-dark text-base appearance-none" type="date"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark pointer-events-none">calendar_today</span>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-text-main-light dark:text-text-main-dark text-sm font-medium leading-normal">Gender <span class="text-red-500">*</span></span>
+<div class="relative">
+<select class="form-select flex w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-text-main-light dark:text-text-main-dark text-base appearance-none">
+<option disabled="" selected="" value="">Select gender</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+<option value="other">Other</option>
+</select>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-text-main-light dark:text-text-main-dark text-sm font-medium leading-normal">Class Applying For <span class="text-red-500">*</span></span>
+<div class="relative">
+<select class="form-select flex w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-text-main-light dark:text-text-main-dark text-base appearance-none">
+<option disabled="" selected="" value="">Select grade</option>
+<option value="1">Grade 1</option>
+<option value="2">Grade 2</option>
+<option value="3">Grade 3</option>
+<option value="4">Grade 4</option>
+<option value="5">Grade 5</option>
+<option value="6">Grade 6</option>
+</select>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<div class="flex items-center gap-1">
+<span class="text-text-main-light dark:text-text-main-dark text-sm font-medium leading-normal">Blood Group</span>
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-sm cursor-help" title="Needed for medical emergencies">info</span>
+</div>
+<div class="relative">
+<select class="form-select flex w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-text-main-light dark:text-text-main-dark text-base appearance-none">
+<option disabled="" selected="" value="">Select blood group</option>
+<option value="a+">A+</option>
+<option value="a-">A-</option>
+<option value="b+">B+</option>
+<option value="b-">B-</option>
+<option value="o+">O+</option>
+<option value="o-">O-</option>
+<option value="ab+">AB+</option>
+<option value="ab-">AB-</option>
+</select>
+</div>
+</label>
+</div>
+</div>
+<!-- Section 2: Quick Docs Upload Preview (To showcase capability) -->
+<div class="p-6 md:p-8 bg-background-light/50 dark:bg-background-dark/30">
+<h2 class="text-text-main-light dark:text-text-main-dark text-xl font-bold leading-tight mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">upload_file</span>
+                                Student Photo
+                            </h2>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm mb-6">Please upload a recent passport size photograph of the student for identification.</p>
+<div class="border-2 border-dashed border-border-light dark:border-border-dark rounded-xl p-8 flex flex-col items-center justify-center text-center bg-card-light dark:bg-card-dark hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors cursor-pointer group">
+<div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl">cloud_upload</span>
+</div>
+<p class="text-text-main-light dark:text-text-main-dark font-medium mb-1">Click to upload or drag and drop</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="p-6 md:p-8 flex items-center justify-between border-t border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark">
+<button class="flex items-center gap-2 px-6 py-3 rounded-lg border border-border-light dark:border-border-dark text-text-main-light dark:text-text-main-dark font-medium hover:bg-background-light dark:hover:bg-border-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                                Back
+                            </button>
+<button class="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary-hover shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5">
+                                Next Step
+                                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Optional Footer -->
+<footer class="py-6 px-10 text-center text-text-secondary-light dark:text-text-secondary-dark text-sm">
+<p>© 2024 EduManage ERP. All rights reserved.</p>
+</footer>
+</div>
+</body></html>

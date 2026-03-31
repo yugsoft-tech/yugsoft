@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Recruitment Management - EduTech ERP</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "primary-dark": "#1a6bbd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "text-main": "#0d141b",
+                        "text-sub": "#4c739a",
+                        "border-light": "#cfdbe7",
+                        "border-dark": "#2d3b4a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .icon-filled {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-gray-100 overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<div class="hidden lg:flex w-72 flex-col border-r border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark h-full">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<!-- Branding -->
+<div class="flex gap-3 items-center px-2 py-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shadow-sm" data-alt="School logo abstract geometric shape" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAgGrLhUbwG8aW_2zGIdske_36SkiJNF6e7OQgxHXI3VKjrYde1U951p-MaOrM_R_B5VcZTOqd5EuRf1QgL4zLW5L5RycAljsUhcKHPlWLfXTNDcUpQm6u7qOg0GtGa381JQ0oqCRuwgcpq0KAapvnsjvuWVEHFp5D3vw-YzFXpRcrZBRi6X9xmh4y2Vca30QClVBJl2aqAONJVYFi_2fnDRG714xzw2C_xt2F6FjK7KjYOhhNdXFTkiTvUUVpQhOHFAYYX9y7_GOj9");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-main dark:text-white text-base font-bold leading-normal">EduTech ERP</h1>
+<p class="text-text-sub dark:text-gray-400 text-sm font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+<!-- Navigation -->
+<div class="flex flex-col gap-2 mt-4">
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-text-main dark:text-gray-300 group-hover:text-primary">dashboard</span>
+<p class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-text-main dark:text-gray-300 group-hover:text-primary">group</span>
+<p class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal">Students</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-text-main dark:text-gray-300 group-hover:text-primary">school</span>
+<p class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal">Academics</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-text-main dark:text-gray-300 group-hover:text-primary">verified</span>
+<p class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal">HR &amp; Payroll</p>
+</div>
+<!-- Active State -->
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-primary/20 cursor-pointer border-l-4 border-primary">
+<span class="material-symbols-outlined text-primary icon-filled">work</span>
+<p class="text-text-main dark:text-white text-sm font-bold leading-normal">Recruitment</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-text-main dark:text-gray-300 group-hover:text-primary">payments</span>
+<p class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal">Finance</p>
+</div>
+</div>
+</div>
+<!-- Bottom User Profile -->
+<div class="flex items-center gap-3 px-3 py-4 border-t border-border-light dark:border-border-dark mt-auto">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 bg-center bg-cover" data-alt="User profile picture of HR manager" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBk5nB88ip4rJZZCSgAk0N1ryJvnRmssfT6Dr6tuV9TxMRrUWkslrM5QdOF5JsRXCAX_SCPJwWSrlbxgDr-E1dw8ffDHMOFXco9JoI6eAPfFN3eJ9oxrh2NLDtcpY88TrG3ixBesHpcXvARrj6M-RVpIvbHwwnA_maJqaRXF6kOukNc3xFP-l3wuys8035N8qPGb99wceobk1YC2rMYx7FptMT-ecFVjSQybPO8-gVIj6MpbEE1zbu5qAvRpcnxb7OBRevedyqzYrb7");'></div>
+<div class="flex flex-col">
+<p class="text-text-main dark:text-white text-sm font-medium">Sarah Jenkins</p>
+<p class="text-text-sub dark:text-gray-400 text-xs">HR Administrator</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header Section -->
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex-none">
+<div class="max-w-[1400px] mx-auto px-6 py-6">
+<div class="flex flex-wrap justify-between gap-4 items-end">
+<div class="flex flex-col gap-2">
+<h1 class="text-text-main dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Recruitment Dashboard</h1>
+<p class="text-text-sub dark:text-gray-400 text-base font-normal">Manage job postings and track applicant progress across departments.</p>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-5 bg-primary hover:bg-primary-dark text-white text-sm font-bold shadow-md transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="truncate">Post New Job</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrolling Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6">
+<div class="max-w-[1400px] mx-auto flex flex-col gap-6">
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border border-border-light dark:border-border-dark shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-text-sub dark:text-gray-400 text-sm font-medium">Active Vacancies</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded-md">work_outline</span>
+</div>
+<p class="text-text-main dark:text-white text-3xl font-bold">12</p>
+<div class="flex items-center gap-1 mt-2 text-[#078838] dark:text-green-400 text-sm font-medium">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+2 this week</span>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border border-border-light dark:border-border-dark shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-text-sub dark:text-gray-400 text-sm font-medium">New Applications</p>
+<span class="material-symbols-outlined text-purple-500 bg-purple-500/10 p-1 rounded-md">person_add</span>
+</div>
+<p class="text-text-main dark:text-white text-3xl font-bold">45</p>
+<div class="flex items-center gap-1 mt-2 text-[#078838] dark:text-green-400 text-sm font-medium">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+15% vs last month</span>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border border-border-light dark:border-border-dark shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-text-sub dark:text-gray-400 text-sm font-medium">Interviews Today</p>
+<span class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1 rounded-md">calendar_today</span>
+</div>
+<p class="text-text-main dark:text-white text-3xl font-bold">8</p>
+<div class="flex items-center gap-1 mt-2 text-text-sub dark:text-gray-400 text-sm font-medium">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Next in 30 mins</span>
+</div>
+</div>
+</div>
+<!-- Tabs & Content -->
+<div class="flex flex-col gap-4">
+<!-- Tabs -->
+<div class="border-b border-border-light dark:border-border-dark">
+<div class="flex gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-text-main dark:text-white pb-3 pt-2 px-1" href="#">
+<p class="text-sm font-bold tracking-[0.015em]">Job Postings</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-text-sub dark:text-gray-500 hover:text-text-main dark:hover:text-gray-300 pb-3 pt-2 px-1 transition-colors" href="#">
+<p class="text-sm font-bold tracking-[0.015em]">Applicant Tracking</p>
+</a>
+</div>
+</div>
+<!-- Filters and Actions -->
+<div class="flex flex-col md:flex-row gap-4 justify-between items-center bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-border-light dark:border-border-dark shadow-sm">
+<!-- Search -->
+<div class="relative w-full md:max-w-md">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-text-sub">search</span>
+</div>
+<input class="block w-full p-2.5 pl-10 text-sm text-text-main dark:text-white bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-primary focus:border-primary placeholder-text-sub dark:placeholder-gray-500" placeholder="Search for job titles, IDs, or keywords..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex gap-3 w-full md:w-auto">
+<select class="bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-text-main dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full md:w-40 p-2.5">
+<option selected="">Department</option>
+<option value="math">Mathematics</option>
+<option value="science">Science</option>
+<option value="admin">Administration</option>
+<option value="sports">Sports</option>
+</select>
+<select class="bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-text-main dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full md:w-32 p-2.5">
+<option selected="">Status</option>
+<option value="active">Active</option>
+<option value="closed">Closed</option>
+<option value="draft">Draft</option>
+</select>
+</div>
+</div>
+<!-- Job Listing Table -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-4 text-xs font-semibold text-text-sub dark:text-gray-400 uppercase tracking-wider">Job Title</th>
+<th class="px-6 py-4 text-xs font-semibold text-text-sub dark:text-gray-400 uppercase tracking-wider">Department</th>
+<th class="px-6 py-4 text-xs font-semibold text-text-sub dark:text-gray-400 uppercase tracking-wider">Posted Date</th>
+<th class="px-6 py-4 text-xs font-semibold text-text-sub dark:text-gray-400 uppercase tracking-wider">Candidates</th>
+<th class="px-6 py-4 text-xs font-semibold text-text-sub dark:text-gray-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-semibold text-text-sub dark:text-gray-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">
+                                                    M
+                                                </div>
+<div class="ml-4">
+<div class="text-sm font-bold text-text-main dark:text-white">Mathematics Teacher</div>
+<div class="text-xs text-text-sub dark:text-gray-500">Full Time • Grade 9-12</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Mathematics Dept</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Oct 24, 2023</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800" data-alt="Candidate portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcdWm0KmTedX2A4Q34vZW_EA4L8t7p5AZ3-TBER9lB0jsgovF6ZNGnXFpsgCdeYxsGcrhT6njlHkW4eF6ik8RSQRjYZy7nzkCezO1Z31sDGYvD-KRhWbtVgnqyv1EmGl8NAsEd3Mw7Bik2fXvYDgL6_aX26SWmV1BUYJC0VT-8M2nWORi0dSzoSlcwvllZJbMVNrx9v5VOZqXd5HfQ8ynXzn3RTXUZKTm5tUN8xTuAItoxhdas0wkjDAdyUdHBaGRohZMTeL92Mnv7"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800" data-alt="Candidate portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOS9cYiTWWHxVbgWHW8AN6xxO-OAxyTvtjhXP0Yj4pjvNt0UxM3XSYx_zrZo2Sbj-pNWWdxg0v4t6Ho_MAPlFFbgVRYqZuONtnthqZ1yTCNnGqqZ7zt_wviHMyogT9ERgXiPC0uJtx3nbwiCBqNzhmV-OqrN4hCwSS2c8bBFx7739kXIHS9GM2R3cg3T_XUlPmOW1AW6ngipXFJEmyNRKiwWhgzzeO2Qp7b7t8x4tf4ZI4pKsSmoKetiSMycIMD8XNg-FSCgHziTdV"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800" data-alt="Candidate portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwtbzAkNSfvi-0YO1OeOHqG8HPq7SdFnL52pv8F8xJyjq0N6oZBqNET38PeRQQnXGaozDYj0UmVRqdhJFbZ21FLwBwwleCbBduhfJ0yKeqE3lFVPEPHiCnNLdtl1Ft5PsGgD4LrC4Qa1tx3gwYMKi6lG10Se_VoKTpsSe18DlS3unJxgbBR2gPQT0tOxOuwS0ezZ77iz9xUCjJXEhuFA1cSdws006kgHP55FzxaY0ililbYscnOFjI9d-eEMLk0rDnFXc_tL8giCgO"/>
+<div class="flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800 bg-slate-100 dark:bg-slate-700 text-xs font-medium text-text-sub dark:text-gray-300">
+                                                    +9
+                                                </div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                Active
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-sub hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold">
+                                                    L
+                                                </div>
+<div class="ml-4">
+<div class="text-sm font-bold text-text-main dark:text-white">Lab Technician</div>
+<div class="text-xs text-text-sub dark:text-gray-500">Part Time • Science Labs</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Science Dept</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Oct 22, 2023</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800" data-alt="Candidate portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5WV4tTN7MqfRgwAy-j4FdjwsCJBCQGilpAyMdCRqZURIKQK_6e-J-kDAmrjEBkYIgLIB-UffQKjfhpjkmwQnxFlGgNjbgp3nh9unFwbR7Q_bNcRy4cezdTcfsHp_bRXyi4Ye5Z00Zt3loCQt7LUv82tYR824uEMXXNunovhfGuPXnOOwu9eAui09QLpyr0myOWtzGgr2lgqyUHk0Vx8WCHWTgX-KbXQVeiQqAFCxeNMlPsfdJGR-kDcCvvIL7vWO13dGJaDYffruF"/>
+<div class="flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800 bg-slate-100 dark:bg-slate-700 text-xs font-medium text-text-sub dark:text-gray-300">
+                                                    +2
+                                                </div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                Active
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-sub hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold">
+                                                    H
+                                                </div>
+<div class="ml-4">
+<div class="text-sm font-bold text-text-main dark:text-white">Head of Admissions</div>
+<div class="text-xs text-text-sub dark:text-gray-500">Full Time • Admin</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Administration</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Oct 15, 2023</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800" data-alt="Candidate portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC723LHuvWVrUXZLySEti456JDF2fz1OxtgeQsiyxKIgdJXdgxo_CaHpiMe5U66ZmeWZN2xKe7wrbC1kbm7tbvc7yGrmzMQ9d31iw9pVv1NMmkS8Pnnc0pCo3Mx4Skc8UBPHbXSDSGiYXTs4io8C5KiTC3v3hNgucYHSJi5yBMgbYfqxrGXR-vUsbVhKFXujV9Od2DrHqlE23sumGI49cksmJ6lEg0Mszn1oQZAbCaEJLOjWffwsriLJuEtjrWZGii5PQVH_891Ax0t"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800" data-alt="Candidate portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzZWxW3_QLNqpyPJjneCYEpLu7fduWCvgNtLdc92z5K-KPnFTAoWDoXCdxOCsnDVeQr3SJGZv7guDgaQoXWY8ooteTeF1KLBWGWiM2m3ohNWMY0YTo0u5-RgJhnljqLqS30w8u8k9GDCok9oSGoqWpyoVBFdzYFlUV36mQrOLch_4xBgTy0BYC1Y0-TaDC9M_9TnZG3vr1zXoPdqEQsWg5QcL4PbgmSuHLQjYeB6qJl4d5MK50MQO8w7CHiC3nf4zlg5b0dqhUGTRE"/>
+<div class="flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-800 bg-slate-100 dark:bg-slate-700 text-xs font-medium text-text-sub dark:text-gray-300">
+                                                    +18
+                                                </div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                                Reviewing
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-sub hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10 rounded-lg bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold">
+                                                    S
+                                                </div>
+<div class="ml-4">
+<div class="text-sm font-bold text-text-main dark:text-white">Sports Coach (Soccer)</div>
+<div class="text-xs text-text-sub dark:text-gray-500">Contract • Athletics</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Sports Dept</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-text-main dark:text-gray-300">Sep 30, 2023</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs text-text-sub dark:text-gray-500 italic">No applicants</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                                Draft
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-sub hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-border-light dark:border-border-dark flex items-center justify-between">
+<p class="text-sm text-text-sub dark:text-gray-400">
+                                Showing <span class="font-medium text-text-main dark:text-white">1</span> to <span class="font-medium text-text-main dark:text-white">4</span> of <span class="font-medium text-text-main dark:text-white">12</span> results
+                            </p>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-border-light dark:border-border-dark rounded-md text-sm text-text-sub dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50">Previous</button>
+<button class="px-3 py-1 border border-border-light dark:border-border-dark rounded-md text-sm text-text-sub dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-slate-800">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Messages</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex selection:bg-primary/30">
+<!-- 1. Global ERP Sidebar (Slim) -->
+<nav class="w-20 bg-white dark:bg-[#182635] flex flex-col items-center py-6 border-r border-slate-200 dark:border-slate-800 flex-shrink-0 z-20">
+<!-- Logo -->
+<div class="size-10 bg-primary rounded-xl flex items-center justify-center mb-8 shadow-lg shadow-primary/30 text-white">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<!-- Menu Items -->
+<div class="flex flex-col gap-6 w-full px-2">
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">dashboard</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="relative flex flex-col items-center gap-1 p-2 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl font-variation-settings-fill">chat_bubble</span>
+<span class="text-[10px] font-medium">Chat</span>
+<!-- Notification Dot -->
+<span class="absolute top-2 right-4 w-2.5 h-2.5 bg-red-500 border-2 border-white dark:border-[#182635] rounded-full"></span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">calendar_month</span>
+<span class="text-[10px] font-medium">Schedule</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">menu_book</span>
+<span class="text-[10px] font-medium">Grades</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-6 w-full px-2">
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">settings</span>
+</a>
+<div class="size-10 rounded-full bg-cover bg-center border-2 border-slate-100 dark:border-slate-700 cursor-pointer" data-alt="User profile avatar of a man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdXMSy1_8xPK7dLYLb_cScqqiRGZCOZl2RHaH3cSyq6iwgwutt39m-3m6-zr17MwxTGpaqtdO6i8a1fVhuNKJSU4FBYdO6IOWe36NaUVh5jCYMZxMjzaI6z2xj0ZpBw8NZj9S5dftBQSQjaoJvn9thI59GnBf4oF3My9ac8UHzaCr12HZ79HmaB5NgO8OAefq0kQ37VEoS4-7g2sfgj-U1Ll3P91IK5ryb4YTfL8mgmkQN2WqOS7jRY_sIWESHyG5mJT0PDLJpV7QU');"></div>
+</div>
+</nav>
+<!-- 2. Conversation List Panel -->
+<aside class="w-80 md:w-96 bg-white dark:bg-[#182635] flex flex-col border-r border-slate-200 dark:border-slate-800 flex-shrink-0 relative z-10 transition-all duration-300">
+<!-- Header -->
+<div class="px-6 pt-6 pb-2">
+<div class="flex items-center justify-between mb-6">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Messages</h1>
+<button class="size-10 flex items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="relative w-full group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border-none rounded-lg bg-background-light dark:bg-background-dark text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Search people or groups..." type="text"/>
+</div>
+</div>
+<!-- Tabs -->
+<div class="px-6 flex gap-6 border-b border-slate-100 dark:border-slate-800 mt-2">
+<button class="pb-3 text-sm font-semibold text-primary border-b-2 border-primary">All</button>
+<button class="pb-3 text-sm font-semibold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 border-b-2 border-transparent hover:border-slate-300 transition-colors">Teachers</button>
+<button class="pb-3 text-sm font-semibold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 border-b-2 border-transparent hover:border-slate-300 transition-colors">Groups</button>
+</div>
+<!-- List -->
+<div class="flex-1 overflow-y-auto p-3 space-y-1">
+<!-- Active Chat Item -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-primary/5 dark:bg-primary/10 border border-primary/10 cursor-pointer transition-colors group">
+<div class="relative flex-shrink-0">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of Sarah Connor" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAeDSp_jIkxQHRE7SGObEL5SrAklyNkBRzG1rd3qmSJcrJyqoPJ5JvzG44D4haGMF3dKosG7nkq5WM-Dw4kBWJjSoaqZybECjj63sPYPBRG1hP2cZZRCGpA5wxk6njukpDi0rWD59UYY5Rf5-dJ_CRkRbMtr4wCHDJyEMrE2K00OI9oAFie4wRA3HUBn5Jek9PPsBE0T1BMaF3bwodtgYDPlmA0Ik0tgZrVV4rbqMfIGKbyTvox30oT-fJdQew2saos12a-xum1mEr3');"></div>
+<span class="absolute bottom-0 right-0 size-3 bg-green-500 border-2 border-white dark:border-[#182635] rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">Ms. Sarah Connor</h3>
+<span class="text-xs text-primary font-medium">Now</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 truncate">Here is the assignment file you aske...</p>
+</div>
+</div>
+<!-- Chat Item -->
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors group">
+<div class="relative flex-shrink-0">
+<div class="size-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg" data-alt="Initials icon for Math Group">10A</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">Grade 10 - Math</h3>
+<span class="text-xs text-slate-400">10:45 AM</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">You:</span>
+<p class="text-sm text-slate-500 dark:text-slate-400 truncate">Does anyone have the notes?</p>
+</div>
+</div>
+</div>
+<!-- Chat Item Unread -->
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors group">
+<div class="relative flex-shrink-0">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of Mr. Smith" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWVef4__rxROgae7sgqmbopwvkSyLtREfN3Svp0orNEXZZQD78vElxq98u8wENDk2FvkNaPXWZtVhOuyVXKVIYTtuM5E9p8cAiuwvSfbTmMJteQp4GNerqv1zDQf5UwkIQsYITDjfktIGQXvWppfLLHIcve89AgMNCfn20F6Qrjml8V9RF9wP1_ZXDpHxw1k8C8TTM4u3-ERO2xQ9YC_6Xaaj2EntVVZItmXAaI804As8beHt-N5gEiNqDaF1sghB_eWA56uZBPG2Q');"></div>
+<span class="absolute bottom-0 right-0 size-3 bg-slate-400 border-2 border-white dark:border-[#182635] rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">Mr. John Smith</h3>
+<span class="text-xs text-primary font-bold">9:30 AM</span>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-sm text-slate-900 dark:text-white font-medium truncate">Please review the attached schedule.</p>
+<span class="flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-primary text-white text-[10px] font-bold rounded-full">2</span>
+</div>
+</div>
+</div>
+<!-- Chat Item -->
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors group">
+<div class="relative flex-shrink-0">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of Principal Skinner" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGFBI1HGgyb8fDfqCl8S0YWfx6saD9sJjC_Ldx7gtQAdOsWz33nIMCGfPpyMwrB8YK5TzNuG7fVDuM49inXDOaRpsM0yyAxO7ax44MTQRe0a758cwEk_62h5jH9PBQ3TGETAgohY5Az3b_0QvvxGxNjELiZcUFtdlMfBcOrUmnCJs76PbdIr1jlHmK0K0g5_-rNsj1es8DwMOn6nmKGhkFIlQKsIqMclbFcPEgEEtwrYPA7oNsk28hYtTFLjmXLZNOudYbl_OO1Pvs');"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">Principal Skinner</h3>
+<span class="text-xs text-slate-400">Yesterday</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 truncate">Meeting rescheduled to Friday.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- 3. Main Chat Area -->
+<main class="flex-1 flex flex-col min-w-0 relative z-0">
+<!-- Chat Header -->
+<header class="h-20 bg-white dark:bg-[#182635] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 flex-shrink-0">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="size-10 rounded-full bg-cover bg-center ring-2 ring-slate-100 dark:ring-slate-700" data-alt="Active chat user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDaFNPEZhwQOvBg8NB8EKd3V-k3ryCSBYxx0RxhXBlw60wFYE6WgCQeeNDv-Afi_guEZyZnLwHcFiQWrQyvnxBPI9Wu2icRhJvVXph-R2shAdZ9e0jShg6rb43K9mCuob9fszpLeKr8fCUUxDgvQlY-7xCoMO-UAvd-pbEpAbmLj48IiqTygDxSLyalyTPWA-lc3Iy4ahhyh0qYkT3W-v9m5ov0KhmmP3ry0Gzd15SMUMkWulIr8fAXbAkYK1x0Y5JM7sMV72SKe8qc');"></div>
+<span class="absolute bottom-0 right-0 size-2.5 bg-green-500 border-2 border-white dark:border-[#182635] rounded-full"></span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Ms. Sarah Connor</h2>
+<span class="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-[10px] font-bold uppercase tracking-wider rounded-md">Teacher</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Online | Physics Dept</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" title="Call">
+<span class="material-symbols-outlined">call</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" title="Video Call">
+<span class="material-symbols-outlined">videocam</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors xl:hidden" title="Details">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</header>
+<!-- Messages Stream -->
+<div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 flex flex-col bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiLz48L3N2Zz4=')] dark:bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')]">
+<!-- Date Separator -->
+<div class="flex justify-center">
+<span class="px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full shadow-sm">Yesterday</span>
+</div>
+<!-- Received Message -->
+<div class="flex gap-4 max-w-[80%]">
+<div class="size-8 rounded-full bg-cover bg-center flex-shrink-0 mt-auto" data-alt="Avatar small" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_yBNSuHhhuXxoFLi06iVgOCFr6ECqJ3w2q1vRsz2fFECl1UOU_oyHBQIwHH-aTelmT-x8WWr5k7h0KHmqV2hws9gLno_36gqHHSL8Z9xqboVKn9WWUSXL_iy-jOYUzEN_zhSLlczsOBXtaRr-86QhmknW1vqZU3Qa6ZMAug_EcwzlQnk-34UbQMwvj2Bloe_X11YZnIkAW5XfCZ8B83zeLnBrY_AtC8lexZKMmqxJ6Ec32VTaYPVLXoumTBb4uD2D_iXvuEWd_dCV');"></div>
+<div class="flex flex-col gap-1">
+<div class="p-3.5 bg-white dark:bg-[#1e293b] rounded-2xl rounded-bl-none shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-sm leading-relaxed">Hi Alex! Just a reminder about the Physics project due next Tuesday. Have you started on the research yet?</p>
+</div>
+<span class="text-[10px] text-slate-400 ml-1">4:30 PM</span>
+</div>
+</div>
+<!-- Sent Message -->
+<div class="flex gap-4 max-w-[80%] self-end flex-row-reverse">
+<div class="size-8 rounded-full bg-cover bg-center flex-shrink-0 mt-auto" data-alt="My avatar small" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJzrRxnRpAJKCIRKjjLUEezTymX58E5uwbRZht7Sdla2ijN9liDD3GCVsDHHSrVwME-_4sfsA-mqwSgSeoPOrwcpUbr5_5a4xaeKCjf3cX-qWEjyb6UuKyAaQMe0Mo5BvPWHG5PKilQAMu4ar1gNc2q0gXjD31ownQ14C52UC0sVTfA9dap2fg0MmNEtnpKss8FHhpH4G5N_y5GhqPdAIsQ1rbY-rpcTu9jjySodM1JlXUkx_eyu4BriW35bUBb8cQ79C51KB7GvU5');"></div>
+<div class="flex flex-col gap-1 items-end">
+<div class="p-3.5 bg-primary text-white rounded-2xl rounded-br-none shadow-md shadow-primary/20">
+<p class="text-sm leading-relaxed">Yes, Ms. Connor. I've gathered most of the data. Just need to compile the charts.</p>
+</div>
+<div class="flex items-center gap-1 mr-1">
+<span class="text-[10px] text-slate-400">4:32 PM</span>
+<span class="material-symbols-outlined text-[14px] text-primary">done_all</span>
+</div>
+</div>
+</div>
+<!-- Date Separator -->
+<div class="flex justify-center mt-4">
+<span class="px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full shadow-sm">Today</span>
+</div>
+<!-- Received Message with Attachment -->
+<div class="flex gap-4 max-w-[80%]">
+<div class="size-8 rounded-full bg-cover bg-center flex-shrink-0 mt-auto" data-alt="Avatar small" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyxK_ukEtjs9U7A1XFgfNOmaCfX2lMAOcWxRkF6nnfAHOaPrFWwviRkwL4zUibziK2VNgKqOTXHVJsc0sNNdofzwMoOlr6AKXYqRdf1ZYKzIjb8EW9KnsLxQnZuB4nXyZWgwSCAmFxKgWPgqf62uECmzgJ95AIZX3WlV-CFNr2G89yuOdDI4bxJC90pKmWsfFtLlnBVfiKvocJlxax8ADovxyvr3Q4Zyh4cZQ89V4eRLFwMbEtTeGRE6iBiTJ1zEpFvJfPNuWM2U27');"></div>
+<div class="flex flex-col gap-1">
+<div class="p-3.5 bg-white dark:bg-[#1e293b] rounded-2xl rounded-bl-none shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-sm leading-relaxed mb-3">That sounds great. Here is the reference sheet for the formatting requirements.</p>
+<!-- File Attachment Card -->
+<div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer group/file">
+<div class="size-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center text-red-500">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">Format_Guide_2023.pdf</p>
+<p class="text-xs text-slate-500">2.4 MB</p>
+</div>
+<button class="size-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-600 shadow-sm text-slate-500 group-hover/file:text-primary opacity-0 group-hover/file:opacity-100 transition-all">
+<span class="material-symbols-outlined text-lg">download</span>
+</button>
+</div>
+</div>
+<span class="text-[10px] text-slate-400 ml-1">9:15 AM</span>
+</div>
+</div>
+<!-- Typing Indicator -->
+<div class="flex gap-4 max-w-[80%] items-center">
+<div class="size-8 rounded-full bg-cover bg-center flex-shrink-0" data-alt="Avatar small" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDPWaifYQAise5IoRVPYK89Q7irjjV1X7mdXKZUYT4w2OfTeLE-LJhwtf06u1wGkAC16ZycCSJaN7rurllN_XWZSugPdaa3Q2recjqzzPdhQaHapt1TzZGXRcr7Mw7T1bBVZswFxhbU4IPTCnSD2qdK_Sb_iW0VhvERFISAr79AMhxKIE-wkJCYRlT8GavQl-Z3a8zWdJEO4zNn-mwusN2KdA-1ymeaCeqQoO4CrJIy8-JQt9-tAswGIrV1bhlwsQB5VEsXAUqe-ugO');"></div>
+<div class="p-3 bg-white dark:bg-[#1e293b] rounded-2xl rounded-bl-none shadow-sm border border-slate-100 dark:border-slate-700 flex gap-1">
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 bg-white dark:bg-[#182635] border-t border-slate-200 dark:border-slate-800 flex-shrink-0">
+<div class="flex items-end gap-2 max-w-5xl mx-auto">
+<button class="p-3 text-slate-400 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">add_circle</span>
+</button>
+<div class="flex-1 bg-background-light dark:bg-slate-900 rounded-xl flex items-center px-4 py-2 border border-transparent focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/10 transition-all">
+<textarea class="w-full bg-transparent border-none p-0 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0 resize-none max-h-32 text-sm leading-6 py-2" placeholder="Type a message..." rows="1"></textarea>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined">sentiment_satisfied</span>
+</button>
+</div>
+<button class="p-3 bg-primary text-white hover:bg-blue-600 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center transition-all flex-shrink-0 active:scale-95">
+<span class="material-symbols-outlined font-variation-settings-fill">send</span>
+</button>
+</div>
+</div>
+</main>
+<!-- 4. Details/Info Panel (Desktop) -->
+<aside class="w-80 bg-white dark:bg-[#182635] border-l border-slate-200 dark:border-slate-800 hidden xl:flex flex-col flex-shrink-0 overflow-y-auto">
+<!-- Profile Section -->
+<div class="p-6 flex flex-col items-center border-b border-slate-100 dark:border-slate-800">
+<div class="size-24 rounded-full p-1 bg-white dark:bg-[#182635] ring-1 ring-slate-200 dark:ring-slate-700 shadow-xl mb-4 relative">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Large user profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqOgPzy-xxvMH0wkauCMx-j2_KxYm4Uo-K5wbFTp3_AYbelPxbtPtlILngC9DSChvSmwS4-TPZcSfopeaCzXbA0_uYsUlW8-ZKa-3H3tc2wFU6f6EAm4KMUMGqfVOh2A_IV0MP4tBRaqWusP_j5kl_pRb2keBqGkqTa_cvk6OlEYb2dSqzaW0ZGPBCVcxCLebWVn6tE9J1FqImDULxh2m1WbTKmotvUZm2EuOYkrEZgp8RyjKrkXRn3IIJKMXZiq6V4dijt6aS5Nhb');"></div>
+<span class="absolute bottom-1 right-1 size-4 bg-green-500 border-2 border-white dark:border-[#182635] rounded-full shadow-sm"></span>
+</div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Ms. Sarah Connor</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Physics Teacher</p>
+<div class="flex gap-3 w-full justify-center">
+<button class="flex-1 py-2 px-4 rounded-lg bg-background-light dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">person</span> Profile
+                </button>
+<button class="flex-1 py-2 px-4 rounded-lg bg-background-light dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">search</span> Search
+                </button>
+</div>
+</div>
+<!-- Shared Files -->
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Shared Files</h3>
+<button class="text-xs text-primary hover:underline">View All</button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">Lab_Safety_Guidelines.pdf</p>
+<p class="text-xs text-slate-400">12 Oct 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">Homework_Ch4.docx</p>
+<p class="text-xs text-slate-400">10 Oct 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 bg-green-50 dark:bg-green-900/20 text-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined">table_view</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">Grades_Term1.xlsx</p>
+<p class="text-xs text-slate-400">05 Oct 2023</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Shared Media -->
+<div class="p-6 pt-0">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Shared Media</h3>
+<button class="text-xs text-primary hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="aspect-square rounded-lg bg-cover bg-center cursor-pointer hover:opacity-80 transition-opacity" data-alt="Physics formula board" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7QEnmsjWAZhoQuNJD8OnxfTRSst90o_2x0un6wlFFr6R8jnui6lXv8B8jVMcUkmj_YH1uvWxgeqV-qa5sfFkYCjWWoEnFj_TEHoB8qgPy1N0Ql7QR9FCZot4bB0CSauCTa2qmZuGmIdr1RX2kVSzPG2oWl3kGvNK6gBMdSbqbhQ5DI-o6CA-aylgwsnsoVHLiIgZmdK-7mtjyQrdx_W-FwuI6I2QpTI-uDbO-kb9N2TXgJGnLGqGtMEA97QyZhXiI9hTnRFdGOBVw');"></div>
+<div class="aspect-square rounded-lg bg-cover bg-center cursor-pointer hover:opacity-80 transition-opacity" data-alt="Science experiment flask" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCiJT31-vOQwKvuSzoAiSi4d2b7F_xl7bgmsv0LNCmPSAHEI1ZfnX5RtCP8gAPN6sG4Tnad73QUIlI2ilxQLjo4CjfUjMvODFDS3BNQFr7u5k0w98n0gZ0DdeMxV1z3l3maYifxNpWhxGjSO1A70AroSQGJzJgsuo3Ia9NNLtD2NcQDv6lu9BWAjslCnyQ_n4jrJuG_0ez1Zys9d2yzMna8hg8hZ1h6_OzqA3JR948cdOpIfftqVLfwYNDavGBB-T28VKU7WfM4IaK_');"></div>
+<div class="aspect-square rounded-lg bg-cover bg-center cursor-pointer hover:opacity-80 transition-opacity relative" data-alt="Lab equipment" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_AGnnGkbpdMkpVK-wlgd03G9U19nO2aDvVgsE-3S0AxuOPlwgz3cfXSevUTQWtpHOtwF9RP6IJbMo6WKsifk3lrOhFAXY9pS-kQxQ8_aBS9R7APLKIKDID7SWr9_vUVOjN8Mk_JoiJyqZ8gUMykGMGIhuISrNyHsn3_YLlt99h5MB8O8Hf2t4bKTxb7FIrcd2FU6DMR5gXfSMRdbHQ24V5nD06AvguXLUGPHqakYs0RrCPMIEubZ1ZSKhe489s3op3gUATabrVvko');">
+<div class="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
+<span class="text-white text-xs font-bold">+12</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Options -->
+<div class="mt-auto p-6 border-t border-slate-100 dark:border-slate-800">
+<button class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 transition-colors group">
+<span class="text-sm font-medium">Block User</span>
+<span class="material-symbols-outlined text-lg">block</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors mt-1">
+<span class="text-sm font-medium">Report Issue</span>
+<span class="material-symbols-outlined text-lg">flag</span>
+</button>
+</div>
+</aside>
+</body></html>

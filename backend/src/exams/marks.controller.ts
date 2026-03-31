@@ -20,10 +20,10 @@ import { Role } from '@prisma/client';
 @Controller('marks')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class MarksController {
-  constructor(private readonly marksService: MarksService) {}
+  constructor(private readonly marksService: MarksService) { }
 
   @Post()
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   create(
     @Body() createMarkDto: CreateMarkDto,
     @CurrentUser() user: any,
@@ -36,7 +36,7 @@ export class MarksController {
   }
 
   @Post('bulk')
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   createBulk(
     @Body() bulkMarksDto: BulkMarksDto,
     @CurrentUser() user: any,
@@ -49,7 +49,7 @@ export class MarksController {
   }
 
   @Get('exam/:examId')
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
   findAll(
     @Param('examId') examId: string,
     @CurrentUser() user: any,
@@ -62,7 +62,7 @@ export class MarksController {
   }
 
   @Get(':id')
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
   findOne(@Param('id') id: string, @CurrentUser() user: any) {
     return this.marksService.findOne(id, {
       userId: user.userId,
@@ -72,7 +72,7 @@ export class MarksController {
   }
 
   @Patch(':id')
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   update(
     @Param('id') id: string,
     @Body() updateMarkDto: UpdateMarkDto,
@@ -86,7 +86,7 @@ export class MarksController {
   }
 
   @Delete(':id')
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   remove(@Param('id') id: string, @CurrentUser() user: any) {
     return this.marksService.remove(id, {
       userId: user.userId,

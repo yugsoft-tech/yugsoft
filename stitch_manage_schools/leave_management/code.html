@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leave Management - School ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1f2937] dark:text-gray-100 font-display transition-colors duration-200">
+<div class="flex h-screen overflow-hidden">
+<!-- Side Navigation -->
+<aside class="hidden w-64 flex-col border-r border-slate-200 bg-white dark:bg-[#1a2632] dark:border-slate-700 md:flex">
+<div class="flex h-16 items-center gap-3 px-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex h-8 w-8 items-center justify-center rounded bg-primary text-white">
+<span class="material-symbols-outlined text-xl">school</span>
+</div>
+<span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">EduMaster</span>
+</div>
+<div class="flex flex-col gap-6 p-4">
+<div class="flex gap-3 items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+<div class="h-10 w-10 rounded-full bg-cover bg-center" data-alt="School logo or emblem" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKny_rq8hFwdTQTUAq96Da4DOmWUv1cO4LDOZcY7C-Ms-A4Q-TT5tywRVfIK_IoOli7HXL2wss4yZ5UhfEgLG8IeNHyrSaA-8H05HTwEbk-gfximSt7auflgid_poCBnzMyVnJrcB08gGY5muj0AVaILqbTJg2nKML7SlIwqYFWcA34ZsCoGthI5XXLZgC7DeobhLxPdHOc9378oEF7wQXAPQGRGIycyQtMerEMRiDJoKk1iJ2Syls9D3_2weI7Yq_VnQjay9fVX4D");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="truncate text-sm font-semibold text-slate-900 dark:text-white">Springfield High</h1>
+<p class="truncate text-xs text-slate-500 dark:text-slate-400">Admin Panel</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">Staff</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined fill-1">calendar_today</span>
+<span class="text-sm font-medium">Leave Mgmt</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Log out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex flex-1 flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 dark:bg-[#1a2632] dark:border-slate-700">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="text-slate-500 hover:text-slate-700 dark:text-slate-400">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="text-lg font-bold text-slate-900 dark:text-white">School ERP</span>
+</div>
+<!-- Search -->
+<div class="hidden max-w-md flex-1 lg:flex px-4">
+<div class="relative w-full">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="h-10 w-full rounded-lg border-none bg-slate-100 pl-10 pr-4 text-sm text-slate-900 focus:ring-2 focus:ring-primary dark:bg-slate-800 dark:text-white dark:placeholder-slate-500" placeholder="Search for staff, leaves..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-[#1a2632]"></span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-cover bg-center border border-slate-200 dark:border-slate-600" data-alt="Profile picture of the logged-in user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB4lVDLVm1rH6X7ApvtTFq5c-KXeZccPBDZ0UnQZCN9yI3do5hPSZfwDVruhJfyfq96mIXbFkkDfHbqRUFAQmNFCVcRaMfWAE-C19Tr9Yhe8rYi3TEM17nc5TfvW0H9K_Y6aBJk0N7Aplo0Xv0b1IFSnezHGHi-rPZyVTEcOIAXRQ_Ft-1_HlG4mWIERvhgzat2JZ4fZAP-MmkWkjeteu9KoI_Iw20JVRJZU6qAHxa3SQDcsxrWzc82AnvOWdJTgODhdssMOvBxKA1N");'></div>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<main class="flex-1 overflow-y-auto bg-background-light p-6 dark:bg-background-dark">
+<div class="mx-auto max-w-6xl space-y-6">
+<!-- Page Heading & Action -->
+<div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Leave Management</h1>
+<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Manage employee leave requests and track balances.</p>
+</div>
+<button class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                            New Request
+                        </button>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<!-- Pending Approvals -->
+<div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-[#1a2632]">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Pending Approvals</p>
+<div class="rounded-full bg-orange-100 p-2 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<p class="text-2xl font-bold text-slate-900 dark:text-white">5</p>
+<span class="flex items-center text-xs font-medium text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                    +2 new
+                                </span>
+</div>
+</div>
+<!-- Staff on Leave -->
+<div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-[#1a2632]">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Staff on Leave Today</p>
+<div class="rounded-full bg-blue-100 p-2 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+<span class="material-symbols-outlined text-[20px]">person_off</span>
+</div>
+</div>
+<div class="mt-3">
+<p class="text-2xl font-bold text-slate-900 dark:text-white">12</p>
+</div>
+</div>
+<!-- Sick Leave Balance -->
+<div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-[#1a2632]">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Sick Leave Balance</p>
+<div class="h-8 w-8 relative">
+<svg class="h-full w-full rotate-[-90deg]" viewbox="0 0 36 36">
+<path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="50, 100" stroke-width="4"></path>
+</svg>
+</div>
+</div>
+<div class="mt-3 flex items-baseline justify-between">
+<p class="text-2xl font-bold text-slate-900 dark:text-white">2 Days</p>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">5/10 Used</span>
+</div>
+</div>
+<!-- Casual Leave Balance -->
+<div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-[#1a2632]">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Casual Leave Balance</p>
+<div class="h-8 w-8 relative">
+<svg class="h-full w-full rotate-[-90deg]" viewbox="0 0 36 36">
+<path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+<path class="text-green-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="66, 100" stroke-width="4"></path>
+</svg>
+</div>
+</div>
+<div class="mt-3 flex items-baseline justify-between">
+<p class="text-2xl font-bold text-slate-900 dark:text-white">4 Days</p>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">8/12 Used</span>
+</div>
+</div>
+</div>
+<!-- Main Content Area with Tabs and Table -->
+<div class="rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-[#1a2632]">
+<!-- Tabs -->
+<div class="border-b border-slate-200 px-6 dark:border-slate-700">
+<nav aria-label="Tabs" class="-mb-px flex gap-6">
+<a class="group inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300" href="#">
+                                    My Leaves
+                                </a>
+<a aria-current="page" class="group inline-flex items-center border-b-2 border-primary py-4 text-sm font-bold text-primary" href="#">
+                                    Team Approvals
+                                    <span class="ml-2 hidden rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary md:inline-block dark:bg-primary/20">5</span>
+</a>
+<a class="group inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300" href="#">
+                                    Leave History
+                                </a>
+</nav>
+</div>
+<!-- Filter and Action Bar -->
+<div class="flex flex-col items-start justify-between gap-4 border-b border-slate-200 p-4 sm:flex-row sm:items-center dark:border-slate-700">
+<div class="flex w-full items-center gap-2 sm:w-auto">
+<div class="relative w-full sm:w-64">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</span>
+<select class="h-9 w-full appearance-none rounded-lg border-slate-200 bg-slate-50 pl-9 text-sm text-slate-700 focus:border-primary focus:ring-primary dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300">
+<option>All Requests</option>
+<option>Pending</option>
+<option>Approved</option>
+<option>Rejected</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined mr-2 text-[18px]">download</span>
+                                    Export
+                                </button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-500 dark:text-slate-400">
+<thead class="bg-slate-50 text-xs uppercase text-slate-700 dark:bg-slate-800 dark:text-slate-400">
+<tr>
+<th class="px-6 py-3 font-semibold" scope="col">Employee</th>
+<th class="px-6 py-3 font-semibold" scope="col">Leave Type</th>
+<th class="px-6 py-3 font-semibold" scope="col">Duration</th>
+<th class="px-6 py-3 font-semibold" scope="col">Reason</th>
+<th class="px-6 py-3 font-semibold" scope="col">Status</th>
+<th class="px-6 py-3 text-right font-semibold" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="bg-white hover:bg-slate-50 dark:bg-[#1a2632] dark:hover:bg-slate-800">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-cover bg-center" data-alt="Avatar of Sarah Jenkins" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwD_b3A18wotzotu2S63ze4wXX9DaSoWn8CI8Jl8Z3NjnuF0ao-gZB2ih0rZ0dwBM5Z0gdOIxaA_XtLSoOFY--Ap_wG3cpm1q__G29X_yBT4rIm-4gHpgQOOOE_AMbbJ0x6ZrjVCoOQIdLUPzsQtJw08rQNvyMscXpQJZCvDjL1YxUlTaTLe0lkIwk1pZ41FxwLyVB9Bol5u75aLfw_H0j29TX1oVW2tXDETPKpPaLRXKbVaoGQ8DxwdWFskrsaMHZdNd7InZAQcL2");'></div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Sarah Jenkins</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Mathematics Dept</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-400/10 dark:text-purple-400 dark:ring-purple-400/20">Sick Leave</span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-900 dark:text-white">Oct 24 - Oct 25</div>
+<div class="text-xs text-slate-500">2 Days</div>
+</td>
+<td class="px-6 py-4 max-w-xs truncate" title="Coming down with a flu, need rest.">
+                                            Coming down with a flu...
+                                        </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-400">
+<span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                                                Pending
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="rounded-lg p-1.5 text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30" title="Approve">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="rounded-lg p-1.5 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30" title="Reject">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="bg-white hover:bg-slate-50 dark:bg-[#1a2632] dark:hover:bg-slate-800">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-cover bg-center" data-alt="Avatar of Michael Chen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9SMNWTGaWYK_PIl7i_lC08ZSJbPn7oaJWW3FABjGnFrV0rzjRvQhMZYQWxMwfC80BpexYcSihUCC2wG1exvfk9I29P_RKibU4oL4L-oFZTYisOmSSXEePAPZLORFiaGWpx64dx77GO2H9_tihBUXCtaWGMRrxwoV0XK23Huc_uCF-gZaMifFSea64w2AehefLpzOfmPZPcMngOQ5s2ow2uiq0ZdEIFrsV0lF2ly3Sscnl6qPsHdrSMG4qzes4jurO2adeuqzyEay1");'></div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Michael Chen</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Science Dept</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-400 dark:ring-yellow-400/20">Casual Leave</span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-900 dark:text-white">Nov 01</div>
+<div class="text-xs text-slate-500">1 Day</div>
+</td>
+<td class="px-6 py-4 max-w-xs truncate">
+                                            Personal matters
+                                        </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-400">
+<span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                                                Pending
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="rounded-lg p-1.5 text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30" title="Approve">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="rounded-lg p-1.5 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30" title="Reject">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="bg-white hover:bg-slate-50 dark:bg-[#1a2632] dark:hover:bg-slate-800">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-cover bg-center" data-alt="Avatar of Emily Davis" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC73qlUtoXWVVYR9_tGLnuGMriqWbA83HHJRkVHytFo7yxce-3JnjSE1Xf6cTG6kLzqgHdEqAwgzHA6pq9Aj0pENQaaPynZiMDNtcb1dDPxeOsGhYRAXpPWY013OydYGZm2soPtuB1EUPO1hqpN9E5a9_3UiDnmK0CAVFSkwr-xY6oDO1ahVJBQTASCgWfm3Y-7sDKChqg0Sx42Bw9MURbG0jYe0C1pbjs_Tl4b3VbugfDZCYardyDqfihkllQqJZBfjlbEQQZPQPBc");'></div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Emily Davis</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">English Dept</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-400/10 dark:text-green-400 dark:ring-green-400/20">Annual Leave</span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-900 dark:text-white">Dec 15 - Dec 20</div>
+<div class="text-xs text-slate-500">5 Days</div>
+</td>
+<td class="px-6 py-4 max-w-xs truncate">
+                                            Family vacation
+                                        </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-400">
+<span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                                                Pending
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="rounded-lg p-1.5 text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30" title="Approve">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="rounded-lg p-1.5 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30" title="Reject">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="bg-slate-50/50 hover:bg-slate-50 dark:bg-[#1a2632] dark:hover:bg-slate-800">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-cover bg-center grayscale opacity-70" data-alt="Avatar of Robert Fox" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDefL-QnQr4tLgWgbMHcNS3W9Bu2PAFb8HTvaAOqd3OVCIvYXPLShAtEyhy_U2_FX-rUSF6RXTnp0930ULjLo4aPP33gkEJYdlI1ghgSXoYWi0tRlbpTJbMnctNU10HtmI9Wx4FiFgHjRM9FcZvU6ddauj9kczq77oIQ85UwVIDh6pD22XCs_2D87i2_DYRdye29klfXNzjkV_wDFRU67hhGQIrn21XUVBhBKjwxYeD75CrPbK4tmWqQ_-L41mdMj2SWvJ-GB_gs2E5");'></div>
+<div>
+<div class="font-medium text-slate-600 dark:text-slate-400">Robert Fox</div>
+<div class="text-xs text-slate-400 dark:text-slate-500">History Dept</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-400/10 dark:text-purple-400 dark:ring-purple-400/20">Sick Leave</span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-600 dark:text-slate-400">Oct 20</div>
+<div class="text-xs text-slate-400">1 Day</div>
+</td>
+<td class="px-6 py-4 max-w-xs truncate text-slate-500">
+                                            Dental appointment
+                                        </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-400/10 dark:text-green-400">
+<span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                                                Approved
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-xs font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300">Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between border-t border-slate-200 px-6 py-3 dark:border-slate-700">
+<div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-slate-700 dark:text-slate-300">
+                                        Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">12</span> results
+                                    </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="isolate inline-flex -space-x-px rounded-md shadow-sm">
+<a class="relative inline-flex items-center rounded-l-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:ring-slate-600 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</a>
+<a aria-current="page" class="relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#">1</a>
+<a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-slate-900 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:text-slate-200 dark:ring-slate-600 dark:hover:bg-slate-700" href="#">2</a>
+<a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-slate-900 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:text-slate-200 dark:ring-slate-600 dark:hover:bg-slate-700" href="#">3</a>
+<a class="relative inline-flex items-center rounded-r-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:ring-slate-600 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Next</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Calendar Preview -->
+<div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-[#1a2632]">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Upcoming Absences</h3>
+<a class="text-sm font-medium text-primary hover:text-blue-700" href="#">View Full Calendar</a>
+</div>
+<div class="flex flex-col md:flex-row gap-4">
+<!-- Simple Day Column -->
+<div class="flex-1 rounded-lg border border-slate-100 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800">
+<div class="text-xs font-semibold uppercase text-slate-500 mb-2">Today</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2 p-2 bg-white rounded border border-slate-100 dark:bg-slate-700 dark:border-slate-600">
+<div class="h-6 w-6 rounded-full bg-cover" data-alt="Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDoFqeDtT_WnOJf5bMBMls7aHtdzIa-ei6AUT09DyZRu8d_JNxczbHbROQyPHtE_OTCYI1fJSIiytdqXSLJRyg9_1tJ2Wo1na4YxNkIjyPppSNHFwSq8GTajzvEQXf0xUO0mG1R5C5zuzSEkR0Iv3TVNLzUKrpYFjv5rgn-zNAXEISqlJJ19QO08CcbRooWM-q71ImZX8pVQxsMRmZl3EVRSSspxwBdfRcVJmG_MJZ3idY327Qm7SKCbyxhKY44oIR8-M0JAuA0MCm7");'></div>
+<span class="text-sm font-medium dark:text-gray-200">John Doe (Sick)</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded border border-slate-100 dark:bg-slate-700 dark:border-slate-600">
+<div class="h-6 w-6 rounded-full bg-cover" data-alt="Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDhXwctRuXBWBa_co5IZa1Vse05x2o0-h71otMycomlZ9hnv0izx5gSJb1bYZkL9aV9ezXD5eNu6NCfUQa12dQoxvWkhPQqbRNqcn9kZB3CCb6_T9XxFIpUHQV7EMbb87kPSrk55VaurQ3IEV5OCtuWQ6_-4ux3I3kqk5YNDKwUvwgDKnpa_Xm9l-THuC4DV1Cnayf8oZKhCQQn_GgKrMExAvHMuu8mOT9oY0Zf0RSytJixo-P9ikren0myjXU7jlTx5jGswvkpGbxm");'></div>
+<span class="text-sm font-medium dark:text-gray-200">Alice Smith (Annual)</span>
+</div>
+</div>
+</div>
+<!-- Simple Day Column -->
+<div class="flex-1 rounded-lg border border-slate-100 bg-white p-3 dark:border-slate-700 dark:bg-[#1a2632]">
+<div class="text-xs font-semibold uppercase text-slate-500 mb-2">Tomorrow</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+<div class="h-6 w-6 rounded-full bg-cover" data-alt="Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuClSs0zTviunrhAohKeFV1-DUDmBV1DTZ6rgDWLtAUXJ8Ego2zsZ8DbZvl2G5I8NJCH9QZDzC_2ysJEw6E4INTksOLL2tCicu2hmP7hU8Ve_vxp9EmE-B73nIUYIF_WjPbIFHlluz_1SW_vQL6lL07g09Ul3JuHhKPujyG2jJ__417jNr7cROu9_bNzranGC-rvwqB8W8yl9ODlhyLBNo6L4piBHAb9f-73PySWBkxqoS5AtyzwAFZ4bHLnucrhu_HfPEuBx4KsAqA4");'></div>
+<span class="text-sm font-medium dark:text-gray-200">Mark Lee (Casual)</span>
+</div>
+</div>
+</div>
+<!-- Simple Day Column -->
+<div class="flex-1 rounded-lg border border-slate-100 bg-white p-3 dark:border-slate-700 dark:bg-[#1a2632]">
+<div class="text-xs font-semibold uppercase text-slate-500 mb-2">Nov 12</div>
+<div class="flex h-full items-center justify-center text-xs text-slate-400 italic">
+                                    No scheduled absences
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

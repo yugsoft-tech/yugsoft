@@ -5,43 +5,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a4fa61f-65b5-41f6-b896-60151997c4e3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/ERP.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deviceManager.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/check_db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/backend/prisma/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/prisma/seed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/prisma/seed.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/attendance/attendance.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/attendance/attendance.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/classes/classes.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/classes/classes.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/classes/classes.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/classes/classes.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/students/students.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/students/students.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/jwt.strategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/auth/jwt.strategy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/communication/chat/chat.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/communication/chat/chat.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/dashboard/dashboard.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/dashboard/dashboard.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/dashboard/dashboard.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/dashboard/dashboard.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exams/dto/create-exam.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/exams/dto/create-exam.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exams/exams.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/exams/exams.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exams/exams.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/exams/exams.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exams/marks.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/exams/marks.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exams/marks.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/exams/marks.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exams/results.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/exams/results.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exams/results.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/exams/results.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/students/students.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/students/students.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/guards/AuthGuard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/guards/AuthGuard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/guards/RoleGuard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/guards/RoleGuard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/timetable/timetable.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/timetable/timetable.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/timetable/timetable.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/timetable/timetable.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/layouts/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/layouts/AdminLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/layouts/AuthLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/layouts/AuthLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/layouts/ParentLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/layouts/ParentLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/layouts/StudentLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/layouts/StudentLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/layouts/SuperAdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/layouts/SuperAdminLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/layouts/TeacherLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/layouts/TeacherLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/ui/DataCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/ui/DataCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/ui/DataTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/ui/DataTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/contexts/AuthContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/attendance/students/StudentAttendance.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/attendance/students/StudentAttendance.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/modules/teacher/attendance/TeacherAttendance.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/teacher/attendance/TeacherAttendance.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/ui/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/ui/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/ui/StatCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/ui/StatCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/hooks/useExams.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/hooks/useExams.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/hooks/useStats.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/hooks/useStats.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/academic/classes/ClassSections.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/academic/classes/ClassSections.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/academic/classes/ClassesList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/academic/classes/ClassesList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/academic/subjects/SubjectsList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/academic/subjects/SubjectsList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/attendance/dashboard/AttendanceDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/attendance/dashboard/AttendanceDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/communication/chat/Chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/communication/chat/Chat.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/communication/notices/NoticeBoard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/communication/notices/NoticeBoard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/dashboard/AdminDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/dashboard/AdminDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/exams/list/ExamList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/exams/list/ExamList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/exams/marks/MarksEntry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/exams/marks/MarksEntry.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/admin/exams/results/ExamResults.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/admin/exams/results/ExamResults.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/auth/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/auth/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/parent/dashboard/ParentDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/parent/dashboard/ParentDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/student/dashboard/StudentDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/student/dashboard/StudentDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/super-admin/dashboard/SuperAdminDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/super-admin/dashboard/SuperAdminDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/teacher/assignments/TeacherAssignments.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/teacher/assignments/TeacherAssignments.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/modules/teacher/dashboard/TeacherDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/teacher/dashboard/TeacherDashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/services/attendance.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/attendance.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/teacher/exams/TeacherExams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/teacher/exams/TeacherExams.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/teacher/grades/TeacherGrades.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/teacher/grades/TeacherGrades.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/modules/teacher/timetable/TeacherTimetable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/modules/teacher/timetable/TeacherTimetable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/admin/timetable/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/admin/timetable/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/parent/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/parent/dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/parent/results.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/student/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/student/dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/student/results.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/student/results.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/super-admin/dashboard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/super-admin/dashboard/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/teacher/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/teacher/dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/teacher/exams.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/services/classes.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/classes.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/services/exams.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/exams.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/services/stats.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/stats.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/services/students.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/students.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/services/teachers.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/teachers.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/services/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/services/super-admin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/super-admin.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/services/timetable.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/services/timetable.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/styles/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/utils/api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/api-client.ts" afterDir="false" />

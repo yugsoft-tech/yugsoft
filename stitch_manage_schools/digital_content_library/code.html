@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Content Library - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "primary-dark": "#1a6bbd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col flex-shrink-0 z-20">
+<div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-700">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 rounded bg-primary/10 flex items-center justify-center">
+<svg class="w-5 h-5" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2 17L12 22L22 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2 12L12 17L22 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">School ERP</h2>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Navigation Group -->
+<div class="flex flex-col gap-1">
+<p class="px-3 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">Library</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">explore</span>
+<span class="text-sm">Browse All</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">bookmarks</span>
+<span class="text-sm">My Library</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">history</span>
+<span class="text-sm">Recent</span>
+</a>
+</div>
+<!-- Categories Group -->
+<div class="flex flex-col gap-1">
+<p class="px-3 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">Filters</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">menu_book</span>
+<span class="text-sm">Subjects</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">trending_up</span>
+<span class="text-sm">Grade Levels</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">folder_open</span>
+<span class="text-sm">Content Types</span>
+</a>
+</div>
+</div>
+<!-- Bottom User Profile Stub -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-700">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center border border-slate-200" data-alt="Portrait of a smiling male teacher with glasses" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB1US2OqQyJ_5NOEjxdgAvpQftpm5YRpU_CVIiD1Wly0OULE5QyBS8JjigJYcLn83YBFBlG7bxu8eCJ7-TKpu2KEnjiGXEGyV-3aNdqPws_cog4Uy4rSZ3QyF0ob306R44dfcu1mwIpTwDr3yFvpuTlbbxeYDZhpHMj2-eKhDGc0UBNAUs0TFQUarr6pu2i4l3HwkxtBxUQKKBIF7mCsbC_qY3UlmhPlWIuUD1NrD1RFQDrLocj1A8jInSq0DaMUZEFTBEG3GNSOLSS");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Mr. Anderson</span>
+<span class="text-xs text-slate-500">Librarian Admin</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark relative">
+<!-- Top Navigation -->
+<header class="h-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-6 sticky top-0 z-10">
+<!-- Breadcrumbs/Context -->
+<div class="hidden md:flex items-center text-sm text-slate-500 dark:text-slate-400">
+<span class="hover:text-primary cursor-pointer">Academics</span>
+<span class="material-symbols-outlined mx-2 text-base">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Digital Library</span>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-4 ml-auto">
+<nav class="hidden lg:flex items-center gap-6 mr-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="hover:text-primary transition-colors" href="#">Students</a>
+<a class="hover:text-primary transition-colors" href="#">Staff</a>
+<a class="text-primary" href="#">Library</a>
+</nav>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden lg:block"></div>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white dark:border-slate-800"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-8">
+<!-- Page Heading & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white mb-2">Digital Library</h1>
+<p class="text-slate-500 dark:text-slate-400">Access 1,240 e-books, videos, and learning modules.</p>
+</div>
+<button class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg font-bold text-sm shadow-sm transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg">cloud_upload</span>
+                        Upload Material
+                    </button>
+</div>
+<!-- Search & Filters Bar -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row gap-4">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder-slate-400 outline-none transition-all" placeholder="Search by title, author, topic or ISBN..." type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-1 md:pb-0">
+<select class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 min-w-[140px]">
+<option>All Formats</option>
+<option>PDF Documents</option>
+<option>Video Lectures</option>
+<option>Audiobooks</option>
+</select>
+<select class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 min-w-[140px]">
+<option>Any Grade</option>
+<option>Grade 9</option>
+<option>Grade 10</option>
+<option>Grade 11</option>
+<option>Grade 12</option>
+</select>
+</div>
+</div>
+<!-- Featured Section (Horizontal Scroll) -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">New Arrivals</h3>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-500">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-500">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex overflow-x-auto gap-4 pb-4 -mx-2 px-2 snap-x hide-scrollbar">
+<!-- Card 1 -->
+<div class="min-w-[280px] md:min-w-[320px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow snap-start group cursor-pointer">
+<div class="h-40 w-full bg-cover bg-center relative" data-alt="Abstract colorful physics simulation graphic with particles" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxDWjquw-eIsnE4UT7sWg7AVXycugfWIiTpk0S9RTjQt8E-cFea0MckC3v8XLsUylXVNveAYRm4QDsENmgEIOdmvTX-BnRmLPtoZUWzMELY3O2M4jDKXafYsbAsHENdfpxZR5VGfo_3s_SHPRBjJ1gD9ZD2qdM7UmKg8tWjRr4e2OWMJZ-DhuMenCkd2xeEu3Mpo8LnWYM6AWlJecjVZSYzx-oVPiEkzILUrCc6RoHbnus7ng0uwNyLU0NsKVOoJ3eQOWAX5CqtSb8");'>
+<span class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">Video</span>
+<div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<div class="size-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-primary">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-slate-900 dark:text-white text-base leading-tight mb-1 line-clamp-1">Advanced Physics: Quantum Mechanics</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Added yesterday • Dr. Richard Fey</p>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded font-medium">Science</span>
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded font-medium">Grade 12</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[280px] md:min-w-[320px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow snap-start group cursor-pointer">
+<div class="h-40 w-full bg-cover bg-center relative" data-alt="Close up of a calculator on top of financial documents" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7O4hm7uwys0tmaK2F35KyJoTKhr7QUOYkMB4DH0wjlLTyB3tTMdINm4ZxoBlHc1ps5V6GeNNBhctPpxQr-ZVYPduQiUCqEUTppLZUUiSAo8i7YUr-bex2rczduT9om3eYxAX2RNLVYTdPurz7uspTNB5CZwZ2del_xO6Ls68A0s6v_PYnWD1dJeljYwlxd4NK4qZfhPiwBh3veXuWTht2YqpxriJACfyfpGEJyMk2i3N54q89MUT_PPQKBLHqFsIRWkUMBsLcEdH-");'>
+<span class="absolute top-3 left-3 bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">PDF</span>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-slate-900 dark:text-white text-base leading-tight mb-1 line-clamp-1">Macroeconomics: 2024 Edition</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Added 2 days ago • Pearson Education</p>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded font-medium">Economics</span>
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded font-medium">Grade 11</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="min-w-[280px] md:min-w-[320px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow snap-start group cursor-pointer">
+<div class="h-40 w-full bg-cover bg-center relative" data-alt="Open old history book with vintage maps" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA5lqlVq3ts2cWSSGFtlCmJACuDE6HJDScYVm1DNfFhuWb9KHn9bJPVWj00Ufj-rFG5GR2MC1UFrJV8t8G_u-hupgXuSCYwByJkyHzaGykhVt_a7o3cMZRXI81pUCZ00v_M_Y0bhu_AbjRJnUtjr3XcPaH3ndJn2mYUl4k186g6AukId41lRi3iZ1Mvp0RJK6dU9GSZYoiHBCKwOFdgLMoLUG2eCxPU8da5KXIFdC_7kRlV6R_2XrIpA_j4qjA49w-XvA3ggRF75c2w");'>
+<span class="absolute top-3 left-3 bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">E-Book</span>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-slate-900 dark:text-white text-base leading-tight mb-1 line-clamp-1">The Rise of Ancient Civilizations</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Added last week • Historian Press</p>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded font-medium">History</span>
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded font-medium">Grade 9</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="space-y-4">
+<div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-2">
+<div class="flex gap-6">
+<button class="text-sm font-bold text-primary border-b-2 border-primary pb-2 -mb-2.5">All Resources</button>
+<button class="text-sm font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 pb-2">Popular</button>
+<button class="text-sm font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 pb-2">Curriculum</button>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500">
+<span>Sort by:</span>
+<select class="bg-transparent border-none p-0 text-slate-700 dark:text-slate-300 font-bold focus:ring-0 cursor-pointer">
+<option>Date Added</option>
+<option>Alphabetical</option>
+<option>Most Viewed</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Grid Item 1 -->
+<div class="group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-3 hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-[4/3] rounded-md bg-slate-100 dark:bg-slate-900 overflow-hidden relative mb-3">
+<img class="w-full h-full object-cover" data-alt="Clean laboratory setup with beakers and test tubes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbk89DnRKeMASvAPEmfYgKu9qwuMOhCZFwRRd3alFSLXG7MBBY7vdzsf5SJ8RuoYXgHCKqxuOK4Aaqk9E4UAj60WE9vYL1cYJLQJs20fNdV4XJPIobeK8-xZ7MVSLG_Jih22jO0VDezBI9VgbuvXS_ia8_N5_O8A1kvnhuCXIuRzKjHcs0eWxmFbbJb_Gzr084qWHxWx8w7NLc4YYEIHYLRqt4Wo8PYGfPhK4Ns_OpzlJtzGD9qYar01W2BS-pDw0w3TW39uyO2j-7"/>
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 p-1.5 rounded shadow-sm text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm block">picture_as_pdf</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1 group-hover:text-primary transition-colors">Chemistry Lab Manual 2024</h3>
+<p class="text-xs text-slate-500">Prof. H. White • 3.4 MB</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">PDF</span>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-lg block">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Item 2 -->
+<div class="group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-3 hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-[4/3] rounded-md bg-slate-100 dark:bg-slate-900 overflow-hidden relative mb-3">
+<img class="w-full h-full object-cover" data-alt="Stack of literature books on a wooden desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Fz-9Z7vOhuon5sEZnCedKLAeP_nqGjUXSB8XJXjXtIUP8hokBbjBav-r71IRTCPJdL_XExaW2h-9YaEkNptFkm8J11bt0aj235RNrfKxUW-LQhEXexbQhISM1CcZtW5iO5wY5f4vkVDBdTc2F_gYP3uSMxUAH-ThGTVcA1x03rFb4VM2Tv0leBmU92kvfumPEOwIxdU-RHGj_TXl3I5ljZQwKkxFgxfVfiTnio745PRlILkuf9_Lc0RV2M9R7fHisDQD1ipiBIFg"/>
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 p-1.5 rounded shadow-sm text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm block">book</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1 group-hover:text-primary transition-colors">Hamlet: Annotated Edition</h3>
+<p class="text-xs text-slate-500">Shakespeare • 150 Pages</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">EPUB</span>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-lg block">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Item 3 -->
+<div class="group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-3 hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-[4/3] rounded-md bg-slate-100 dark:bg-slate-900 overflow-hidden relative mb-3 group">
+<img class="w-full h-full object-cover" data-alt="Colorful abstract geometric math shapes 3d render" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5dYKbPJv7JjyRwxV5mtPXP0BxD0-TmNGDTYT-nbwPuqn6F8fjfP_0Ac1vJPU1gkNy8UUpXHoQ90RZ3exh0CJu8rGqLmDHAr5UMSaLn5Na6kdKGqHhmgP3Fc-TjV2Au2bNovEfyyFfKn4wJCeiCgFDkFsQqEHFdj_CTLGLqof3l5gyj5EGI8Tdo2H7KSB9gBxkySXMiYVQau-RT1uuNyVCBfq0OosZasEh2T2pdov7cSaApJQroyalqsagYbmkIsDgrvk2hAWxVujo"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">12:40</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1 group-hover:text-primary transition-colors">Geometry: Solids &amp; Surfaces</h3>
+<p class="text-xs text-slate-500">Khan Academy • Video</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">MP4</span>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-lg block">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Item 4 -->
+<div class="group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-3 hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-[4/3] rounded-md bg-slate-100 dark:bg-slate-900 overflow-hidden relative mb-3">
+<img class="w-full h-full object-cover" data-alt="Close up of green leaves with biological structures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAclnCM_iS45VIMDzHI5BrR0mfn84f48K_4yXgoANwN7p-AC6iG2cHlFtUb30uhcqtVn6NW0EjVExiEmt7-V8080GdBBZ59-0l9XX4CBgHoknvmSke_P94lYIz2biQVdTw4d-8ff4h4GO-lqUXSQpT2oJcV9dyqMRKf78qXv6DC7UX92M30414SLYtJjs_hIrIU2-W8H1nukK3F7beMIK3W-SFoOavd_luHX5xd21SW5ZXmB1Pc8DfmdpvzNUn45dGNeUBjieZs1gAO"/>
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 p-1.5 rounded shadow-sm text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm block">description</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1 group-hover:text-primary transition-colors">Biology: Plant Cells Study Guide</h3>
+<p class="text-xs text-slate-500">Grade 10 Staff • 1.2 MB</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">DOCX</span>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-lg block">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Item 5 -->
+<div class="group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-3 hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-[4/3] rounded-md bg-slate-100 dark:bg-slate-900 overflow-hidden relative mb-3">
+<img class="w-full h-full object-cover" data-alt="Stock market graph data analysis" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYwITN1EZbZrRg2gUd0cbhCW6O3FQi_X6efD-ItrducUs3fVjwOPAPildIgqZ54buPm_JSLBcpGf3IQMBrIiomGD2UtFSGb5rv6lAIczWNFkDl4HIlKUG2ES4YkseBEHDmMsjR6_nMPumYCKM4o4C6qbXwi5Dl92GYtd_xOaJxQFClvaeFUy4AmV3RjpNYOmlhjo1IDk9N5Nowky6esISHVRhQ4ob36T67hoB0b6OOYVrNBvViv3oOLKtmXtnJm81dSMQzsBBABqYr"/>
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 p-1.5 rounded shadow-sm text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm block">picture_as_pdf</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1 group-hover:text-primary transition-colors">Intro to Statistics: Worksheets</h3>
+<p class="text-xs text-slate-500">Math Dept • 540 KB</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">PDF</span>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-lg block">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Item 6 -->
+<div class="group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-3 hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-[4/3] rounded-md bg-slate-100 dark:bg-slate-900 overflow-hidden relative mb-3 group">
+<img class="w-full h-full object-cover" data-alt="Online learning screen with teacher explaining" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvf9lohiDs9T5DIxbUbvr9FZOxVlh2OxAykpF0thPaoM65HcWtAxCG8iNzFC9zN5hU6RwafFm46MnY2IN2U4JJ8RaBHiJZCS1W1UjIGA3XoqK9bn9v7gBw9RKjfLW16NZKwCeecCd3R773--0Ps13XB3iVc4ueipHpXdTQ6m2cK7wehvrt_qmpUr3mH8-5BnNh7mMNCw6c4oCx9uKi58az2HVN9jKkJHgZ5Ii5A-rtOHfYQ-kkTD5mvEs9BC9btIG1Ffj30mUDd3TM"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">45:00</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1 group-hover:text-primary transition-colors">Computer Science: Algorithms</h3>
+<p class="text-xs text-slate-500">CS Department • Lecture</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">REC</span>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-lg block">visibility</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination Stub -->
+<div class="flex justify-center pt-8 pb-4">
+<nav class="flex items-center gap-1">
+<button class="px-3 py-1 text-sm rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">Prev</button>
+<button class="px-3 py-1 text-sm rounded bg-primary text-white font-medium">1</button>
+<button class="px-3 py-1 text-sm rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">2</button>
+<button class="px-3 py-1 text-sm rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">3</button>
+<span class="text-slate-400">...</span>
+<button class="px-3 py-1 text-sm rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">Next</button>
+</nav>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Enrollment - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white overflow-x-hidden antialiased">
+<div class="flex min-h-screen w-full">
+<!-- SideNavBar -->
+<div class="hidden lg:flex flex-col w-[280px] border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a2634] shrink-0 sticky top-0 h-screen overflow-y-auto">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-center bg-no-repeat bg-cover rounded-xl size-10 bg-primary/10 flex items-center justify-center text-primary" data-alt="School ERP Logo">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-base font-bold leading-none">EduManage ERP</h1>
+<p class="text-slate-400 text-xs mt-1">Admin Console</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<div class="flex flex-col gap-1 mt-2">
+<p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Academic</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">person_add</span>
+<span class="text-sm font-medium">Admissions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="text-sm font-medium">Faculty</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">class</span>
+<span class="text-sm font-medium">Classes</span>
+</a>
+</div>
+<div class="flex flex-col gap-1 mt-4">
+<p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Administrative</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-auto p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-center bg-cover" data-alt="User Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB2P_1eJTANvQGCIq7BfMRC37HAItJ62-HkjPkAH65DowPv7nVNQPcpS2sbBjcw9vJGTNuMfY-ooq_Ch7QsD5KkF4ZFr_Vt4ey8CCvw1TF1ID47FGL8EvxaFNoMyK1ffGIw7MQG6MXb4jfB-MiJkoWsAcyEaPjPSmf2CXV9OQPgIhp_3mqaq6NAgwrqsrH0QGgBo3Gw6Ebm-rOLpZpDp2wSq34XQx-rJOyODy6_3RroLTtRHYrl39MZqwb9l2ynMECYw4UshbZQrgD-');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Admin User</p>
+<p class="text-xs text-slate-500">View Profile</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- Top Navigation / Breadcrumbs -->
+<header class="flex items-center justify-between px-6 py-4 bg-white dark:bg-[#1a2634] border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
+<div class="flex items-center gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-slate-400 text-[16px]">chevron_right</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Admissions</a>
+<span class="material-symbols-outlined text-slate-400 text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Student Enrollment</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2634]"></span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6 lg:p-10">
+<div class="max-w-6xl mx-auto flex flex-col gap-8">
+<!-- Page Heading & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Student Enrollment</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-2">Complete the procedural enrollment steps for newly admitted candidates.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 dark:bg-transparent dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors">
+                            Save Draft
+                        </button>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-white dark:bg-[#1a2634] rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-semibold text-primary">Step 2 of 4: Class Assignment</span>
+<span class="text-sm font-medium text-slate-500">50% Complete</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2.5 overflow-hidden">
+<div class="bg-primary h-2.5 rounded-full transition-all duration-500" style="width: 50%"></div>
+</div>
+<div class="flex justify-between mt-3 text-xs text-slate-400 font-medium">
+<span class="text-slate-800 dark:text-slate-200">1. Verification</span>
+<span class="text-primary">2. Class Assignment</span>
+<span>3. ID Generation</span>
+<span>4. Review</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- Left Column: Student Profile Card (Sticky) -->
+<div class="lg:col-span-1 flex flex-col gap-6 lg:sticky lg:top-6">
+<div class="bg-white dark:bg-[#1a2634] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="h-24 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 relative" data-alt="Abstract header background pattern">
+<div class="absolute top-4 right-4">
+<span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Pending Assignment</span>
+</div>
+</div>
+<div class="px-6 pb-6 relative">
+<div class="-mt-12 mb-4 flex justify-between items-end">
+<div class="size-24 rounded-full border-4 border-white dark:border-[#1a2634] bg-white shadow-md overflow-hidden bg-cover bg-center" data-alt="Portrait of student Sarah Jenkins" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBupsI79fV-ErqsgzYWQEhlmIB4nADsh0hc5UkxMv42IOeV4tcDqopahhhwZhqLVoI1iu6EomeMulf2nf-Ym-7vP3Gu_SCB6YKmZtRKbDG9RcFk0M9uu3YbTXgUD707WGBpg9xL5pFMt1sbSXRKWQiKpY5ceSRRWTVL9Bm0wYoXpSLLwifl8RO7veZbfdujEfuVUFZ_bcCvKTPUauFPr3xHiE_IcpAMM4JKjPpW3AEzjyZwXvfkmdUQKgDQe5a_wwZjLG0Eq1nQnnCp');"></div>
+</div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Sarah Jenkins</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Temp ID: <span class="font-mono text-slate-700 dark:text-slate-300">ADM-2023-882</span></p>
+<div class="flex flex-col gap-3 pt-4 border-t border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">calendar_today</span>
+<span class="text-sm text-slate-600 dark:text-slate-300">DOB: 12 Aug 2012</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">call</span>
+<span class="text-sm text-slate-600 dark:text-slate-300">+1 (555) 012-3456</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">mail</span>
+<span class="text-sm text-slate-600 dark:text-slate-300 truncate">parent.sarah@email.com</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700">
+<button class="w-full py-2 px-3 flex items-center justify-center gap-2 text-sm font-medium text-slate-700 hover:text-primary transition-colors hover:bg-slate-50 rounded-lg">
+<span class="material-symbols-outlined text-[18px]">edit_document</span>
+                                        Edit Personal Details
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="bg-primary/5 rounded-xl border border-primary/10 p-5">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+                                Needs Attention
+                            </h3>
+<ul class="text-sm space-y-2 text-slate-600 dark:text-slate-400">
+<li class="flex gap-2 items-start">
+<span class="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 shrink-0"></span>
+<span>Missing medical history form</span>
+</li>
+<li class="flex gap-2 items-start">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 shrink-0"></span>
+<span>Transport route unassigned</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Right Column: Main Form Area -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Class Assignment Card -->
+<div class="bg-white dark:bg-[#1a2634] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 lg:p-8">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Academic Assignment</h3>
+<p class="text-sm text-slate-500">Assign grade, section, and roll number.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Academic Year -->
+<div class="col-span-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Academic Year</label>
+<select class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-[#1a2634] text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5">
+<option>2023-2024</option>
+<option>2024-2025</option>
+</select>
+</div>
+<!-- Curriculum -->
+<div class="col-span-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Curriculum</label>
+<select class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-[#1a2634] text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5">
+<option>State Board</option>
+<option selected="">CBSE</option>
+<option>IB</option>
+<option>Cambridge</option>
+</select>
+</div>
+<!-- Grade Level -->
+<div class="col-span-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Grade Level</label>
+<select class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-[#1a2634] text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5">
+<option disabled="">Select Grade</option>
+<option>Grade 5</option>
+<option selected="">Grade 6</option>
+<option>Grade 7</option>
+</select>
+</div>
+<!-- Section -->
+<div class="col-span-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Section</label>
+<div class="relative">
+<select class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-[#1a2634] text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 pr-10">
+<option>Section A (28/30)</option>
+<option selected="">Section B (24/30)</option>
+<option class="text-slate-400" disabled="">Section C (Full)</option>
+</select>
+<div class="absolute inset-y-0 right-8 flex items-center pointer-events-none">
+<span class="h-2 w-2 rounded-full bg-green-500"></span>
+</div>
+</div>
+<p class="mt-1 text-xs text-green-600 dark:text-green-400">Section B has 6 seats remaining.</p>
+</div>
+<!-- Roll Number Logic -->
+<div class="col-span-1 md:col-span-2 border-t border-slate-100 dark:border-slate-700 pt-4 mt-2">
+<div class="flex items-end gap-4">
+<div class="flex-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Roll Number</label>
+<div class="flex shadow-sm rounded-lg">
+<span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-500 dark:text-slate-400 sm:text-sm">
+                                                    RN-
+                                                </span>
+<input class="flex-1 block w-full min-w-0 rounded-none rounded-r-lg border-slate-300 dark:border-slate-600 dark:bg-[#1a2634] dark:text-white focus:border-primary focus:ring-primary sm:text-sm py-2.5" id="roll_number" name="roll_number" placeholder="001" type="text" value="24"/>
+</div>
+</div>
+<button class="inline-flex items-center px-4 py-2.5 border border-slate-300 dark:border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="button">
+<span class="material-symbols-outlined text-[18px] mr-2">autorenew</span>
+                                            Auto-Suggest
+                                        </button>
+</div>
+<p class="mt-1.5 text-xs text-slate-500">System suggests next available roll number for Grade 6-B.</p>
+</div>
+</div>
+</div>
+<!-- ID Generation Card -->
+<div class="bg-white dark:bg-[#1a2634] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 lg:p-8 relative overflow-hidden">
+<!-- Decorative background blur -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center gap-3 mb-6">
+<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">ID &amp; Credentials</h3>
+<p class="text-sm text-slate-500">Generate unique identifiers and access.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+<!-- ID Preview -->
+<div class="w-full md:w-auto shrink-0 flex justify-center">
+<div class="w-64 aspect-[1.586] rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 shadow-lg relative overflow-hidden">
+<!-- ID Card Design Elements -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-10 -mt-10 blur-xl"></div>
+<div class="flex justify-between items-start mb-3 relative z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-white/80">school</span>
+<span class="text-xs font-bold tracking-widest uppercase opacity-80">EduManage</span>
+</div>
+<div class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-mono">STUDENT</div>
+</div>
+<div class="flex gap-3 items-center relative z-10">
+<div class="size-16 rounded bg-white/20 backdrop-blur-md overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small thumbnail of student Sarah Jenkins for ID card" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSwqYfJk0pBJBqohwBWY6h_qKflil77QCEJPdinqnCxO6JuScejq0xXvhGzogevkbo_RUlVEaZENuVrDSzx-U6BjUbVma0WbZDBTkKpM2-t6_-3MKkpOW0i17ZHVYkjA-5F7RVPjP8ZHTu-9OY53gFErcAZEOI6RAojmD7xbluc32IbDgD_SDi6VSxVwTF6bCDi7qOAWdzMgwJdp5jU7RA3EtwrGzSP-aPztXCoFcz54WV0jPJUGgUOgUT2wfRx2PLeIlY_X7CNkB3"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold leading-tight">Sarah Jenkins</span>
+<span class="text-[10px] opacity-70 mt-0.5">Grade 6 - B</span>
+<span class="text-[10px] opacity-70">DOB: 12/08/2012</span>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<div class="flex flex-col">
+<span class="text-[8px] opacity-50 uppercase">ID Number</span>
+<span class="text-xs font-mono tracking-wider">ST-2024-8821</span>
+</div>
+<div class="h-6 w-16 bg-white rounded-sm"></div> <!-- Barcode placeholder -->
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex-1 w-full space-y-4">
+<div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<div class="flex items-start gap-3">
+<div class="flex h-5 items-center">
+<input checked="" class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" id="comments" name="comments" type="checkbox"/>
+</div>
+<div class="text-sm">
+<label class="font-medium text-slate-900 dark:text-white" for="comments">Email Credentials to Parent</label>
+<p class="text-slate-500 dark:text-slate-400">Send portal login details to <span class="font-medium text-slate-700 dark:text-slate-300">parent.sarah@email.com</span> upon completion.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-3">
+<button class="flex-1 inline-flex justify-center items-center px-4 py-2.5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mr-2">id_card</span>
+                                            Generate Permanent ID
+                                        </button>
+<button class="flex-1 inline-flex justify-center items-center px-4 py-2.5 border border-slate-300 dark:border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-[#1a2634] hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mr-2">download</span>
+                                            Download Preview
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+<button class="px-6 py-3 border border-slate-300 dark:border-slate-600 shadow-sm text-base font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-[#1a2634] hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all" type="button">
+                                Previous
+                            </button>
+<button class="px-8 py-3 border border-transparent shadow-sm text-base font-medium rounded-lg text-white bg-primary hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all flex items-center gap-2" type="button">
+                                Next Step
+                                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Recent Activity Table (Optional Context) -->
+<div class="mt-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Recently Enrolled Students</h3>
+<a class="text-sm text-primary font-medium hover:underline" href="#">View All</a>
+</div>
+<div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-xl">
+<table class="min-w-full divide-y divide-slate-300 dark:divide-slate-700 bg-white dark:bg-[#1a2634]">
+<thead class="bg-slate-50 dark:bg-slate-800">
+<tr>
+<th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 dark:text-white sm:pl-6" scope="col">Name</th>
+<th class="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-white" scope="col">Class</th>
+<th class="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-white" scope="col">ID Number</th>
+<th class="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-white" scope="col">Date</th>
+<th class="relative py-3.5 pl-3 pr-4 sm:pr-6" scope="col">
+<span class="sr-only">Edit</span>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr>
+<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 dark:text-white sm:pl-6 flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Student Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-_7N7Z1sqaG3siLBhpuZKHreE0l3cpnvnM9hu4AqPqwzB_AovOpdC_Xeu11zQJZDr6_ViIUnuJCtKGn5VRx9NIr5Sf9ccKh1amrAe0WswFBN9AGtwPI78d7Pk2jjEQ_Om-DycXpoR_tDv0cai31rd03iXJLOHw9Khas70cKOp7MoHBjd7yOxSe4WTiVXB8KHUG6f7bFBdxwvU8rbkTkGjt35oswqwODNXV-Z0r5DpaNHXu5qasvmQyw7ojgBuvTTsmIToMGjDbXfT');"></div>
+                                         John Doe
+                                    </td>
+<td class="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400">Grade 6 - A</td>
+<td class="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">ST-2024-8819</td>
+<td class="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400">Today</td>
+<td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+<a class="text-primary hover:text-blue-900" href="#">Edit</a>
+</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 dark:text-white sm:pl-6 flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Student Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBCE07ZxpqEeV7MhKXQ5mtcspPKcM6cwzPVYBHb7Oq_EaHPDFxcQXli33Wcc8fvtZ_mSU8CIsF1kBP47kfcoeXXj_3B_wrASaU8pBi-8kGNFhwQwXmZBRrradOHwL_se3CyY7KA68MC70gNSF8ZD5071kRLpo3IJWAWd6uKv36PsTCOF2UMvQJg2RgAPM7e_L4XisDcSOYY_FAvTsqgw9fS2-iH5uBCPdu1s8y4TzkFBy-D5AWhMDfn7dutwxhb_VOLe52P2gM7IHE_');"></div>
+                                         Emily Chen
+                                    </td>
+<td class="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400">Grade 5 - C</td>
+<td class="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">ST-2024-8818</td>
+<td class="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400">Yesterday</td>
+<td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+<a class="text-primary hover:text-blue-900" href="#">Edit</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

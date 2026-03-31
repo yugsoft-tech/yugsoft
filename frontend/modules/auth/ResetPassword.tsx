@@ -18,10 +18,10 @@ import {
 import { toast } from 'react-hot-toast';
 
 const resetPasswordSchema = z.object({
-    password: z.string().min(8, 'Security protocol requires at least 8 characters'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
     confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
-    message: "Security ciphers do not match",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
 });
 
@@ -49,9 +49,9 @@ export default function ResetPassword() {
         try {
             await authService.resetPassword(token as string, data.password);
             setSuccess(true);
-            toast.success('Security cipher updated. Protocol stabilized.');
+            toast.success('Password updated successfully.');
         } catch (err: any) {
-            toast.error(err.message || 'Cipher update protocol failed');
+            toast.error(err.message || 'Failed to update password');
         } finally {
             setLoading(false);
         }

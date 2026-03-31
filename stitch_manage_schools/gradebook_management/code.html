@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gradebook Management - School ERP</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for table */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+        
+        .no-spinner::-webkit-outer-spin-button,
+        .no-spinner::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .no-spinner {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col transition-all duration-300">
+<div class="h-16 flex items-center px-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8 bg-primary/10 flex items-center justify-center text-primary" data-alt="School logo abstract icon">
+<span class="material-symbols-outlined text-lg">school</span>
+</div>
+<h1 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">School ERP</h1>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">class</span>
+<span class="text-sm font-medium">Classes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary dark:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px] fill-current">assignment</span>
+<span class="text-sm font-medium">Gradebook</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">groups</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">calendar_month</span>
+<span class="text-sm font-medium">Schedule</span>
+</a>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark relative">
+<!-- Top Navigation -->
+<header class="h-16 flex items-center justify-between px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 z-20">
+<div class="flex items-center flex-1 max-w-xl">
+<label class="relative w-full">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-none text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary/50 text-sm" placeholder="Search students, classes, or assignments..." type="text"/>
+</label>
+</div>
+<div class="flex items-center gap-4 ml-6">
+<button class="relative p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-[24px]">chat_bubble</span>
+</button>
+<div class="w-px h-8 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Alex Morgan</p>
+<p class="text-xs text-slate-500 mt-1">Mathematics Teacher</p>
+</div>
+<div class="size-9 rounded-full bg-cover bg-center ring-2 ring-white dark:ring-slate-800 shadow-sm" data-alt="Profile picture of teacher Alex Morgan" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA33i-Z_VYZqFQjIcDoaX7GiYLgGjomOt_8PltA1dZangk4RHJgpNeVNKvHK25dYME8xdvs4zurpljzoaAJ4cXZNGwChAtZoB-TwGd_vCFSIxWBI-hxdyuIRzZIpoVP1SLghm1a7O53mtjKrDN3FUpcP4-VBw1-tq0j5MpwKfdnIH-oj_5Zva3-EpNEpbrqso7e16CG5LpO5XMwMenFKZCePNKKMWrtVnbhL1kYUSAx7znONq4kg8h4hsd0hda6cqbfjcHft0T9g_Gh');"></div>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10 pb-20">
+<div class="max-w-[1400px] mx-auto flex flex-col gap-6">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+<a class="hover:text-primary transition-colors" href="#">Classes</a>
+<span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+<span class="text-slate-900 dark:text-white">Grade 10 - Mathematics</span>
+</nav>
+<!-- Page Heading & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Grade 10 - Mathematics</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Fall Semester 2023 • Section A • 32 Students</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="h-10 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                                Class Settings
+                            </button>
+<button class="h-10 px-4 rounded-lg bg-primary text-white font-medium text-sm hover:bg-blue-600 transition-colors shadow-sm shadow-blue-200 dark:shadow-none flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                                Add Assignment
+                            </button>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Class Average</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">82%</p>
+<p class="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                                    +2.4% vs last term
+                                </p>
+</div>
+<div class="size-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+<span class="material-symbols-outlined">bar_chart</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Highest Score</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">98%</p>
+<p class="text-xs text-slate-500 mt-1">Held by Sarah J.</p>
+</div>
+<div class="size-10 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 flex items-center justify-center">
+<span class="material-symbols-outlined">emoji_events</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Pass Rate</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">93%</p>
+<p class="text-xs text-red-500 font-medium mt-1">2 students at risk</p>
+</div>
+<div class="size-10 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 flex items-center justify-center">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Pending Grading</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">5</p>
+<p class="text-xs text-slate-500 mt-1">Due today</p>
+</div>
+<div class="size-10 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+<span class="material-symbols-outlined">edit_document</span>
+</div>
+</div>
+</div>
+<!-- Filters and Controls Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none">
+<option>Fall 2023</option>
+<option>Spring 2024</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none">
+<option>All Students</option>
+<option>Group A</option>
+<option>Group B</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<label class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                                Show Dropped
+                            </label>
+</div>
+<div class="flex items-center gap-3">
+<button class="h-10 px-4 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-sm font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                                Export
+                            </button>
+<button class="h-10 px-4 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                                Save Changes
+                            </button>
+</div>
+</div>
+<!-- Grade Grid / Spreadsheet -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col flex-1 min-h-[500px]">
+<div class="overflow-x-auto flex-1 custom-scrollbar">
+<table class="w-full text-sm text-left border-collapse">
+<thead class="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 uppercase font-bold sticky top-0 z-10 shadow-sm">
+<tr>
+<th class="px-6 py-4 sticky left-0 bg-slate-50 dark:bg-slate-800 z-20 border-b border-r border-slate-200 dark:border-slate-700 min-w-[240px]" scope="col">
+                                            Student Name
+                                        </th>
+<th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 text-center min-w-[100px]" scope="col">
+                                            ID
+                                        </th>
+<th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 text-center min-w-[120px] group cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" scope="col">
+<div class="flex flex-col gap-1 items-center">
+<span>HW 1</span>
+<span class="text-[10px] text-slate-400 font-normal bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded">10%</span>
+</div>
+</th>
+<th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 text-center min-w-[120px] group cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" scope="col">
+<div class="flex flex-col gap-1 items-center">
+<span>Quiz 1</span>
+<span class="text-[10px] text-slate-400 font-normal bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded">15%</span>
+</div>
+</th>
+<th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 text-center min-w-[120px] group cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" scope="col">
+<div class="flex flex-col gap-1 items-center">
+<span>Midterm</span>
+<span class="text-[10px] text-slate-400 font-normal bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded">30%</span>
+</div>
+</th>
+<th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 text-center min-w-[120px] group cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" scope="col">
+<div class="flex flex-col gap-1 items-center">
+<span>Project</span>
+<span class="text-[10px] text-slate-400 font-normal bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded">20%</span>
+</div>
+</th>
+<th class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 text-center min-w-[120px] bg-slate-100/50 dark:bg-slate-800/50" scope="col">
+<div class="flex flex-col gap-1 items-center">
+<span class="text-primary dark:text-blue-400">Total</span>
+<span class="text-[10px] text-slate-400 font-normal">Calculated</span>
+</div>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 sticky left-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 border-r border-slate-200 dark:border-slate-700 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-cover bg-center" data-alt="Student Sarah Johnson" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYSl1VBPNcYVbXQmhnohFzgfsmKvwXcsK4gxaMT47g-3mUHGSrb_8sr-H_1MfBJ23yBE6N2kxDw1V4jpVKX6W1WFQ1gm88kV0M8Q2Gt2oCSSzN3_mI0fZUiOyl96dkph4ARpGVS7XQ0oCwrl9gqH0o-75Jzv5YEhJ1HgCTR-yFC_gQPas_aReJmHuntRdp_Kv1yGVemWWU3Y7hi2pecAliN7QKiK3omMLWDcJBOJa7AEFzoukgWuwQejKyZZAZIaEJsY49IMjXaNN3');"></div>
+<div class="flex flex-col">
+<span>Sarah Johnson</span>
+<span class="text-xs text-slate-400 font-normal sm:hidden">ID: 2023001</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-500 font-mono text-xs">2023001</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="95"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="88"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="92"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="96"/>
+</td>
+<td class="px-6 py-3 text-center font-bold text-slate-900 dark:text-white bg-slate-50/30 dark:bg-slate-800/30">
+                                            93%
+                                        </td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 sticky left-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 border-r border-slate-200 dark:border-slate-700 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 font-bold text-xs" data-alt="Initials Avatar for Michael C">MC</div>
+<div class="flex flex-col">
+<span>Michael Chen</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-500 font-mono text-xs">2023002</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="82"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="79"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="85"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="88"/>
+</td>
+<td class="px-6 py-3 text-center font-bold text-slate-900 dark:text-white bg-slate-50/30 dark:bg-slate-800/30">
+                                            84%
+                                        </td>
+</tr>
+<!-- Row 3 - At Risk -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 sticky left-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 border-r border-slate-200 dark:border-slate-700 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-cover bg-center" data-alt="Student James Wilson" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBIQ_forOHL0cuSEVF5DVW7CYidTg4HPsKh8s5p9HxA1rBvzRVwoU3lTCB5-JNzq0A_5mroHklWfrkqFZimKfm2xVIRae1bxcLY70qSpQPxA9IY_7qRwsYzXTZTNys9AT0qNPRMh5MPc52iymxu8L2zFf076bz2hd3hdc_fZGB3HRs7kwzz_ie8RBjK6Btl4x91pmksK4VKiPHffmA5yNDZiEa40ANq-BA3daK2-LbD56HL2ZQrrZiQ6eCO5QgYPloxOZKDPI97z2i1');"></div>
+<div class="flex flex-col">
+<span>James Wilson</span>
+<span class="text-[10px] text-red-500 font-bold bg-red-50 dark:bg-red-900/20 px-1.5 rounded-sm w-fit mt-0.5">At Risk</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-500 font-mono text-xs">2023003</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-red-600 dark:text-red-400 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="65"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-red-600 dark:text-red-400 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="58"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-orange-500 dark:text-orange-400 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="70"/>
+</td>
+<td class="px-2 py-2">
+<div class="relative w-full">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-400 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" placeholder="-" type="text" value="-"/>
+<div class="absolute right-2 top-2 size-1.5 bg-primary rounded-full animate-pulse" title="Pending entry"></div>
+</div>
+</td>
+<td class="px-6 py-3 text-center font-bold text-red-600 bg-slate-50/30 dark:bg-slate-800/30">
+                                            64%
+                                        </td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 sticky left-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 border-r border-slate-200 dark:border-slate-700 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-cover bg-center" data-alt="Student Emily Rose" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2uzsyP7yw3GwfNEUPZntDh1F1w6qYXzkUirBZe6_8m9zDqPVfq1Je-BWazzJGgqk-a0FYvgDOKZoF_EL8G8XO-ITlTlLKSa5hLEHUx4zxB67RPYRIvW0s5vSicTkDiaOwRRaG1rS81yqhrzf-DB2elcWvDrh5WZ8Jc4Qk6DMe39IoqO6eWxlSvF7YCfNbxaASQv0MIMxozz5mDYH7GgbEyobWHHf5usbl9SWwmJCteGE0lxNG9GFXUnnvpThoT46dzAnEkV-LxcL3');"></div>
+<div class="flex flex-col">
+<span>Emily Rose</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-500 font-mono text-xs">2023004</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="100"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="98"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="95"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="99"/>
+</td>
+<td class="px-6 py-3 text-center font-bold text-slate-900 dark:text-white bg-slate-50/30 dark:bg-slate-800/30">
+                                            98%
+                                        </td>
+</tr>
+<!-- Row 5 - Empty State example -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 sticky left-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 border-r border-slate-200 dark:border-slate-700 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 font-bold text-xs" data-alt="Initials Avatar for David K">DK</div>
+<div class="flex flex-col">
+<span>David Kim</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-500 font-mono text-xs">2023005</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="88"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="90"/>
+</td>
+<td class="px-2 py-2">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" type="number" value="85"/>
+</td>
+<td class="px-2 py-2">
+<div class="relative w-full">
+<input class="no-spinner w-full text-center bg-transparent border-transparent rounded focus:border-primary focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-300 font-medium p-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" placeholder="-" type="text" value=""/>
+</div>
+</td>
+<td class="px-6 py-3 text-center font-bold text-slate-900 dark:text-white bg-slate-50/30 dark:bg-slate-800/30">
+                                            88%
+                                        </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-6 py-3 flex items-center justify-between">
+<span class="text-xs text-slate-500">Showing 1-5 of 32 students</span>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">Page 1</span>
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex justify-end pb-10">
+<p class="text-xs text-slate-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+                            All changes saved 2 minutes ago
+                        </p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

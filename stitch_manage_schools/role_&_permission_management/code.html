@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Role &amp; Permission Management - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better look in permission area */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">School ERP</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800 border border-transparent focus-within:border-primary transition-colors">
+<div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-slate-900 dark:text-white focus:outline-0 border-none h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-3 text-sm font-normal leading-normal" placeholder="Search modules..." value=""/>
+</div>
+</label>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-white dark:border-slate-800 shadow-sm" data-alt="User profile picture of a smiling administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPACauMtXZZfE5_lG6X_XFShOdggyJV9ivbhvYdio3npgEFPThTELxkKVpRP0RiNovH0t-sjRKNf432XwetzJNhT_yFzLEbLyPyzyNXj8sJY-Ex2zUwnM3ap1lYXcJpQDjzPHiNhPHTzoPU7MF9iRSX7PU9o5P7S0bckJMcRCgxSfzJEBUkKrhWEPxiPmHH0kiNka60p4r-GEFk1NpqBBtmVtkW8QzyoALzznAetxAYb_SQh0vQswMxp2H0VWyxCcqV-AIJCZGGRRx");'></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 flex-col p-4 md:p-8 max-w-7xl mx-auto w-full gap-6">
+<!-- Breadcrumbs & Heading Section -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap gap-2 items-center text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors font-medium leading-normal" href="#">Home</a>
+<span class="text-slate-400 material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="text-slate-500 hover:text-primary transition-colors font-medium leading-normal" href="#">Settings</a>
+<span class="text-slate-400 material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-semibold leading-normal">Roles &amp; Permissions</span>
+</div>
+<div class="flex flex-col md:flex-row justify-between gap-4 md:items-end">
+<div class="flex flex-col gap-2 max-w-2xl">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Role &amp; Permission Management</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-relaxed">Define roles and assign detailed access rights across the ERP modules to control data security and workflow.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">history</span>
+                        Audit Log
+                    </button>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Master-Detail Layout -->
+<div class="flex flex-col lg:flex-row gap-6 h-full min-h-[600px]">
+<!-- Left Sidebar: Roles List -->
+<aside class="w-full lg:w-80 flex-shrink-0 flex flex-col gap-4">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col h-full">
+<div class="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+<h3 class="font-bold text-slate-800 dark:text-white">Defined Roles</h3>
+<span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full">6 Roles</span>
+</div>
+<div class="flex-1 overflow-y-auto p-3 flex flex-col gap-2 custom-scrollbar">
+<!-- Active Item -->
+<div class="group flex items-center gap-3 p-3 rounded-lg bg-primary/5 border border-primary/20 cursor-pointer transition-all">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="text-slate-900 dark:text-white font-semibold text-sm truncate">Administrator</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs truncate">Full system access</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+</div>
+<!-- Inactive Items -->
+<div class="group flex items-center gap-3 p-3 rounded-lg border border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-white dark:group-hover:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="text-slate-900 dark:text-white font-medium text-sm truncate">Principal</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs truncate">Management access</span>
+</div>
+</div>
+<div class="group flex items-center gap-3 p-3 rounded-lg border border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-white dark:group-hover:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">cast_for_education</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="text-slate-900 dark:text-white font-medium text-sm truncate">Teacher</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs truncate">Academic access</span>
+</div>
+</div>
+<div class="group flex items-center gap-3 p-3 rounded-lg border border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-white dark:group-hover:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">calculate</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="text-slate-900 dark:text-white font-medium text-sm truncate">Accountant</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs truncate">Financial module access</span>
+</div>
+</div>
+<div class="group flex items-center gap-3 p-3 rounded-lg border border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-white dark:group-hover:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">backpack</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="text-slate-900 dark:text-white font-medium text-sm truncate">Student</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs truncate">Restricted portal view</span>
+</div>
+</div>
+<div class="group flex items-center gap-3 p-3 rounded-lg border border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-white dark:group-hover:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">family_restroom</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="text-slate-900 dark:text-white font-medium text-sm truncate">Parent</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs truncate">Parental oversight view</span>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white gap-2 text-sm font-bold transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add New Role</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Right Panel: Permissions Detail -->
+<main class="flex-1 flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<!-- Detail Header -->
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="size-12 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+<span class="material-symbols-outlined text-[28px]">admin_panel_settings</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Administrator</h2>
+<span class="material-symbols-outlined text-slate-400 text-[18px] cursor-pointer hover:text-primary">edit</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Grants full access to all modules and system settings.</p>
+<div class="flex items-center gap-2 mt-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white dark:border-slate-900 bg-gray-200 bg-cover" data-alt="User avatar 1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBSBUswUyp1b-BVX0PyXqoJUvIPLbiUgMM0ig_gMxy9IWUelDCk0wnQx7MFyMIgv2txdUOzdXuVyDfz7uTAtQp2qPZOXtij4hWH8lyTrGrpQb8S9cG5C_KwV9B8tJy9mRpDPc0j5iK1FRJI11w91BL7_Wn2FmpHV0exv-t3I7pOSLSgk0sETGH5VLX90Chf9VmeJSxv2x_Uz__JzGq-a8GIyKv7_dwxld6XaMHBCR3zw06ijeFIWehw7fBda8Ra__f9cbj7Cx3xEvg");'></div>
+<div class="w-6 h-6 rounded-full border-2 border-white dark:border-slate-900 bg-gray-200 bg-cover" data-alt="User avatar 2" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCH-LzG6rsJIvP3io6PTWRLgX-xqZJG7pWlw0ZoT06UD6KjLwgHgelcL0iDTBrXF90VkzN_uTt26LTLuMKJh2KQjvYzAxGD2r-i7oTDxiXfzngXtUkUzaaFepjln4QNdw0xpJdnA7Igr9S2OoyPfP1Ycml5RhbEcaguG4GIYoeDE-RQ0C-3WXcXkze9SqYbvY3dQWhUgk5Ccn8U0Esxl6MLw41egm2VHYsBJlZEtvYfd98rEs74gIGXgePk_iPJyAjRwvdDQ8yNXC7h");'></div>
+<div class="w-6 h-6 rounded-full border-2 border-white dark:border-slate-900 bg-gray-200 bg-cover" data-alt="User avatar 3" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWv3Pa00GtJZIz94RXZEmU72Vovxrun20PFPPZOsbE2hPdgx3hWLaYtbM1jldU5trdgbrv8QCLhYdsVmVhZTSMe_MR1Q-nchgnUaMsqVMKnko8l9PeKFtQRY-dGINW838UEL9BoHkMhL1Crwez-folbfqKsKgIeoz4uc8QsCPSqV-kqQuyAV0EEO83RZghXO5rua-stPDBGXXPCG2Wu5WiTJWXyNZXujnYAipRFuaXWsbwSXfrstGkX9upN6HUnpMv2Eez7rSXkzk3");'></div>
+</div>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">3 Active Users</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px]">filter_list</span>
+<input class="pl-10 pr-4 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none w-full md:w-64 transition-all" placeholder="Filter permissions..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Permissions Matrix -->
+<div class="flex-1 overflow-y-auto bg-slate-50/30 dark:bg-slate-900/50 p-6 custom-scrollbar">
+<!-- Module: Academics -->
+<div class="mb-8 last:mb-0">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+                                Academics
+                            </h3>
+<button class="text-xs font-medium text-primary hover:text-blue-700 hover:underline">Select All</button>
+</div>
+<div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl divide-y divide-slate-100 dark:divide-slate-700 shadow-sm overflow-hidden">
+<!-- Permission Item -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Student Records</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">View and modify student profiles and details</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Gradebook Management</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Enter grades, publish report cards</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Curriculum &amp; Syllabus</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Create and edit course content</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Module: Finance -->
+<div class="mb-8 last:mb-0">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+                                Finance
+                            </h3>
+<button class="text-xs font-medium text-slate-400 hover:text-primary transition-colors">Select All</button>
+</div>
+<div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl divide-y divide-slate-100 dark:divide-slate-700 shadow-sm overflow-hidden">
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Fee Collection</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Process payments and issue receipts</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Payroll Access</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">View staff salary details</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Module: Library -->
+<div class="mb-8 last:mb-0">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">local_library</span>
+                                Library
+                            </h3>
+<button class="text-xs font-medium text-primary hover:text-blue-700 hover:underline">Select All</button>
+</div>
+<div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl divide-y divide-slate-100 dark:divide-slate-700 shadow-sm overflow-hidden">
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Inventory Management</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Add, remove, and edit book details</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Issue &amp; Returns</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Manage book circulation</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-4 md:px-6 md:py-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-between items-center z-10">
+<button class="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Delete Role</button>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+<button class="px-5 py-2.5 rounded-lg bg-primary text-white font-semibold text-sm shadow-md shadow-blue-500/20 hover:bg-blue-600 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                            Save Changes
+                        </button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

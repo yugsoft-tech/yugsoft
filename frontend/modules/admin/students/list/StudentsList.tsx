@@ -57,7 +57,7 @@ export default function StudentsList() {
       ),
     },
     {
-      header: 'Academic Unit',
+      header: 'Class',
       accessor: (student) => (
         <span className="text-sm font-bold text-slate-600 dark:text-slate-400 italic">
           {student.class?.name || 'Unassigned'}
@@ -104,9 +104,9 @@ export default function StudentsList() {
   ];
 
   return (
-    <AdminLayout title="Identity Directory">
+    <AdminLayout title="Student List">
       <Head>
-        <title>Identity Directory - Students - EduCore</title>
+        <title>Student List - EduCore</title>
       </Head>
 
       <div className="space-y-8">
@@ -115,14 +115,14 @@ export default function StudentsList() {
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-primary">
               <GraduationCap size={20} />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Validated Records</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Verified Students</span>
             </div>
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Student Archives</h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium italic">Global catalog of all verified student entities.</p>
+            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Students</h1>
+            <p className="text-slate-500 dark:text-slate-400 font-medium italic">List of all students in the school.</p>
           </div>
           <Link href="/admin/students/add" className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-black shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95 transition-all">
             <UserPlus size={18} />
-            Onboard Entity
+            Add Student
           </Link>
         </div>
 
@@ -131,11 +131,11 @@ export default function StudentsList() {
           <div className="flex flex-col lg:flex-row gap-4 items-center">
             <div className="relative w-full lg:w-96 group">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">
-                <Search size={18} />
+                <Search size={18} className="text-slate-400" />
               </span>
               <input
                 type="text"
-                placeholder="Query by name or ID..."
+                placeholder="Search by name or ID..."
                 className="w-full pl-11 pr-5 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-sm font-bold placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -164,7 +164,7 @@ export default function StudentsList() {
             limit: params.limit || 10,
             onPageChange: (page) => setPage(page),
           }}
-          emptyMessage="No student entities detected in the current query."
+          emptyMessage="No students found."
         />
       </div>
     </AdminLayout>

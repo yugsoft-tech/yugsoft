@@ -1,27 +1,32 @@
-import { ReactNode, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { ReactNode } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import AuthGuard from '@/components/guards/AuthGuard';
 import RoleGuard from '@/components/guards/RoleGuard';
 import { USER_ROLES } from '@/utils/role-config';
+import DashboardLayout, { NavSection } from './DashboardLayout';
 import {
   LayoutDashboard,
+  GraduationCap,
   Users,
   Calendar,
-  Settings,
-  Menu,
-  Bell,
-  Search,
-  ChevronDown,
-  LogOut,
   BookOpen,
-  GraduationCap,
+  FileText,
+  Settings,
+  Layers,
   Bus,
   Briefcase,
-  Layers,
-  FileText,
-  School
+  Bell,
+  Megaphone,
+  Search,
+  UserCheck,
+  Award,
+  ClipboardList,
+  Database,
+  Utensils,
+  ShieldCheck,
+  MessageSquare,
+  BookMarked,
+  Smartphone
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -29,150 +34,51 @@ interface AdminLayoutProps {
   title?: string;
 }
 
+const ADMIN_SECTIONS: NavSection[] = [
+  {
+    title: 'Home',
+    items: [
+      { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+      { label: 'Students', href: '/admin/students', icon: GraduationCap },
+      { label: 'Staff', href: '/admin/users', icon: Users },
+      { label: 'Attendance', href: '/admin/attendance', icon: UserCheck },
+    ]
+  },
+  {
+    title: 'School',
+    items: [
+      { label: 'Classes', href: '/admin/classes', icon: Layers },
+      { label: 'Subjects', href: '/admin/subjects', icon: BookMarked },
+      { label: 'Calendar', href: '/admin/academic/calendar', icon: Calendar },
+      { label: 'Exams', href: '/admin/exams', icon: Award },
+      { label: 'Homework', href: '/admin/homework', icon: ClipboardList },
+      { label: 'Timetable', href: '/admin/timetable', icon: Calendar },
+    ]
+  },
+  {
+    title: 'Office',
+    items: [
+      { label: 'Messages', href: '/admin/communication', icon: MessageSquare },
+      { label: 'Announcements', href: '/admin/announcements', icon: Megaphone },
+      { label: 'Fees', href: '/admin/fees', icon: FileText },
+      { label: 'Library', href: '/admin/library', icon: BookOpen },
+    ]
+  },
+  {
+    title: 'Settings',
+    items: [
+      { label: 'Logs', href: '/admin/audit', icon: Database },
+      { label: 'Notice Board', href: '/admin/notices', icon: Bell },
+      { label: 'General Settings', href: '/admin/settings', icon: Settings },
+    ]
+  }
+];
+
 function AdminLayoutContent({ children, title }: AdminLayoutProps) {
-  const router = useRouter();
-  const { user, logout } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
-
-  const navItems = [
-    { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/admin/students', label: 'Students', icon: GraduationCap },
-    { href: '/admin/users', label: 'Staff & Users', icon: Users },
-    { href: '/admin/attendance', label: 'Attendance', icon: Calendar },
-    { href: '/admin/academic', label: 'Academics', icon: BookOpen },
-    { href: '/admin/finance', label: 'Finance', icon: FileText },
-    { href: '/admin/library', label: 'Library', icon: Layers },
-    { href: '/admin/transport', label: 'Transport', icon: Bus },
-    { href: '/admin/inventory', label: 'Inventory', icon: Briefcase },
-    { href: '/admin/settings', label: 'Settings', icon: Settings },
-  ];
-
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex overflow-hidden">
-      {/* Sidebar - Mobile Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside className={`
-        fixed lg:sticky top-0 left-0 z-50 h-screen w-72 
-        bg-white border-r border-slate-200
-        transition-transform duration-300 ease-in-out shadow-sm
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-      `}>
-        <div className="flex flex-col h-full relative overflow-hidden">
-          {/* Logo */}
-          <div className="h-20 flex items-center px-8 border-b border-slate-200 bg-white relative z-10">
-            <div className="flex items-center gap-3">
-              <div className="size-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-sm">
-                <School size={24} />
-              </div>
-              <div>
-                <span className="text-xl font-display font-bold tracking-tight text-slate-900 leading-none">EduCore</span>
-                <span className="block text-[10px] uppercase font-bold text-slate-500 mt-1 tracking-[0.1em]">Admin Portal</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Nav Items */}
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto no-scrollbar relative z-10">
-            {navItems.map((item) => {
-              const isActive = router.pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`
-                    flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 group
-                    ${isActive
-                      ? 'bg-blue-50 text-blue-700 font-semibold'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                    }
-                  `}
-                >
-                  <item.icon
-                    size={20}
-                    className={`transition-colors ${isActive ? 'text-blue-600' : 'text-slate-500 group-hover:text-slate-700'}`}
-                  />
-                  <span className="text-sm tracking-wide">{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* User Profile */}
-          <div className="p-4 border-t border-slate-200 bg-white relative z-10">
-            <div className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center gap-3">
-              <div className="size-10 rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center text-slate-600 font-bold">
-                {user?.firstName?.[0]}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-slate-900 truncate">{user?.firstName} {user?.lastName}</p>
-                <p className="text-xs text-slate-500 truncate">Administrator</p>
-              </div>
-              <button
-                onClick={logout}
-                className="text-slate-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 rounded-md"
-                title="Logout"
-              >
-                <LogOut size={18} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 bg-slate-50">
-        {/* Header */}
-        <header className="h-20 sticky top-0 z-30 px-8 flex items-center justify-between border-b border-slate-200 bg-white/80 backdrop-blur-md">
-          <div className="flex items-center gap-4">
-            <button
-              className="lg:hidden p-2 -ml-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu size={24} />
-            </button>
-
-            <div className="hidden md:flex items-center bg-slate-50 rounded-lg px-4 py-2 w-96 border border-slate-200 focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all">
-              <Search size={18} className="text-slate-400 mr-3" />
-              <input
-                type="text"
-                placeholder="Search global records..."
-                className="bg-transparent border-none text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-0 w-full outline-none"
-              />
-              <div className="flex items-center gap-1 text-[10px] font-bold text-slate-500 px-1.5 py-0.5 bg-white rounded border border-slate-200 shadow-sm">
-                ⌘K
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-100">
-              <span className="size-2 bg-emerald-500 rounded-full animate-pulse mr-2" />
-              <span className="text-xs font-semibold">System Online</span>
-            </div>
-
-            <button className="relative p-2 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all border border-transparent">
-              <Bell size={20} />
-              <span className="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white" />
-            </button>
-          </div>
-        </header>
-
-        {/* Page Content */}
-        <main className="flex-1 p-8 overflow-y-auto">
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
+    <DashboardLayout sections={ADMIN_SECTIONS} role="Admin">
+      {children}
+    </DashboardLayout>
   );
 }
 

@@ -1,200 +1,276 @@
 import { useState, useEffect } from 'react';
 import {
-    Plus,
-    Search,
-    Filter,
-    MoreVertical,
     Activity,
     Calendar,
-    Clock,
-    ChevronRight,
-    Zap,
-    BookOpen,
-    ArrowRight,
-    TrendingUp,
-    AlertCircle,
-    FileText,
     Award,
-    ShieldCheck,
-    CheckCircle2,
+    Star,
     GraduationCap,
+    Clock,
     ClipboardList,
     Flame,
-    Star
+    Zap,
+    Download,
+    TrendingUp,
+    CheckCircle2,
+    ChevronRight,
+    ArrowRight,
+    BookOpen,
+    Loader2,
+    Inbox
 } from 'lucide-react';
-import { statsService } from '@/services/stats.service';
-import Button from '@/components/ui/Button';
-import Skeleton from '@/components/ui/Skeleton';
-import { Badge } from '@/components/ui/Badge';
-import { toast } from 'react-hot-toast';
+import { useStudentDashboard } from '@/hooks/useStudentDashboard';
+import { useAuthContext } from '@/contexts/AuthContext';
+import StatCard from '@/components/ui/StatCard';
+import StudentLayout from '@/components/layouts/StudentLayout';
 
 export default function StudentDashboard() {
-    const [stats, setStats] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    const { user } = useAuthContext();
+    const { data, loading, error } = useStudentDashboard();
 
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const data = await statsService.getStudentStats();
-                setStats(data.data || data);
-            } catch (error: any) {
-                toast.error('Failed to synchronize pedagogical nodes.');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchStats();
-    }, []);
+    if (loading) {
+        return (
+            <StudentLayout>
+                <div className="h-[80vh] flex flex-col items-center justify-center space-y-4">
+                    <Loader2 className="w-10 h-10 text-primary animate-spin" />
+                    <p className="text-slate-500 font-medium animate-pulse">Loading your profile...</p>
+                </div>
+            </StudentLayout>
+        );
+    }
+
+    if (error) {
+        console.log('[StudentDashboard] Error state:', error);
+        // Check for specific profile missing error
+        const isProfileMissing = error.toLowerCase().includes('profile not found') ||
+            error.toLowerCase().includes('student not found');
+
+        if (isProfileMissing) {
+            return (
+                <StudentLayout>
+                    <div className="h-[80vh] flex flex-col items-center justify-center space-y-4 text-center px-4">
+                        <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-full">
+                            <GraduationCap className="w-10 h-10 text-amber-500" />
+                        </div>
+                        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Setup Needed</h2>
+                        <p className="text-slate-500 dark:text-slate-400 max-w-md">
+                            Your profile is not linked to any class. 
+                            Please contact the school office to complete your enrollment.
+                        </p>
+                        <button
+                            onClick={() => window.location.reload()}
+                            className="mt-4 px-6 py-2 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                        >
+                            Check Again
+                        </button>
+                    </div>
+                </StudentLayout>
+            );
+        }
+
+        return (
+            <StudentLayout>
+                <div className="h-[80vh] flex flex-col items-center justify-center space-y-4">
+                    <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-full">
+                        <Activity className="w-10 h-10 text-red-500" />
+                    </div>
+                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Oops! Something went wrong</h2>
+                    <p className="text-slate-500 dark:text-slate-400 text-center max-w-md">{error}</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                    >
+                        Retry
+                    </button>
+                </div>
+            </StudentLayout>
+        );
+    }
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div>
-                    <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        PEDAGOGICAL_CORE: STUDENT_INSIGHTS
-                    </Badge>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Academic Command Center</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Monitor pedagogical progress, manage temporal schedules, and synchronize with the institutional core.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 bg-amber-500/10 text-amber-600 px-6 py-4 rounded-2xl border-2 border-amber-500/20 shadow-xl shadow-amber-500/5 transition-all hover:scale-105 group">
-                        <Flame size={20} className="group-hover:animate-bounce" />
-                        <div className="flex flex-col">
-                            <span className="text-[8px] font-black uppercase tracking-widest leading-none mb-1">Learning Streak</span>
-                            <span className="text-sm font-black leading-none">12 DAYS ACTIVE</span>
+        <StudentLayout>
+            <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+                {/* Page Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, {user?.firstName}!</h1>
+                        <p className="text-slate-500 dark:text-slate-400 mt-1">Check your progress and classes.</p>
+                    </div>
+                    <div className="flex gap-3">
+                        <div className="flex items-center gap-2 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-lg border border-orange-200 dark:border-orange-800/50 shadow-sm transition-all hover:scale-105 group">
+                            <Flame size={18} className="group-hover:animate-bounce" />
+                            <div className="flex flex-col">
+                                <span className="text-[10px] font-black uppercase tracking-widest leading-none mb-0.5">Study Days</span>
+                                <span className="text-sm font-black leading-none">{data?.streak || '0'} DAYS</span>
+                            </div>
                         </div>
+                        <button className="inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            <Download size={18} className="mr-2" />
+                            Download Report
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {[
-                    { label: 'Cumulative GPA', value: '3.8', icon: <GraduationCap className="text-primary" />, trend: 'TOP 5%', color: 'bg-primary/5' },
-                    { label: 'Temporal Clock', value: '94.2%', icon: <Clock className="text-emerald-500" />, trend: 'OPTIMAL', color: 'bg-emerald-500/5' },
-                    { label: 'Active Tasks', value: '08', icon: <ClipboardList className="text-amber-500" />, trend: '3 DUE TODAY', color: 'bg-amber-500/5' },
-                    { label: 'Merit Points', value: '450', icon: <Star className="text-purple-500" />, trend: '+50 RECENT', color: 'bg-purple-500/5' },
-                ].map((stat, i) => (
-                    <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl relative group overflow-hidden">
-                        <div className="relative z-10 flex items-center justify-between mb-6">
-                            <div className={`size-14 rounded-2xl ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                                {stat.icon}
-                            </div>
-                            <Badge variant="outline" className="text-[7px] font-black uppercase tracking-widest border-none p-0 opacity-40 group-hover:opacity-100 transition-opacity">{stat.trend}</Badge>
-                        </div>
-                        <div className="relative z-10">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{stat.label}</p>
-                            <h3 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{stat.value}</h3>
-                        </div>
-                    </div>
-                ))}
-            </div>
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <StatCard
+                        title="My Grade"
+                        value={data?.gpa || "0.0"}
+                        icon={<GraduationCap size={24} />}
+                        trend={data?.rankText || "N/A"}
+                        trendType={data?.rankText ? "up" : "neutral"}
+                        color="indigo"
+                    />
+                    <StatCard
+                        title="Attendance"
+                        value={data?.attendancePercent || "0%"}
+                        icon={<Clock size={24} />}
+                        trend={data?.attendanceStatus || "POOR"}
+                        trendType={data?.attendanceStatus === 'GOOD' ? 'up' : data?.attendanceStatus === 'AVERAGE' ? 'neutral' : 'down'}
+                        color="emerald"
+                    />
+                    <StatCard
+                        title="Active Assignments"
+                        value={data?.activeAssignmentsCount.toString().padStart(2, '0') || "00"}
+                        icon={<ClipboardList size={24} />}
+                        trend={data?.activeAssignmentsCount === 0 ? "ALL CLEAR" : `${data?.activeAssignmentsCount} PENDING`}
+                        trendType={data?.activeAssignmentsCount === 0 ? "up" : "down"}
+                        color="blue"
+                    />
+                    <StatCard
+                        title="Activity Points"
+                        value="0"
+                        icon={<Star size={24} />}
+                        trend="0 RECENT"
+                        trendType="neutral"
+                        color="purple"
+                    />
+                </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-8">
-                    <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-                        <div className="p-10">
-                            <div className="flex items-center justify-between mb-10">
-                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic flex items-center gap-3">
-                                    <Activity className="text-primary" />
-                                    Performance Matrix
-                                </h2>
-                                <Button variant="secondary" className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl px-6 py-3 text-[10px] font-black uppercase text-slate-400 hover:text-primary transition-all">
-                                    Full Projection
-                                </Button>
+                {/* Main Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Performance Overview */}
+                    <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+                        <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center gap-2">
+                                <Activity size={20} className="text-primary" />
+                                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">My Progress</h2>
                             </div>
-                            <div className="h-64 flex items-end justify-between gap-4 px-4">
-                                {[85, 92, 78, 88, 95, 82, 90].map((h, i) => (
-                                    <div key={i} className="flex-1 flex flex-col items-center gap-4 group">
+                            <button className="text-xs font-bold text-primary hover:underline flex items-center gap-1 group">
+                                See Details
+                                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </div>
+
+                        {data?.performanceData && data.performanceData.some(d => d.score > 0) ? (
+                            <div className="h-64 flex items-end justify-between gap-4 px-2">
+                                {data.performanceData.map((d, i) => (
+                                    <div key={i} className="flex-1 flex flex-col items-center gap-4 group/bar">
                                         <div className="w-full bg-slate-50 dark:bg-slate-800/50 rounded-2xl relative overflow-hidden flex items-end h-full">
                                             <div
-                                                className="w-full bg-primary rounded-2xl transition-all duration-1000 group-hover:bg-primary/80"
-                                                style={{ height: `${h}%` }}
-                                            >
-                                                <div className="absolute top-0 left-0 w-full h-1/2 bg-white/10"></div>
+                                                className="w-full bg-primary/20 group-hover:bg-primary transition-all duration-500 rounded-t-xl"
+                                                style={{ height: `${d.score}%` }}
+                                            />
+                                            <div className="absolute top-2 left-0 right-0 text-center opacity-0 group-hover/bar:opacity-100 transition-opacity">
+                                                <span className="text-[10px] font-bold text-primary">{d.score}%</span>
                                             </div>
                                         </div>
-                                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">W{i + 1}</span>
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{d.name}</span>
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        ) : (
+                            <div className="h-64 flex flex-col items-center justify-center text-slate-400 bg-slate-50 dark:bg-slate-800/20 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+                                <Activity size={32} className="mb-2 opacity-20" />
+                                <p className="text-xs font-bold uppercase tracking-widest">No Performance Data</p>
+                            </div>
+                        )}
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-                        <div className="p-10">
-                            <div className="flex items-center justify-between mb-10">
-                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic flex items-center gap-3">
-                                    <Calendar className="text-emerald-500" />
-                                    Temporal Protocol
-                                </h2>
-                            </div>
-                            <div className="space-y-4">
-                                {[
-                                    { time: '09:00 AM', name: 'Mathematics 101', room: 'Room 302', status: 'ACTIVE' },
-                                    { time: '10:45 AM', name: 'World History', room: 'Room 104', status: 'PENDING' },
-                                    { time: '01:00 PM', name: 'Physics Lab', room: 'Room 205', status: 'PENDING' },
-                                ].map((node, i) => (
-                                    <div key={i} className="flex items-center justify-between p-6 rounded-[2rem] bg-slate-50/50 dark:bg-slate-800/30 border-2 border-transparent hover:border-slate-100 dark:hover:border-slate-800 transition-all group">
-                                        <div className="flex items-center gap-6">
-                                            <div className="flex flex-col items-center">
-                                                <span className="text-[10px] font-black text-slate-900 dark:text-white">{node.time}</span>
-                                                <div className="w-0.5 h-6 bg-slate-200 dark:bg-slate-800 my-1"></div>
+                    {/* Assignments */}
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col">
+                        <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Pending Homework</h2>
+
+                        {data?.pendingAssignments && data.pendingAssignments.length > 0 ? (
+                            <div className="space-y-6 flex-1 overflow-auto max-h-[300px] pr-2 scrollbar-thin">
+                                {data.pendingAssignments.map((task, i) => (
+                                    <div key={i} className="group cursor-pointer">
+                                        <div className="flex items-start justify-between mb-2">
+                                            <div className="flex flex-col">
+                                                <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors line-clamp-1">{task.title}</h4>
+                                                <span className="text-[9px] text-slate-400 font-bold uppercase">{task.subject}</span>
                                             </div>
-                                            <div>
-                                                <h4 className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{node.name}</h4>
-                                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{node.room}</p>
-                                            </div>
+                                            <span className={`text-[10px] font-black uppercase tracking-widest ${task.priority === 'HIGH' ? 'text-red-500' : 'text-slate-400'}`}>{task.due}</span>
                                         </div>
-                                        <Badge variant="outline" className={`text-[8px] font-black uppercase tracking-widest border-none ${node.status === 'ACTIVE' ? 'bg-primary text-white animate-pulse' : 'text-slate-400'}`}>
-                                            {node.status}
-                                        </Badge>
+                                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                            <div
+                                                className={`h-full rounded-full transition-all duration-1000 ${task.priority === 'HIGH' ? 'bg-red-500' : 'bg-primary/40'}`}
+                                                style={{ width: `${task.progress || 10}%` }}
+                                            />
+                                        </div>
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        ) : (
+                            <div className="flex-1 flex flex-col items-center justify-center text-slate-400 py-8">
+                                <Inbox size={32} className="mb-2 opacity-20" />
+                                <p className="text-xs font-bold uppercase tracking-widest text-emerald-500">All Done!</p>
+                            </div>
+                        )}
+
+                        <button className="w-full mt-6 py-3 text-xs font-black uppercase tracking-widest text-white bg-primary rounded-xl shadow-lg shadow-primary/20 hover:bg-indigo-700 transition-all active:scale-95 flex items-center justify-center gap-2">
+                            View All Assignments
+                            <ArrowRight size={14} />
+                        </button>
                     </div>
                 </div>
 
-                <div className="space-y-8">
-                    <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden p-10">
-                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-8">Pedagogical Tasks</h3>
-                        <div className="space-y-6">
+                {/* Bottom Section: Class Schedule & School Alerts */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Class Schedule */}
+                    <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+                        <div className="flex items-center gap-2 mb-6">
+                            <Calendar size={20} className="text-emerald-500" />
+                            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Classes Today</h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {[
-                                { title: 'Algebra Worksheet 4.2', due: 'Today', priority: 'HIGH' },
-                                { title: 'History Essay Draft', due: 'Tomorrow', priority: 'MEDIUM' },
-                                { title: 'Physics Lab Report', due: 'Oct 26', priority: 'LOW' },
-                            ].map((task, i) => (
-                                <div key={i} className="group cursor-pointer">
-                                    <div className="flex items-start justify-between mb-2">
-                                        <h4 className="text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-tight group-hover:text-primary transition-colors">{task.title}</h4>
-                                        <span className={`text-[7px] font-black uppercase tracking-widest ${task.priority === 'HIGH' ? 'text-rose-500' : 'text-slate-400'}`}>{task.due}</span>
+                                { time: '09:00 AM', name: 'Mathematics', room: 'Room 302', status: 'ACTIVE' },
+                                { time: '10:45 AM', name: 'World History', room: 'Room 104', status: 'NEXT' },
+                                { time: '01:00 PM', name: 'Physics Lab', room: 'Room 205', status: 'PENDING' },
+                            ].map((item, i) => (
+                                <div key={i} className={`p-4 rounded-xl border-2 transition-all ${item.status === 'ACTIVE' ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-slate-100 dark:border-slate-800'}`}>
+                                    <div className="flex justify-between items-start mb-2">
+                                        <span className="text-xs font-bold text-slate-900 dark:text-white">{item.time}</span>
+                                        <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${item.status === 'ACTIVE' ? 'bg-primary text-white animate-pulse' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>{item.status}</span>
                                     </div>
-                                    <div className="h-1.5 w-full bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
-                                        <div className={`h-full rounded-full transition-all duration-1000 ${task.priority === 'HIGH' ? 'bg-rose-500 w-full' : task.priority === 'MEDIUM' ? 'bg-amber-500 w-1/2' : 'bg-slate-200 w-1/4'}`}></div>
-                                    </div>
+                                    <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">{item.name}</h4>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.room}</p>
                                 </div>
                             ))}
                         </div>
-                        <Button className="w-full mt-10 bg-primary hover:bg-primary/90 text-white rounded-2xl py-6 font-black text-[10px] uppercase tracking-widest gap-2 shadow-xl shadow-primary/20 transition-all active:scale-95">
-                            Launch Task Hub
-                            <ArrowRight size={14} />
-                        </Button>
+                        <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800/50 flex items-center gap-3">
+                            <Clock size={16} className="text-slate-400" />
+                            <p className="text-xs font-medium text-slate-500">More schedule data will sync from Timetable module soon.</p>
+                        </div>
                     </div>
 
-                    <div className="bg-primary p-10 rounded-[3rem] shadow-xl shadow-primary/20 relative overflow-hidden group">
+                    {/* School Announcement Card */}
+                    <div className="bg-primary p-6 rounded-xl shadow-xl shadow-primary/20 relative overflow-hidden group">
                         <div className="absolute -top-10 -right-10 size-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
-                        <div className="relative z-10">
-                            <Zap className="text-white mb-6 animate-pulse" size={32} />
-                            <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-2 italic">Institutional Alert</h3>
-                            <p className="text-[10px] font-bold text-blue-100 uppercase tracking-wider leading-relaxed">System-wide synchronization for Annual Science Fair scheduled for 24 Oct. Secure your protocol entry now.</p>
-                            <button className="mt-8 text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                Verify Entry
+                        <div className="relative z-10 flex flex-col h-full justify-between">
+                            <div>
+                                <Zap className="text-white mb-4 animate-pulse" size={24} />
+                                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-2 italic">School News</h3>
+                                <p className="text-xs font-bold text-blue-100 opacity-80 leading-relaxed">Science Fair starts soon! Register by tomorrow.</p>
+                            </div>
+                            <button className="mt-6 text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
+                                Learn More
                                 <ChevronRight size={14} />
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </StudentLayout>
     );
 }

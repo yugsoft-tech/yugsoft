@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Transfer Management - School ERP</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "primary-dark": "#1a6cb8",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col w-64 h-full bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-shrink-0 z-20">
+<div class="flex flex-col h-full justify-between p-4">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col px-2">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">school</span>
+</div>
+<div>
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-none">School ERP</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal mt-1">Admin Console</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">groups</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">menu_book</span>
+<span class="text-sm font-medium">Academics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">payments</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined text-[22px] fill-current">swap_horiz</span>
+<span class="text-sm font-bold">Transfers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="px-3">
+<div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 flex-shrink-0">
+<span class="material-symbols-outlined text-sm">notifications</span>
+</div>
+<div>
+<p class="text-xs font-semibold text-slate-900 dark:text-white mb-1">New Transfer Request</p>
+<p class="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">Review Sarah's application for Grade 5 transfer.</p>
+<button class="text-[11px] font-bold text-primary mt-2 hover:underline">Review Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<div class="flex flex-col flex-1 h-full overflow-hidden relative">
+<!-- Top Navbar -->
+<header class="h-16 flex items-center justify-between px-6 lg:px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shrink-0 z-10">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="p-2 -ml-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-bold text-lg">St. Mary's High</span>
+</div>
+<div class="hidden lg:flex items-center gap-3 text-slate-800 dark:text-white">
+<h2 class="text-lg font-bold tracking-tight">St. Mary's High School</h2>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 uppercase tracking-wide">Academic Year 2024-25</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="flex items-center gap-3 pl-1 pr-2 py-1 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Administrator Profile Picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAeVdDUSwxOLGKxFFkViFtKx_t12xBdUgxk0xDfs_EdGbNKI0Ep-OFJVVlsCj60uz0kpisSuLLCF0RqH8hVdQ0eGIsXlXhCRM0GVDqgj0L6n49L6xsGzHb8xQ9oKdUGo_dcOsCDgnQFGEVsyMJ7PcK_EqDqR4qKJLQH5F9vZWqK5rY85OJKAmN_1kB0tNc5U5KowVlWLVrB9ardodrMZwYPpgszkhEAznM0esgaIEUKPgaziABJw7vl1TM9MJJZtrCkbhbJjZ1Ub3Hd');"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200 hidden sm:block">Admin User</span>
+<span class="material-symbols-outlined text-slate-400 text-lg hidden sm:block">expand_more</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<main class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+<div class="max-w-7xl mx-auto flex flex-col gap-6">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex text-sm font-medium text-slate-500 dark:text-slate-400">
+<ol class="flex items-center gap-2">
+<li><a class="hover:text-primary transition-colors" href="#">Home</a></li>
+<li><span class="material-symbols-outlined text-base">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Student Management</a></li>
+<li><span class="material-symbols-outlined text-base">chevron_right</span></li>
+<li aria-current="page" class="text-slate-900 dark:text-white font-semibold">Transfers</li>
+</ol>
+</nav>
+<!-- Page Heading & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Student Transfer Management</h1>
+<p class="text-slate-500 dark:text-slate-400">Manage student transfer requests, approvals, and certificate generation.</p>
+</div>
+<button class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-colors shadow-sm shadow-primary/30">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                            New Transfer Request
+                        </button>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute right-0 top-0 h-full w-1 bg-orange-500"></div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Requests</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-1">12</h3>
+</div>
+<div class="size-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+</div>
+<div class="flex items-center text-xs font-medium text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 w-fit px-2 py-1 rounded">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span>
+                                +2 new today
+                            </div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute right-0 top-0 h-full w-1 bg-blue-500"></div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Transfers Out (YTD)</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-1">45</h3>
+</div>
+<div class="size-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+<span class="material-symbols-outlined">logout</span>
+</div>
+</div>
+<div class="flex items-center text-xs font-medium text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 w-fit px-2 py-1 rounded">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span>
+                                +15% vs last year
+                            </div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute right-0 top-0 h-full w-1 bg-purple-500"></div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Transfers In (YTD)</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-1">8</h3>
+</div>
+<div class="size-10 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+<span class="material-symbols-outlined">login</span>
+</div>
+</div>
+<div class="flex items-center text-xs font-medium text-rose-600 bg-rose-50 dark:bg-rose-900/20 w-fit px-2 py-1 rounded">
+<span class="material-symbols-outlined text-xs mr-1">trending_down</span>
+                                -5% vs last year
+                            </div>
+</div>
+</div>
+<!-- Main Data Container -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
+<!-- Tabs -->
+<div class="flex border-b border-slate-200 dark:border-slate-700 overflow-x-auto no-scrollbar">
+<button class="flex items-center gap-2 px-6 py-4 text-sm font-bold text-primary border-b-2 border-primary bg-primary/5 whitespace-nowrap">
+<span>Pending Requests</span>
+<span class="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full">12</span>
+</button>
+<button class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b-2 border-transparent whitespace-nowrap">
+<span>Approved / Completed</span>
+</button>
+<button class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b-2 border-transparent whitespace-nowrap">
+<span>Rejected</span>
+</button>
+<button class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b-2 border-transparent whitespace-nowrap">
+<span>Certificate Generation</span>
+<span class="material-symbols-outlined text-[16px] text-amber-500">warning</span>
+</button>
+</div>
+<!-- Toolbar -->
+<div class="p-4 flex flex-col lg:flex-row gap-4 justify-between lg:items-center bg-slate-50/50 dark:bg-slate-800/50">
+<!-- Search -->
+<div class="relative max-w-md w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg leading-5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-shadow" placeholder="Search by name, ID, or admission no..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap gap-2">
+<select class="form-select pl-3 pr-8 py-2 text-sm border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary cursor-pointer">
+<option>All Classes</option>
+<option>Grade 10</option>
+<option>Grade 9</option>
+</select>
+<select class="form-select pl-3 pr-8 py-2 text-sm border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary cursor-pointer">
+<option>All Types</option>
+<option>Transfer Out</option>
+<option>Transfer In</option>
+</select>
+<button class="flex items-center justify-center size-[38px] border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors" title="Export CSV">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="flex items-center justify-center size-[38px] border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors" title="Filter Settings">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto min-h-[400px]">
+<table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+<thead class="bg-slate-50 dark:bg-slate-800">
+<tr>
+<th class="px-6 py-3 text-left" scope="col">
+<div class="flex items-center gap-2">
+<input class="rounded border-slate-300 text-primary focus:ring-primary size-4" type="checkbox"/>
+</div>
+</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Student Details</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Transfer Type</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Reason</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Request Date</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Status</th>
+<th class="px-6 py-3 text-right text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary size-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="size-9 shrink-0 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-xs mr-3">SJ</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">Sarah Jenkins</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: #STD-2023-01</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Transfer Out</div>
+<div class="text-xs text-slate-500">To: Springfield Academy</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Relocation</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Oct 24, 2023</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300">
+                                                Pending Approval
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-green-600 transition-colors" title="Approve">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary size-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="size-9 shrink-0 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs mr-3">LB</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">Lucas Brown</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: #STD-2023-44</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Transfer Out</div>
+<div class="text-xs text-slate-500">To: North High</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Financial</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Oct 22, 2023</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300">
+                                                Library Dues
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary size-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="size-9 shrink-0 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-xs mr-3">EM</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">Emma Martinez</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: #STD-2023-12</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Transfer In</div>
+<div class="text-xs text-slate-500">From: West Valley</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Parent Job Transfer</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Oct 20, 2023</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">
+                                                Processing
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-green-600 transition-colors" title="Approve">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary size-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="size-9 shrink-0 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-700 font-bold text-xs mr-3">JC</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">James Chen</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: #STD-2023-89</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Transfer Out</div>
+<div class="text-xs text-slate-500">To: City High</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Medical Reasons</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Oct 19, 2023</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                                Awaiting Docs
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-white dark:bg-slate-800 px-4 py-3 flex items-center justify-between border-t border-slate-200 dark:border-slate-700 sm:px-6">
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-slate-700 dark:text-slate-300">
+                                        Showing
+                                        <span class="font-medium text-slate-900 dark:text-white">1</span>
+                                        to
+                                        <span class="font-medium text-slate-900 dark:text-white">10</span>
+                                        of
+                                        <span class="font-medium text-slate-900 dark:text-white">97</span>
+                                        results
+                                    </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-600" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-bold" href="#">
+                                            1
+                                        </a>
+<a class="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                            2
+                                        </a>
+<a class="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                            3
+                                        </a>
+<span class="relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm font-medium text-slate-700">
+                                            ...
+                                        </span>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-600" href="#">
+<span class="sr-only">Next</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

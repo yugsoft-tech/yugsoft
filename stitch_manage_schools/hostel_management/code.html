@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hostel Management - School ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] font-display overflow-x-hidden">
+<div class="flex min-h-screen w-full flex-row">
+<!-- Sidebar -->
+<div class="w-64 border-r border-[#cfdbe7] bg-slate-50 dark:bg-[#1a2632] dark:border-gray-700 flex-shrink-0 hidden lg:flex flex-col">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-center mb-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="School logo placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCzBgGy8HQILmIz8vzlBj7C8hlX8EaFvQ2ys9NFB3ByoRS5xLXmeU8dChckX9R4DZXdhosYDWZ4dbLLJuMb1ZHIMs_9rABZbCwPgdo0KDm9Qy-1xdW9Gs5zlMLQ9sZntzhxQbIqKI6FJfFf58Jy-npdS0NcE91wj5nErklZ2LTg_MdydjIlCKWt6zqR5Utb1aF9d2D7Rttl6_bx12rFrPtGbkkxf6_6aCglfqsm4h0bLT1nlGfXgJWL7CbSxvXlhOz3xK_sYvq-IwXa");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#0d141b] dark:text-white text-base font-bold leading-normal">School ERP</h1>
+<p class="text-[#4c739a] text-sm font-normal leading-normal">Admin Panel</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#e7edf3] dark:hover:bg-gray-700 cursor-pointer group transition-colors">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-[#0d141b] dark:text-gray-400 dark:group-hover:text-white">dashboard</span>
+<p class="text-[#0d141b] dark:text-gray-300 dark:group-hover:text-white text-sm font-medium leading-normal">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#e7edf3] dark:hover:bg-gray-700 cursor-pointer group transition-colors">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-[#0d141b] dark:text-gray-400 dark:group-hover:text-white">school</span>
+<p class="text-[#0d141b] dark:text-gray-300 dark:group-hover:text-white text-sm font-medium leading-normal">Students</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#e7edf3] dark:hover:bg-gray-700 cursor-pointer group transition-colors">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-[#0d141b] dark:text-gray-400 dark:group-hover:text-white">menu_book</span>
+<p class="text-[#0d141b] dark:text-gray-300 dark:group-hover:text-white text-sm font-medium leading-normal">Academics</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#e7edf3] dark:hover:bg-gray-700 cursor-pointer group transition-colors">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-[#0d141b] dark:text-gray-400 dark:group-hover:text-white">payments</span>
+<p class="text-[#0d141b] dark:text-gray-300 dark:group-hover:text-white text-sm font-medium leading-normal">Finance</p>
+</div>
+<!-- Active State -->
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary cursor-pointer">
+<span class="material-symbols-outlined text-primary fill-current" data-weight="fill">apartment</span>
+<p class="text-primary text-sm font-bold leading-normal">Hostel</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#e7edf3] dark:hover:bg-gray-700 cursor-pointer group transition-colors">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-[#0d141b] dark:text-gray-400 dark:group-hover:text-white">settings</span>
+<p class="text-[#0d141b] dark:text-gray-300 dark:group-hover:text-white text-sm font-medium leading-normal">Settings</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 border-t border-[#cfdbe7] dark:border-gray-700 pt-4">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#e7edf3] dark:hover:bg-gray-700 cursor-pointer group transition-colors">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-[#0d141b] dark:text-gray-400 dark:group-hover:text-white">logout</span>
+<p class="text-[#0d141b] dark:text-gray-300 dark:group-hover:text-white text-sm font-medium leading-normal">Log Out</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-screen overflow-y-auto">
+<!-- Top Bar / Breadcrumbs -->
+<header class="w-full bg-white dark:bg-[#1a2632] border-b border-[#cfdbe7] dark:border-gray-700 sticky top-0 z-10">
+<div class="px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex flex-wrap gap-2 items-center">
+<a class="text-[#4c739a] hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Home</a>
+<span class="text-[#4c739a] text-sm font-medium leading-normal">/</span>
+<a class="text-[#4c739a] hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">ERP</a>
+<span class="text-[#4c739a] text-sm font-medium leading-normal">/</span>
+<span class="text-[#0d141b] dark:text-white text-sm font-medium leading-normal">Hostel Management</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-50 dark:bg-gray-800 border border-[#cfdbe7] dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary w-64 text-[#0d141b] dark:text-white placeholder-gray-400" placeholder="Search student or room..." type="text"/>
+</div>
+<div class="size-10 rounded-full bg-gray-200 dark:bg-gray-700 bg-center bg-cover border border-gray-300 dark:border-gray-600 cursor-pointer" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJtqFRWnpTObAoMwlbwUEGPACJQrwTp9CD_wvDMkwBwKChadRs7VbF9RJE2biJAtyE06enPdDSL8vburMKljcQCIQ-Nrip5AlzTKBWYVLIIazxO8c2nD86OZajjmTwTiLwLEawNrEoOLMHNlKqrVfc2x57U6-PJTim8ipjlfzhVy0YGw1v8TL4bEJbUK_wKB6tEDTZRFBUIEJXDIQ_3uH0Q_3sD_S4mInh3N4iHPCg6xYvjSpp1e8o1iLM0g8dDUuAbmrZcNVVdSHE");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-6 md:p-8 max-w-[1400px] mx-auto w-full">
+<!-- Page Heading & Actions -->
+<div class="flex flex-wrap justify-between items-end gap-6 mb-8">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#0d141b] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Hostel Management</h1>
+<p class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal max-w-2xl">Manage dormitory facilities, visualize occupancy, assign rooms, and handle student records efficiently.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 cursor-pointer justify-center rounded-lg h-10 px-4 bg-white dark:bg-[#1a2632] border border-[#cfdbe7] dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-[#0d141b] dark:text-white text-sm font-bold shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="flex items-center gap-2 cursor-pointer justify-center rounded-lg h-10 px-4 bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Assign Room</span>
+</button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#1a2632] border border-[#cfdbe7] dark:border-gray-700 shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium uppercase tracking-wide">Total Capacity</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded">bed</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold leading-tight">500 Beds</p>
+<span class="text-[#078838] bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded text-xs font-bold mb-1">+0%</span>
+</div>
+<p class="text-xs text-gray-400 mt-1">Across 3 buildings</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#1a2632] border border-[#cfdbe7] dark:border-gray-700 shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium uppercase tracking-wide">Occupancy</p>
+<span class="material-symbols-outlined text-purple-500 bg-purple-500/10 p-1 rounded">pie_chart</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold leading-tight">82%</p>
+<span class="text-[#078838] bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded text-xs font-bold mb-1">+5%</span>
+</div>
+<p class="text-xs text-gray-400 mt-1">410 occupied beds</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#1a2632] border border-[#cfdbe7] dark:border-gray-700 shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium uppercase tracking-wide">Requests</p>
+<span class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1 rounded">pending</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold leading-tight">12</p>
+<span class="text-[#078838] bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded text-xs font-bold mb-1">+2</span>
+</div>
+<p class="text-xs text-gray-400 mt-1">Room change &amp; new</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#1a2632] border border-[#cfdbe7] dark:border-gray-700 shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium uppercase tracking-wide">Maintenance</p>
+<span class="material-symbols-outlined text-red-500 bg-red-500/10 p-1 rounded">build</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-[#0d141b] dark:text-white text-2xl font-bold leading-tight">3</p>
+<span class="text-red-500 bg-red-50 dark:bg-red-900/20 px-1.5 py-0.5 rounded text-xs font-bold mb-1">-1</span>
+</div>
+<p class="text-xs text-gray-400 mt-1">Open tickets</p>
+</div>
+</div>
+<!-- Tabs -->
+<div class="mb-6 border-b border-[#cfdbe7] dark:border-gray-700">
+<div class="flex gap-8 overflow-x-auto">
+<a class="flex items-center gap-2 border-b-[3px] border-primary text-[#0d141b] dark:text-white pb-3 px-1" href="#">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+<p class="text-sm font-bold leading-normal whitespace-nowrap">Room View</p>
+</a>
+<a class="flex items-center gap-2 border-b-[3px] border-transparent text-[#4c739a] hover:text-[#0d141b] dark:text-gray-400 dark:hover:text-white transition-colors pb-3 px-1" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<p class="text-sm font-bold leading-normal whitespace-nowrap">Student List</p>
+</a>
+<a class="flex items-center gap-2 border-b-[3px] border-transparent text-[#4c739a] hover:text-[#0d141b] dark:text-gray-400 dark:hover:text-white transition-colors pb-3 px-1" href="#">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+<p class="text-sm font-bold leading-normal whitespace-nowrap">Requests</p>
+<span class="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">12</span>
+</a>
+<a class="flex items-center gap-2 border-b-[3px] border-transparent text-[#4c739a] hover:text-[#0d141b] dark:text-gray-400 dark:hover:text-white transition-colors pb-3 px-1" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<p class="text-sm font-bold leading-normal whitespace-nowrap">Configuration</p>
+</a>
+</div>
+</div>
+<!-- Main Content Area: Room View -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#cfdbe7] dark:border-gray-700 shadow-sm overflow-hidden">
+<!-- Toolbar inside card -->
+<div class="p-4 border-b border-[#cfdbe7] dark:border-gray-700 flex flex-wrap gap-4 items-center justify-between">
+<div class="flex items-center gap-2">
+<p class="text-[#0d141b] dark:text-white font-bold text-sm">Block A - Boys Hostel</p>
+<span class="text-gray-400">|</span>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm">Floor 1</p>
+</div>
+<div class="flex gap-2">
+<select class="bg-slate-50 dark:bg-gray-800 border border-[#cfdbe7] dark:border-gray-600 rounded-lg text-sm px-3 py-1.5 focus:ring-primary focus:border-primary text-[#0d141b] dark:text-white">
+<option>All Blocks</option>
+<option selected="">Block A (Boys)</option>
+<option>Block B (Girls)</option>
+<option>Staff Quarters</option>
+</select>
+<select class="bg-slate-50 dark:bg-gray-800 border border-[#cfdbe7] dark:border-gray-600 rounded-lg text-sm px-3 py-1.5 focus:ring-primary focus:border-primary text-[#0d141b] dark:text-white">
+<option>All Floors</option>
+<option selected="">Floor 1</option>
+<option>Floor 2</option>
+<option>Floor 3</option>
+</select>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-gray-800/50 border-b border-[#cfdbe7] dark:border-gray-700">
+<th class="py-3 px-4 text-[#4c739a] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">Room No</th>
+<th class="py-3 px-4 text-[#4c739a] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">Type</th>
+<th class="py-3 px-4 text-[#4c739a] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">Capacity</th>
+<th class="py-3 px-4 text-[#4c739a] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">Occupants</th>
+<th class="py-3 px-4 text-[#4c739a] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">Cost / Year</th>
+<th class="py-3 px-4 text-[#4c739a] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">Status</th>
+<th class="py-3 px-4 text-[#4c739a] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#cfdbe7] dark:divide-gray-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white font-medium text-sm">101</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">Double AC</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 text-sm">bed</span>
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">2</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-block size-8 rounded-full ring-2 ring-white dark:ring-[#1a2632] bg-cover bg-center" data-alt="Student Avatar 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDPLUYdq1xcQwvpiyoqDqdVDIgBLgXRv57fG8W1rOAAIHjnRPeWfQOjvIJv7YXU6CKw27zd4UWbEDUslE9BXklku5HuV3uTV9SaSn6aMnCOQYwlR7R7x07KugPI4xgpUBi61ddhs3r52JB5lSM0jUkupoj1uxCYqCtAtL5Di9g_xY0sZc5g2pVJVDaAu3uwbAxk7JvhGCSA2S20B1v2cJHOlLP_lObihoqjsT7qmu3YblH_OaLdnDjb4qGShW903KsFYuZ5FCijC5L3')"></div>
+<div class="inline-block size-8 rounded-full ring-2 ring-white dark:ring-[#1a2632] bg-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-500">
+                                            +1
+                                        </div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm font-medium">$2,400</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+<span class="size-1.5 rounded-full bg-red-500"></span> Full
+                                    </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white font-medium text-sm">102</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">Double AC</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 text-sm">bed</span>
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">2</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-block size-8 rounded-full ring-2 ring-white dark:ring-[#1a2632] bg-cover bg-center" data-alt="Student Avatar 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgBbPk89YyEret7WRs6-FHOOpPGZbAHiysGnkGzvZZlM0i_ze5XlyXtRkQmDjVd-anYz5BIEa8maFV0P_O3TRKK-hi7cgv5dJH_ZsKsCgmT-qxarGO-VpWf0pSTOGeJJ-B2CW4-Nmo7n3CgTqaLbzAo5BlY09_AoB4b2rqZXDIGf63MZEQhRKWf7XejuoPSk1BQam41rD_L4bw2JEGeSRh2Z-kwsQzL43jZiR9nuBkXwgDX3NOCXq1871tY3yH2CtjgznhIQQY5oda')"></div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm font-medium">$2,400</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+<span class="size-1.5 rounded-full bg-green-500"></span> 1 Bed Available
+                                    </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white font-medium text-sm">103</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">Triple Non-AC</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 text-sm">bed</span>
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">3</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-gray-400 text-sm italic">Empty</span>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm font-medium">$1,800</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+<span class="size-1.5 rounded-full bg-green-500"></span> Available
+                                    </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white font-medium text-sm">104</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">Triple Non-AC</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 text-sm">bed</span>
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">3</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-block size-8 rounded-full ring-2 ring-white dark:ring-[#1a2632] bg-cover bg-center" data-alt="Student Avatar 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXyXWOv7AluJ3hbXxxlEbck5t4mw_IioBKXunQoJotpdDr41VJxJ2EE0Zx8vGWvTE4dGWj21uLx3ylA9r9Hyq0YK7vNfIErlEN_DskTj1AT3B5l-54H1qzhcaNrG0XX1gaYCne1w4vxn-tk2z6jnBWoTVseIy8syvm4VJCByMeK9q-kCqHRC_2AC00TTTF60B9pvAvtnBi1aCMgI_JiKU52Z6z_7YoKH1oF3fyLKsejQniScMNHeOz5A_EW0ENIXwzd3CMAfHC0S8s')"></div>
+<div class="inline-block size-8 rounded-full ring-2 ring-white dark:ring-[#1a2632] bg-cover bg-center" data-alt="Student Avatar 4" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCC6IcvVoEnrNf8UvKs_cnrMZaBr3ZgZkCmfizum9EzSREa9R7aYnXlB_0aqsaNMnVQEyGY-V43Lk51aAmOpY3IvxGGk0iAE2lHRdTIxuVnOqJjKLc68pN6uwUIJAVeEcUWHWR26hlVlcDyM5wndE7OXPYOD3kVNRxTaM_ET2VC9c-Ojz9RbxofL7xzl6a_FZL2Xoo9-x4Vd3yedxmZR7-i7g_NdfbWv4r1ePKeh6oY4GVkxYspwmkzli_bcEepGCmlMvCS5koj01kz')"></div>
+<div class="inline-block size-8 rounded-full ring-2 ring-white dark:ring-[#1a2632] bg-cover bg-center" data-alt="Student Avatar 5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4nDgCILoyPj9XWSy9ZevUn06wbiCokwhRQSYmnkPG2SAUktZuUY82Y2yMsyKpe4vIp3f-P5FkzKDmO8pNqbG3fPvN18r9WXEDYVSaRxu0mKkFDsanm1tRhxKBMC8MHU6q4LGW35ojhWnTxvVyZTrYVRV84UacaQJFmZ-QcTvGTyDoQdGof-xXpryEix6C1oXwHdjhjRgPvVqpcW5MzdqpuxX2sDjBpj0PvxjvJm9xE86S_TAcl2KnEJ_R0E9xgtTe5VK37aTbfik3')"></div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm font-medium">$1,800</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+<span class="size-1.5 rounded-full bg-red-500"></span> Full
+                                    </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 - Maintenance -->
+<tr class="hover:bg-slate-50 dark:hover:bg-gray-800/30 transition-colors group bg-yellow-50/50 dark:bg-yellow-900/10">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="text-[#0d141b] dark:text-white font-medium text-sm">105</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">Double AC</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 text-sm">bed</span>
+<span class="text-[#0d141b] dark:text-gray-300 text-sm">2</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="text-gray-400 text-sm italic">Out of Service</span>
+</td>
+<td class="py-3 px-4">
+<span class="text-[#0d141b] dark:text-gray-300 text-sm font-medium">$2,400</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+<span class="material-symbols-outlined text-[14px]">build</span> Maintenance
+                                    </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-[#cfdbe7] dark:border-gray-700 flex items-center justify-between">
+<p class="text-sm text-[#4c739a] dark:text-gray-400">Showing <span class="font-bold text-[#0d141b] dark:text-white">1-5</span> of <span class="font-bold text-[#0d141b] dark:text-white">42</span> rooms</p>
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-8 rounded border border-[#cfdbe7] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#0d141b] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-8 rounded border border-[#cfdbe7] dark:border-gray-600 bg-primary text-white hover:bg-blue-600">1</button>
+<button class="flex items-center justify-center size-8 rounded border border-[#cfdbe7] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#0d141b] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">2</button>
+<button class="flex items-center justify-center size-8 rounded border border-[#cfdbe7] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#0d141b] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">3</button>
+<button class="flex items-center justify-center size-8 rounded border border-[#cfdbe7] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#0d141b] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

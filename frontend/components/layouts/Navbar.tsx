@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Menu, Bell, User, LogOut } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
+import { APP_NAME } from '@/utils/constants';
 
 interface NavbarProps {
     onMenuClick: () => void;
@@ -30,10 +31,10 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
 
                     <div className="flex items-center gap-3">
                         <div className="h-8 w-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold shadow-sm">
-                            S
+                            {APP_NAME.charAt(0)}
                         </div>
                         <span className="text-xl font-bold text-slate-900 hidden sm:block">
-                            School ERP
+                            {APP_NAME}
                         </span>
                     </div>
                 </div>

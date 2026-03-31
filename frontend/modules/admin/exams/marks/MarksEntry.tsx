@@ -1,153 +1,163 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
 import {
     Save,
     ChevronLeft,
-    Search,
-    BookOpen,
     Users,
-    Calculator,
+    ClipboardCheck,
     AlertCircle,
-    Activity,
-    CheckCircle2
+    GraduationCap,
+    Clock,
+    Target
 } from 'lucide-react';
 import Link from 'next/link';
-import { examsService } from '@/services/exams.service';
 import Button from '@/components/ui/Button';
-import { toast } from 'react-hot-toast';
+import { examsService } from '@/services/exams.service';
+import { studentsService } from '@/services/students.service';
+import { Exam, Student } from '@/utils/types';
 import Skeleton from '@/components/ui/Skeleton';
-import { Badge } from '@/components/ui/Badge';
+
+interface MarkEntry {
+    studentId: string;
+    marks: number;
+}
 
 export default function MarksEntry() {
     const router = useRouter();
     const { id } = router.query;
+    const [exam, setExam] = useState<Exam | null>(null);
+    const [students, setStudents] = useState<Student[]>([]);
+    const [marks, setMarks] = useState<Record<string, number>>({});
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
-    const [marks, setMarks] = useState<any[]>([]);
-    const [subjectInfo, setSubjectInfo] = useState({ name: 'Mathematics', code: 'MAT-101', maxMarks: 100 });
 
     useEffect(() => {
         if (id) {
-            fetchMarks();
+            initData();
         }
     }, [id]);
 
-    const fetchMarks = async () => {
+    const initData = async () => {
         setLoading(true);
         try {
-            const data = await examsService.getMarks(id as string);
-            setMarks(data.length > 0 ? data : [
-                { studentId: 'ST-001', name: 'Aaryan Sharma', marksObtained: '', remarks: '' },
-                { studentId: 'ST-002', name: 'Isha Patel', marksObtained: '', remarks: '' },
-                { studentId: 'ST-003', name: 'Rohan Mehra', marksObtained: '', remarks: '' }
+            const examData = await examsService.getExamById(id as string);
+            setExam(examData);
+
+            const [studentsData, marksData] = await Promise.all([
+                studentsService.getByClass(examData.classId),
+                examsService.getMarks(id as string)
             ]);
-        } catch (err) {
-            setMarks([
-                { studentId: 'ST-001', name: 'Aaryan Sharma', marksObtained: '', remarks: '' },
-                { studentId: 'ST-002', name: 'Isha Patel', marksObtained: '', remarks: '' },
-                { studentId: 'ST-003', name: 'Rohan Mehra', marksObtained: '', remarks: '' }
-            ]);
+
+            setStudents(studentsData);
+
+            // Initialize marks from existing data
+            const marksMap: Record<string, number> = {};
+            (marksData.results || []).forEach((r: any) => {
+                marksMap[r.studentId] = r.marks;
+            });
+            setMarks(marksMap);
+        } catch (error: any) {
+            toast.error('Failed to load assessment data');
+            router.push('/admin/exams');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleMarkChange = (index: number, value: string) => {
-        const updated = [...marks];
-        updated[index].marksObtained = value;
-        setMarks(updated);
+    const handleMarkChange = (studentId: string, value: string) => {
+        const numValue = parseFloat(value);
+        if (isNaN(numValue)) {
+            const newMarks = { ...marks };
+            delete newMarks[studentId];
+            setMarks(newMarks);
+            return;
+        }
+
+        if (numValue < 0 || numValue > (exam?.totalMarks || 100)) {
+            toast.error(`Marks must be between 0 and ${exam?.totalMarks || 100}`);
+            return;
+        }
+
+        setMarks({ ...marks, [studentId]: numValue });
     };
 
-    const handleSave = async () => {
+    const onSave = async () => {
         setSaving(true);
         try {
-            await examsService.saveMarks(id as string, 'sub-001', marks);
-            toast.success('Academic performance indexed successfully.');
-        } catch (err: any) {
-            toast.error(err.message || 'Indexing protocol failed');
+            const payload = Object.entries(marks).map(([studentId, marks]) => ({
+                studentId,
+                marks
+            }));
+            await examsService.saveMarks(id as string, payload);
+            toast.success('Performance nodes synchronized successfully.');
+            router.push('/admin/exams');
+        } catch (error: any) {
+            toast.error(error.message || 'Failed to synchronize marks');
         } finally {
             setSaving(false);
         }
     };
 
+    if (loading) {
+        return (
+            <div className="space-y-8 animate-in fade-in duration-500">
+                <Skeleton className="h-20 w-full rounded-[2rem]" />
+                <Skeleton className="h-96 w-full rounded-[2.5rem]" />
+            </div>
+        );
+    }
+
+    if (!exam) return null;
+
     return (
         <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+            {/* Header Area */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
-                    <Link href="/admin/exams" className="size-10 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 hover:text-primary transition-colors">
-                        <ChevronLeft size={20} />
+                    <Link href="/admin/exams" className="size-12 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 hover:text-primary transition-all shadow-sm">
+                        <ChevronLeft size={24} />
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1">Marks Entry Matrix</h1>
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest italic">Protocol ID: {id}</p>
+                        <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-1">Performance Registry</h1>
+                        <p className="text-sm font-medium text-slate-500 italic">Centralized marks entry for {exam.name}</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
+                    <div className="px-6 py-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                            <Target size={16} className="text-primary" />
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Max Score: {exam.totalMarks}</span>
+                        </div>
+                        <div className="w-px h-4 bg-slate-200 dark:bg-slate-800" />
+                        <div className="flex items-center gap-2">
+                            <Users size={16} className="text-indigo-500" />
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Cohort: {students.length}</span>
+                        </div>
+                    </div>
                     <Button
-                        onClick={handleSave}
-                        disabled={saving || loading}
+                        onClick={onSave}
+                        loading={saving}
                         className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-10 py-6 h-auto font-black text-xs uppercase tracking-widest gap-3 shadow-xl shadow-primary/20"
                     >
-                        {saving ? <Activity size={18} className="animate-spin" /> : <Save size={18} />}
-                        Index Performance
+                        <Save size={18} />
+                        Sync Registry
                     </Button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl flex items-center gap-6">
-                    <div className="size-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
-                        <BookOpen size={24} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Subject Node</p>
-                        <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{subjectInfo.name}</p>
-                    </div>
-                </div>
-                <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl flex items-center gap-6">
-                    <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                        <Calculator size={24} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Max Threshold</p>
-                        <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{subjectInfo.maxMarks} Units</p>
-                    </div>
-                </div>
-                <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl flex items-center gap-6">
-                    <div className="size-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-                        <Users size={24} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Target Nodes</p>
-                        <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{marks.length} Units</p>
-                    </div>
-                </div>
-                <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl flex items-center gap-6">
-                    <div className="size-14 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-500">
-                        <Activity size={24} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Indexing Progress</p>
-                        <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">0%</p>
-                    </div>
-                </div>
-            </div>
-
+            {/* Students Grid */}
             <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-                <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
-                    <div className="flex items-center gap-4">
-                        <div className="size-10 bg-indigo-500 text-white rounded-xl flex items-center justify-center shadow-lg">
-                            <Users size={20} />
+                <div className="p-8 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="size-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
+                            <ClipboardCheck size={20} />
                         </div>
-                        <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-widest">Student Registry</h2>
+                        <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Entry Matrix</h2>
                     </div>
-                    <div className="relative group max-w-xs w-full">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                        <input
-                            type="text"
-                            placeholder="Query Node ID..."
-                            className="w-full bg-white dark:bg-slate-800 border-none rounded-xl py-3 pl-12 pr-4 text-xs font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-primary transition-all"
-                        />
+                    <div className="flex items-center gap-2 text-rose-500 px-4 py-2 bg-rose-50 dark:bg-rose-500/10 rounded-xl border border-rose-100 dark:border-rose-500/20">
+                        <AlertCircle size={14} />
+                        <span className="text-[10px] font-bold uppercase tracking-widest">Validate input precision before sync</span>
                     </div>
                 </div>
 
@@ -155,58 +165,51 @@ export default function MarksEntry() {
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="border-b border-slate-100 dark:border-slate-800">
-                                <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] w-1/2">Identity Profile</th>
-                                <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Marks Obtained</th>
-                                <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Performance Remarks</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] w-24">Roll No</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Student Identity</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Contact Node</th>
+                                <th className="px-8 py-6 text-right text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] w-64">Achieved Marks</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800/50">
-                            {loading ? (
-                                Array.from({ length: 5 }).map((_, i) => (
-                                    <tr key={i}>
-                                        <td className="px-10 py-8"><Skeleton className="h-4 w-48 rounded-lg" /></td>
-                                        <td className="px-10 py-8"><Skeleton className="h-10 w-24 rounded-xl" /></td>
-                                        <td className="px-10 py-8"><Skeleton className="h-10 w-full rounded-xl" /></td>
-                                    </tr>
-                                ))
-                            ) : (
-                                marks.map((m, i) => (
-                                    <tr key={m.studentId} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors group">
-                                        <td className="px-10 py-8">
-                                            <div className="flex items-center gap-4">
-                                                <div className="size-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:scale-110 transition-transform">
-                                                    <Users size={18} />
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">{m.name}</p>
-                                                    <p className="text-[10px] font-medium text-slate-500 italic font-mono uppercase">ID: {m.studentId}</p>
-                                                </div>
+                            {students.map((student) => (
+                                <tr key={student.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors group">
+                                    <td className="px-8 py-8">
+                                        <span className="text-xs font-mono font-black text-primary bg-primary/5 px-3 py-1.5 rounded-lg border border-primary/10">
+                                            {student.rollNumber || 'N/A'}
+                                        </span>
+                                    </td>
+                                    <td className="px-8 py-8">
+                                        <div className="flex items-center gap-4">
+                                            <div className="size-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all">
+                                                <GraduationCap size={22} />
                                             </div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="relative group w-32">
-                                                <input
-                                                    type="number"
-                                                    max={subjectInfo.maxMarks}
-                                                    value={m.marksObtained}
-                                                    onChange={(e) => handleMarkChange(i, e.target.value)}
-                                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl py-3 px-4 text-sm font-black text-slate-900 dark:text-white outline-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-primary transition-all text-center"
-                                                />
-                                                <div className="absolute -right-8 top-1/2 -translate-y-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity">
-                                                    {parseInt(m.marksObtained) >= 40 ? <CheckCircle2 size={16} className="text-emerald-500" /> : <AlertCircle size={16} className="text-rose-500" />}
-                                                </div>
+                                            <div>
+                                                <p className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">{student.user.firstName} {student.user.lastName}</p>
+                                                <p className="text-[10px] font-medium text-slate-500 italic uppercase">ID: {student.id.substring(0, 8)}</p>
                                             </div>
-                                        </td>
-                                        <td className="px-10 py-8">
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-8 text-xs font-bold text-slate-500 font-mono italic">
+                                        {student.user.email}
+                                    </td>
+                                    <td className="px-8 py-8 text-right">
+                                        <div className="flex items-center justify-end gap-3 group/input">
                                             <input
-                                                type="text"
-                                                placeholder="Add performance metadata..."
-                                                className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl py-3 px-6 text-xs font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-indigo-500 transition-all italic"
+                                                type="number"
+                                                min="0"
+                                                max={exam.totalMarks}
+                                                step="0.5"
+                                                value={marks[student.id] !== undefined ? marks[student.id] : ''}
+                                                onChange={(e) => handleMarkChange(student.id, e.target.value)}
+                                                className="w-32 bg-slate-50 dark:bg-slate-800 border-none rounded-xl py-3 px-4 text-center font-black text-slate-900 dark:text-white outline-none ring-2 ring-slate-100 dark:ring-slate-800 focus:ring-primary transition-all shadow-sm"
+                                                placeholder="---"
                                             />
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
+                                            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">/ {exam.totalMarks}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

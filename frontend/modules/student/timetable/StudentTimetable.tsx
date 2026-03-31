@@ -32,10 +32,10 @@ export default function StudentTimetable() {
     useEffect(() => {
         const fetchTimetable = async () => {
             try {
-                const data = await timetableService.getStudentTimetable('CURRENT_ME'); // In production, this would be the logged-in student's ID
+                const data = await timetableService.getMyTimetable();
                 setTimetable(data.data || data);
             } catch (error: any) {
-                toast.error('Failed to synchronize temporal schedule nodes.');
+                toast.error('Failed to load your timetable.');
             } finally {
                 setLoading(false);
             }
@@ -51,15 +51,15 @@ export default function StudentTimetable() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        PEDAGOGICAL_CORE: TEMPORAL_SYNC
+                        Student Office: Timetable
                     </Badge>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Academic Timetable</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Visualize temporal academic nodes, manage schedule synchronization, and optimize pedagogical ranges.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">My Timetable</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">View your class schedule and subjects.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button variant="secondary" className="bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-2xl px-8 py-6 h-auto font-black text-[10px] uppercase tracking-widest gap-2 text-slate-400 hover:text-primary transition-all shadow-xl">
                         <Printer size={18} />
-                        Export Protocol
+                        Download PDF
                     </Button>
                 </div>
             </div>
@@ -68,13 +68,13 @@ export default function StudentTimetable() {
                 <div className="p-10">
                     <div className="flex items-center justify-between mb-10 border-b border-slate-100 dark:border-slate-800 pb-8">
                         <div className="flex gap-10">
-                            <button className="relative py-4 text-[10px] font-black text-primary uppercase tracking-widest border-b-4 border-primary italic">Matrix View</button>
-                            <button className="relative py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors italic">Daily Logs</button>
+                            <button className="relative py-4 text-[10px] font-black text-primary uppercase tracking-widest border-b-4 border-primary italic">Full View</button>
+                            <button className="relative py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors italic">Daily View</button>
                         </div>
                         <div className="flex items-center gap-4">
                             <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-none px-4 py-2 font-black text-[10px] flex items-center gap-2">
                                 <Clock size={14} className="animate-pulse" />
-                                SYSTEM_ACTIVE: 09:42 AM
+                                CURRENT_TIME: 09:42 AM
                             </Badge>
                         </div>
                     </div>
@@ -83,7 +83,7 @@ export default function StudentTimetable() {
                         <table className="w-full border-collapse min-w-[1000px]">
                             <thead>
                                 <tr className="bg-slate-50 dark:bg-slate-800/50 border-b-2 border-slate-100 dark:border-slate-800">
-                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-r border-slate-100 dark:border-slate-800">Temporal Node</th>
+                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-r border-slate-100 dark:border-slate-800">Time</th>
                                     {days.map(day => (
                                         <th key={day} className="px-10 py-6 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{day}</th>
                                     ))}
@@ -105,10 +105,10 @@ export default function StudentTimetable() {
                                                             <Layers size={40} />
                                                         </div>
                                                         <p className="text-[10px] font-black uppercase tracking-widest mb-2 opacity-80">Mathematics</p>
-                                                        <h4 className="text-[12px] font-black uppercase mb-4 tracking-tight leading-none italic">Advanced Calculus Node</h4>
+                                                        <h4 className="text-[12px] font-black uppercase mb-4 tracking-tight leading-none italic">Advanced Calculus Class</h4>
                                                         <div className="flex items-center gap-2 text-[8px] font-black uppercase tracking-widest">
                                                             <MapPin size={10} />
-                                                            Cluster 302
+                                                            Room 302
                                                         </div>
                                                     </div>
                                                 ) : (
@@ -125,16 +125,16 @@ export default function StudentTimetable() {
                     <div className="mt-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
                             <ShieldCheck size={14} className="text-emerald-500" />
-                            TEMPORAL_PROTOCOL_VERIFIED_V4
+                            VERIFIED SCHEDULE
                         </p>
                         <div className="flex items-center gap-6">
                             <div className="flex items-center gap-2">
                                 <span className="size-3 rounded-full bg-indigo-500 shadow-lg shadow-indigo-500/50"></span>
-                                <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Active Academic Nodes</span>
+                                <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Classes</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <span className="size-3 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700"></span>
-                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Void Sequence</span>
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Free Time</span>
                             </div>
                         </div>
                     </div>

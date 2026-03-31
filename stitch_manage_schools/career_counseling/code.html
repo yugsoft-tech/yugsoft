@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Career Counseling - School ERP</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white font-display overflow-hidden h-screen flex w-full">
+<!-- Sidebar -->
+<aside class="hidden lg:flex w-72 flex-col border-r border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 h-full flex-shrink-0">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 text-primary mb-8">
+<div class="size-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h2 class="text-[#0d141b] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<div class="flex flex-col gap-1 mb-6">
+<h3 class="px-3 text-xs font-semibold text-[#4c739a] dark:text-gray-400 uppercase tracking-wider mb-2">Main Menu</h3>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-gray-400">dashboard</span>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-200">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-gray-400">menu_book</span>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-200">Academics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-gray-400">groups</span>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-200">Student Life</span>
+</a>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="px-3 text-xs font-semibold text-[#4c739a] dark:text-gray-400 uppercase tracking-wider mb-2">Career Center</h3>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">work_outline</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-gray-400">account_balance</span>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-200">Colleges</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-gray-400">description</span>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-200">Exams</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-gray-400">calendar_today</span>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-200">My Schedule</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-gray-400">psychology</span>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-200">Aptitude Tests</span>
+</a>
+</div>
+</div>
+<div class="mt-auto p-4 border-t border-[#e7edf3] dark:border-gray-800">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-[#f6f8fa] dark:bg-gray-800">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10" data-alt="Student profile picture showing a smiling young man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCe9VPMSYCncNy7ypaA06homYAvqtfJ1VXrbzvKvJw76vqjPznNV9lj__8-Gcx0ZBBAabBPwUGh14p5l8f7wmlu0aQoKXV_nTsHMqoR0a4umkszmwchM62PvTmc44i-ppdI3VxmWT2hzjLtKG_9yJDCGEFURiQFIOvKABkiXSayxAg1xhLwNCvF5ZW7SHmgYFIudzxPLElVsd8zAgQz6zdWVGdF4oxgPGh6FNiIhzo2vxaK8Nmt-uQHg1VStCn4OU70MvF5x9uM5dFk");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-sm font-semibold text-[#0d141b] dark:text-white truncate">Alex Johnson</p>
+<p class="text-xs text-[#4c739a] dark:text-gray-400 truncate">Grade 12 - Science</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header Mobile/Desktop -->
+<header class="flex items-center justify-between border-b border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-3 shrink-0 z-10">
+<div class="flex items-center gap-4 lg:hidden">
+<span class="material-symbols-outlined text-[#0d141b] dark:text-white cursor-pointer">menu</span>
+<span class="font-bold text-lg dark:text-white">Career Center</span>
+</div>
+<div class="hidden lg:flex flex-1 max-w-xl">
+<label class="flex w-full items-center gap-2 rounded-lg bg-[#f0f4f8] dark:bg-gray-800 px-3 py-2">
+<span class="material-symbols-outlined text-[#4c739a] dark:text-gray-400 text-[20px]">search</span>
+<input class="w-full bg-transparent text-sm text-[#0d141b] dark:text-white placeholder-[#4c739a] dark:placeholder-gray-500 focus:outline-none" placeholder="Search for colleges, careers, or counselors..."/>
+</label>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-[#4c739a] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+</button>
+<button class="p-2 text-[#4c739a] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6 lg:p-10">
+<div class="max-w-6xl mx-auto flex flex-col gap-8">
+<!-- Hero Section -->
+<div class="relative w-full rounded-2xl overflow-hidden min-h-[320px] flex flex-col items-center justify-center p-8 text-center" data-alt="Group of diverse students studying together outdoors on a sunny day" style='background-image: linear-gradient(rgba(16, 25, 34, 0.5), rgba(16, 25, 34, 0.7)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpvii-WBwu6uj_4ssirBSA1yciOgeyrHP-qu_czwjjFC_zBtijnZuhTp-RlVzaifyQ9gP2wsDWe92ri11LBy56JeigFwCyrtBDJpYRp99cjXaDn9TUnaGV1i-w_TnlyI2n4GVo--pPt0u0QZVjheYT0ZpqCHiKcsZqM5YMYeTsTySOhONAzqAmMNasTdE0AmmK0eCFBpdC5b4Y_enkHryCMO5UL53BmfhTIoiUeoquvOiL4RLuYJbyQDSC0NUf_Fa1a5X-ureC-_W2"); background-size: cover; background-position: center;'>
+<h1 class="text-white text-3xl md:text-5xl font-black mb-4 tracking-tight drop-shadow-md">
+                        Find Your Dream Career Path
+                    </h1>
+<p class="text-gray-100 text-lg md:text-xl max-w-2xl mb-8 font-light drop-shadow-sm">
+                        Explore colleges, courses, and guidance sessions to shape your future.
+                    </p>
+<div class="flex w-full max-w-md bg-white dark:bg-gray-800 rounded-xl p-1 shadow-lg">
+<input class="flex-1 bg-transparent px-4 py-3 text-sm md:text-base outline-none text-gray-800 dark:text-white placeholder-gray-400" placeholder="What do you want to study?"/>
+<button class="bg-primary hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-bold transition-colors">
+                            Search
+                        </button>
+</div>
+</div>
+<!-- Stats Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-[#e7edf3] dark:border-gray-800 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium mb-1">Upcoming Sessions</p>
+<p class="text-[#0d141b] dark:text-white text-3xl font-bold">2</p>
+</div>
+<div class="size-12 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">video_camera_front</span>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-[#e7edf3] dark:border-gray-800 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium mb-1">Applications Pending</p>
+<p class="text-[#0d141b] dark:text-white text-3xl font-bold">5</p>
+</div>
+<div class="size-12 rounded-full bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-500">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-[#e7edf3] dark:border-gray-800 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium mb-1">Resources Viewed</p>
+<div class="flex items-baseline gap-2">
+<p class="text-[#0d141b] dark:text-white text-3xl font-bold">12</p>
+<span class="text-green-600 text-xs font-semibold bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded">+3 this week</span>
+</div>
+</div>
+<div class="size-12 rounded-full bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-500">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+</div>
+</div>
+<!-- Main Grid: Resources & Scheduler -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Left Column: Resources -->
+<div class="xl:col-span-2 flex flex-col gap-8">
+<!-- Universities -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold text-[#0d141b] dark:text-white">Featured Universities</h2>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Card 1 -->
+<div class="group relative flex flex-col overflow-hidden rounded-xl border border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-all hover:shadow-md">
+<div class="h-40 w-full bg-cover bg-center" data-alt="Classic university building with green lawn and trees" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA79ucOWNpg63yjougryqhnhghNJh8RZZhxXp7Jys5iYPgALz5K-AWYiVmAB6idVj0aPbm3VnJsqDSiWvAM8uUF54K7eG92S4AxCaL7T15fMpaoTn9OYXgtBBhVSDLVN7sZc0-jaKGyaNXRgH2Cevgm6eTWm7Ac89ktckno0Ye7fqCdNwwL2fJV0FzlkZao5n6BipOS48BPsWcgnv6I2xnjzs19K2XK7xybTPejtxmaFSEBsVffS2cmxzQzqnTK3yDFVIgmGWD2mq23");'>
+<div class="absolute top-3 right-3 rounded-md bg-white/90 px-2 py-1 text-xs font-bold text-[#0d141b] shadow-sm">Top 10</div>
+</div>
+<div class="flex flex-1 flex-col p-4">
+<div class="mb-2 flex items-center gap-1 text-xs text-[#4c739a] dark:text-gray-400">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Cambridge, MA</span>
+</div>
+<h3 class="mb-1 text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors">Tech Institute of Science</h3>
+<p class="mb-4 text-sm text-[#4c739a] dark:text-gray-400 line-clamp-2">World-renowned for engineering and computer science programs.</p>
+<div class="mt-auto pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+<span class="text-xs font-medium text-gray-500">Acceptance: 4%</span>
+<button class="text-primary text-sm font-bold">Details</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex flex-col overflow-hidden rounded-xl border border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-all hover:shadow-md">
+<div class="h-40 w-full bg-cover bg-center" data-alt="Modern university campus building glass facade" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCx0vtYSxpWJmm5c-jsLlksqJWNqLNLNe5Hvz2HmZc0CxK44WOjK1q1kN7xvD6t2BBBPPKuugdd-tq_cU7NP4kBd_E7y2VA0_3bD9-J9MYubNG5B2IAVwV9uMzvqQbFMopAQghKGJMAmIVrc2SQGrWIXNm1qKlY-oOq1LYPWZjPis0IID8bGt6iSSfevQ8-LgvyynxE9GCpfyeo2wCgsutWLr2XtEkoYZ-5tNZpIVS0205xGs_v9cor0nHJf7-R_HgYg9Qt_R43w6uW");'>
+<div class="absolute top-3 right-3 rounded-md bg-white/90 px-2 py-1 text-xs font-bold text-[#0d141b] shadow-sm">Trending</div>
+</div>
+<div class="flex flex-1 flex-col p-4">
+<div class="mb-2 flex items-center gap-1 text-xs text-[#4c739a] dark:text-gray-400">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Stanford, CA</span>
+</div>
+<h3 class="mb-1 text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors">West Coast University</h3>
+<p class="mb-4 text-sm text-[#4c739a] dark:text-gray-400 line-clamp-2">Leading innovation in business and sustainable technologies.</p>
+<div class="mt-auto pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+<span class="text-xs font-medium text-gray-500">Acceptance: 7%</span>
+<button class="text-primary text-sm font-bold">Details</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Popular Career Paths -->
+<div>
+<h2 class="text-xl font-bold text-[#0d141b] dark:text-white mb-4">Trending Career Paths</h2>
+<div class="flex flex-wrap gap-3">
+<a class="px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary transition-colors" href="#">Artificial Intelligence</a>
+<a class="px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary transition-colors" href="#">Sustainable Energy</a>
+<a class="px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary transition-colors" href="#">Bioinformatics</a>
+<a class="px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary transition-colors" href="#">Digital Marketing</a>
+<a class="px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary transition-colors" href="#">Urban Planning</a>
+</div>
+</div>
+<!-- Roadmap Snippet -->
+<div class="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white shadow-lg">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div>
+<h3 class="text-lg font-bold mb-1">Your Engineering Roadmap</h3>
+<p class="text-blue-100 text-sm">You are on track! Next milestone: Entrance Exam Prep.</p>
+</div>
+<div class="flex items-center gap-2 w-full md:w-auto">
+<div class="h-2 w-full md:w-32 bg-blue-900/30 rounded-full overflow-hidden">
+<div class="h-full bg-white w-[65%] rounded-full"></div>
+</div>
+<span class="text-xs font-bold whitespace-nowrap">65% Ready</span>
+</div>
+<button class="px-4 py-2 bg-white text-primary text-sm font-bold rounded-lg hover:bg-gray-50 transition-colors whitespace-nowrap">
+                                    View Roadmap
+                                </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Scheduler -->
+<div class="xl:col-span-1 flex flex-col gap-8">
+<!-- Counselors Widget -->
+<div class="rounded-xl border border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
+<div class="flex items-center justify-between mb-5">
+<h2 class="text-lg font-bold text-[#0d141b] dark:text-white">Schedule a Session</h2>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined">calendar_add_on</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Counselor 1 -->
+<div class="flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-gray-100 dark:hover:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="relative">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Female counselor portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVQQp_ruYe4n_nZbwGMhnsuxJvVDrWhyuaMr2Sjh71jmEElsANHw-H5MNJ5c1XuIMl7_v9blzPGufrB03idVhqPVaBzrfKx1A0aczF-O3nhM0ufFnmbbtE6L_qFsgl91NXJY2Pgv_5wT8c0dqUdLZKCoY1D7C-2MOFQc1JojpEWP9XnoUBqZi9j8q-jLQx9xC2ZoIlr9aEQ6btwXRP6dOksyuTYgkE5yM0BpdNo4OWWbEpJZZEpDMr-0m616NTASAxOoI-sWRItgPR");'></div>
+<span class="absolute bottom-0 right-0 size-3 rounded-full bg-green-500 border-2 border-white dark:border-gray-900"></span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold text-[#0d141b] dark:text-white truncate">Sarah Miller</p>
+<p class="text-xs text-[#4c739a] dark:text-gray-400 truncate">STEM Specialist</p>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-md transition-colors">
+                                        Book
+                                    </button>
+</div>
+<!-- Counselor 2 -->
+<div class="flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-gray-100 dark:hover:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="relative">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Male counselor portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPjIwZ9UTUUl2lqaTwgecE2dsuWAsVuiQI_L9PtagfsTaNlZMIzAqiDdxtAcWQ3nDWQESPmPkddWf7cCIuOurgm2l2qEtQu5ji9qf3oNEUVRPgNRfq7ckAu5u6TqA-Os25m9FyB1jc6ykxeeprZy2h6w9k9TKuVtvxWsPkYd0oNK8lonMHqUoEDLXSmWEW2mD00IJ0Cfnzb_b-qGSyoD4D6mr7Oq0ZPSilF68P1NXKlhfYfxmECjWDqqmU0CIpd4UP1p1_GR1jpL7H");'></div>
+<span class="absolute bottom-0 right-0 size-3 rounded-full bg-gray-400 border-2 border-white dark:border-gray-900"></span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold text-[#0d141b] dark:text-white truncate">Dr. James Chen</p>
+<p class="text-xs text-[#4c739a] dark:text-gray-400 truncate">Arts &amp; Humanities</p>
+</div>
+<button class="bg-white border border-[#e7edf3] text-[#0d141b] hover:bg-gray-50 text-xs font-bold px-3 py-1.5 rounded-md transition-colors">
+                                        Profile
+                                    </button>
+</div>
+<!-- Counselor 3 -->
+<div class="flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-gray-100 dark:hover:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="relative">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Female counselor portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBy8GbeZxLKMGFrRXginStosuVf3l_eI6HcBar8o-PxYF1yq9UsgWW2aSl7iZVbrmOcjNx1T8pG-AdntA8FP9XKPY0yHy5-5mkEryy507jQwxHHRg8ypes2TO5GVSMcPNWgYnfS57bCmOF57hR2WntehZWsSjjWuzHO4m6VJjCQSElOE8pelJPsCfqe6kLiupPmrsZUAwWgdX1ynD901oYpkDldBwhCZ1dbu8CSh6love6o_W-A9SGdvG3O7zbaal6Zt03vAOQ_gzio");'></div>
+<span class="absolute bottom-0 right-0 size-3 rounded-full bg-green-500 border-2 border-white dark:border-gray-900"></span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold text-[#0d141b] dark:text-white truncate">Emily Davis</p>
+<p class="text-xs text-[#4c739a] dark:text-gray-400 truncate">Study Abroad</p>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-md transition-colors">
+                                        Book
+                                    </button>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-sm font-semibold text-[#4c739a] hover:text-primary hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded-lg transition-colors">
+                                View all counselors
+                            </button>
+</div>
+<!-- My Schedule Widget -->
+<div class="rounded-xl border border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
+<h2 class="text-lg font-bold text-[#0d141b] dark:text-white mb-4">My Schedule</h2>
+<div class="relative pl-4 border-l-2 border-gray-100 dark:border-gray-800 space-y-6">
+<!-- Event 1 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 rounded-full bg-primary ring-4 ring-white dark:ring-gray-900"></div>
+<p class="text-xs font-semibold text-[#4c739a] dark:text-gray-400 mb-1">Today, 2:00 PM</p>
+<p class="text-sm font-bold text-[#0d141b] dark:text-white">College Application Review</p>
+<p class="text-xs text-gray-500">with Sarah Miller</p>
+<div class="mt-2 flex gap-2">
+<button class="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-medium hover:bg-primary/20">Join Call</button>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-gray-900"></div>
+<p class="text-xs font-semibold text-[#4c739a] dark:text-gray-400 mb-1">Tomorrow, 10:00 AM</p>
+<p class="text-sm font-bold text-[#0d141b] dark:text-white">SAT Prep Mock Test</p>
+<p class="text-xs text-gray-500">Online Platform</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="max-w-6xl mx-auto mt-12 py-6 border-t border-[#e7edf3] dark:border-gray-800 flex flex-col md:flex-row items-center justify-between text-xs text-[#4c739a] dark:text-gray-400">
+<p>© 2024 School ERP System. All rights reserved.</p>
+<div class="flex gap-4 mt-2 md:mt-0">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Help Center</a>
+</div>
+</footer>
+</div>
+</main>
+</body></html>

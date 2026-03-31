@@ -36,7 +36,7 @@ export default function StudentFees() {
                 const data = await feesService.getFees({});
                 setFees(data.data || data);
             } catch (error: any) {
-                toast.error('Failed to synchronize financial ledger.');
+                toast.error('Failed to load fees.');
             } finally {
                 setLoading(false);
             }
@@ -49,10 +49,10 @@ export default function StudentFees() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        FINANCIAL_CORE: LEDGER_SYNC
+                        Student Office: Fees
                     </Badge>
                     <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Fee Management</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Monitor financial obligations, track payment history, and secure transaction receipts.</p>
+                    <p className="text-sm font-medium text-slate-500 italic">View your school fees, payment history, and receipts.</p>
                 </div>
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-3 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-slate-50 dark:border-slate-800 shadow-xl">
@@ -69,9 +69,9 @@ export default function StudentFees() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: 'Paid In Full', value: '$4,500', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'VERIFIED_TRANSACTIONS' },
-                    { label: 'Pending Dues', value: '$1,200', icon: <AlertCircle className="text-rose-500" />, sub: 'ACTION_REQUIRED' },
-                    { label: 'Next Invoice', value: '15 NOV', icon: <Calendar className="text-primary" />, sub: 'SCHEDULED_DEBIT' },
+                    { label: 'Paid In Full', value: '$4,500', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'PAID' },
+                    { label: 'Pending Dues', value: '$1,200', icon: <AlertCircle className="text-rose-500" />, sub: 'UNPAID' },
+                    { label: 'Next Invoice', value: '15 NOV', icon: <Calendar className="text-primary" />, sub: 'UPCOMING' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl relative group overflow-hidden">
                         <div className="relative z-10 flex items-center justify-between mb-6">
@@ -91,9 +91,12 @@ export default function StudentFees() {
             <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
                 <div className="p-10">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b border-slate-100 dark:border-slate-800 pb-8">
-                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">Invoice Registry</h2>
+                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">Fee History</h2>
                         <div className="flex gap-4">
-                            <Button variant="secondary" className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-400 hover:text-primary transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
+                            <Button 
+                                onClick={() => toast('Loading full transaction history...', { icon: '📜' })}
+                                variant="secondary" 
+                                className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-400 hover:text-primary transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
                                 <History size={16} />
                                 Transaction History
                             </Button>
@@ -116,8 +119,8 @@ export default function StudentFees() {
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-3 mb-1">
-                                                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">{fee.type || 'TUITION_FEE'}</h3>
-                                                        <Badge variant={(fee.status === 'PAID') ? 'success' : 'destructive'} className="text-[7px] font-black uppercase tracking-widest px-2 py-0.5">
+                                                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">{fee.type || 'Tuition Fee'}</h3>
+                                                        <Badge variant={(fee.status === 'PAID') ? 'outline' : 'destructive'} className={`text-[7px] font-black uppercase tracking-widest px-2 py-0.5 ${(fee.status === 'PAID') ? 'bg-emerald-500/10 text-emerald-600 border-none' : ''}`}>
                                                             {fee.status || 'PENDING'}
                                                         </Badge>
                                                     </div>
@@ -131,7 +134,15 @@ export default function StudentFees() {
                                                     <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Total Amount</span>
                                                 </div>
                                                 {fee.status !== 'PAID' && (
-                                                    <Button className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl px-6 py-3 h-auto font-black text-[9px] uppercase tracking-widest border-none hover:opacity-90 transition-opacity whitespace-nowrap">
+                                                    <Button 
+                                                        onClick={() => {
+                                                            toast.loading('Initializing secure gateway...');
+                                                            setTimeout(() => {
+                                                                toast.dismiss();
+                                                                toast.success('Payment portal opened.');
+                                                            }, 1500);
+                                                        }}
+                                                        className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl px-6 py-3 h-auto font-black text-[9px] uppercase tracking-widest border-none hover:opacity-90 transition-opacity whitespace-nowrap">
                                                         Process Payment
                                                     </Button>
                                                 )}
@@ -142,7 +153,7 @@ export default function StudentFees() {
                             ) : (
                                 <div className="flex flex-col items-center justify-center p-20 gap-4 opacity-30 italic">
                                     <Receipt size={48} />
-                                    <p className="text-[10px] font-black uppercase tracking-widest">No detailed financial records found in current ledger.</p>
+                                    <p className="text-[10px] font-black uppercase tracking-widest">No fee records found.</p>
                                 </div>
                             )
                         )}
@@ -151,7 +162,7 @@ export default function StudentFees() {
                 <div className="bg-slate-50 dark:bg-slate-800/50 p-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center">
                     <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
                         <ShieldCheck size={14} className="text-emerald-500" />
-                        TRANSACTION_PROTOCOL_SECURE_TLS1.3
+                        SECURE PAYMENT
                     </p>
                 </div>
             </div>

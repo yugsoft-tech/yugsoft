@@ -41,15 +41,15 @@ export default function TeacherMessages() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 shrink-0">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        FACULTY_COMMS: ENCRYPTED_CHANNEL
+                        Teacher Office: Messages
                     </Badge>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Communication Hub</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Centralized faculty-student-parent synergy channel with secure protocol orchestration.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Messages</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Chat with students and parents easily.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-10 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20 transition-all active:scale-95">
                         <Plus size={18} />
-                        Protocol Initiation
+                        New Message
                     </Button>
                 </div>
             </div>
@@ -61,7 +61,7 @@ export default function TeacherMessages() {
                             <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                             <input
                                 type="text"
-                                placeholder="Search Entity..."
+                                placeholder="Search..."
                                 className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-3 pl-12 pr-6 text-xs font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all shadow-inner"
                             />
                         </div>
@@ -97,7 +97,7 @@ export default function TeacherMessages() {
                                 <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Principal Office</h2>
                                 <p className="text-[8px] font-black text-emerald-500 uppercase tracking-widest flex items-center gap-1">
                                     <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                                    Secure Node Linked
+                                    Connected
                                 </p>
                             </div>
                         </div>
@@ -114,14 +114,14 @@ export default function TeacherMessages() {
                     <div className="flex-1 overflow-y-auto p-12 space-y-8 flex flex-col justify-end">
                         <div className="flex flex-col gap-2 max-w-[70%] text-left">
                             <div className="bg-white dark:bg-slate-800 p-6 rounded-[2rem] rounded-bl-none shadow-sm border-2 border-slate-50 dark:border-slate-800">
-                                <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300 leading-relaxed uppercase tracking-tight">System Protocol Alert: Assessment standards for Q1 must be synchronized by COP Friday. Please confirm verification status.</p>
+                                <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300 leading-relaxed uppercase tracking-tight">Reminder: Please finish marking the Q1 exam results by this Friday.</p>
                             </div>
                             <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest pl-2">09:12 AM • ENCRYPTED</span>
                         </div>
 
                         <div className="flex flex-col gap-2 max-w-[70%] self-end text-right">
                             <div className="bg-primary p-6 rounded-[2rem] rounded-br-none shadow-xl border-none text-white">
-                                <p className="text-[10px] font-bold leading-relaxed uppercase tracking-tight">Protocol acknowledged. Mathematics and Physics nodes are 92% synchronized. Verification deployment scheduled for Thursday.</p>
+                                <p className="text-[10px] font-bold leading-relaxed uppercase tracking-tight">Got it. Math and Physics grades are almost done. We will finish by Thursday.</p>
                             </div>
                             <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest pr-2">10:45 AM • SECURE</span>
                         </div>
@@ -132,7 +132,7 @@ export default function TeacherMessages() {
                             <div className="flex-1 relative">
                                 <input
                                     type="text"
-                                    placeholder="Enter Protocol Instruction..."
+                                    placeholder="Write a message..."
                                     className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-6 pl-14 pr-32 text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest outline-none ring-2 ring-slate-100 dark:ring-slate-800 focus:ring-primary transition-all"
                                 />
                                 <MessageSquare size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" />

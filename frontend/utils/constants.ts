@@ -2,6 +2,8 @@
  * Application constants
  */
 
+export const APP_NAME = "Vikas ERP";
+
 const envUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000').trim();
 // Ensure no double slash or trailing /api if user accidentally added it
 export const API_BASE_URL = envUrl.replace(/\/api\/?$/, '').replace(/\/$/, '');

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Communication Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 flex-shrink-0 z-20">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">school</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-blue-600 text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
+<span class="truncate">Profile</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-3 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-3 transition-colors">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-slate-200 dark:ring-slate-700" data-alt="User profile avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWH-2SZix31OV1CiRll4kHMGmnvWRyqfMbg8IJdiO_D3CqzrYDbeY3wtlXDv3rrY-f9SPqdBFR0phq-hvqYWVhS6yBA8-gx3ftcaiNZNBaEJFo5nZp2-PJxhp2amnYulisJiWYzkJaO6ndlt2NGMKcFKbym8RheOTl0CRG9MsrNYPGrjl0Ku2Qz7fqLCC35IdHZXNAXMrqjUb9QMAZukq-AFQSyvd0PqKHPPVYWJUDmzcUFHY-qTg0TA33RGPyR9hTC4hjiqRlUkaO");'></div>
+</div>
+</header>
+<!-- Main Content Area -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar: Navigation -->
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col flex-shrink-0 z-10 hidden md:flex">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 bg-primary hover:bg-blue-600 text-slate-50 text-base font-bold leading-normal tracking-[0.015em] shadow-md transition-all hover:shadow-lg">
+<span class="material-symbols-outlined">edit_square</span>
+<span class="truncate">Compose Message</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Folders -->
+<div class="flex flex-col gap-1">
+<h3 class="px-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Folders</h3>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:text-blue-400" href="#">
+<span class="material-symbols-outlined fill-current">inbox</span>
+<p class="text-sm font-medium leading-normal flex-1">Inbox</p>
+<span class="text-xs font-bold bg-primary text-white rounded-full px-2 py-0.5">4</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">send</span>
+<p class="text-sm font-medium leading-normal">Sent</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">draft</span>
+<p class="text-sm font-medium leading-normal">Drafts</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">archive</span>
+<p class="text-sm font-medium leading-normal">Archived</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">delete</span>
+<p class="text-sm font-medium leading-normal">Trash</p>
+</a>
+</div>
+<!-- Labels -->
+<div class="flex flex-col gap-1">
+<h3 class="px-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Labels</h3>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="size-3 rounded-full bg-red-500"></span>
+<p class="text-sm font-medium leading-normal">Urgent</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="size-3 rounded-full bg-green-500"></span>
+<p class="text-sm font-medium leading-normal">Admin</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="size-3 rounded-full bg-purple-500"></span>
+<p class="text-sm font-medium leading-normal">Curriculum</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Middle Column: Message List -->
+<div class="w-full md:w-96 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col flex-shrink-0 z-0">
+<!-- Search -->
+<div class="p-4 border-b border-slate-200 dark:border-slate-800">
+<label class="flex flex-col w-full">
+<div class="flex w-full items-stretch rounded-lg h-10 bg-slate-100 dark:bg-slate-800 border border-transparent focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<div class="text-slate-500 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-slate-900 dark:text-white focus:outline-0 border-none h-full placeholder:text-slate-400 px-3 text-sm font-normal leading-normal" placeholder="Search emails..."/>
+</div>
+</label>
+</div>
+<!-- Chips / Filters -->
+<div class="flex gap-2 p-3 overflow-x-auto scrollbar-hide border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<button class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-3 transition-transform hover:scale-105">
+<p class="text-xs font-medium leading-normal">All</p>
+</button>
+<button class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 transition-colors">
+<p class="text-xs font-medium leading-normal">Unread</p>
+</button>
+<button class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 transition-colors">
+<p class="text-xs font-medium leading-normal">Announcements</p>
+</button>
+</div>
+<!-- Message List Items -->
+<div class="flex-1 overflow-y-auto">
+<!-- Message 1 (Active) -->
+<div class="flex flex-col gap-1 p-4 cursor-pointer border-b border-slate-100 dark:border-slate-800 bg-primary/5 hover:bg-primary/10 border-l-4 border-l-primary transition-colors">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-6" data-alt="Portrait of Principal Skinner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZzJ-WI6Hc6CsPgca4_2chpLo-lkAfxBhHG6pVOhg48D2pmxxED092aEcmwM252qFYJTQRgDZ1ocHR0nClhb9Qm3hjE3b-oa5gkWhx1E6Rom1UxzskVuz9_pGiw1iSQpQd5w4UuX5tH1HDx08vwz2OLBa1p88yja1m1x5zsUbQqMhpISQeScc7_NEGXKdWAxDhKMMX0I4M7rXym3URzqrr3qufupywixfjYbkRASZd5CpE1kcZ0-JA_YXhtRW-VxbMLEjYcZG8AXrD");'></div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">Principal Skinner</span>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400">10:45 AM</span>
+</div>
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">Upcoming Parent-Teacher Conference</h4>
+<span class="bg-red-100 text-red-700 text-[10px] font-bold px-1.5 py-0.5 rounded">Urgent</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Please see the attached schedule for next week's conferences. It is imperative that all staff review their assigned slots.</p>
+</div>
+<!-- Message 2 -->
+<div class="flex flex-col gap-1 p-4 cursor-pointer border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-l-4 border-l-transparent transition-colors">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-6" data-alt="Portrait of Mrs. Krabappel" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDfgX5t99ksNpYTuUsgPJmTuwSOzoCxWPR4XfOnmLCn93zgx4DazCVRItUJDkUeZvc32yBux0FDG_ykSDonWZ4AmFo4Oj4higaaoUAuag5InogfDZaQ9sfZxw_KZSX1mNfsdcYCyIm-kT-45GvoiDjsz86DhomDZ0BziQKsllYofSr3Zl8Y0vSnonPwLJj6M7KNtlQ6_w35ZQoKwDpH23ki8OwtoYuWYY75LememQI3hHjQnZKOK5zjMj3VC6zePHEwDpUjq3If603v");'></div>
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Edna Krabappel</span>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400">Yesterday</span>
+</div>
+<h4 class="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">Grade 4 Field Trip Permission Slips</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Just a reminder that we are still missing 5 permission slips for the museum trip. Can we send a blast to parents?</p>
+</div>
+<!-- Message 3 -->
+<div class="flex flex-col gap-1 p-4 cursor-pointer border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-l-4 border-l-transparent transition-colors">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<div class="bg-blue-100 dark:bg-blue-900 flex items-center justify-center rounded-full size-6 text-[10px] font-bold text-blue-700 dark:text-blue-300">
+                                IT
+                            </div>
+<span class="text-sm font-semibold text-slate-900 dark:text-white">IT Support</span>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400">Oct 24</span>
+</div>
+<h4 class="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">Planned System Maintenance</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">The ERP system will be down for maintenance this Saturday from 2:00 AM to 4:00 AM UTC.</p>
+</div>
+<!-- Message 4 -->
+<div class="flex flex-col gap-1 p-4 cursor-pointer border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-l-4 border-l-transparent transition-colors opacity-60">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-6" data-alt="Portrait of Coach" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD345tNd4ym09MRV_MsXhdznUBWT3dF-SWGUHpG4rEMKqhKMOIoXX8IF0kXE1xK3lLsdRQbrGUjZWjQUxTDHmJT3RJo9O1yuy_L5wpdDkgvdDafqT3bUQeoadTE40-YvLEjYTIUmCkOKIx5OMDFbruDp0JjbrzJGCPWV_CWTuhoRyV2FSVV5qqAYC-uimeOhULWyFmPWW1QTGEfni9ySeCrmjwY_6GpDX_mO7Gci9f7mG61RwKVsJZeepXmAc99YxLAXKyzqmGgL3lU");'></div>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Coach cutler</span>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400">Oct 22</span>
+</div>
+<h4 class="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">Gym Equipment Request</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">The new basketballs have arrived. Please sign off on the receipt attached below.</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Reading Pane -->
+<main class="flex-1 flex flex-col bg-background-light dark:bg-background-dark overflow-hidden relative">
+<!-- Breadcrumbs in Main Content Area -->
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors font-medium" href="#">Home</a>
+<span class="text-slate-300">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors font-medium" href="#">Dashboard</a>
+<span class="text-slate-300">/</span>
+<span class="text-slate-900 dark:text-white font-medium">Communication Center</span>
+</div>
+<div class="flex-1 overflow-y-auto p-6 md:p-10">
+<div class="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<!-- Message Header -->
+<div class="p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<h1 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Upcoming Parent-Teacher Conference</h1>
+<span class="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-xs font-bold px-2 py-1 rounded">Urgent</span>
+<span class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium px-2 py-1 rounded">Staff Announcement</span>
+</div>
+<div class="flex gap-2 text-slate-400">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors" title="Print">
+<span class="material-symbols-outlined text-xl">print</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors" title="Expand">
+<span class="material-symbols-outlined text-xl">open_in_new</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shadow-sm" data-alt="Portrait of Principal Skinner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAC8oy1j7TcWdQrtqsmfktFXdCUhrw1f-1FgM8teZ4bi-bgS-7hCggIIpagrGh9xGDIYn1Td9DPECHDn6xqzt4UpE4om7g65wPwscXE2coSbdhfJz7a5GTRPIA291WnsrmTMSTLK7Zb9iQnqo4S93lS5Oc0PGicn9U63IgqkRm9fOWiILASLMVXG6GbH3UphHF27PEamq1Ng-eg4r51ywOEVJhXfykZvQd4ru5cBEDEou2ZvXrRur0gsV9DFXOb1AgOUeKYZSJgv5On");'></div>
+<div>
+<div class="flex items-center gap-2">
+<p class="text-base font-bold text-slate-900 dark:text-white">Principal Skinner</p>
+<span class="text-xs text-slate-500 dark:text-slate-400">&lt;principal@springfield.edu&gt;</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">To: All Staff</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Oct 26, 2023, 10:45 AM</p>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-primary transition-colors" title="Reply">
+<span class="material-symbols-outlined text-xl">reply</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-primary transition-colors" title="Reply All">
+<span class="material-symbols-outlined text-xl">reply_all</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-primary transition-colors" title="Forward">
+<span class="material-symbols-outlined text-xl">forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Message Body -->
+<div class="p-8 text-slate-800 dark:text-slate-200 leading-relaxed text-base space-y-4">
+<p>Dear Staff,</p>
+<p>Please see the attached schedule for next week's conferences. It is imperative that all staff review their assigned slots and confirm availability by end of day Friday.</p>
+<p>We have tried to accommodate all special requests submitted before the deadline. If there are major conflicts, please reach out to the administrative office immediately.</p>
+<p>Additionally, we will be providing dinner for all staff staying past 6:00 PM on Tuesday and Thursday.</p>
+<p>Best regards,</p>
+<p class="font-bold">Seymour Skinner<br/><span class="text-slate-500 text-sm font-normal">Principal, Springfield Elementary</span></p>
+<!-- Attachments -->
+<div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-3">2 Attachments</h4>
+<div class="flex gap-4 flex-wrap">
+<div class="group flex items-center gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer min-w-[200px]">
+<div class="bg-red-100 dark:bg-red-900/50 p-2 rounded-lg text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-medium text-slate-900 dark:text-white truncate">Conference_Schedule.pdf</span>
+<span class="text-xs text-slate-500">2.4 MB</span>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-slate-400">download</span>
+</div>
+</div>
+<div class="group flex items-center gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer min-w-[200px]">
+<div class="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-lg text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-medium text-slate-900 dark:text-white truncate">Parent_Guidelines.docx</span>
+<span class="text-xs text-slate-500">145 KB</span>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-slate-400">download</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Reply -->
+<div class="p-6 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800">
+<div class="flex gap-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0" data-alt="User profile avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_mbyT9IPg1vtA5S46pfSw33yUTQ_ErsyJFSdmKQiEzq3W92tytRTsIvTYx9OP71Hx5NlHNjGU1K1WQEeqAUwBf1r6ZosHS516bQ2eHvWptgHIMXi1DB2k4WgG-EK5phSIh0_dM0exSs_Kwvbp-rJT_xDMRE_CkWwFfEWONCMOQeWZ9FEwtq0UdSVjo8f6kaR-WY81vtPjfxJGfGFtdqhgB9sMDCGgRNev1f9tue6gSDe7ApbDHY5sG18ujHELp3v7iT5x1Z3z_HR1");'></div>
+<div class="flex-1">
+<div class="relative rounded-lg shadow-sm">
+<textarea class="form-textarea block w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:border-primary focus:ring-primary sm:text-sm p-4" placeholder="Click here to reply to Principal Skinner..." rows="3"></textarea>
+<div class="absolute bottom-2 right-2 flex gap-2">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-lg">attach_file</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-lg">image</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-lg">mood</span>
+</button>
+<button class="bg-primary hover:bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-medium transition-colors ml-2 flex items-center gap-1">
+                                            Send <span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

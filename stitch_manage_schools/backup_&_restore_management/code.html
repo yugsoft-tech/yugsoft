@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Backup &amp; Restore Management - School ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-50 font-display">
+<div class="flex min-h-screen w-full flex-col">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-slate-50">
+<div class="size-8 flex items-center justify-center rounded bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-xl">school</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-slate-50 focus:outline-0 focus:ring-2 focus:ring-primary/20 border-none bg-slate-100 dark:bg-slate-800 focus:border-none h-full placeholder:text-slate-400 px-4 pl-10 text-sm font-normal leading-normal transition-all" placeholder="Search modules..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<button class="relative p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-white dark:ring-slate-800 shadow-sm cursor-pointer" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyNIfMnI9khFJTd3gn8ONtDtr1NN-SKD9OFC42n7ZgI4iCwCnvM5b66Omt5JymWCH3h8XjeO3uMMTC3kkioMbbKsfqzSWbUA71j4bp0NnSheDOGyUnXkK8C3KGjgeb7_YBcnLoM3Yhcej8ZGCqoToX5tlKviWdrM4sbSDqTZAos0w4FLwPeQXXXane07gYB1Kx4S9KwSMWI2PY1cWVBtlP4BRDyspKBD-h28clefH5POUxC2FblwGThg-1Iu6_07kfGXphHSC3QjPg");'></div>
+</div>
+</header>
+<div class="flex flex-1 relative overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex w-64 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-y-auto">
+<div class="flex flex-col gap-4 p-4">
+<div class="flex flex-col px-3">
+<h1 class="text-slate-900 dark:text-slate-50 text-base font-bold leading-normal">Admin Console</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal">Version 4.2.0</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">groups</span>
+<p class="text-sm font-medium leading-normal">Students</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">school</span>
+<p class="text-sm font-medium leading-normal">Academics</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">payments</span>
+<p class="text-sm font-medium leading-normal">Finance</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">badge</span>
+<p class="text-sm font-medium leading-normal">HR</p>
+</a>
+<div class="my-2 border-t border-slate-100 dark:border-slate-800"></div>
+<div class="px-3 py-2">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">System</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">backup</span>
+<p class="text-sm leading-normal">Backup &amp; Restore</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">security</span>
+<p class="text-sm font-medium leading-normal">Access Control</p>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6 lg:p-10">
+<div class="mx-auto max-w-[1200px] flex flex-col gap-8">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+<div class="flex flex-col gap-2 max-w-2xl">
+<div class="flex items-center gap-3">
+<h1 class="text-slate-900 dark:text-white text-3xl font-black leading-tight tracking-tight">Backup &amp; Restore Management</h1>
+<span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 ring-1 ring-inset ring-emerald-600/20">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                    System Healthy
+                                </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed">Manage data integrity, configure automated schedules, and restore system states from secure recovery points.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Configure</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-5 bg-primary hover:bg-blue-600 text-white transition-colors text-sm font-bold shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Create Manual Backup</span>
+</button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">history</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Last Successful Backup</p>
+<p class="text-slate-900 dark:text-white text-2xl font-bold">Today, 02:00 AM</p>
+</div>
+<div class="mt-auto flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 w-fit px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                Verified Integrity
+                            </div>
+</div>
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">schedule</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Next Scheduled Backup</p>
+<p class="text-slate-900 dark:text-white text-2xl font-bold">Tomorrow, 02:00 AM</p>
+</div>
+<div class="mt-auto flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 w-fit px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">update</span>
+                                Automated (Daily)
+                            </div>
+</div>
+<div class="flex flex-col justify-between gap-4 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Storage Quota</p>
+<p class="text-slate-900 dark:text-white text-sm font-bold">45%</p>
+</div>
+<div class="h-2.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 45%;"></div>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-2">45.2 GB of 100 GB used</p>
+</div>
+<div class="flex gap-2">
+<button class="text-xs font-semibold text-primary hover:text-blue-600 transition-colors">Manage Storage</button>
+</div>
+</div>
+</div>
+<!-- Configuration Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left: Settings Card -->
+<div class="lg:col-span-1 flex flex-col gap-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-6 h-fit">
+<div class="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Backup Configuration</h3>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Automated Backups</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Run backups on schedule</span>
+</div>
+<button aria-checked="true" class="bg-primary relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" role="switch">
+<span aria-hidden="true" class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<div class="space-y-3">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Frequency</label>
+<div class="relative">
+<select class="block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-200 focus:border-primary focus:ring-primary sm:text-sm py-2.5">
+<option>Daily</option>
+<option>Weekly</option>
+<option>Monthly</option>
+</select>
+</div>
+</div>
+<div class="space-y-3">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Time (UTC)</label>
+<input class="block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-200 focus:border-primary focus:ring-primary sm:text-sm py-2.5" type="time" value="02:00"/>
+</div>
+<div class="space-y-3">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Destination</label>
+<div class="relative">
+<select class="block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-200 focus:border-primary focus:ring-primary sm:text-sm py-2.5">
+<option>Local Server Storage</option>
+<option>AWS S3 Bucket</option>
+<option>Google Drive</option>
+<option>FTP Server</option>
+</select>
+</div>
+</div>
+<div class="space-y-3">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Retention Policy</label>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Delete older backups automatically.</p>
+<div class="relative">
+<select class="block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-200 focus:border-primary focus:ring-primary sm:text-sm py-2.5">
+<option>Keep last 30 days</option>
+<option>Keep last 60 days</option>
+<option>Keep last 90 days</option>
+<option>Keep forever</option>
+</select>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-auto">
+<button class="w-full flex items-center justify-center rounded-lg h-10 bg-primary/10 hover:bg-primary/20 text-primary transition-colors text-sm font-bold">
+                                    Save Changes
+                                </button>
+</div>
+</div>
+<!-- Right: History Table -->
+<div class="lg:col-span-2 flex flex-col rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500">table_view</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Backup History</h3>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors rounded hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors rounded hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Date &amp; Time</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Type</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Size</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Status</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 24, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">02:00 AM</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                                    Automated
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-600 dark:text-slate-300">2.4 GB</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+<span class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Success</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex justify-end items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary transition-colors" title="Download">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-amber-600 transition-colors" title="Restore">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 23, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">04:15 PM</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800">
+                                                    Manual
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-600 dark:text-slate-300">2.3 GB</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+<span class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Success</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex justify-end items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary transition-colors" title="Download">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-amber-600 transition-colors" title="Restore">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 23, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">02:00 AM</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                                    Automated
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-600 dark:text-slate-300">--</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5">
+<span class="size-1.5 rounded-full bg-red-500"></span>
+<span class="text-sm text-red-600 dark:text-red-400 font-medium">Failed</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex justify-end items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-red-600 transition-colors" title="Delete Log">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 22, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">02:00 AM</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                                    Automated
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-600 dark:text-slate-300">2.3 GB</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+<span class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Success</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex justify-end items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary transition-colors" title="Download">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-amber-600 transition-colors" title="Restore">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Oct 21, 2023</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">02:00 AM</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                                    Automated
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-600 dark:text-slate-300">2.2 GB</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+<span class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Success</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex justify-end items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary transition-colors" title="Download">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-amber-600 transition-colors" title="Restore">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+<p class="text-xs text-slate-500 dark:text-slate-400">Showing 5 of 42 backups</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-medium rounded border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 disabled:opacity-50">Previous</button>
+<button class="px-3 py-1 text-xs font-medium rounded border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

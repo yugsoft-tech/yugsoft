@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Feedback &amp; Suggestions</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "border-light": "#cfdbe7",
+                        "border-dark": "#2a3b4d",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white font-display min-h-screen flex flex-col">
+<!-- Top Navbar -->
+<header class="w-full bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark sticky top-0 z-50">
+<div class="px-4 md:px-10 py-3 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#0d141b] dark:text-white">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">school</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-[#0d141b] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#0d141b] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Academics</a>
+<a class="text-[#0d141b] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Finance</a>
+<a class="text-primary text-sm font-medium leading-normal" href="#">Communication</a>
+<a class="text-[#0d141b] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="hidden lg:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-border-light dark:border-border-dark bg-background-light dark:bg-surface-dark overflow-hidden focus-within:ring-2 focus-within:ring-primary/20">
+<div class="text-[#4c739a] flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-none border-none bg-transparent h-full placeholder:text-[#4c739a] px-3 text-sm font-normal leading-normal focus:ring-0" placeholder="Search..."/>
+</div>
+</label>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-[#4c739a] dark:text-gray-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-white dark:ring-gray-700 cursor-pointer" data-alt="User profile avatar showing a smiling student" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyBXP25QtgBv0cYEHmEOF2uT656FwEtEN7acjEnBuevPY9G96cfL6ww7wozAZ52locUG2_yq3jxJUCjWiOTc5Z06HNTIHLT8FpTgQpENEbKJEYERpcJhtAATaUEx9UjKU_AO9G97Xpw7GmvD5LOXVke69ilkvcRaZfsnpgzPpw0V9VW1FOpMXRX9fTs52IksmGlIEE_VDChLrOd-mxMZnUqyrkR0B0qfQ33Xzbl-oPkjbAQR42QfBAPPOqC5r1-5DNR2KRj3mngpBI");'>
+</div>
+</div>
+</div>
+</header>
+<div class="flex-1 overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col max-w-[1440px] mx-auto px-4 md:px-10 py-8">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between gap-6 pb-8 border-b border-border-light dark:border-border-dark mb-8">
+<div class="flex min-w-72 flex-col gap-3">
+<h1 class="text-[#0d141b] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Feedback &amp; Suggestions</h1>
+<p class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal">Your voice matters. Help us improve our school community together.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-sm font-medium text-[#4c739a] dark:text-gray-400">Viewing as:</span>
+<div class="flex items-center gap-2 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-1">
+<button class="bg-primary/10 text-primary px-3 py-1.5 rounded text-sm font-medium">Student</button>
+<button class="text-[#4c739a] dark:text-gray-400 px-3 py-1.5 rounded text-sm font-medium hover:bg-background-light dark:hover:bg-gray-800">Staff</button>
+</div>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Panel: Submission Form (5 columns) -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+<h2 class="text-xl font-bold text-[#0d141b] dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">add_comment</span>
+                            Submit New Feedback
+                        </h2>
+<form class="flex flex-col gap-5">
+<!-- Category Select -->
+<div class="flex flex-col gap-2">
+<label class="text-[#0d141b] dark:text-gray-200 text-sm font-medium">Category</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-gray-800 text-[#0d141b] dark:text-white h-12 px-4 pr-10 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option disabled="" selected="" value="">Select a category</option>
+<option value="academic">Academic / Curriculum</option>
+<option value="facilities">Facilities &amp; Infrastructure</option>
+<option value="canteen">Canteen &amp; Food</option>
+<option value="sports">Sports &amp; Activities</option>
+<option value="other">Other</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#4c739a]">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Subject Input -->
+<div class="flex flex-col gap-2">
+<label class="text-[#0d141b] dark:text-gray-200 text-sm font-medium">Subject</label>
+<input class="w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-gray-800 text-[#0d141b] dark:text-white h-12 px-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none placeholder:text-[#4c739a]" placeholder="Brief summary of your feedback" type="text"/>
+</div>
+<!-- Message Textarea -->
+<div class="flex flex-col gap-2">
+<label class="text-[#0d141b] dark:text-gray-200 text-sm font-medium">Detailed Message</label>
+<textarea class="w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-gray-800 text-[#0d141b] dark:text-white p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none resize-none placeholder:text-[#4c739a]" placeholder="Please describe your suggestion or issue in detail..." rows="5"></textarea>
+</div>
+<!-- Attachment -->
+<div class="flex flex-col gap-2">
+<label class="text-[#0d141b] dark:text-gray-200 text-sm font-medium">Attachments (Optional)</label>
+<div class="border-2 border-dashed border-border-light dark:border-border-dark rounded-lg p-6 flex flex-col items-center justify-center bg-background-light dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-[#4c739a] text-3xl mb-2 group-hover:text-primary transition-colors">cloud_upload</span>
+<p class="text-sm text-[#4c739a] text-center">Click or drag file to upload</p>
+<p class="text-xs text-gray-400 mt-1">PNG, JPG, PDF up to 5MB</p>
+</div>
+</div>
+<!-- Anonymous Toggle & Submit -->
+<div class="flex items-center justify-between pt-2">
+<label class="flex items-center gap-3 cursor-pointer select-none">
+<div class="relative">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+<span class="text-sm font-medium text-[#0d141b] dark:text-gray-300">Keep Anonymous</span>
+</label>
+<button class="bg-primary hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-medium text-sm flex items-center gap-2 transition-all shadow-md hover:shadow-lg" type="button">
+<span>Submit Feedback</span>
+<span class="material-symbols-outlined text-lg">send</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Right Panel: Tracking & Review (7 columns) -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium">Pending Review</p>
+<span class="material-symbols-outlined text-amber-500">pending</span>
+</div>
+<p class="text-[#0d141b] dark:text-white text-3xl font-bold">12</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium">In Progress</p>
+<span class="material-symbols-outlined text-primary">sync</span>
+</div>
+<p class="text-[#0d141b] dark:text-white text-3xl font-bold">5</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-medium">Resolved</p>
+<span class="material-symbols-outlined text-emerald-500">check_circle</span>
+</div>
+<p class="text-[#0d141b] dark:text-white text-3xl font-bold">89</p>
+</div>
+</div>
+<!-- Filter & Search -->
+<div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+<h3 class="text-lg font-bold text-[#0d141b] dark:text-white">Recent Feedback</h3>
+<div class="flex gap-3 w-full sm:w-auto">
+<div class="relative flex-1 sm:flex-initial">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#4c739a] text-lg">filter_list</span>
+<select class="w-full sm:w-40 pl-9 pr-8 py-2 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-sm text-[#0d141b] dark:text-white focus:outline-none focus:border-primary appearance-none cursor-pointer">
+<option>All Status</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Resolved</option>
+</select>
+</div>
+<div class="relative flex-1 sm:flex-initial">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#4c739a] text-lg">calendar_today</span>
+<select class="w-full sm:w-40 pl-9 pr-8 py-2 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-sm text-[#0d141b] dark:text-white focus:outline-none focus:border-primary appearance-none cursor-pointer">
+<option>Newest First</option>
+<option>Oldest First</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Feedback List -->
+<div class="flex flex-col gap-4">
+<!-- Item 1 -->
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="bg-primary/10 text-primary text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">Facilities</span>
+<span class="text-xs text-[#4c739a] dark:text-gray-400">#TRK-2024-001 • 2 hours ago</span>
+</div>
+<span class="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-800">
+<span class="material-symbols-outlined text-[14px]">pending</span>
+                                    Pending Review
+                                </span>
+</div>
+<h4 class="text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors mb-1">Water dispenser on 2nd floor leaking</h4>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm line-clamp-2">The water dispenser near the science lab has been leaking water onto the floor since this morning. It's creating a slipping hazard for students passing by during break times.</p>
+<div class="mt-4 flex items-center justify-between border-t border-border-light dark:border-border-dark pt-3">
+<div class="flex items-center gap-2 text-xs text-[#4c739a] dark:text-gray-500">
+<div class="bg-gray-200 dark:bg-gray-700 rounded-full size-6 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+<span>Anonymous Student</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-medium text-[#4c739a] dark:text-gray-400">
+<span class="flex items-center gap-1 hover:text-[#0d141b] dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> 12
+                                    </span>
+<span class="flex items-center gap-1 hover:text-[#0d141b] dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">chat_bubble</span> 0
+                                    </span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">Academic</span>
+<span class="text-xs text-[#4c739a] dark:text-gray-400">#TRK-2023-892 • 1 day ago</span>
+</div>
+<span class="flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-blue-200 dark:border-blue-800">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+                                    In Progress
+                                </span>
+</div>
+<h4 class="text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors mb-1">Request for more library quiet hours</h4>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm line-clamp-2">With exams approaching, the library is often too noisy for effective study. Could we implement strict quiet hours from 4 PM to 6 PM?</p>
+<div class="mt-4 flex items-center justify-between border-t border-border-light dark:border-border-dark pt-3">
+<div class="flex items-center gap-2 text-xs text-[#4c739a] dark:text-gray-500">
+<div class="bg-gray-200 dark:bg-gray-700 rounded-full size-6 flex items-center justify-center overflow-hidden bg-cover bg-center" data-alt="Small avatar of student Sarah J." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUCgr8CnA03zQgP9-1uk1JGQf4yWg7dWgJ_4xxhadxXm1qddRYcfLlE-ApgCt3tpbNaUkBDYIqzs34ohJWJtVvz3opMLJrFx1Gk3LoMJn4mmf2MA4bpuNVLTMFvCSMMA7uckbxwi4Sc47Ef_-JqVbSPPyIBnFDOrApdwiN7n9KVt6pc5Hm-mR1kHTAnGO5uEXh5PzV3EjmASqfnBtqXsuRpgH7qiHd5EOPp5uGz3krsFUy9TVglaLNWcnnWaavtMdOeU1MSWX4r7w-");'></div>
+<span>Sarah Jenkins</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-medium text-[#4c739a] dark:text-gray-400">
+<span class="flex items-center gap-1 hover:text-[#0d141b] dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> 45
+                                    </span>
+<span class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]">chat_bubble</span> 2 Admin Replies
+                                    </span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow cursor-pointer group opacity-80 hover:opacity-100">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">Canteen</span>
+<span class="text-xs text-[#4c739a] dark:text-gray-400">#TRK-2023-845 • 3 days ago</span>
+</div>
+<span class="flex items-center gap-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                    Resolved
+                                </span>
+</div>
+<h4 class="text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors mb-1">More vegetarian options in cafeteria</h4>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm line-clamp-2">We have added a dedicated vegetarian station starting next Monday! Check the new menu on the notice board.</p>
+<div class="mt-4 flex items-center justify-between border-t border-border-light dark:border-border-dark pt-3">
+<div class="flex items-center gap-2 text-xs text-[#4c739a] dark:text-gray-500">
+<div class="bg-gray-200 dark:bg-gray-700 rounded-full size-6 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+<span>Anonymous Parent</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-medium text-[#4c739a] dark:text-gray-400">
+<span class="flex items-center gap-1 hover:text-[#0d141b] dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> 8
+                                    </span>
+<span class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined text-[16px]">verified</span> Solution Verified
+                                    </span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-3 text-sm font-medium text-[#4c739a] dark:text-gray-400 hover:text-primary hover:bg-surface-light dark:hover:bg-surface-dark rounded-lg transition-colors border border-transparent hover:border-border-light dark:hover:border-border-dark">
+                        Load More Feedback
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

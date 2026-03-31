@@ -34,7 +34,7 @@ export default function StudentExams() {
                 const data = await examsService.getExams({});
                 setExams(data.data || data);
             } catch (error: any) {
-                toast.error('Failed to synchronize assessment protocols.');
+                toast.error('Failed to load exam data.');
             } finally {
                 setLoading(false);
             }
@@ -47,10 +47,10 @@ export default function StudentExams() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        ACADEMIC_CORE: ASSESSMENT_PROTOCOL
+                        Student Office: Exams
                     </Badge>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Examination Registry</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Verify assessment schedules, monitor protocol status, and synchronize with the academic core.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">My Exams</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Check your exam dates, status, and results.</p>
                 </div>
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-3 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-slate-50 dark:border-slate-800 shadow-xl">
@@ -65,9 +65,9 @@ export default function StudentExams() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: 'Total Assessments', value: '12', icon: <FileText className="text-primary" />, sub: 'ACADEMIC_CYCLE' },
-                    { label: 'Completed', value: '09', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'PROTOCOL_VERIFIED' },
-                    { label: 'Pending', value: '03', icon: <Timer className="text-amber-500" />, sub: 'SCHEDULE_ACTIVE' },
+                    { label: 'Total Exams', value: '12', icon: <FileText className="text-primary" />, sub: 'Current Term' },
+                    { label: 'Completed', value: '09', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'Passed' },
+                    { label: 'Pending', value: '03', icon: <Timer className="text-amber-500" />, sub: 'Upcoming' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl relative group overflow-hidden">
                         <div className="relative z-10 flex items-center justify-between mb-6">
@@ -97,7 +97,9 @@ export default function StudentExams() {
                                     className="bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-3 pl-12 pr-6 text-xs font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all shadow-inner"
                                 />
                             </div>
-                            <Button variant="secondary" className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-400 hover:text-primary transition-all">
+                            <Button 
+                                onClick={() => toast('Filters coming soon', { icon: '🔍' })}
+                                variant="secondary" className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-400 hover:text-primary transition-all">
                                 <Filter size={18} />
                             </Button>
                         </div>
@@ -144,8 +146,10 @@ export default function StudentExams() {
                                                 <Badge variant="outline" className="text-[7px] font-black uppercase tracking-widest border-none bg-emerald-500/5 text-emerald-600 px-3 py-1">
                                                     SCHEDULED
                                                 </Badge>
-                                                <Button variant="ghost" className="text-[9px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors gap-1">
-                                                    View Protocol
+                                                <Button 
+                                                    onClick={() => toast(`Viewing details for ${exam.name}`, { icon: '📄' })}
+                                                    variant="ghost" className="text-[9px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors gap-1">
+                                                    View Details
                                                     <ArrowRight size={12} />
                                                 </Button>
                                             </div>
@@ -155,7 +159,7 @@ export default function StudentExams() {
                             ) : (
                                 <div className="col-span-2 flex flex-col items-center justify-center p-20 gap-4 opacity-30 italic">
                                     <GraduationCap size={48} />
-                                    <p className="text-[10px] font-black uppercase tracking-widest">No assessment protocols active in current registry.</p>
+                                    <p className="text-[10px] font-black uppercase tracking-widest">No exams scheduled at this time.</p>
                                 </div>
                             )
                         )}
@@ -164,9 +168,11 @@ export default function StudentExams() {
                     <div className="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
                             <ShieldCheck size={14} className="text-emerald-500" />
-                            ACADEMIC_INTEGRITY_SYNC_V1
+                            SECURE RECORDS
                         </p>
-                        <Button className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl px-8 py-4 h-auto font-black text-[9px] uppercase tracking-widest gap-2 hover:opacity-90 transition-all">
+                        <Button 
+                            onClick={() => toast('Loading your performance analytics...', { icon: '📊' })}
+                            className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl px-8 py-4 h-auto font-black text-[9px] uppercase tracking-widest gap-2 hover:opacity-90 transition-all">
                             <Activity size={16} />
                             Performance Analytics
                         </Button>

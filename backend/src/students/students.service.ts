@@ -71,6 +71,7 @@ export class StudentsService {
       );
     }
 
+
     // Verify section exists and belongs to the class
     const section = await this.prisma.section.findUnique({
       where: { id: sectionId },
@@ -247,6 +248,47 @@ export class StudentsService {
 
       return student;
     });
+  }
+
+  /**
+ * Get logged-in student's own profile
+ * Used by Student Dashboard
+ */
+  async findMe(currentUser: { userId: string; role: Role }) {
+    if (currentUser.role !== Role.STUDENT) {
+      throw new ForbiddenException('Only students can access this resource');
+    }
+
+    const student = await this.prisma.student.findUnique({
+      where: { userId: currentUser.userId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            phone: true,
+            isActive: true,
+          },
+        },
+        class: {
+          select: { id: true, name: true },
+        },
+        section: {
+          select: { id: true, name: true },
+        },
+        school: {
+          select: { id: true, name: true },
+        },
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException('Student profile not found');
+    }
+
+    return student;
   }
 
   /**

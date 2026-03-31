@@ -34,5 +34,15 @@ export const superAdminService = {
       console.error('Failed to fetch global users', error);
       return [];
     }
+  },
+
+  getPlans: async () => {
+    try {
+      const response = await apiClient.get('/super-admin/plans');
+      return response;
+    } catch (error) {
+      console.error('Failed to fetch plans', error);
+      return { data: [], meta: {} };
+    }
   }
 };

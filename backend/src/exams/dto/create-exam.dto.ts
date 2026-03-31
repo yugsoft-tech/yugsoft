@@ -23,4 +23,10 @@ export class CreateExamDto {
   @IsUUID()
   @IsNotEmpty()
   classId: string;
+
+  @IsNotEmpty()
+  totalMarks: number;
+
+  @IsNotEmpty()
+  passingMarks: number;
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Forgot Password - School ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#4F46E5", // Indigo-600
+                        primary_hover: "#4338ca", // Indigo-700
+                        "background-light": "#F3F4F6", // Gray-100
+                        "background-dark": "#111827", // Gray-900
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1F2937", // Gray-800
+                        "text-light": "#1F2937", // Gray-800
+                        "text-dark": "#F9FAFB", // Gray-50
+                        "text-muted-light": "#6B7280", // Gray-500
+                        "text-muted-dark": "#9CA3AF", // Gray-400
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
+<div class="w-full max-w-md bg-surface-light dark:bg-surface-dark rounded-xl shadow-xl overflow-hidden transform transition-all hover:scale-[1.01] duration-300 border border-gray-100 dark:border-gray-700 relative">
+<div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-primary"></div>
+<div class="absolute -top-10 -right-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+<div class="absolute bottom-10 -left-10 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl"></div>
+<div class="p-8 sm:p-10 relative z-10">
+<div class="text-center mb-8">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 dark:bg-primary/20 mb-4">
+<span class="material-icons-outlined text-3xl text-primary">lock_reset</span>
+</div>
+<h1 class="text-2xl font-bold text-text-light dark:text-text-dark tracking-tight">Forgot password?</h1>
+<p class="mt-2 text-sm text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    No worries, we'll send you reset instructions.
+                </p>
+</div>
+<form action="#" class="space-y-6" method="POST">
+<div>
+<label class="block text-sm font-medium text-text-light dark:text-gray-300 mb-1" for="email">Email address</label>
+<div class="relative rounded-md shadow-sm">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-lg">email</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow duration-200" id="email" name="email" placeholder="teacher@school.edu" required="" type="email"/>
+</div>
+<p class="mt-2 text-xs text-text-muted-light dark:text-text-muted-dark">
+                        Please enter the email associated with your school account.
+                    </p>
+</div>
+<button class="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary_hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-gray-900 transition-colors duration-200 group" type="button">
+<span class="mr-2">Send Reset Link</span>
+<span class="material-icons-outlined text-lg transition-transform group-hover:translate-x-1 duration-200">arrow_forward</span>
+</button>
+</form>
+<div class="mt-8 flex items-center justify-center space-x-2 text-sm">
+<span class="text-text-muted-light dark:text-text-muted-dark">Remember your password?</span>
+<a class="font-medium text-primary hover:text-primary_hover transition-colors flex items-center" href="#">
+<span class="material-icons-outlined text-sm mr-1">arrow_back</span>
+                    Back to log in
+                </a>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 px-8 py-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center text-xs">
+<span class="text-text-muted-light dark:text-gray-500">© 2024 SchoolERP</span>
+<a class="text-text-muted-light dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Need help?</a>
+</div>
+</div>
+<div class="fixed top-4 right-4">
+<button class="p-2 rounded-full bg-surface-light dark:bg-surface-dark shadow-md text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-outlined dark:hidden">dark_mode</span>
+<span class="material-icons-outlined hidden dark:block">light_mode</span>
+</button>
+</div>
+
+</body></html>

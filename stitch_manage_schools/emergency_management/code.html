@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Emergency Management</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- TopNavBar -->
+<div class="w-full bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800">
+<div class="px-4 md:px-10 py-3 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">School ERP</h2>
+</div>
+<div class="hidden lg:flex items-center bg-slate-100 dark:bg-[#24303e] rounded-lg h-10 w-64 px-3 gap-2">
+<span class="material-symbols-outlined text-slate-500">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full p-0 text-slate-900 dark:text-white placeholder-slate-500" placeholder="Search students, staff..."/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Students</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Staff</a>
+<a class="text-primary text-sm font-bold" href="#">Emergency</a>
+</nav>
+<div class="flex items-center gap-4 border-l border-slate-200 dark:border-slate-700 pl-6">
+<button class="relative text-slate-600 dark:text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2632]"></span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border-2 border-slate-100 dark:border-slate-700" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAft4op_KyCOGIC38DmGBCkYYIN5b8JobSUZo0bW-ecDleIkc12CyNcSG2heNSLULf_wwcPZohYx1s3y7iARMiCwMC_2gL0Mqs65DGReiicBp56uP9HO0wh8JWBkG6EfxipIy_n4AMiJcJ_FB-XVd06T2zGpGtLhDQX3AnKLuykMb-M0OUinUp8wC3guiW0Us1_7SPvi_eraLmgisxKt8aD5cKOPTmcnpLFcNho3_AJDW6eCgqcdzZA4jBdyUPGkv-sXapUs4zGbHGb");'></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex flex-col w-full max-w-[1280px] mx-auto px-4 md:px-10 py-8 gap-8">
+<!-- Header & Stats Row -->
+<div class="flex flex-col xl:flex-row gap-6 items-start justify-between">
+<!-- Page Heading -->
+<div class="flex flex-col gap-2 max-w-2xl">
+<div class="flex items-center gap-3">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black tracking-tight">Emergency Management Center</h1>
+<span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">
+<span class="size-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>
+                        System Online
+                    </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Manage safety protocols, emergency contacts, and real-time alerts.</p>
+</div>
+<!-- Stats -->
+<div class="flex flex-wrap md:flex-nowrap gap-4 w-full xl:w-auto">
+<div class="flex flex-1 min-w-[140px] flex-col gap-1 rounded-xl p-5 bg-white dark:bg-[#1a2632] shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">verified_user</span>
+                        Current Status
+                    </div>
+<p class="text-slate-900 dark:text-white text-xl font-bold">Normal Ops</p>
+</div>
+<div class="flex flex-1 min-w-[140px] flex-col gap-1 rounded-xl p-5 bg-white dark:bg-[#1a2632] shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">history</span>
+                        Last Drill
+                    </div>
+<p class="text-slate-900 dark:text-white text-xl font-bold">Oct 15, 2023</p>
+</div>
+<div class="flex flex-1 min-w-[140px] flex-col gap-1 rounded-xl p-5 bg-white dark:bg-[#1a2632] shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">notification_important</span>
+                        Active Alerts
+                    </div>
+<p class="text-slate-900 dark:text-white text-xl font-bold">None</p>
+</div>
+</div>
+</div>
+<!-- Quick Actions Grid -->
+<div class="flex flex-col gap-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bolt</span>
+                Quick Actions
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Action 1: Lockdown (Critical) -->
+<div class="group relative overflow-hidden rounded-xl bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+<div class="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
+<div class="p-6 flex flex-col h-full justify-between gap-6">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-2">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Initiate Lockdown</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Trigger campus-wide lockdown protocol immediately. Locks all electronic doors.</p>
+</div>
+<div class="size-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-red-600 dark:text-red-400">lock</span>
+</div>
+</div>
+<button class="w-full bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900/50 font-bold py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+                            Trigger Protocol
+                        </button>
+</div>
+</div>
+<!-- Action 2: Mass Alert -->
+<div class="group relative overflow-hidden rounded-xl bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="p-6 flex flex-col h-full justify-between gap-6">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-2">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Send Mass Alert</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Notify staff, students, and parents via SMS and Email simultaneously.</p>
+</div>
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">campaign</span>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm shadow-primary/30">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                            Compose Alert
+                        </button>
+</div>
+</div>
+<!-- Action 3: Medical -->
+<div class="group relative overflow-hidden rounded-xl bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+<div class="absolute top-0 left-0 w-1 h-full bg-teal-500"></div>
+<div class="p-6 flex flex-col h-full justify-between gap-6">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-2">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Medical Emergency</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Alert on-site medical staff and dispatch local ambulance services.</p>
+</div>
+<div class="size-10 rounded-full bg-teal-50 dark:bg-teal-900/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-teal-600 dark:text-teal-400">medical_services</span>
+</div>
+</div>
+<button class="w-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 font-bold py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">call</span>
+                            Contact Nurse
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Split Section: Protocols & Map -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left: Protocols (2 cols) -->
+<div class="lg:col-span-2 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+                        Standard Protocols
+                    </h2>
+<a class="text-sm font-medium text-primary hover:text-blue-600" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Protocol Card -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-12 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">local_fire_department</span>
+</div>
+<div class="flex flex-col flex-1">
+<h4 class="text-slate-900 dark:text-white font-bold">Fire Evacuation</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Updated: Oct 01, 2023</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">chevron_right</span>
+</div>
+<!-- Protocol Card -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">flood</span>
+</div>
+<div class="flex flex-col flex-1">
+<h4 class="text-slate-900 dark:text-white font-bold">Severe Weather</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Updated: Sep 12, 2023</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">chevron_right</span>
+</div>
+<!-- Protocol Card -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-12 rounded-lg bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">directions_run</span>
+</div>
+<div class="flex flex-col flex-1">
+<h4 class="text-slate-900 dark:text-white font-bold">Active Intruder</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Updated: Nov 05, 2023</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">chevron_right</span>
+</div>
+<!-- Protocol Card -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-12 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">science</span>
+</div>
+<div class="flex flex-col flex-1">
+<h4 class="text-slate-900 dark:text-white font-bold">Chemical Spill</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Updated: Aug 22, 2023</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Right: Map -->
+<div class="flex flex-col gap-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">map</span>
+                    Campus Layout
+                </h2>
+<div class="relative w-full h-full min-h-[240px] rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 shadow-sm group">
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-700" data-alt="Campus emergency exit map and layout" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAfXGRTDooeh4eEBNaUUs6fUzeDabDyES5dvbCtAx0IFgm9YQtV88fmboBEP6hF7IDPAWci2aZWs91qhRD-1uVWeU11VarU2dETkmS2ncUQGZMOZ0f-RJTsMMJo57_MEse0VybGbzjwNtasc7Cn4B2NvNa5JcM5Ztav7vsoRhjbS6MFxUJmV5atd0-4ImU2EZcBSu8wU46oLfktnS8yCFdVts-FFli_sKpq_ksP8WuVqzhMFvqr87HDZNYdsiiRisv_UR59hvBTHQrg");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<p class="font-bold text-lg">Main Campus</p>
+<p class="text-sm opacity-90">View Assembly Points</p>
+</div>
+<button class="absolute top-4 right-4 bg-white/90 dark:bg-black/50 p-2 rounded-lg text-slate-900 dark:text-white hover:bg-white transition-colors">
+<span class="material-symbols-outlined">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contacts Section -->
+<div class="flex flex-col gap-4 pb-12">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">contacts</span>
+                    Emergency Contacts
+                </h2>
+<button class="text-primary hover:bg-primary/5 font-medium px-4 py-2 rounded-lg transition-colors text-sm">
+                    Manage List
+                </button>
+</div>
+<div class="w-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-[#24303e] text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-6 py-4 font-semibold">Name</th>
+<th class="px-6 py-4 font-semibold">Role</th>
+<th class="px-6 py-4 font-semibold">Direct Line</th>
+<th class="px-6 py-4 font-semibold">Status</th>
+<th class="px-6 py-4 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-[#24303e] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover" data-alt="Portrait of Sarah Jenkins" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVI6sdAwt9KvlUQq9IDiLS3l3WMWx5_gkYRaL1qZXDA-Hr-DFMgucs1axjUjYTw5XsRy7F5ywHeDt_V-Keis4oXb5jVkvouLf7pazlgsbcCk_n6CXcTdyHE7BATxqhuwmdmlBkhKVfLiw0A7xBM1BYP-f8EmB-D67dn2kjLTYb6WHV186vrSqlmAdVL3qUBTCbWfA5PSRIpd4AAFNHvkjDFKM7qny86UoHMj9Vfv8WXPPfg0OOlRH_QWrVb88jUIk7aKEWTHWfuP6f");'></div>
+<span class="font-medium text-slate-900 dark:text-white">Sarah Jenkins</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Principal</td>
+<td class="px-6 py-4 font-mono text-slate-600 dark:text-slate-300">555-0123</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400">On Campus</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">call</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-[#24303e] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover" data-alt="Portrait of Mark Rivera" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZ7QaOFYKBU6i4uR9gBznFOo2RMnI3TbZP-Dl3e1GcnyHAR5P043rctpslRQWMDI7D-YGJfRHGGW0H689IdytvXJFxwnQOP_2JMUkr7rpAiGe4N6-zMFbhEZwtRoUujF5MSxM3U0vAq2LU2H9V5KalKa-WxdhKheSnzdDsRPVPQlqydrUPRrhKcWRVPiNOZjzcfQZPE5n8wTOV7H4ZsoONT5ByY_mKh3-Z7_mkxm6n6NyZjGfRgxOe4VC-M9oMJxBftcmCovlI73SN");'></div>
+<span class="font-medium text-slate-900 dark:text-white">Mark Rivera</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Head of Security</td>
+<td class="px-6 py-4 font-mono text-slate-600 dark:text-slate-300">555-0199</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400">On Campus</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">call</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-[#24303e] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 font-bold text-xs">PD</div>
+<span class="font-medium text-slate-900 dark:text-white">City Police Dept</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Emergency Dispatch</td>
+<td class="px-6 py-4 font-mono text-red-600 dark:text-red-400 font-bold">911</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-slate-100 dark:bg-slate-700 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-300">External</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">call</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

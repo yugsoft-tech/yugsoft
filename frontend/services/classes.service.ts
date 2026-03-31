@@ -32,8 +32,13 @@ class ClassesService {
   }
 
   async getSections(classId: string): Promise<Section[]> {
-    const response = await apiClient.get(`${API_ENDPOINTS.CLASSES}/${classId}/sections`);
+    const response = await apiClient.get(`${API_ENDPOINTS.SECTIONS}/class/${classId}`);
     return response.data || [];
+  }
+
+  async createSection(data: any): Promise<Section> {
+    const response = await apiClient.post(API_ENDPOINTS.SECTIONS, data);
+    return response.data;
   }
 }
 

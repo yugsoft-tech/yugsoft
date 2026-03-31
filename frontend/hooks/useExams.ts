@@ -3,7 +3,7 @@ import { Exam, PaginationParams } from '@/utils/types';
 import { examsService } from '@/services/exams.service';
 import { toast } from 'react-hot-toast';
 
-export const useExams = (initialParams?: PaginationParams & { status?: string }) => {
+export const useExams = (initialParams?: PaginationParams & { status?: string; search?: string }) => {
     const [exams, setExams] = useState<Exam[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

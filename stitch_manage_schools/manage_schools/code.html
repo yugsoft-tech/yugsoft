@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manage Schools - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3B82F6", // Blue 500
+                        "primary-hover": "#2563EB", // Blue 600
+                        "background-light": "#F3F4F6", // Gray 100
+                        "background-dark": "#111827", // Gray 900
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1F2937", // Gray 800
+                        "text-light": "#111827", // Gray 900
+                        "text-dark": "#F9FAFB", // Gray 50
+                        "text-secondary-light": "#6B7280", // Gray 500
+                        "text-secondary-dark": "#9CA3AF", // Gray 400
+                        "border-light": "#E5E7EB", // Gray 200
+                        "border-dark": "#374151", // Gray 700
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased min-h-screen flex flex-col transition-colors duration-200">
+<nav class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark sticky top-0 z-30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<div class="flex">
+<div class="flex-shrink-0 flex items-center">
+<span class="material-icons-outlined text-primary text-3xl mr-2">school</span>
+<span class="font-bold text-xl tracking-tight">EduMaster <span class="text-xs font-normal text-text-secondary-light dark:text-text-secondary-dark uppercase ml-1">Super Admin</span></span>
+</div>
+<div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+<a class="border-transparent text-text-secondary-light dark:text-text-secondary-dark hover:border-primary hover:text-text-light dark:hover:text-text-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">Dashboard</a>
+<a class="border-primary text-text-light dark:text-text-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">Schools</a>
+<a class="border-transparent text-text-secondary-light dark:text-text-secondary-dark hover:border-primary hover:text-text-light dark:hover:text-text-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">Plans</a>
+<a class="border-transparent text-text-secondary-light dark:text-text-secondary-dark hover:border-primary hover:text-text-light dark:hover:text-text-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">System Logs</a>
+</div>
+</div>
+<div class="flex items-center">
+<button class="bg-transparent p-1 rounded-full text-text-secondary-light dark:text-text-secondary-dark hover:text-text-light dark:hover:text-text-dark focus:outline-none">
+<span class="material-icons-outlined">notifications</span>
+</button>
+<div class="ml-3 relative">
+<div class="flex items-center space-x-3">
+<div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">SA</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="flex-1 py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="md:flex md:items-center md:justify-between mb-8">
+<div class="flex-1 min-w-0">
+<h2 class="text-2xl font-bold leading-7 text-text-light dark:text-text-dark sm:text-3xl sm:truncate">
+                        Manage Schools
+                    </h2>
+<p class="mt-1 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                        Overview of all registered institutions in the system.
+                    </p>
+</div>
+<div class="mt-4 flex md:mt-0 md:ml-4">
+<button class="inline-flex items-center px-4 py-2 border border-border-light dark:border-border-dark rounded-md shadow-sm text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark bg-card-light dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="button">
+<span class="material-icons-outlined mr-2 text-lg">file_download</span>
+                        Export
+                    </button>
+<button class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="button">
+<span class="material-icons-outlined mr-2 text-lg">add</span>
+                        Add New School
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+<div class="bg-card-light dark:bg-card-dark overflow-hidden shadow rounded-lg border border-border-light dark:border-border-dark">
+<div class="p-5">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-md p-3">
+<span class="material-icons-outlined text-primary text-2xl">apartment</span>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark truncate">Total Schools</dt>
+<dd>
+<div class="text-2xl font-semibold text-text-light dark:text-text-dark">124</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800 px-5 py-3">
+<div class="text-sm">
+<a class="font-medium text-primary hover:text-primary-hover" href="#">View all</a>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark overflow-hidden shadow rounded-lg border border-border-light dark:border-border-dark">
+<div class="p-5">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-md p-3">
+<span class="material-icons-outlined text-green-600 dark:text-green-400 text-2xl">check_circle</span>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark truncate">Active Licenses</dt>
+<dd>
+<div class="text-2xl font-semibold text-text-light dark:text-text-dark">118</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800 px-5 py-3">
+<div class="text-sm">
+<span class="text-green-600 font-medium">95% Active</span>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark overflow-hidden shadow rounded-lg border border-border-light dark:border-border-dark">
+<div class="p-5">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900 rounded-md p-3">
+<span class="material-icons-outlined text-yellow-600 dark:text-yellow-400 text-2xl">pending</span>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark truncate">Pending Setup</dt>
+<dd>
+<div class="text-2xl font-semibold text-text-light dark:text-text-dark">4</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800 px-5 py-3">
+<div class="text-sm">
+<a class="font-medium text-primary hover:text-primary-hover" href="#">Action required</a>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark overflow-hidden shadow rounded-lg border border-border-light dark:border-border-dark">
+<div class="p-5">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-purple-100 dark:bg-purple-900 rounded-md p-3">
+<span class="material-icons-outlined text-purple-600 dark:text-purple-400 text-2xl">groups</span>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark truncate">Total Students</dt>
+<dd>
+<div class="text-2xl font-semibold text-text-light dark:text-text-dark">45.2k</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800 px-5 py-3">
+<div class="text-sm">
+<span class="text-text-secondary-light dark:text-text-secondary-dark font-medium">Across all schools</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark shadow rounded-lg mb-6 border border-border-light dark:border-border-dark">
+<div class="p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+<div class="relative w-full sm:w-96">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400">search</span>
+</div>
+<input class="focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-text-light dark:text-text-dark placeholder-gray-400" id="search" name="search" placeholder="Search by school name, ID, or city..." type="text"/>
+</div>
+<div class="flex items-center space-x-3 w-full sm:w-auto">
+<div class="relative inline-block text-left w-full sm:w-auto">
+<select class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md bg-white dark:bg-gray-800 text-text-light dark:text-text-dark">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Inactive</option>
+<option>Pending</option>
+</select>
+</div>
+<div class="relative inline-block text-left w-full sm:w-auto">
+<select class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md bg-white dark:bg-gray-800 text-text-light dark:text-text-dark">
+<option>All Plans</option>
+<option>Basic</option>
+<option>Pro</option>
+<option>Enterprise</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark shadow overflow-hidden sm:rounded-lg border border-border-light dark:border-border-dark">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+<thead class="bg-gray-50 dark:bg-gray-800">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">
+                                    School Name
+                                </th>
+<th class="px-6 py-3 text-left text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">
+                                    Plan
+                                </th>
+<th class="px-6 py-3 text-left text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">
+                                    Admin Contact
+                                </th>
+<th class="px-6 py-3 text-left text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">
+                                    Students
+                                </th>
+<th class="px-6 py-3 text-left text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">
+                                    Status
+                                </th>
+<th class="relative px-6 py-3" scope="col">
+<span class="sr-only">Actions</span>
+</th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-gray-900 divide-y divide-border-light dark:divide-border-dark">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Springfield High logo" class="h-10 w-10 rounded-full object-cover border border-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj_2yRnL6P99QQdymgic7k6C9rSLfhT7Xlxpk75R8wflnJtUnv2CjU85OGk0tQ2ZfvRwRTpPDpL0lQeLZoumSaQB4-KM-832E7px-7B_mHl8VLCNW3wXgqvGqpHB67Kxq5hseTNTKNtcTxHvw_UBWK7_OVAr6Ypf1x8uyIzNlXuqh1WappIbh53jKe6_ruGHdyvELsUgl5SIaMsMv5T1l9mhuvah1bo22uscu6tbATqNan-zhMxIDzBJIEfWvzRCsFN9rzbA4nfHJR"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-text-light dark:text-text-dark">Springfield High School</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">ID: SCH-001 • New York, NY</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">Enterprise</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Expires: Dec 2024</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">Sarah Connor</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">sarah@springfield.edu</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                    1,240
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex justify-end space-x-2">
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors" title="Edit">
+<span class="material-icons-outlined text-lg">edit</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors" title="Settings">
+<span class="material-icons-outlined text-lg">settings</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-red-500 transition-colors" title="Delete">
+<span class="material-icons-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Riverside Academy logo" class="h-10 w-10 rounded-full object-cover border border-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApPkRw3jdqsZBHyR2Gr_L3Bw_kUfFziKnVv762aVVB2o_mZ2riv-3ZmO64730SvgXLVAfwXsgKXU_JLnbtNzQlM5J7MfN26kdpc4jXYC7ReVitXi1yWNtPu_Em_mcMEpTUOh_Q5OzVDrcmOCvsJSA1f6CKcj3CIr8uX3B4L4iOXqbcz7SwuMJzEInreGScidhio3rQqY-UYB893_7_RojrEEnEbSmLfJeNDjxMgZLhcIFgjU8gvpyUPRLhlMckm_JwYXzybNc4ZlRL"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-text-light dark:text-text-dark">Riverside Academy</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">ID: SCH-002 • Austin, TX</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">Pro Plan</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Monthly</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">John Doe</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">admin@riverside.edu</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                    850
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex justify-end space-x-2">
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">edit</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">settings</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-red-500 transition-colors">
+<span class="material-icons-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<div class="h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-indigo-700 dark:text-indigo-300 font-bold border border-indigo-200 dark:border-indigo-800">OH</div>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-text-light dark:text-text-dark">Oak Hill International</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">ID: SCH-003 • London, UK</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">Basic</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Trial Ends in 5 days</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">Emily Blunt</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">emily@oakhill.com</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                    210
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
+                                        Pending
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex justify-end space-x-2">
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">edit</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">settings</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-red-500 transition-colors">
+<span class="material-icons-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Tech Valley High logo" class="h-10 w-10 rounded-full object-cover border border-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA28DSTjb8leamrZ6llpa-zBujf21jNA5UnSOTmK6Q3dqEa1s7zqaj_tqky984kzKVVu3zH_gaDi0HHX3igsWra6bp7M_CQLVYRF8vdd_QEJPbCCOF0svqNVgnxBS42k97icVHe3r_5TyT5Tl4qGn0icStlNyNpr3AQyMYeTXA1q_XMOC6Nxo4_3Rc_NpkB-IPkcKAPVyyzWDSd-YJh6my-t-ntNZWBYfjuDQiu8E75ZvzNyx-VLPLDIMNeuayvOgIsdQxO3MCX_OZ7"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-text-light dark:text-text-dark">Tech Valley High</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">ID: SCH-004 • San Jose, CA</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">Enterprise</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Expires: Jan 2025</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-text-light dark:text-text-dark">Michael Scott</div>
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark">m.scott@techvalley.edu</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                    2,100
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">
+                                        Inactive
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex justify-end space-x-2">
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">edit</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">settings</span>
+</button>
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-red-500 transition-colors">
+<span class="material-icons-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-card-light dark:bg-card-dark px-4 py-3 flex items-center justify-between border-t border-border-light dark:border-border-dark sm:px-6">
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                Showing <span class="font-medium text-text-light dark:text-text-dark">1</span> to <span class="font-medium text-text-light dark:text-text-dark">4</span> of <span class="font-medium text-text-light dark:text-text-dark">124</span> results
+                            </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-icons-outlined text-lg">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary border-primary text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    1
+                                </a>
+<a class="bg-white dark:bg-gray-800 border-border-light dark:border-border-dark text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    2
+                                </a>
+<a class="bg-white dark:bg-gray-800 border-border-light dark:border-border-dark text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    3
+                                </a>
+<span class="relative inline-flex items-center px-4 py-2 border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-400">
+                                    ...
+                                </span>
+<a class="bg-white dark:bg-gray-800 border-border-light dark:border-border-dark text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    8
+                                </a>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700" href="#">
+<span class="sr-only">Next</span>
+<span class="material-icons-outlined text-lg">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-gray-900 border-t border-border-light dark:border-border-dark">
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+<p class="text-center text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                © 2024 EduMaster ERP. All rights reserved.
+            </p>
+</div>
+</footer>
+<script>
+        // Simple script to demonstrate dark mode support if the user toggles it manually in devtools or system prefs
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+             document.documentElement.classList.add('dark');
+        }
+    </script>
+
+</body></html>

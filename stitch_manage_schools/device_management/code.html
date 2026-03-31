@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Device Management - School ERP</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px; 
+        }
+        .icon-md { font-size: 24px; }
+        .icon-lg { font-size: 32px; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined icon-md">school</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">School ERP</h2>
+</div>
+<!-- Search Bar -->
+<label class="hidden md:flex flex-col min-w-40 h-10 w-80">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-background-light dark:bg-slate-700">
+<div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-4 pr-2">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-sm text-slate-900 dark:text-white focus:ring-0 placeholder:text-slate-500" placeholder="Search students, invoices..."/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="#">Students</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="#">Faculty</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="#">Finance</a>
+</div>
+<div class="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-slate-700">
+<button class="relative p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-slate-800"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-cover bg-center ring-2 ring-slate-100 dark:ring-slate-700 cursor-pointer" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB-izZZ3T56OZlkK8UbaQL4S0Z_n76zSltG6IVc_Wr4fU4KE2g_vCiGpYb0IUKX1aYzG94RCfvAR9zi-QPECeGakCMWYDtXTmM3uGbjWZLuDKlvCews6l8CPPvQF_c5-kgi0OY1coENRfhm-260AFe1prMbuBhCZ5SOMwmESaEYx2Wtvx9V7RAuWEJ5_xYqG9DfyqYDPORI9EFQz2t1P6P9ETTZINd916pMB-6m52g1yrESYXBYdUIJDR2_kPt89KSqUnpOEv1lhvF-");'></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 overflow-y-auto">
+<div class="p-4 flex flex-col h-full justify-between">
+<div class="flex flex-col gap-1">
+<div class="mb-6 px-3 pt-2">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-10 h-10 rounded-full bg-cover bg-center shadow-sm" data-alt="School logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBv9UK_Wi87VT8PXjr-Kw0Acv6Ao5WemQO1SWwKrJbjxnpCKF12qp83iefzKIu0pitSCcoA0xF8WKKXVig1C6YhEnYstxJy5aGdP54B6iS8hd9v5ilNZA396G16kywqhs9DM_nnYWBiI-B0dZf0O9lp6Iv_5aJbVKtJuRwFaEtI5xhUBdk_HFpaggBO_yVUxZAmYaqXI3lKPCo--Gl17fp_TAr4yjPO4sug8Fu_cncuyfI8Dqyoh5u5Q1Ui-7XFFX0rPgWZnlFbGwnA");'></div>
+<div class="flex flex-col">
+<h1 class="text-sm font-bold text-slate-900 dark:text-white">Admin Panel</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">St. Mary's High</p>
+</div>
+</div>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 group transition-colors" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 group transition-colors" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">school</span>
+<span class="text-sm font-medium">Academics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 group transition-colors" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">person_add</span>
+<span class="text-sm font-medium">Admissions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 group transition-colors" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">badge</span>
+<span class="text-sm font-medium">HR &amp; Payroll</span>
+</a>
+<div class="my-2 border-t border-slate-100 dark:border-slate-700 mx-3"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary" href="#">
+<span class="material-symbols-outlined icon-filled">devices</span>
+<span class="text-sm font-medium">Device Mgmt</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 group transition-colors" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</div>
+<div class="px-3">
+<div class="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-xl p-4 flex flex-col items-start gap-2">
+<span class="material-symbols-outlined text-primary">security</span>
+<p class="text-xs font-medium text-slate-700 dark:text-slate-200">System Security</p>
+<div class="w-full bg-slate-300 dark:bg-slate-600 rounded-full h-1.5 mt-1">
+<div class="bg-green-500 h-1.5 rounded-full w-4/5"></div>
+</div>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Status: Good (85%)</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark scroll-smooth">
+<div class="max-w-[1200px] mx-auto p-6 md:p-10 space-y-8">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">Device Management</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base max-w-2xl">Manage active sessions and registered devices accessing the ERP system. Secure your organization's data by reviewing trusted devices.</p>
+</div>
+<button class="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                        Log out all other sessions
+                    </button>
+</div>
+<!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+<!-- Stat Card 1 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">devices</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Total Active Devices</p>
+<div class="flex items-end gap-3">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">14</span>
+<span class="text-green-600 bg-green-50 dark:bg-green-900/30 px-2 py-0.5 rounded text-xs font-medium mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                                2 this week
+                            </span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">history</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Recent Logins (24h)</p>
+<div class="flex items-end gap-3">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">5</span>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-red-500">warning</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Flagged Devices</p>
+<div class="flex items-end gap-3">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">1</span>
+<span class="text-red-600 bg-red-50 dark:bg-red-900/30 px-2 py-0.5 rounded text-xs font-medium mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">priority_high</span>
+                                Action required
+                            </span>
+</div>
+</div>
+</div>
+<!-- Current Session -->
+<div class="space-y-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+                        Current Session
+                    </h3>
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-primary/20 shadow-[0_0_0_1px_rgba(43,140,238,0.1)] p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex items-start gap-4 z-10">
+<div class="bg-primary/10 text-primary p-3 rounded-lg">
+<span class="material-symbols-outlined icon-lg">desktop_windows</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h4 class="text-base font-bold text-slate-900 dark:text-white">Windows 11 PC - Chrome Browser</h4>
+<span class="bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border border-green-200 dark:border-green-800">Active Now</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="flex items-center gap-1.5" title="Location">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        San Francisco, CA, US
+                                    </span>
+<span class="flex items-center gap-1.5" title="IP Address">
+<span class="material-symbols-outlined text-[16px]">dns</span>
+                                        192.168.1.45
+                                    </span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 z-10 w-full md:w-auto pt-4 md:pt-0 border-t md:border-none border-slate-100 dark:border-slate-700">
+<div class="text-xs text-slate-400 dark:text-slate-500 italic mr-2">This is your current device</div>
+<!-- No actions needed for current device usually, maybe rename? -->
+</div>
+</div>
+</div>
+<!-- Other Devices List -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
+<!-- Filters Header -->
+<div class="p-4 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white px-2">Other Devices</h3>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</span>
+<select class="pl-9 pr-8 py-2 bg-slate-50 dark:bg-slate-700 border-none rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary/50 cursor-pointer appearance-none">
+<option>All Devices</option>
+<option>Desktop</option>
+<option>Mobile</option>
+<option>Tablet</option>
+</select>
+</div>
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</span>
+<input class="pl-9 py-2 bg-slate-50 dark:bg-slate-700 border-none rounded-lg text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/50 placeholder:text-slate-400 w-48 lg:w-64" placeholder="Search by name or IP" type="text"/>
+</div>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-500 dark:text-slate-400">
+<thead class="bg-slate-50 dark:bg-slate-700/50 text-xs uppercase text-slate-500 dark:text-slate-300 font-semibold">
+<tr>
+<th class="px-6 py-4 rounded-tl-lg" scope="col">Device</th>
+<th class="px-6 py-4 hidden md:table-cell" scope="col">Location</th>
+<th class="px-6 py-4 hidden sm:table-cell" scope="col">Last Active</th>
+<th class="px-6 py-4" scope="col">Status</th>
+<th class="px-6 py-4 text-right rounded-tr-lg" scope="col">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">smartphone</span>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">iPhone 14 Pro</div>
+<div class="text-xs text-slate-500">iOS App • v4.2.0</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 hidden md:table-cell">
+<div class="flex items-center gap-1.5">
+<img alt="US Flag" class="w-4 h-auto rounded-sm shadow-sm" data-alt="US Flag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC78Ho1HPjMryZzIDZGLj2elULyN6Z47h9NyybLhIpHl1UzBjZL4RZYPMa9VRCDBzYdrlhynkngwcQgiuPg6-JbJkxHPI7bJdNaEunvuocIRHmsUhSGw6jdeilGBafate3BoLrlYg6eFwWHtZKZ6VQ7xHMNBZq9D8Ew9YSghcYqzTrkAvssMY16Ird428iE6E8zttWprERX-HWfnto2Rp3hmJvPFQhS2y4KPnJVz4vpXYZhU5WXSI6WfuBUTYCAAQLKKu5kK08fgA5I"/>
+<span>New York, NY</span>
+</div>
+<div class="text-xs font-mono mt-0.5">10.0.0.142</div>
+</td>
+<td class="px-6 py-4 hidden sm:table-cell">
+<div>2 hours ago</div>
+<div class="text-xs">Oct 24, 10:30 AM</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                            Idle
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-red-500 dark:hover:text-red-400 font-medium text-sm transition-colors flex items-center justify-end gap-1 ml-auto">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span class="hidden lg:inline">Revoke</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">laptop_mac</span>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">MacBook Pro</div>
+<div class="text-xs text-slate-500">Safari • macOS Sonoma</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 hidden md:table-cell">
+<div class="flex items-center gap-1.5">
+<img alt="UK Flag" class="w-4 h-auto rounded-sm shadow-sm" data-alt="UK Flag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0I1hsvcTzjG9qfLNaGpkmm4Rxd439Wd-a0E2As_HjRc-u-P-fzQQxZAQFNMg8jCwrBV0iSWHP4PlShTnRQyhF6NZS26LsJo-YfYmMbDdTAPDHnFekOD4JUW1jyPBCfB-PPP7lg5agnAzJWH0nSzJuDKJF9Gn-00fhmOpAw-hhmBVF7A0tzBu0du3k4a4f9Tf8gdwimNz85hEYlpPgNdoBdqDZ0clm8lAcEUbAzVOTMjH1tMQvrydMG_Ngi55Oa8-KRQlAVM9hs0KB"/>
+<span>London, UK</span>
+</div>
+<div class="text-xs font-mono mt-0.5">192.168.0.22</div>
+</td>
+<td class="px-6 py-4 hidden sm:table-cell">
+<div>Yesterday</div>
+<div class="text-xs">Oct 23, 4:15 PM</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                                            Flagged
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-primary hover:text-primary/80 font-medium text-sm transition-colors">Trust</button>
+<span class="text-slate-300">|</span>
+<button class="text-red-500 hover:text-red-600 font-medium text-sm transition-colors">Revoke</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">tablet_mac</span>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">iPad Air</div>
+<div class="text-xs text-slate-500">Student Portal App</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 hidden md:table-cell">
+<div class="flex items-center gap-1.5">
+<img alt="US Flag" class="w-4 h-auto rounded-sm shadow-sm" data-alt="US Flag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOdSLL0CiGnmKWcwQBX7YrFkyLu5r1V29DU4_TFXOD1EraQcL3STYFRhSPFRM91FAWLRfaafXKhX8eYZ5yZ2NPQRCIZzCzWJ0cGgLcf-48eP2DdRCNEFmcUrGHrs0OJmW-pYssVUrDUm0apVC8OInFYYCNvFRBA9TukaZFnecpAjbZwUufzNcrfYve-FNoCQLa22AomH7b2_R-Z1BHiSXmAPf6Wu-HdlH6IzSsDVmAkHoERLJX1YN8pOqBhiQaQGSz-QMYWjVSgM02"/>
+<span>Austin, TX</span>
+</div>
+<div class="text-xs font-mono mt-0.5">172.16.254.1</div>
+</td>
+<td class="px-6 py-4 hidden sm:table-cell">
+<div>3 days ago</div>
+<div class="text-xs">Oct 21, 09:00 AM</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                            Idle
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-red-500 dark:hover:text-red-400 font-medium text-sm transition-colors flex items-center justify-end gap-1 ml-auto">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span class="hidden lg:inline">Revoke</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+<span class="material-symbols-outlined">desktop_windows</span>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Library Desktop #04</div>
+<div class="text-xs text-slate-500">Chrome • Windows 10</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 hidden md:table-cell">
+<div class="flex items-center gap-1.5">
+<img alt="US Flag" class="w-4 h-auto rounded-sm shadow-sm" data-alt="US Flag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-T5ACufQBuAQMpCFQNxNUB15LDpxXlPsB0FGr99dKY8_HcZYMW9s9EuRW_xXvvf8BLxFpzlAjPZyzfi-RmCN8U4x2nF67sPgvYQmYQCOtnqsmtAgxOrUYwZLEJjfvIcEu7AWvQ3yKQY0GUPhPSKL_2Y3XPrQRKBEvrWOTFFZgmQYsSpl27LvCKpuxAmqBVPGt3B3XcSL_JCsoa6Vh8hrPnILisA--yVyc841OoGudb36jyv3AFPf4unDzbfTekwuZF4OvgmOyT-1g"/>
+<span>Campus Library</span>
+</div>
+<div class="text-xs font-mono mt-0.5">192.168.10.104</div>
+</td>
+<td class="px-6 py-4 hidden sm:table-cell">
+<div>1 week ago</div>
+<div class="text-xs">Oct 17, 1:20 PM</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                            Idle
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-red-500 dark:hover:text-red-400 font-medium text-sm transition-colors flex items-center justify-end gap-1 ml-auto">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span class="hidden lg:inline">Revoke</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+<div class="text-sm text-slate-500 dark:text-slate-400">
+                            Showing <span class="font-medium text-slate-900 dark:text-white">1</span> to <span class="font-medium text-slate-900 dark:text-white">5</span> of <span class="font-medium text-slate-900 dark:text-white">14</span> results
+                        </div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-50">Previous</button>
+<button class="px-3 py-1 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600">Next</button>
+</div>
+</div>
+</div>
+<!-- Footer Tip -->
+<div class="flex items-start gap-4 p-4 rounded-lg bg-primary/5 border border-primary/10">
+<span class="material-symbols-outlined text-primary mt-0.5">lightbulb</span>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Security Tip</h4>
+<p class="text-sm text-slate-600 dark:text-slate-300">
+                            If you see a device you don't recognize, revoke its access immediately. 
+                            We recommend <a class="text-primary hover:underline font-medium" href="#">changing your password</a> if you suspect unauthorized access.
+                        </p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

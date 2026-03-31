@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Template Management</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: "Public Sans", "Noto Sans", sans-serif; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light text-[#0d141b] overflow-hidden flex flex-col h-screen">
+<!-- TopNavBar -->
+<header class="flex-none bg-white border-b border-[#e7edf3] z-20 relative">
+<div class="w-full px-6 py-3 flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#0d141b]">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h2 class="text-[#0d141b] text-lg font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-[#4c739a] hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-[#4c739a] hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Students</a>
+<a class="text-[#4c739a] hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Staff</a>
+<a class="text-[#4c739a] hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Finance</a>
+<a class="text-[#0d141b] text-sm font-bold leading-normal" href="#">Communication</a>
+<a class="text-[#4c739a] hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Settings</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="flex flex-col min-w-40 !h-10 max-w-64 hidden md:flex">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full group focus-within:ring-2 ring-primary/20 transition-all">
+<div class="text-[#4c739a] flex border-none bg-[#e7edf3] items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] focus:outline-0 focus:ring-0 border-none bg-[#e7edf3] focus:border-none h-full placeholder:text-[#4c739a] px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Search templates..." value=""/>
+</div>
+</label>
+<div class="flex gap-3">
+<button class="size-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-[#4c739a] transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200" data-alt="User profile picture showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC--Juy3ShHAjt-8BGrSE799mf6i_C6KbdV9h5kJJLZ3emsc6ubfq_gmyIn9nBNp8d23xASi28M-2EoMQaWybEy49zq0lQpRWcJlAZ8qZANtJZBlzjUOkc24ZPR8DrVpLi8XrR7ionPwdaex6AJ_iDV7MewsCkPSL-erLpGAzeapG0iQgusH4k7PGcwmk4BQTmmvil52s8xU1lDOPRdaXumZecOXFB8F2GvdpF64CyDINor6RrIhvS6Zu6SbuGrquGtz0mlwbSfzayp");'></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar: Template List -->
+<aside class="w-80 bg-white border-r border-[#e7edf3] flex flex-col z-10 hidden md:flex">
+<div class="p-4 border-b border-[#e7edf3] bg-white sticky top-0">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold text-[#0d141b]">Templates</h3>
+<button class="flex items-center justify-center size-8 rounded-full bg-[#e7edf3] hover:bg-slate-200 text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<div class="flex gap-2 mb-2">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20 cursor-pointer">All</span>
+<span class="px-3 py-1 rounded-full bg-slate-100 text-[#4c739a] text-xs font-bold hover:bg-slate-200 cursor-pointer transition-colors">Email</span>
+<span class="px-3 py-1 rounded-full bg-slate-100 text-[#4c739a] text-xs font-bold hover:bg-slate-200 cursor-pointer transition-colors">SMS</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<!-- List Item: Active -->
+<div class="p-4 border-b border-[#e7edf3] bg-primary/5 border-l-4 border-l-primary cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-[#0d141b] text-sm leading-tight">Attendance Warning</h4>
+<span class="text-[10px] text-[#4c739a] bg-white px-1.5 py-0.5 rounded border border-slate-200">Email</span>
+</div>
+<p class="text-xs text-[#4c739a] mb-2">Student / Absent</p>
+<div class="flex justify-between items-center">
+<span class="text-[11px] text-[#4c739a]">Edited 2h ago</span>
+<span class="material-symbols-outlined text-[16px] text-primary">chevron_right</span>
+</div>
+</div>
+<!-- List Item -->
+<div class="p-4 border-b border-[#e7edf3] hover:bg-slate-50 cursor-pointer group transition-colors">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-medium text-[#0d141b] text-sm leading-tight group-hover:text-primary transition-colors">Fee Reminder</h4>
+<span class="text-[10px] text-[#4c739a] bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">SMS</span>
+</div>
+<p class="text-xs text-[#4c739a] mb-2">Billing / Overdue</p>
+<div class="flex justify-between items-center">
+<span class="text-[11px] text-[#4c739a]">Edited Oct 20</span>
+</div>
+</div>
+<!-- List Item -->
+<div class="p-4 border-b border-[#e7edf3] hover:bg-slate-50 cursor-pointer group transition-colors">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-medium text-[#0d141b] text-sm leading-tight group-hover:text-primary transition-colors">Exam Schedule</h4>
+<span class="text-[10px] text-[#4c739a] bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">Email</span>
+</div>
+<p class="text-xs text-[#4c739a] mb-2">Academics / Term End</p>
+<div class="flex justify-between items-center">
+<span class="text-[11px] text-[#4c739a]">Edited Oct 15</span>
+</div>
+</div>
+<!-- List Item -->
+<div class="p-4 border-b border-[#e7edf3] hover:bg-slate-50 cursor-pointer group transition-colors">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-medium text-[#0d141b] text-sm leading-tight group-hover:text-primary transition-colors">Bus Delay</h4>
+<span class="text-[10px] text-[#4c739a] bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">Push</span>
+</div>
+<p class="text-xs text-[#4c739a] mb-2">Transport / Delay</p>
+<div class="flex justify-between items-center">
+<span class="text-[11px] text-[#4c739a]">Edited Sep 28</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light overflow-y-auto">
+<!-- Page Header & Actions -->
+<div class="px-8 py-6 bg-white border-b border-[#e7edf3] flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<a class="text-xs font-medium text-[#4c739a] hover:text-primary" href="#">Templates</a>
+<span class="text-xs text-[#cfdbe7]">/</span>
+<span class="text-xs font-medium text-[#4c739a]">Student</span>
+</div>
+<h2 class="text-[#0d141b] text-2xl font-bold leading-tight tracking-[-0.015em]">Edit Template: Attendance Warning</h2>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-white border border-[#cfdbe7] text-[#4c739a] text-sm font-bold hover:bg-slate-50 transition-colors">
+                        Discard
+                    </button>
+<button class="flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold shadow-sm hover:bg-blue-600 transition-colors gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                        Save Changes
+                    </button>
+</div>
+</div>
+<!-- Editor Container -->
+<div class="flex-1 p-8 max-w-[1600px] mx-auto w-full">
+<div class="flex flex-col xl:flex-row gap-8 h-full">
+<!-- Left Column: Editor -->
+<div class="flex-1 flex flex-col gap-6 min-w-0">
+<!-- Tabs -->
+<div class="border-b border-[#cfdbe7] flex gap-8">
+<button class="flex items-center gap-2 border-b-[3px] border-primary text-[#0d141b] pb-3 px-1">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+<span class="text-sm font-bold">Email Template</span>
+</button>
+<button class="flex items-center gap-2 border-b-[3px] border-transparent text-[#4c739a] hover:text-[#0d141b] pb-3 px-1 transition-colors">
+<span class="material-symbols-outlined text-[20px]">sms</span>
+<span class="text-sm font-bold">SMS Template</span>
+</button>
+<button class="flex items-center gap-2 border-b-[3px] border-transparent text-[#4c739a] hover:text-[#0d141b] pb-3 px-1 transition-colors">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="text-sm font-bold">History</span>
+</button>
+</div>
+<!-- Metadata Inputs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-bold text-[#4c739a] uppercase tracking-wider">Trigger Event</label>
+<div class="relative">
+<select class="w-full bg-white border border-[#cfdbe7] rounded-lg h-10 px-3 text-sm text-[#0d141b] focus:border-primary focus:ring-0 appearance-none">
+<option>Student Marked Absent</option>
+<option>Fee Payment Due</option>
+<option>New Assignment Posted</option>
+</select>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#4c739a]">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-bold text-[#4c739a] uppercase tracking-wider">Audience</label>
+<div class="relative">
+<select class="w-full bg-white border border-[#cfdbe7] rounded-lg h-10 px-3 text-sm text-[#0d141b] focus:border-primary focus:ring-0 appearance-none">
+<option>Parents</option>
+<option>Students</option>
+<option>Staff</option>
+</select>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#4c739a]">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Content Editor -->
+<div class="flex flex-col gap-4 bg-white rounded-xl border border-[#cfdbe7] shadow-sm p-5 flex-1">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#0d141b]">Subject Line</label>
+<input class="w-full bg-[#f6f7f8] border border-[#e7edf3] rounded-lg h-10 px-4 text-sm text-[#0d141b] focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="text" value="Attendance Alert: {student_name} is absent today"/>
+</div>
+<div class="flex flex-col gap-2 flex-1">
+<div class="flex items-center justify-between mb-1">
+<label class="text-sm font-bold text-[#0d141b]">Message Body</label>
+<div class="flex gap-2">
+<button class="text-[#4c739a] hover:text-primary transition-colors text-xs font-medium flex items-center gap-1 bg-[#e7edf3] px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">add_circle</span> Insert Variable
+                                        </button>
+</div>
+</div>
+<!-- Variables Toolbar -->
+<div class="flex flex-wrap gap-2 pb-3 border-b border-[#e7edf3]">
+<button class="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-medium border border-primary/20 hover:bg-primary/20 transition-colors">{student_name}</button>
+<button class="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-medium border border-primary/20 hover:bg-primary/20 transition-colors">{date}</button>
+<button class="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-medium border border-primary/20 hover:bg-primary/20 transition-colors">{class_name}</button>
+<button class="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-medium border border-primary/20 hover:bg-primary/20 transition-colors">{school_contact}</button>
+</div>
+<!-- Formatting Toolbar -->
+<div class="flex gap-1 py-2">
+<button class="size-8 flex items-center justify-center rounded hover:bg-slate-100 text-[#4c739a]"><span class="material-symbols-outlined text-[20px]">format_bold</span></button>
+<button class="size-8 flex items-center justify-center rounded hover:bg-slate-100 text-[#4c739a]"><span class="material-symbols-outlined text-[20px]">format_italic</span></button>
+<button class="size-8 flex items-center justify-center rounded hover:bg-slate-100 text-[#4c739a]"><span class="material-symbols-outlined text-[20px]">format_underlined</span></button>
+<div class="w-px h-5 bg-[#e7edf3] mx-1 self-center"></div>
+<button class="size-8 flex items-center justify-center rounded hover:bg-slate-100 text-[#4c739a]"><span class="material-symbols-outlined text-[20px]">link</span></button>
+<button class="size-8 flex items-center justify-center rounded hover:bg-slate-100 text-[#4c739a]"><span class="material-symbols-outlined text-[20px]">image</span></button>
+</div>
+<!-- Text Area -->
+<div class="flex-1 bg-[#f6f7f8] rounded-lg border border-[#e7edf3] p-4 text-sm text-[#0d141b] leading-relaxed font-sans min-h-[240px] focus-within:bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<p class="mb-3">Dear Parent/Guardian,</p>
+<p class="mb-3">This is to inform you that <span class="bg-primary/10 text-primary px-1 rounded inline-block">{student_name}</span> has been marked absent for class today, <span class="bg-primary/10 text-primary px-1 rounded inline-block">{date}</span>.</p>
+<p class="mb-3">Please ensure to provide a reason for this absence by replying to this email or contacting the school office at <span class="bg-primary/10 text-primary px-1 rounded inline-block">{school_contact}</span>.</p>
+<p>Regards,<br/>School Administration</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Preview -->
+<div class="w-full xl:w-[400px] flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<label class="text-sm font-bold text-[#0d141b]">Live Preview</label>
+<div class="flex bg-[#e7edf3] p-1 rounded-lg">
+<button class="p-1 rounded bg-white shadow-sm text-primary"><span class="material-symbols-outlined text-[18px]">smartphone</span></button>
+<button class="p-1 rounded text-[#4c739a] hover:text-[#0d141b]"><span class="material-symbols-outlined text-[18px]">desktop_windows</span></button>
+</div>
+</div>
+<!-- Phone Mockup -->
+<div class="bg-white border-[8px] border-[#101922] rounded-[2rem] overflow-hidden shadow-xl aspect-[9/18] relative flex flex-col">
+<!-- Status Bar -->
+<div class="bg-[#101922] text-white px-5 py-2 text-[10px] flex justify-between items-center rounded-t-[1.5rem]">
+<span>9:41</span>
+<div class="flex gap-1.5">
+<span class="material-symbols-outlined text-[10px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[10px]">wifi</span>
+<span class="material-symbols-outlined text-[10px]">battery_full</span>
+</div>
+</div>
+<!-- Email App Header -->
+<div class="bg-primary px-4 py-3 text-white">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="flex-1 text-sm font-medium">Inbox</span>
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+</div>
+<!-- Email Content -->
+<div class="flex-1 bg-gray-50 p-4 overflow-y-auto">
+<h3 class="font-bold text-gray-900 text-lg leading-tight mb-3">Attendance Alert: Alex Johnson is absent today</h3>
+<div class="flex items-center gap-3 mb-4">
+<div class="size-8 rounded-full bg-blue-100 text-primary flex items-center justify-center font-bold text-xs">SA</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-gray-900">School Admin</span>
+<span class="text-[10px] text-gray-500">to me • 9:42 AM</span>
+</div>
+</div>
+<div class="text-sm text-gray-700 leading-relaxed space-y-3">
+<p>Dear Parent/Guardian,</p>
+<p>This is to inform you that <strong>Alex Johnson</strong> has been marked absent for class today, <strong>Oct 24, 2023</strong>.</p>
+<p>Please ensure to provide a reason for this absence by replying to this email or contacting the school office at <strong>555-0123</strong>.</p>
+<div class="h-px bg-gray-200 my-4"></div>
+<p class="text-xs text-gray-500">Regards,<br/>School Administration</p>
+</div>
+</div>
+<!-- FAB -->
+<div class="absolute bottom-6 right-6">
+<div class="size-12 bg-primary rounded-full shadow-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">edit</span>
+</div>
+</div>
+</div>
+<button class="w-full h-10 flex items-center justify-center gap-2 border border-[#cfdbe7] bg-white rounded-lg text-[#0d141b] text-sm font-medium hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">send</span> Send Test Email
+                        </button>
+</div>
+</div>
+<!-- Recent Activity Table (Reusing the Table component idea) -->
+<div class="mt-12 pt-8 border-t border-[#e7edf3]">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-[#0d141b] text-lg font-bold">Recent Changes</h3>
+<a class="text-sm text-primary font-medium" href="#">View All History</a>
+</div>
+<div class="overflow-hidden rounded-lg border border-[#cfdbe7] bg-slate-50">
+<table class="w-full">
+<thead>
+<tr class="bg-slate-50 text-left">
+<th class="px-4 py-3 text-[#0d141b] text-xs font-bold uppercase tracking-wider">Version</th>
+<th class="px-4 py-3 text-[#0d141b] text-xs font-bold uppercase tracking-wider">Edited By</th>
+<th class="px-4 py-3 text-[#0d141b] text-xs font-bold uppercase tracking-wider">Date</th>
+<th class="px-4 py-3 text-[#0d141b] text-xs font-bold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="bg-white">
+<tr class="border-t border-[#cfdbe7]">
+<td class="px-4 py-3 text-sm text-[#0d141b]">v2.4 (Current)</td>
+<td class="px-4 py-3 text-sm text-[#4c739a]">Sarah Connor</td>
+<td class="px-4 py-3 text-sm text-[#4c739a]">Oct 24, 2023, 09:42 AM</td>
+<td class="px-4 py-3 text-right">
+<button class="text-[#4c739a] hover:text-primary text-xs font-bold">Revert</button>
+</td>
+</tr>
+<tr class="border-t border-[#cfdbe7]">
+<td class="px-4 py-3 text-sm text-[#0d141b]">v2.3</td>
+<td class="px-4 py-3 text-sm text-[#4c739a]">Admin System</td>
+<td class="px-4 py-3 text-sm text-[#4c739a]">Sep 15, 2023, 10:00 AM</td>
+<td class="px-4 py-3 text-right">
+<button class="text-[#4c739a] hover:text-primary text-xs font-bold">Restore</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

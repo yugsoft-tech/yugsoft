@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alumni Management | School ERP</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<div class="flex min-h-screen flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 bg-surface-light dark:bg-surface-dark px-4 py-3 md:px-10">
+<div class="flex items-center gap-4 md:gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">school</span>
+</div>
+<h2 class="hidden md:block text-lg font-bold leading-tight tracking-[-0.015em]">School ERP | Alumni</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-900 dark:text-slate-100 text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-slate-900 dark:text-slate-100 text-sm font-medium hover:text-primary transition-colors" href="#">Directory</a>
+<a class="text-slate-900 dark:text-slate-100 text-sm font-medium hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-slate-900 dark:text-slate-100 text-sm font-medium hover:text-primary transition-colors" href="#">Jobs</a>
+<a class="text-slate-900 dark:text-slate-100 text-sm font-medium hover:text-primary transition-colors" href="#">Donate</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 md:gap-8">
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800">
+<div class="text-slate-500 flex items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none h-full placeholder:text-slate-400 px-4 pl-2 text-sm" placeholder="Search" value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 transition-colors">
+<span class="truncate">Log In</span>
+</button>
+<button class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+<span class="truncate">Register</span>
+</button>
+<button class="lg:hidden flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col">
+<!-- HeroSection -->
+<section class="w-full bg-surface-light dark:bg-surface-dark pb-8">
+<div class="max-w-[1280px] mx-auto px-4 md:px-10 pt-6">
+<div class="relative overflow-hidden rounded-2xl min-h-[400px] flex flex-col items-center justify-center text-center p-8 gap-6 bg-cover bg-center" data-alt="Group of diverse graduates throwing caps in the air" style='background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAGU-SCwsredsU1yvfxGaq-FTHSlgPhts5JMZ7OZqMNBj-nrF_TTaPo2NgX4flPT3dRkOlHTSU1wV3MXOstBC80w79UqssSn7uOI_Dbpo4AmuZNEDULz8x7iHcj3NfP3Zfz10-L4EPR4XrcHpeoVP27OiH5eN6rto7b5Vf_2Bm0svx6sXjNR7-dnr7ypmQVTv_SJa4HXLmvyb0F_jVHXyzE3ZxyrzDdc2tY9KynTPUUsDJ2aULUQNH9rYuUeUq6rNsyr7JEGvqa6PqP");'>
+<div class="flex flex-col gap-3 max-w-3xl z-10">
+<h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+                                Welcome Home, Alumni
+                            </h1>
+<p class="text-slate-200 text-lg md:text-xl font-normal leading-relaxed max-w-2xl mx-auto">
+                                Reconnect with old friends, expand your professional network, and give back to the community that started it all.
+                            </p>
+</div>
+<div class="flex flex-wrap gap-4 justify-center z-10 mt-2">
+<button class="flex h-12 items-center justify-center rounded-lg px-8 bg-primary text-white text-base font-bold hover:bg-blue-600 transition-colors shadow-lg">
+                                Join the Network
+                            </button>
+<button class="flex h-12 items-center justify-center rounded-lg px-8 bg-white/10 backdrop-blur-md border border-white/30 text-white text-base font-bold hover:bg-white/20 transition-colors">
+                                Find Classmates
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Directory Search & Filters -->
+<section class="max-w-[1280px] mx-auto w-full px-4 md:px-10 py-8">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-slate-900 dark:text-white text-2xl font-bold leading-tight">Alumni Directory</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Search over 15,000 alumni profiles</p>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4 flex flex-col gap-4">
+<div class="w-full">
+<label class="flex flex-col h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus-within:border-primary transition-colors">
+<div class="text-slate-500 flex items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 bg-transparent text-slate-900 dark:text-white focus:outline-0 border-none h-full placeholder:text-slate-400 px-4 pl-2 text-base" placeholder="Search alumni by name, graduation year, company, or location"/>
+</div>
+</label>
+</div>
+<div class="flex gap-3 flex-wrap">
+<button class="group flex h-9 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-4 transition-colors">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium">Class Year</p>
+<span class="material-symbols-outlined text-slate-500 text-lg group-hover:text-slate-700">arrow_drop_down</span>
+</button>
+<button class="group flex h-9 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-4 transition-colors">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium">Industry</p>
+<span class="material-symbols-outlined text-slate-500 text-lg group-hover:text-slate-700">arrow_drop_down</span>
+</button>
+<button class="group flex h-9 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-4 transition-colors">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium">Location</p>
+<span class="material-symbols-outlined text-slate-500 text-lg group-hover:text-slate-700">arrow_drop_down</span>
+</button>
+<button class="group flex h-9 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-4 transition-colors">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium">Major</p>
+<span class="material-symbols-outlined text-slate-500 text-lg group-hover:text-slate-700">arrow_drop_down</span>
+</button>
+<button class="group flex h-9 items-center justify-center gap-x-2 rounded-full bg-primary/10 hover:bg-primary/20 px-4 transition-colors ml-auto">
+<span class="material-symbols-outlined text-primary text-lg">filter_list</span>
+<p class="text-primary text-sm font-medium">All Filters</p>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Grid Layout -->
+<section class="max-w-[1280px] mx-auto w-full px-4 md:px-10 pb-16">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Spotlight & Resources (3 cols) -->
+<div class="lg:col-span-3 flex flex-col gap-6 order-2 lg:order-1">
+<!-- Quick Links -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="p-4 border-b border-slate-100 dark:border-slate-700">
+<h3 class="font-bold text-slate-900 dark:text-white">Quick Actions</h3>
+</div>
+<div class="flex flex-col">
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-sm text-slate-700 dark:text-slate-300 font-medium" href="#">
+<span class="material-symbols-outlined text-primary">description</span>
+                                    Request Transcript
+                                </a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-sm text-slate-700 dark:text-slate-300 font-medium" href="#">
+<span class="material-symbols-outlined text-primary">work</span>
+                                    Career Services
+                                </a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-sm text-slate-700 dark:text-slate-300 font-medium" href="#">
+<span class="material-symbols-outlined text-primary">volunteer_activism</span>
+                                    Make a Donation
+                                </a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-sm text-slate-700 dark:text-slate-300 font-medium" href="#">
+<span class="material-symbols-outlined text-primary">person_add</span>
+                                    Invite Classmates
+                                </a>
+</div>
+</div>
+<!-- Featured Profile -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider text-slate-500">Spotlight</h3>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="size-20 rounded-full overflow-hidden mb-3 ring-2 ring-primary ring-offset-2 dark:ring-offset-slate-800">
+<img class="w-full h-full object-cover" data-alt="Portrait of Sarah Jenkins" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5qXFl5_oftrUFKO2LFpalDGiUaXxmNRHAhVjLUjm7DQ0MNZ3g_AfLbajpuImWdhjwtMtyY_hd6Il5QpWMlUjGZWuhLihcnRbLLelt1Q0BMizCE9N48PbHlrpfnfRX85Yfz8FWriGIVPcUOc_iwGGeyBTPBqEZ5qevoO1p39dN8R_Np817HSmVZNcN7uFU_j51F3KTKbNe4wou5DHfwaWqUTI8Uzu49V3zt8gyRbwTtDnGiU_1ewywFfQps7Vahlxi-GayUsLUTetW"/>
+</div>
+<h4 class="text-lg font-bold text-slate-900 dark:text-white">Sarah Jenkins</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-1">Class of 2012</p>
+<p class="text-sm text-slate-700 dark:text-slate-300 font-medium mb-4">Director of Product at TechFlow</p>
+<button class="w-full h-9 rounded-lg border border-primary text-primary text-sm font-bold hover:bg-primary hover:text-white transition-colors">
+                                    View Profile
+                                </button>
+</div>
+</div>
+</div>
+<!-- Middle Column: Feed & Directory Results (6 cols) -->
+<div class="lg:col-span-6 flex flex-col gap-6 order-1 lg:order-2">
+<!-- Tabs -->
+<div class="flex border-b border-slate-200 dark:border-slate-700 gap-6">
+<button class="pb-3 border-b-2 border-primary text-primary font-bold text-sm">Suggested Alumni</button>
+<button class="pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Activity Feed</button>
+<button class="pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Mentorship</button>
+</div>
+<!-- Alumni Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4 hover:shadow-md transition-shadow">
+<div class="flex items-start gap-3">
+<img class="size-12 rounded-full object-cover" data-alt="Portrait of Michael Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA02IA5Aawxkbn4_KwUn3G-dL14ZHXd5_72GxiGrWJx8wKCQuP-kBfeJ3lfB06mpqPL1t61BUGikkWKU-8sbrHv6uX2kAlgx6ftQPQRQD-sTi6Z-fFzbGhZFgKr0288ZwkKgJ7M92-q9evmlsCYv1UyIqy_kkN3t3hcXWntW7pQ3QUsrBdz_prxkwCiltVyhcFyTPfOEg5ObWi3nwDozNQ7SOXAzD-qLTcBn0xX0oeBxta0hE6ymbz8dBH_D__EE5wEHsNMbmPn4NEW"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white truncate">Michael Chen</h4>
+<p class="text-xs text-slate-500 truncate">Class of 2018 • Architecture</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px] cursor-pointer" title="Connect">person_add</span>
+</div>
+<p class="mt-2 text-sm text-slate-700 dark:text-slate-300 line-clamp-2">Senior Architect looking to mentor recent grads interested in urban planning.</p>
+<div class="mt-3 flex gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-400">San Francisco</span>
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-400">Design</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4 hover:shadow-md transition-shadow">
+<div class="flex items-start gap-3">
+<img class="size-12 rounded-full object-cover" data-alt="Portrait of Emily Rodriguez" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrKPXlGZSGky5SZixjdddVKe1WxMaa2vT0uioQgO0XqZhjzdJkfGTetjjSR-BwehH__UpncgylI7_krLsTT880zYvOE3YS6omHsutGYFLK2T3gONjm0dLqLMLlTuABy99M_JXOs_XNVvLYZVvR9P7wAZV-FNsL5r5A1UFKhpHwN1jswU-e5GEeE8l1o3xpH1STaxeWwn9elGgozLOWpM1ebIfy7Du7H61o31sz_ytylk5cQlhV0Y6KYR-k474nGtcT4iAYkF9GIlgd"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white truncate">Emily Rodriguez</h4>
+<p class="text-xs text-slate-500 truncate">Class of 2015 • Business</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px] cursor-pointer" title="Connect">person_add</span>
+</div>
+<p class="mt-2 text-sm text-slate-700 dark:text-slate-300 line-clamp-2">Founder at StartUp Inc. Always happy to chat with aspiring entrepreneurs.</p>
+<div class="mt-3 flex gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-400">New York</span>
+<span class="inline-flex items-center rounded-md bg-green-100 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400">Mentor</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4 hover:shadow-md transition-shadow">
+<div class="flex items-start gap-3">
+<img class="size-12 rounded-full object-cover" data-alt="Portrait of David Kim" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Jap1RWLonrJsUoiwLtc94dGlZfl2V2dwAv-gQ5yktgT91e694JuYxo-cIyJqV4CSDKRHlHo7vy8wuxoBlo5_KRybrbO-N5zKUknA-D-IG66lv8tRmm-_5-C9lqt7LcT8HgZNhl2OIXbNvr0H0jzFLLvARZFUqFOT_0UMeD0vPJFqvt1Hz8FX3QxIvms30cXhFW00XCzeC7yeFRRowtWKMB5KRQwO00jIxA5IKUb8SuPcvbPL0REqoSTFHWDsm_kkVPE4p0lW0jWL"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white truncate">David Kim</h4>
+<p class="text-xs text-slate-500 truncate">Class of 2010 • Engineering</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px] cursor-pointer" title="Connect">person_add</span>
+</div>
+<p class="mt-2 text-sm text-slate-700 dark:text-slate-300 line-clamp-2">Software Engineering Manager at BigTech. Hiring junior devs!</p>
+<div class="mt-3 flex gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-400">Remote</span>
+<span class="inline-flex items-center rounded-md bg-blue-100 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-400">Hiring</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4 hover:shadow-md transition-shadow">
+<div class="flex items-start gap-3">
+<img class="size-12 rounded-full object-cover" data-alt="Portrait of Anita Patel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjYTg_azRgOpk6jBUfsTjVn-04j7S9oupRlIQvuIccTiz87Zh1lNBqNbfruljXd8hWGgRx9qSWbWvZ2qiyORknpQ7V92Dy0290Bpy8tGTfVsXqJTZE2XzMFGdjTvDGY5vBroTaHNyMNacQk-ItzmNO6v1HskvPuBPLN01bv9zbSlZTBAabShslI-kbF71mjIPZpMRE_qu6Lb2y3oDD_PNBaZ6apkWBVpDQv5d8a0yLQgjlB-h0_BnV3TswymEdxawnLgAoZ7GnoDlL"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white truncate">Anita Patel</h4>
+<p class="text-xs text-slate-500 truncate">Class of 2019 • Medicine</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px] cursor-pointer" title="Connect">person_add</span>
+</div>
+<p class="mt-2 text-sm text-slate-700 dark:text-slate-300 line-clamp-2">Resident Physician. Interested in connecting with other medical professionals.</p>
+<div class="mt-3 flex gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-400">Chicago</span>
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-400">Health</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- News Feed Item Example -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+<h3 class="font-bold text-slate-900 dark:text-white mb-4">Latest Updates</h3>
+<div class="flex gap-4">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">campaign</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold text-sm text-slate-900 dark:text-white">Alumni Office</span>
+<span class="text-xs text-slate-500">• 2 hours ago</span>
+</div>
+<p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                        We are thrilled to announce that registration for the Grand Reunion Gala 2024 is now open! Early bird tickets are available until next Friday. Don't miss this chance to celebrate with your peers.
+                                    </p>
+<div class="mt-3">
+<img class="rounded-lg w-full h-48 object-cover" data-alt="University gala event with guests dining" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq-cGGefVM8KpZX8FkpXQoXAGSarl9632W5Ei9M2e3SWwqaj1DNuh3bWC_D8rIzWKRPVSH4u4Ie-CS40-L3SJq7YZbukwp5xYqRcHkJnYVBdBDNwlPpc5vkaYP-SPvS7WXShQlpK7JAJQyKf48EX0s2crcOaVysl5V3vhQ8mmAKtEG2LzEM1p6pZaXzveo00FBGMzK4QOkuHTebSQEp68SpGwFbwnalqf2NHaO8CHxVdfii6IyuBB8-pmtU29SlBR0Ve15l0hD6sAe"/>
+</div>
+<div class="flex items-center gap-4 mt-3">
+<button class="flex items-center gap-1 text-slate-500 hover:text-primary text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span> Like
+                                        </button>
+<button class="flex items-center gap-1 text-slate-500 hover:text-primary text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">comment</span> Comment
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Events (3 cols) -->
+<div class="lg:col-span-3 flex flex-col gap-6 order-3">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-slate-900 dark:text-white">Upcoming Events</h3>
+<a class="text-xs font-bold text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Event 1 -->
+<div class="flex gap-3 items-start group cursor-pointer">
+<div class="flex flex-col items-center justify-center w-12 h-14 bg-slate-100 dark:bg-slate-800 rounded-lg shrink-0 group-hover:bg-primary/10 transition-colors">
+<span class="text-xs font-bold text-primary uppercase">Oct</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">24</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight group-hover:text-primary transition-colors">Annual Fall Mixer</h4>
+<p class="text-xs text-slate-500 mt-1">6:00 PM • Campus Center</p>
+<span class="text-[10px] inline-block mt-1 bg-green-100 text-green-700 px-1.5 py-0.5 rounded">Networking</span>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="flex gap-3 items-start group cursor-pointer">
+<div class="flex flex-col items-center justify-center w-12 h-14 bg-slate-100 dark:bg-slate-800 rounded-lg shrink-0 group-hover:bg-primary/10 transition-colors">
+<span class="text-xs font-bold text-primary uppercase">Nov</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">05</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight group-hover:text-primary transition-colors">Webinar: Future of AI</h4>
+<p class="text-xs text-slate-500 mt-1">1:00 PM • Online</p>
+<span class="text-[10px] inline-block mt-1 bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">Virtual</span>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="flex gap-3 items-start group cursor-pointer">
+<div class="flex flex-col items-center justify-center w-12 h-14 bg-slate-100 dark:bg-slate-800 rounded-lg shrink-0 group-hover:bg-primary/10 transition-colors">
+<span class="text-xs font-bold text-primary uppercase">Nov</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">12</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight group-hover:text-primary transition-colors">Homecoming Game</h4>
+<p class="text-xs text-slate-500 mt-1">2:00 PM • Stadium</p>
+<span class="text-[10px] inline-block mt-1 bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded">Sports</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-5 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                                Open Calendar
+                            </button>
+</div>
+<!-- Map/Location Widget -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+<h3 class="font-bold text-slate-900 dark:text-white mb-3">Alumni Near You</h3>
+<div class="relative rounded-lg overflow-hidden h-40 group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Map view of city streets" data-location="New York City" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjFWXaFJoJc7Iz2a_tTEX-EUY7nSJVcvwSdP1ywON11t41ujybkHHqm0yna99hC8S7ClSBO5FWSNA85R4NM7TyzuQeBtXGqXKvRqufSyYYQWDyt4waLjiyInGDw7IGToiTAAIedCmLl9aJLJPJhqhEpdSM5QQZl0af-E3224eh53frSvWaWmbiev-baY8uNsqi9FhkbUK17x-3ZW5kNA4aOB2BjIqu4A3wDgmi-0Wry6uEHlaqsuMo-_DwpAHj7lFb4TXkI1HS9_gD"/>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<button class="bg-white text-slate-900 text-xs font-bold px-3 py-2 rounded-lg shadow-lg hover:bg-slate-50 transition-colors">
+                                        View Map
+                                    </button>
+</div>
+</div>
+<p class="text-xs text-slate-500 mt-3 text-center">342 alumni found in your area</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Simple Footer -->
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
+<div class="max-w-[1280px] mx-auto px-4 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-slate-500">© 2024 School ERP System. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-sm text-slate-500 hover:text-primary" href="#">Privacy Policy</a>
+<a class="text-sm text-slate-500 hover:text-primary" href="#">Terms of Service</a>
+<a class="text-sm text-slate-500 hover:text-primary" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

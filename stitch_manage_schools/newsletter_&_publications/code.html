@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Newsletter &amp; Publications - School ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white transition-colors duration-200">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Side Navigation -->
+<aside class="w-64 flex-shrink-0 border-r border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 flex flex-col justify-between overflow-y-auto">
+<div class="flex flex-col gap-4 p-4">
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shadow-sm" data-alt="School logo abstract geometric shape" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD3DZdi2Y_D2IOm9ZRf0rsE66sXSbLAxRME0663X4ETIScEoJ3GaupMpHr2U-8lFFAJqwD_l9Zcp0LUi35eKNiGcBeshFtIPIbZDIFCbj_tGGjNyLSSpKw0Jw---ksL1LMDm4saTdzXqlE7yDLmNJpq8Z4Ga927Xxy9fNmbkepAoC3OiXs8BvGiqKGxUmDMVif6VF-Q6cBdhf3tQH6LRvx4SQVBsLdx7RKnzoZVgsoe-xqJiShKE-q2fZOS8apLs-NX8jSxdOBwHY_E");'></div>
+<h1 class="text-lg font-bold leading-normal text-gray-900 dark:text-white">School ERP</h1>
+</div>
+<div class="flex flex-col gap-1 mt-4">
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[24px]">school</span>
+<p class="text-sm font-medium">Students</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+<p class="text-sm font-medium">Academics</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-blue-400 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[24px] fill-1">campaign</span>
+<p class="text-sm font-medium">Newsletters</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[24px]">payments</span>
+<p class="text-sm font-medium">Finance</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+<p class="text-sm font-medium">Calendar</p>
+</div>
+</div>
+<div class="mt-8 border-t border-gray-100 dark:border-gray-800 pt-4">
+<p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Lists</p>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<p class="text-sm font-medium">Parents Association</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">science</span>
+<p class="text-sm font-medium">Science Club</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-[#e7edf3] dark:border-gray-800">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAeM6E-PEgZicNp0bj8-WDlpQTjf1Gfr0aMO3tncH-y6bFEB5jJWm74DktqGx8J3RYeS5W4tzyz-Qa7ZMjX9HJm4pvr58ZvQ4TPba4sbcxpvlyf0G1ejR3ztjuFLLpO3_nNilSGvLCROUOEdWua4VAIpG7yUQnxCsBDHuOC8zHCpBCV5tv5hnxo7_gInHG2kRGZGGfjC195Izg4P78EmndJk9j5F_9cIuka2jU01aFpBt3rA5DkWwCX0NOkRBjjLk4UibWX191BYX4A");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-gray-900 dark:text-white">Jane Admin</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Head of Ops</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex flex-col flex-1 h-full overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Top Header -->
+<header class="flex-shrink-0 flex items-center justify-between border-b border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-gray-900 px-8 py-4 z-10">
+<div class="flex flex-col gap-1">
+<h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Newsletters &amp; Publications</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400">Create, manage, and distribute school-wide communications</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-64 py-2 pl-10 pr-4 text-sm bg-[#f6f7f8] dark:bg-gray-800 border-none rounded-lg focus:ring-2 focus:ring-primary dark:text-white placeholder-gray-400" placeholder="Search newsletters..." type="text"/>
+</div>
+<button class="relative p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+</button>
+<button class="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary hover:bg-blue-600 text-white text-sm font-semibold rounded-lg shadow-sm transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Create Newsletter</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Stats Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex flex-col p-6 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Subscribers</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-[20px]">group</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-3xl font-bold text-gray-900 dark:text-white">2,450</p>
+<p class="text-sm font-medium text-green-600 mb-1 flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-0.5">trending_up</span> 
+                                    +12%
+                                </p>
+</div>
+</div>
+<div class="flex flex-col p-6 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Avg. Open Rate</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-[20px]">mail</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-3xl font-bold text-gray-900 dark:text-white">58%</p>
+<p class="text-sm font-medium text-green-600 mb-1 flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-0.5">trending_up</span> 
+                                    +2.4%
+                                </p>
+</div>
+</div>
+<div class="flex flex-col p-6 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Scheduled</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-[20px]">schedule</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-3xl font-bold text-gray-900 dark:text-white">3</p>
+<p class="text-sm font-medium text-gray-400 mb-1">Upcoming this week</p>
+</div>
+</div>
+</div>
+<!-- Main Feed Section -->
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Left Content Column (List) -->
+<div class="flex-1 flex flex-col gap-6">
+<!-- Tabs -->
+<div class="border-b border-gray-200 dark:border-gray-800">
+<nav aria-label="Tabs" class="flex gap-8">
+<a aria-current="page" class="border-b-2 border-primary py-4 px-1 text-sm font-semibold text-primary" href="#">All</a>
+<a class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300" href="#">Drafts</a>
+<a class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300" href="#">Scheduled</a>
+<a class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300" href="#">Sent</a>
+</nav>
+</div>
+<!-- Newsletter Cards List -->
+<div class="flex flex-col gap-4">
+<!-- Card 1: Sent -->
+<div class="group flex flex-col sm:flex-row bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 gap-4 hover:shadow-md transition-all cursor-pointer">
+<div class="w-full sm:w-48 h-32 bg-gray-100 rounded-lg bg-cover bg-center flex-shrink-0" data-alt="Kids playing in school playground" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAuoOuza2VuAxsjSd0VB5ixfYKfWXK3ucwqhHCxXuaWi0RhLs1UrARSR3krVB7Ma7etcF9yiiYBpeln-X-fkV_6FzEDOIpj1xybZMAd6ArYzMyu3hEoWcRIieO2_KOSTr8918fxp1uXpAZ_EkkMNeoO9s7f3XbqprDfTOL7BSUk0bJc37ssKoJ_qoybv4yB9--p5YCKIUvJFZZVfB922eWrQl4QhQpRcO4ISN9XShW8QzWofCGARlw7ldk5U7CnwEOVof6cP-SDP-j7");'></div>
+<div class="flex flex-col flex-1 justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<div class="flex gap-2 items-center mb-1">
+<span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/30 px-2 py-0.5 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">Sent</span>
+<span class="text-xs text-gray-400">Oct 24, 2023</span>
+</div>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-white p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">October Weekly Roundup</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">Highlights from the Science Fair, upcoming Parent-Teacher conferences, and the new lunch menu for November.</p>
+</div>
+<div class="flex items-center gap-4 mt-3">
+<div class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>1,240 Opens (58%)</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-[16px]">group</span>
+<span>Parents, Staff</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Draft -->
+<div class="group flex flex-col sm:flex-row bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 gap-4 hover:shadow-md transition-all cursor-pointer">
+<div class="w-full sm:w-48 h-32 bg-gray-100 rounded-lg bg-cover bg-center flex-shrink-0" data-alt="Drama class students on stage" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCd2A0lIEdUiMdBJQR-p7JdRcfdLrQ3u9KvinbJ2NGiNZz7eBCuiF6T7bPpZxaPHotNa0aDCm6_nmW0HY4hNdtTjEy2qbeuRUOatqRmz9abt2VHxnPImL5JE4NEVvtdfvdU9NYU3I4AGkwzn6vGf54eYRS1Jiv8_djZ8Z93qxU_23oOMm7DdTfXoeB3UtA4vYYPVc1iDo_119-zN-iFAis1pvichH2WKcWP_lDk91L54A3m4UVkrarPco4RvxhTpHg5t8_xlwH1UOIK");'></div>
+<div class="flex flex-col flex-1 justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<div class="flex gap-2 items-center mb-1">
+<span class="inline-flex items-center rounded-full bg-yellow-50 dark:bg-yellow-900/30 px-2 py-0.5 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/20">Draft</span>
+<span class="text-xs text-gray-400">Edited 2h ago</span>
+</div>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-white p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">School Play Announcement: "The Wizard of Oz"</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">Tickets go on sale next Monday. Important dates for dress rehearsals and volunteer sign-ups.</p>
+</div>
+<div class="flex items-center gap-2 mt-3">
+<button class="text-xs font-medium text-primary hover:text-blue-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">edit</span> Continue Editing
+                                             </button>
+</div>
+</div>
+</div>
+<!-- Card 3: Scheduled -->
+<div class="group flex flex-col sm:flex-row bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 gap-4 hover:shadow-md transition-all cursor-pointer">
+<div class="w-full sm:w-48 h-32 bg-gray-100 rounded-lg bg-cover bg-center flex-shrink-0" data-alt="Sports field grass texture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1G9DVzr-y5sG-FEy8huWguuZVgxEvUmRINTba_NedY1iIDhSHyN5Hek1ihXiktrCd_32NGIxbV_qFbqrCSLSOmXQR8J-NC1PCYLBFI1Ez8eM52aAmsgLJRCOulRpQfwo9dCj6GD1iSaieRio4x_N6NwVM2Eobgv3w96LXRtGTC2PBss93H7rG4L3mymAXzTAsvD3ElKgze1cXmrik2ylPzArXXKEx9wJc2TIsGrWRVD6L8qgSj0BRaaOwinOZZwfYsT4WLOhxc5K6");'></div>
+<div class="flex flex-col flex-1 justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<div class="flex gap-2 items-center mb-1">
+<span class="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-medium text-blue-700 dark:text-blue-400 ring-1 ring-inset ring-blue-600/20">Scheduled</span>
+<span class="text-xs text-gray-400">For Nov 1, 9:00 AM</span>
+</div>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-white p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Sports Day Information Pack</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">Everything you need to know about the upcoming inter-house sports competition.</p>
+</div>
+<div class="flex items-center gap-4 mt-3">
+<div class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Sends in 3 days</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-[16px]">group</span>
+<span>All Students, Staff</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Utility Panel -->
+<div class="w-full lg:w-80 flex flex-col gap-6">
+<!-- Quick Actions -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm">
+<h4 class="font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h4>
+<div class="space-y-2">
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all text-left group">
+<div class="size-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/50">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+</div>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Upload Media Assets</span>
+</button>
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all text-left group">
+<div class="size-8 rounded-full bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/50">
+<span class="material-symbols-outlined text-[18px]">design_services</span>
+</div>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Manage Templates</span>
+</button>
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all text-left group">
+<div class="size-8 rounded-full bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400 group-hover:bg-teal-100 dark:group-hover:bg-teal-900/50">
+<span class="material-symbols-outlined text-[18px]">settings_accessibility</span>
+</div>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Audience Groups</span>
+</button>
+</div>
+</div>
+<!-- Upcoming Schedule Mini-List -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-bold text-gray-900 dark:text-white">Upcoming</h4>
+<a class="text-xs font-semibold text-primary hover:underline" href="#">View Calendar</a>
+</div>
+<div class="space-y-4">
+<div class="flex gap-3 relative">
+<div class="flex flex-col items-center">
+<div class="size-2 rounded-full bg-blue-500 ring-4 ring-white dark:ring-gray-900 z-10"></div>
+<div class="w-0.5 h-full bg-gray-200 dark:bg-gray-800 absolute top-2"></div>
+</div>
+<div class="pb-4">
+<p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Nov 1 • 9:00 AM</p>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Sports Day Info Pack</p>
+</div>
+</div>
+<div class="flex gap-3 relative">
+<div class="flex flex-col items-center">
+<div class="size-2 rounded-full bg-gray-300 dark:bg-gray-600 ring-4 ring-white dark:ring-gray-900 z-10"></div>
+<!-- Last item no line -->
+</div>
+<div>
+<p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Nov 5 • 10:00 AM</p>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Monthly Finance Report</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Audience Snapshot -->
+<div class="bg-gradient-to-br from-primary to-blue-600 rounded-xl p-5 text-white shadow-lg">
+<h4 class="font-bold text-lg mb-2">Grow your reach</h4>
+<p class="text-blue-100 text-sm mb-4">You have 150 new parents added to the system who aren't in any newsletter list yet.</p>
+<button class="w-full py-2 bg-white text-primary text-sm font-bold rounded-lg hover:bg-gray-50 transition-colors">
+                                    Sync New Parents
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

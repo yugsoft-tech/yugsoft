@@ -13,7 +13,7 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class MarksService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   /**
    * Enter marks per student
@@ -23,8 +23,8 @@ export class MarksService {
     createMarkDto: CreateMarkDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only TEACHER can enter marks');
+    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
+      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can enter marks');
     }
 
     if (!currentUser.schoolId) {
@@ -143,8 +143,8 @@ export class MarksService {
     bulkMarksDto: BulkMarksDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only TEACHER can enter marks');
+    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
+      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can enter marks');
     }
 
     if (!currentUser.schoolId) {
@@ -285,7 +285,7 @@ export class MarksService {
     }
 
     // RBAC checks
-    if (currentUser.role === Role.TEACHER) {
+    if (currentUser.role === Role.TEACHER || currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId || exam.class.schoolId !== currentUser.schoolId) {
         throw new ForbiddenException(
           'Access denied. You can only view marks for exams in your school',
@@ -410,7 +410,7 @@ export class MarksService {
     }
 
     // RBAC checks (same as findAll)
-    if (currentUser.role === Role.TEACHER) {
+    if (currentUser.role === Role.TEACHER || currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId || result.exam.class.schoolId !== currentUser.schoolId) {
         throw new ForbiddenException(
           'Access denied. You can only view marks for exams in your school',
@@ -466,8 +466,8 @@ export class MarksService {
     updateMarkDto: UpdateMarkDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only TEACHER can update marks');
+    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
+      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can update marks');
     }
 
     if (!currentUser.schoolId) {
@@ -544,8 +544,8 @@ export class MarksService {
     id: string,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only TEACHER can delete marks');
+    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
+      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can delete marks');
     }
 
     if (!currentUser.schoolId) {

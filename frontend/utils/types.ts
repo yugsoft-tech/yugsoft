@@ -42,6 +42,7 @@ export interface PaginationParams {
   sortOrder?: 'asc' | 'desc';
   sectionId?: string;
   classId?: string;
+  search?: string;
 }
 
 // Paginated response
@@ -72,6 +73,8 @@ export interface LoginCredentials {
 // Student
 export interface Student {
   id: string;
+  user: User;
+  rollNumber?: string;
   firstName: string;
   lastName: string;
   email?: string;
@@ -80,7 +83,7 @@ export interface Student {
   dateOfBirth?: string;
   gender?: 'MALE' | 'FEMALE' | 'OTHER';
   address?: string;
-  classId?: string;
+  classId: string;
   class?: Class;
   sectionId?: string;
   parentId?: string;
@@ -159,6 +162,11 @@ export interface Class {
   teacherId?: string;
   createdAt?: string;
   updatedAt?: string;
+  _count?: {
+    students?: number;
+    sections?: number;
+    exams?: number;
+  };
 }
 
 export interface CreateClassDto {
@@ -180,6 +188,9 @@ export interface Section {
   teacherId?: string;
   createdAt?: string;
   updatedAt?: string;
+  _count?: {
+    students?: number;
+  };
 }
 
 // Subject
@@ -191,6 +202,10 @@ export interface Subject {
   schoolId?: string;
   createdAt?: string;
   updatedAt?: string;
+  _count?: {
+    timetables?: number;
+    homeworks?: number;
+  };
 }
 
 export interface CreateSubjectDto {
@@ -240,13 +255,12 @@ export interface CreateAttendanceDto {
 export interface Exam {
   id: string;
   name: string;
-  description?: string;
-  startDate: string;
-  endDate: string;
-  classId?: string;
-  subjectId?: string;
-  totalMarks?: number;
-  passingMarks?: number;
+  type: string;
+  date: string;
+  classId: string;
+  class?: Class;
+  totalMarks: number;
+  passingMarks: number;
   schoolId?: string;
   createdAt?: string;
   updatedAt?: string;

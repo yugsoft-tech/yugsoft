@@ -134,13 +134,13 @@ class ApiClient {
     if (error.response) {
       // Server responded with error
       const message = error.response.data?.message || error.response.data?.error || 'An error occurred';
-      return new Error(message);
+      return Error(message);
     } else if (error.request) {
       // Request made but no response
-      return new Error('Network error. Please check your connection.');
+      return Error('Network error. Please check your connection.');
     } else {
       // Error in request setup
-      return new Error(error.message || 'An unexpected error occurred');
+      return Error(error.message || 'An unexpected error occurred');
     }
   }
 }

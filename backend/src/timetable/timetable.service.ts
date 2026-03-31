@@ -14,7 +14,7 @@ import { Role, DayOfWeek } from '@prisma/client';
 
 @Injectable()
 export class TimetableService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   /**
    * Convert time string (HH:mm) to minutes for comparison
@@ -542,6 +542,83 @@ export class TimetableService {
     });
 
     return timetables;
+  }
+
+  /**
+   * Get current teacher's timetable
+   */
+  async getMyTimetable(
+    currentUser: { userId: string; role: Role; schoolId?: string },
+  ) {
+    if (currentUser.role !== Role.TEACHER) {
+      throw new ForbiddenException('Only teachers can access their own timetable');
+    }
+
+    if (!currentUser.schoolId) {
+      throw new ForbiddenException('Teacher must be associated with a school');
+    }
+
+    // Find teacher profile
+    const teacher = await this.prisma.teacher.findFirst({
+      where: {
+        userId: currentUser.userId,
+        schoolId: currentUser.schoolId,
+      },
+    });
+
+    if (!teacher) {
+      throw new NotFoundException('Teacher profile not found');
+    }
+
+    const timetables = await this.prisma.timetable.findMany({
+      where: {
+        teacherId: teacher.id,
+      },
+      include: {
+        class: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        subject: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
+      },
+      orderBy: [
+        { day: 'asc' },
+        { startTime: 'asc' },
+      ],
+    });
+
+    // Group by day for better structure
+    const groupedByDay: Record<string, any[]> = {};
+    const days = [
+      DayOfWeek.MONDAY,
+      DayOfWeek.TUESDAY,
+      DayOfWeek.WEDNESDAY,
+      DayOfWeek.THURSDAY,
+      DayOfWeek.FRIDAY,
+      DayOfWeek.SATURDAY,
+      DayOfWeek.SUNDAY,
+    ];
+
+    days.forEach((day) => {
+      groupedByDay[day] = timetables.filter((t) => t.day === day);
+    });
+
+    return {
+      teacher: {
+        id: teacher.id,
+        name: `${currentUser['firstName'] || ''} ${currentUser['lastName'] || ''}`.trim() || 'Teacher',
+      },
+      timetable: groupedByDay,
+      totalEntries: timetables.length,
+    };
   }
 
   /**

@@ -16,10 +16,10 @@ import { Role } from '@prisma/client';
 @Controller('results')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ResultsController {
-  constructor(private readonly resultsService: ResultsService) {}
+  constructor(private readonly resultsService: ResultsService) { }
 
   @Post('generate/:examId')
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   generateResults(
     @Param('examId') examId: string,
     @CurrentUser() user: any,
@@ -32,7 +32,7 @@ export class ResultsController {
   }
 
   @Get('student/:studentId')
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
   getStudentResults(
     @Param('studentId') studentId: string,
     @CurrentUser() user: any,
@@ -45,7 +45,7 @@ export class ResultsController {
   }
 
   @Get('exam/:examId')
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
   getExamResults(
     @Param('examId') examId: string,
     @CurrentUser() user: any,
@@ -58,7 +58,7 @@ export class ResultsController {
   }
 
   @Get('class/:classId')
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
   getClassResults(
     @Param('classId') classId: string,
     @Query() viewResultsDto: ViewResultsDto,

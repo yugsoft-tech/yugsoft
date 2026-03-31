@@ -73,9 +73,9 @@ export default function ParentAttendance() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        ACADEMIC_LOG: ATTENDANCE
+                        SCHOOL RECORD: ATTENDANCE
                     </Badge>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Attendance Registry</h1>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Attendance Record</h1>
                     <p className="text-sm font-medium text-slate-500 italic">
                         {selectedChildId === 'ALL'
                             ? `Please select a specific child to view detailed attendance.`

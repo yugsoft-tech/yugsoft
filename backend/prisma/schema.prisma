@@ -74,6 +74,28 @@ model User {
   parent  Parent?
 
   audits AuditLog[]
+
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+}
+
+model Message {
+  id      String @id @default(uuid())
+  message String
+  type    String @default("text") // text, image, file
+
+  senderId String
+  sender   User   @relation("SentMessages", fields: [senderId], references: [id])
+
+  receiverId String
+  receiver   User   @relation("ReceivedMessages", fields: [receiverId], references: [id])
+
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id])
+
+  read Boolean @default(false)
+
+  createdAt DateTime @default(now())
 }
 
 model School {
@@ -95,9 +117,10 @@ model School {
   notices  Notice[]
   books    Book[]
   vehicles Vehicle[]
+  messages Message[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 //////////////////// USERS ////////////////////
@@ -139,9 +162,9 @@ model Teacher {
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])
 
-  subjects Subject[]
+  subjects   Subject[]
   timetables Timetable[]
-  homeworks Homework[]
+  homeworks  Homework[]
 
   createdAt DateTime @default(now())
 }
@@ -167,11 +190,11 @@ model Class {
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])
 
-  sections Section[]
-  students Student[]
-  exams    Exam[]
+  sections   Section[]
+  students   Student[]
+  exams      Exam[]
   timetables Timetable[]
-  homeworks Homework[]
+  homeworks  Homework[]
 
   createdAt DateTime @default(now())
 }
@@ -202,7 +225,7 @@ model Subject {
   teacher   Teacher? @relation(fields: [teacherId], references: [id])
 
   timetables Timetable[]
-  homeworks Homework[]
+  homeworks  Homework[]
 
   createdAt DateTime @default(now())
 }
@@ -222,8 +245,8 @@ enum DayOfWeek {
 model Timetable {
   id        String    @id @default(uuid())
   day       DayOfWeek
-  startTime String    // Format: HH:mm (e.g., "09:00")
-  endTime   String    // Format: HH:mm (e.g., "10:00")
+  startTime String // Format: HH:mm (e.g., "09:00")
+  endTime   String // Format: HH:mm (e.g., "10:00")
 
   classId String
   class   Class  @relation(fields: [classId], references: [id])
@@ -243,7 +266,7 @@ model Timetable {
 //////////////////// HOMEWORK ////////////////////
 
 model Homework {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String?
 
@@ -262,8 +285,6 @@ model Homework {
   updatedAt DateTime @updatedAt
 }
 
-
-
 model Attendance {
   id     String           @id @default(uuid())
   date   DateTime
@@ -275,12 +296,13 @@ model Attendance {
   createdAt DateTime @default(now())
 }
 
-
 model Exam {
-  id   String   @id @default(uuid())
-  name String
-  type ExamType
-  date DateTime
+  id           String   @id @default(uuid())
+  name         String
+  type         ExamType
+  date         DateTime
+  totalMarks   Int
+  passingMarks Int
 
   classId String
   class   Class  @relation(fields: [classId], references: [id])
@@ -300,8 +322,6 @@ model ExamResult {
   studentId String
   student   Student @relation(fields: [studentId], references: [id])
 }
-
-
 
 model Fee {
   id      String    @id @default(uuid())
@@ -327,8 +347,6 @@ model Notice {
   createdAt DateTime @default(now())
 }
 
-
-
 model Book {
   id     String @id @default(uuid())
   title  String
@@ -341,8 +359,6 @@ model Book {
   createdAt DateTime @default(now())
 }
 
-
-
 model Vehicle {
   id     String @id @default(uuid())
   number String
@@ -351,7 +367,6 @@ model Vehicle {
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])
 }
-
 
 model AuditLog {
   id     String  @id @default(uuid())
@@ -364,7 +379,6 @@ model AuditLog {
   createdAt DateTime @default(now())
 }
 
-
 model SystemLog {
   id      String @id @default(uuid())
   level   String
@@ -376,12 +390,12 @@ model SystemLog {
 //////////////////// PLANS ////////////////////
 
 model Plan {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   description String?
   price       Float
-  duration    Int?     // Duration in months
-  isActive    Boolean  @default(true)
+  duration    Int? // Duration in months
+  isActive    Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

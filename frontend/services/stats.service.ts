@@ -7,33 +7,46 @@ import { apiClient } from '@/utils/api-client';
 import { API_ENDPOINTS } from '@/utils/constants';
 
 export interface DashboardStats {
-    totalStudents: number;
-    totalTeachers: number;
-    totalParents: number;
-    totalEarnings: number;
-    totalClasses: number;
-    totalSubjects: number;
+    totalStudents?: number;
+    totalTeachers?: number;
+    totalParents?: number;
+    totalEarnings?: number;
+    totalClasses?: number;
+    totalSubjects?: number;
+    statistics?: any;
+    recentActivities?: any[];
+    recentSchools?: any[];
+    [key: string]: any;
 }
 
 class StatsService {
     /**
-     * Get dashboard statistics
+     * Get dashboard statistics based on role
      */
-    async getStats(): Promise<DashboardStats> {
-        // Note: You might need to add a STATS endpoint to constants if it doesn't exist
-        // For now, assuming a general stats endpoint or using a placeholder
-        const response = await apiClient.get<DashboardStats>('/stats/dashboard');
-        return response as any;
+    async getStats(role?: string): Promise<any> {
+        let endpoint = '/dashboard/admin'; // Default
+
+        if (role === 'SUPER_ADMIN') endpoint = '/dashboard/super-admin';
+        else if (role === 'TEACHER') endpoint = '/dashboard/teacher';
+        else if (role === 'STUDENT') endpoint = '/dashboard/student';
+        else if (role === 'PARENT') endpoint = '/dashboard/parent';
+        else if (role === 'SCHOOL_ADMIN') endpoint = '/dashboard/admin';
+
+        const response = await apiClient.get<any>(endpoint);
+        return response; // response comes back directly as the object from apiClient.get
+    }
+
+    // Individual methods for backward compatibility or direct access
+    async getAdminStats(): Promise<DashboardStats> {
+        return this.getStats('SCHOOL_ADMIN');
     }
 
     async getTeacherStats(): Promise<any> {
-        const response = await apiClient.get('/stats/teacher');
-        return response;
+        return this.getStats('TEACHER');
     }
 
     async getStudentStats(): Promise<any> {
-        const response = await apiClient.get('/stats/student');
-        return response;
+        return this.getStats('STUDENT');
     }
 }
 

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Partnership Management - EduManage ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#2b8cee",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101922",
+                "surface-light": "#ffffff",
+                "surface-dark": "#1A2632",
+                "border-light": "#e7edf3",
+                "border-dark": "#2d3748",
+              },
+              fontFamily: {
+                "display": ["Lexend", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        /* Custom scrollbar for better look in webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569; 
+        }
+      </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white font-display overflow-hidden h-screen flex w-full">
+<!-- Side Navigation -->
+<aside class="w-72 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex-col hidden md:flex h-full flex-shrink-0 transition-colors duration-200">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shadow-sm" data-alt="Abstract blue education logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDL1_m25qbRbMxwiecVMkSIInoERNkIFpcKLbHDH8J6L-G7WSUq3tn7dVZo77UnFI5kdHAqnFEjxdLdv22kxnSUNg0l5v_-9mQwI0lKTGt3xBfgPVzJ6Vh9JpbuSLyW3YxhmFVNBnjeg-knLyd9-_3csO5WqKSp9zWH0jTSitlxqVE7vFY2_OXPUOow94v4sI0nnKlRbg3k0bLcafcLPvVk0txFrBY2gwys_ZGRH48Uyzhs_4C55tVARAlbF0t9rkgDljJt4yiQvgLl");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#0d141b] dark:text-white text-base font-bold leading-normal">EduManage ERP</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal">Admin Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">school</span>
+<p class="text-sm font-medium leading-normal">Students</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">menu_book</span>
+<p class="text-sm font-medium leading-normal">Academics</p>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined text-[24px] fill-current">handshake</span>
+<p class="text-sm font-medium leading-normal">Partnerships</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">payments</span>
+<p class="text-sm font-medium leading-normal">Finance</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</nav>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 ring-2 ring-white dark:ring-gray-700" data-alt="User profile picture of administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAKkueWd_QeC955-APzg_YP9GZ_isBYUprJ4-40py3aEcdmyWDeK5HIOhl3x6xjIHXR4FXzPYjQlzZdKy8BLyJxof6APSxQayC7gP34Fo2vzNvvYMKztaoqYZK28l8L0G0CkzCU2mdPJ88m0y2WWBD22jDaQFqnW99bkPssjaGdG2J1ACLb8LYMrprO570DAZccbAwN2W6RS_YYNIEoxegcWQhUKEK1yDLajVcJATZMIPZtIwgqRpMVhFTX6IHdURE8YrT5s0G1oeO");'></div>
+<div class="flex flex-col">
+<p class="text-[#0d141b] dark:text-white text-sm font-medium">Alex Johnson</p>
+<p class="text-[#4c739a] dark:text-slate-400 text-xs">School Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col h-full min-w-0 bg-background-light dark:bg-background-dark">
+<!-- Top Navigation Bar -->
+<header class="h-16 flex items-center justify-between px-6 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex-shrink-0 z-10">
+<div class="flex items-center gap-4 flex-1">
+<button class="md:hidden text-[#0d141b] dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="relative w-full max-w-md hidden md:block">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-slate-800 border-none text-sm text-[#0d141b] dark:text-white placeholder:text-[#4c739a] focus:ring-1 focus:ring-primary" placeholder="Search partners, MOUs, projects..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="size-10 flex items-center justify-center rounded-full hover:bg-background-light dark:hover:bg-slate-800 text-[#0d141b] dark:text-white transition-colors relative">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2.5 right-2.5 size-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-full hover:bg-background-light dark:hover:bg-slate-800 text-[#0d141b] dark:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">help</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Main Area -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
+<div class="max-w-6xl mx-auto flex flex-col gap-8 pb-10">
+<!-- Breadcrumbs & Heading -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">External Relations</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-medium text-[#0d141b] dark:text-white">Partnerships</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-[#0d141b] dark:text-white text-3xl font-bold tracking-tight">Partnership Management</h2>
+<p class="text-[#4c739a] dark:text-slate-400 text-base font-normal max-w-2xl">
+                                Manage partner organizations, MOUs, and track collaborative projects and grants.
+                            </p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 h-10 rounded-lg bg-surface-light dark:bg-slate-800 border border-border-light dark:border-border-dark text-[#0d141b] dark:text-white text-sm font-semibold hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Export Report</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium">Total Partners</p>
+<span class="material-symbols-outlined text-[#4c739a] dark:text-slate-500 group-hover:text-primary transition-colors">domain</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-[#0d141b] dark:text-white text-2xl font-bold">42</h3>
+<span class="text-emerald-600 dark:text-emerald-400 text-xs font-bold bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded">+5%</span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium">Active MOUs</p>
+<span class="material-symbols-outlined text-[#4c739a] dark:text-slate-500 group-hover:text-primary transition-colors">contract</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-[#0d141b] dark:text-white text-2xl font-bold">12</h3>
+<span class="text-emerald-600 dark:text-emerald-400 text-xs font-bold bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded">+2 new</span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-3 group hover:border-amber-500/50 transition-colors">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium">Pending Renewals</p>
+<span class="material-symbols-outlined text-[#4c739a] dark:text-slate-500 group-hover:text-amber-500 transition-colors">pending_actions</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-[#0d141b] dark:text-white text-2xl font-bold">3</h3>
+<span class="text-amber-600 dark:text-amber-400 text-xs font-bold bg-amber-50 dark:bg-amber-900/30 px-1.5 py-0.5 rounded">Action req.</span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between">
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium">Grant Funding</p>
+<span class="material-symbols-outlined text-[#4c739a] dark:text-slate-500 group-hover:text-primary transition-colors">monetization_on</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-[#0d141b] dark:text-white text-2xl font-bold">$150k</h3>
+<span class="text-emerald-600 dark:text-emerald-400 text-xs font-bold bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded">+12% YTD</span>
+</div>
+</div>
+</div>
+<!-- Tabs & Toolbar -->
+<div class="flex flex-col gap-6">
+<!-- Tab Headers -->
+<div class="border-b border-border-light dark:border-border-dark overflow-x-auto">
+<nav aria-label="Tabs" class="flex space-x-8">
+<button class="whitespace-nowrap pb-4 px-1 border-b-2 border-primary font-medium text-sm text-primary">
+                                Partners Directory
+                            </button>
+<button class="whitespace-nowrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm text-[#4c739a] dark:text-slate-400 hover:text-[#0d141b] dark:hover:text-white hover:border-gray-300 transition-colors">
+                                MOU Repository
+                            </button>
+<button class="whitespace-nowrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm text-[#4c739a] dark:text-slate-400 hover:text-[#0d141b] dark:hover:text-white hover:border-gray-300 transition-colors">
+                                Active Projects
+                            </button>
+<button class="whitespace-nowrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm text-[#4c739a] dark:text-slate-400 hover:text-[#0d141b] dark:hover:text-white hover:border-gray-300 transition-colors">
+                                Funding &amp; Grants
+                            </button>
+</nav>
+</div>
+<!-- Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3 flex-1 min-w-[280px]">
+<div class="relative w-full max-w-xs">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-sm text-[#0d141b] dark:text-white placeholder:text-[#4c739a] focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Filter by industry, status..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="p-2.5 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-[#4c739a] dark:text-slate-400 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[20px] block">grid_view</span>
+</button>
+<button class="p-2.5 rounded-lg border border-border-light dark:border-border-dark bg-transparent text-[#4c739a] dark:text-slate-400 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[20px] block">view_list</span>
+</button>
+</div>
+</div>
+<button class="flex items-center gap-2 px-5 h-11 rounded-lg bg-primary text-white font-bold text-sm shadow-md hover:bg-blue-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add New Partnership</span>
+</button>
+</div>
+</div>
+<!-- Directory Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-start justify-between">
+<div class="size-14 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-border-light dark:border-border-dark">
+<img alt="University campus building representing Global Tech University" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7eOkRbJKTwGiLvbt1NwM6qV681lmwHsuWhMyvZJxFygZ_9nlVfmB2xzeTFUWKtOZOX9ULTJTbhcpc99FkVaP1oIzRxDKfFhVTxDKAFHg-FabQVxdMWBX6IgD22Yq2Cbtb-vYG833F8_8c1OOY6rc-u0AgMxzxC1a9Cb58dbT4MeLWLpscGdUyuYcCW--BGZrq7cbvTm9-SPZPcBWo3ypnz0v64QUxqXs5_kVrkQaIk40N_Bpf813chgURCrfBufxxp0Kr_aLwP5Qg"/>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">
+                                Active
+                            </span>
+</div>
+<div>
+<h3 class="text-[#0d141b] dark:text-white text-lg font-bold">Global Tech University</h3>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm">Higher Education</p>
+</div>
+<div class="space-y-3 pt-2 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span>Dr. Sarah Connor</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>MOU Expires: Dec 2024</span>
+</div>
+</div>
+<a class="mt-auto pt-4 text-primary text-sm font-semibold hover:text-blue-600 flex items-center gap-1" href="#">
+                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-start justify-between">
+<div class="size-14 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-border-light dark:border-border-dark">
+<img alt="Modern office building representing EdTech Solutions Inc" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJrEjtvIbhPERVauJZIGxuH-t0-NPTmiO1KyahMFD-LAHykSqaHUIQ4mJwwdLehKDu1s6Gg08umkfymncLJ3QxE3ekD7YmFXpoijE5ePLJpcNErK-yosqxHBfi0ja_cL44sTqxbmEW7ajjU37CvbcC_D6kgYzfX96RLA4IYP--GrinTHXhBa5PimhzQXT3mL1-Uk1TrdlmtYpMK5zOgrz5jd5xlw9rdWcnaJBExts3Wa-M8rM1TAUPNpkL9BChGKQR3Yvo-NFFzxoU"/>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">
+                                Renewing
+                            </span>
+</div>
+<div>
+<h3 class="text-[#0d141b] dark:text-white text-lg font-bold">EdTech Solutions Inc.</h3>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm">Technology Provider</p>
+</div>
+<div class="space-y-3 pt-2 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span>Michael Chen</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span class="text-amber-600 dark:text-amber-400 font-medium">Expires in 14 days</span>
+</div>
+</div>
+<a class="mt-auto pt-4 text-primary text-sm font-semibold hover:text-blue-600 flex items-center gap-1" href="#">
+                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-start justify-between">
+<div class="size-14 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center overflow-hidden border border-border-light dark:border-border-dark">
+<span class="material-symbols-outlined text-indigo-500 text-[32px]">public</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">
+                                Active
+                            </span>
+</div>
+<div>
+<h3 class="text-[#0d141b] dark:text-white text-lg font-bold">City Arts Council</h3>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm">Non-Profit / NGO</p>
+</div>
+<div class="space-y-3 pt-2 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span>Elena Rodriguez</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>MOU Expires: Jun 2025</span>
+</div>
+</div>
+<a class="mt-auto pt-4 text-primary text-sm font-semibold hover:text-blue-600 flex items-center gap-1" href="#">
+                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-start justify-between">
+<div class="size-14 rounded-lg bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center overflow-hidden border border-border-light dark:border-border-dark">
+<span class="material-symbols-outlined text-orange-500 text-[32px]">science</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                Draft
+                            </span>
+</div>
+<div>
+<h3 class="text-[#0d141b] dark:text-white text-lg font-bold">Future Science Labs</h3>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm">Research Institute</p>
+</div>
+<div class="space-y-3 pt-2 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span>Dr. Alan Grant</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">edit_document</span>
+<span>Proposal Pending</span>
+</div>
+</div>
+<a class="mt-auto pt-4 text-primary text-sm font-semibold hover:text-blue-600 flex items-center gap-1" href="#">
+                            Continue Setup <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-start justify-between">
+<div class="size-14 rounded-lg bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center overflow-hidden border border-border-light dark:border-border-dark">
+<span class="material-symbols-outlined text-purple-500 text-[32px]">sports_soccer</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">
+                                Active
+                            </span>
+</div>
+<div>
+<h3 class="text-[#0d141b] dark:text-white text-lg font-bold">Regional Sports Academy</h3>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm">Athletics</p>
+</div>
+<div class="space-y-3 pt-2 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span>Coach Ted Lasso</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>MOU Expires: Aug 2026</span>
+</div>
+</div>
+<a class="mt-auto pt-4 text-primary text-sm font-semibold hover:text-blue-600 flex items-center gap-1" href="#">
+                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-all border-dashed">
+<div class="flex-1 flex flex-col items-center justify-center text-center gap-3 min-h-[160px]">
+<div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">add</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-[#0d141b] dark:text-white text-base font-semibold">New Partnership</h3>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm max-w-[180px]">Initiate a new collaboration or draft an MOU.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -46,7 +46,7 @@ export default function AttendanceDashboard() {
     }, []);
 
     return (
-        <AdminLayout title="Attendance Intelligence">
+        <AdminLayout title="Attendance Dashboard">
             <Head>
                 <title>Attendance Dashboard - EduCore</title>
             </Head>
@@ -56,10 +56,10 @@ export default function AttendanceDashboard() {
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 text-primary mb-1 text-[10px] font-black uppercase tracking-[0.2em]">
                         <LayoutDashboard size={14} />
-                        Institutional Overview
+                        Operational Overview
                     </div>
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Attendance Dashboard</h1>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">High-level institutional movements and deployment analytics.</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">Monitor presence and absence patterns across the institution.</p>
                 </div>
 
                 <div className="flex gap-4">
@@ -68,14 +68,14 @@ export default function AttendanceDashboard() {
                         className="px-8 py-4 bg-primary text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-2"
                     >
                         <UserCheck size={16} />
-                        Student Tracking
+                        Student Attendance
                     </button>
                     <button
                         onClick={() => router.push('/admin/attendance/teachers')}
                         className="px-8 py-4 bg-slate-900 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl shadow-slate-900/30 hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-2"
                     >
                         <Briefcase size={16} />
-                        Faculty Tracking
+                        Staff Attendance
                     </button>
                 </div>
             </div>
@@ -83,32 +83,32 @@ export default function AttendanceDashboard() {
             {/* Primary Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <OverviewCard
-                    label="Student Attendance"
+                    label="Student Presence"
                     value={loading ? '...' : '96.4%'}
                     icon={Users}
                     color="blue"
                     trend="+0.8% today"
                 />
                 <OverviewCard
-                    label="Faculty Presence"
+                    label="Staff Presence"
                     value={loading ? '...' : '98.2%'}
                     icon={Briefcase}
                     color="emerald"
                     trend="Stable"
                 />
                 <OverviewCard
-                    label="Critical Absences"
+                    label="Total Absences"
                     value={loading ? '...' : '12'}
                     icon={UserX}
                     color="rose"
                     trend="-4 from yesterday"
                 />
                 <OverviewCard
-                    label="System Uptime"
-                    value={loading ? '...' : '100%'}
+                    label="System Status"
+                    value={loading ? '...' : 'ONLINE'}
                     icon={Activity}
                     color="purple"
-                    trend="Strategic Alignment"
+                    trend="Operating Normal"
                 />
             </div>
 
@@ -120,8 +120,8 @@ export default function AttendanceDashboard() {
                         <div className="relative z-10 flex flex-col h-full">
                             <div className="flex justify-between items-start mb-10">
                                 <div>
-                                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Registry Analytics</h3>
-                                    <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Deployment Stabilization</p>
+                                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Weekly Trends</h3>
+                                    <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Attendance Stability</p>
                                 </div>
                                 <div className="size-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
                                     <TrendingUp size={24} />
@@ -150,24 +150,24 @@ export default function AttendanceDashboard() {
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] p-10 shadow-sm relative overflow-hidden flex flex-col h-[500px]">
                         <div className="flex flex-col gap-6">
                             <div>
-                                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Operational Insight</h3>
-                                <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Active Sectors</p>
+                                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Departmental Analysis</h3>
+                                <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Active Departments</p>
                             </div>
                         </div>
 
                         <div className="flex-1 flex flex-col justify-center space-y-6">
-                            <SectorStability label="Science Faculty" percentage={98} color="bg-emerald-500" />
-                            <SectorStability label="Mathematics" percentage={94} color="bg-primary" />
-                            <SectorStability label="Humanities" percentage={89} color="bg-amber-500" />
-                            <SectorStability label="Languages" percentage={92} color="bg-purple-500" />
-                            <SectorStability label="Fine Arts" percentage={85} color="bg-rose-500" />
+                            <DepartmentStability label="Science" percentage={98} color="bg-emerald-500" />
+                            <DepartmentStability label="Mathematics" percentage={94} color="bg-primary" />
+                            <DepartmentStability label="Humanities" percentage={89} color="bg-amber-500" />
+                            <DepartmentStability label="Languages" percentage={92} color="bg-purple-500" />
+                            <DepartmentStability label="Fine Arts" percentage={85} color="bg-rose-500" />
                         </div>
 
                         <button
                             onClick={() => router.push('/admin/attendance/reports')}
                             className="w-full py-5 bg-slate-50 dark:bg-slate-800 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] rounded-3xl hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-all flex items-center justify-center gap-2"
                         >
-                            View Strategic Reports
+                            View Attendance Reports
                             <ArrowRight size={14} />
                         </button>
                     </div>
@@ -204,7 +204,7 @@ function OverviewCard({ label, value, icon: Icon, color, trend }: any) {
     );
 }
 
-function SectorStability({ label, percentage, color }: any) {
+function DepartmentStability({ label, percentage, color }: any) {
     return (
         <div className="space-y-2">
             <div className="flex justify-between items-end">

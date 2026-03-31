@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Event &amp; Holiday Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "sans": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for calendar events if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white font-display overflow-x-hidden transition-colors duration-200">
+<!-- Top Navbar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2632] px-6 py-3 shadow-sm">
+<div class="flex items-center gap-4 text-[#0d141b] dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-slate-100 dark:border-slate-700" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDd_qrsQRCbBVKnClxKba4TTKbVAyoT0986rxGSDmfQY9OZEc4E_IlwZWBEwfivPU4ZlFSVMdnUbWXvp9VqHvEFdEuDsOXnfb67Agy5sCGbvhvagNuhbNvODrP5eFFehI2SwFMPZgAq7DryX9zRNplZqccJtUvYwq-9Kz36vNquF6CvRUPQnyek3V1ti2OGpn1RnwWP8XlXOeEx9PJPD2jWYtKR_vxJjPX0eQ-H9Q79K-ziTTvKh_iNR_YVbsA1s-WK8SxDqb-1LZrR");'></div>
+</div>
+</header>
+<div class="flex h-full min-h-[calc(100vh-64px)] w-full flex-col">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 md:px-8 lg:px-12 xl:px-20 flex flex-1 justify-center py-6">
+<div class="layout-content-container flex flex-col max-w-[1280px] flex-1 gap-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 px-1">
+<a class="text-slate-500 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Home</a>
+<span class="text-slate-400 text-sm font-medium leading-normal">/</span>
+<span class="text-slate-800 dark:text-slate-200 text-sm font-medium leading-normal">Calendar</span>
+</div>
+<!-- Page Heading & Actions -->
+<div class="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Event &amp; Holiday Management</h1>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary hover:bg-blue-600 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm shadow-blue-200 dark:shadow-none gap-2">
+<span class="material-symbols-outlined text-lg">add</span>
+<span class="truncate">Create New Event</span>
+</button>
+</div>
+<!-- Controls Toolbar -->
+<div class="flex flex-col lg:flex-row gap-4 justify-between items-center bg-white dark:bg-[#1a2632] p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+<!-- Search -->
+<div class="w-full lg:w-96">
+<label class="flex flex-col h-10 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-slate-200 dark:border-slate-600 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all bg-background-light dark:bg-slate-800">
+<div class="text-slate-500 flex items-center justify-center pl-3" data-icon="MagnifyingGlass">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 bg-transparent placeholder:text-slate-400 px-3 text-sm font-normal leading-normal border-none focus:ring-0" placeholder="Search events..." value=""/>
+</div>
+</label>
+</div>
+<!-- View Toggles & Filter -->
+<div class="flex items-center gap-3 w-full lg:w-auto justify-end">
+<!-- Segmented Buttons -->
+<div class="flex h-10 items-center justify-center rounded-lg bg-background-light dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-600">
+<label class="flex cursor-pointer h-full items-center justify-center rounded-md px-4 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-600 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 text-sm font-medium transition-all">
+<span class="">Month</span>
+<input checked="" class="invisible w-0 absolute" name="view_mode" type="radio" value="Month"/>
+</label>
+<label class="flex cursor-pointer h-full items-center justify-center rounded-md px-4 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-600 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 text-sm font-medium transition-all">
+<span class="">Week</span>
+<input class="invisible w-0 absolute" name="view_mode" type="radio" value="Week"/>
+</label>
+<label class="flex cursor-pointer h-full items-center justify-center rounded-md px-4 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-600 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 text-sm font-medium transition-all">
+<span class="">Day</span>
+<input class="invisible w-0 absolute" name="view_mode" type="radio" value="Day"/>
+</label>
+</div>
+<button class="flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-[#1a2632] text-slate-500 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Main Content Split -->
+<div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
+<!-- Calendar Widget (Left) -->
+<div class="xl:col-span-3 flex flex-col bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<!-- Calendar Header -->
+<div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+<div class="flex items-center gap-4">
+<button class="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">October 2023</h2>
+<button class="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<button class="text-sm font-medium text-primary hover:underline">Today</button>
+</div>
+<!-- Calendar Grid Header -->
+<div class="grid grid-cols-7 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+<div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wide">Sun</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wide">Mon</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wide">Tue</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wide">Wed</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wide">Thu</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wide">Fri</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wide">Sat</div>
+</div>
+<!-- Calendar Days -->
+<div class="grid grid-cols-7 grid-rows-5 h-[600px] lg:h-[700px] bg-slate-200 dark:bg-slate-700 gap-px border-b border-slate-200 dark:border-slate-700">
+<!-- Previous Month Days -->
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">24</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">25</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">26</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">27</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">28</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">29</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">30</span>
+</div>
+<!-- Current Month Days -->
+<!-- Week 1 -->
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">1</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">2</span>
+<div class="px-2 py-1 rounded bg-red-100 dark:bg-red-900/30 border-l-2 border-red-500 text-[10px] font-bold text-red-700 dark:text-red-300 truncate">
+                                        Gandhi Jayanti
+                                    </div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">3</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">4</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">5</span>
+<div class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-900/30 border-l-2 border-amber-500 text-[10px] font-bold text-amber-700 dark:text-amber-300 truncate">
+                                        Math Mid-Term
+                                    </div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">6</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">7</span>
+</div>
+<!-- Week 2 -->
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">8</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">9</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">10</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">11</span>
+<div class="px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 border-l-2 border-primary text-[10px] font-bold text-primary dark:text-blue-300 truncate">
+                                        Science Fair Setup
+                                    </div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="flex items-center justify-center size-7 rounded-full bg-primary text-white text-sm font-bold shadow-md">12</span>
+<div class="px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 border-l-2 border-green-500 text-[10px] font-bold text-green-700 dark:text-green-300 truncate">
+                                        Football Match
+                                    </div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">13</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">14</span>
+</div>
+<!-- Week 3 -->
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">15</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">16</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">17</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">18</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">19</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">20</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">21</span>
+</div>
+<!-- Week 4 -->
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">22</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">23</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">24</span>
+<div class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-900/30 border-l-2 border-purple-500 text-[10px] font-bold text-purple-700 dark:text-purple-300 truncate">
+                                        Staff Workshop
+                                    </div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">25</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">26</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">27</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">28</span>
+</div>
+<!-- Week 5 -->
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">29</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">30</span>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-2 flex flex-col gap-1 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer relative">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">31</span>
+<div class="px-2 py-1 rounded bg-orange-100 dark:bg-orange-900/30 border-l-2 border-orange-500 text-[10px] font-bold text-orange-700 dark:text-orange-300 truncate">
+                                        Halloween Parade
+                                    </div>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">1</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">2</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">3</span>
+</div>
+<div class="bg-slate-50/50 dark:bg-[#151f29] p-2 flex flex-col gap-1 opacity-50">
+<span class="text-sm font-medium text-slate-400">4</span>
+</div>
+</div>
+</div>
+<!-- Sidebar (Right) -->
+<div class="xl:col-span-1 flex flex-col gap-6">
+<!-- Upcoming Events Card -->
+<div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Upcoming Events</h3>
+<a class="text-xs font-bold text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<!-- Event Item -->
+<div class="flex gap-4 items-start group cursor-pointer">
+<div class="flex flex-col items-center justify-center min-w-[50px] h-[50px] bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-800">
+<span class="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase">Oct</span>
+<span class="text-lg font-black text-green-700 dark:text-green-300">12</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Football Match</h4>
+<p class="text-xs text-slate-500 mb-1">School Ground • 10:00 AM</p>
+<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-[10px] font-medium text-green-800 dark:text-green-300 w-fit">
+                                                Sports
+                                            </span>
+</div>
+</div>
+<hr class="border-dashed border-slate-200 dark:border-slate-700"/>
+<!-- Event Item -->
+<div class="flex gap-4 items-start group cursor-pointer">
+<div class="flex flex-col items-center justify-center min-w-[50px] h-[50px] bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-100 dark:border-purple-800">
+<span class="text-[10px] font-bold text-purple-600 dark:text-purple-400 uppercase">Oct</span>
+<span class="text-lg font-black text-purple-700 dark:text-purple-300">24</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Staff Workshop</h4>
+<p class="text-xs text-slate-500 mb-1">Auditorium • 09:00 AM</p>
+<span class="inline-flex items-center rounded-full bg-purple-100 dark:bg-purple-900/30 px-2 py-0.5 text-[10px] font-medium text-purple-800 dark:text-purple-300 w-fit">
+                                                Staff
+                                            </span>
+</div>
+</div>
+<hr class="border-dashed border-slate-200 dark:border-slate-700"/>
+<!-- Event Item -->
+<div class="flex gap-4 items-start group cursor-pointer">
+<div class="flex flex-col items-center justify-center min-w-[50px] h-[50px] bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-100 dark:border-orange-800">
+<span class="text-[10px] font-bold text-orange-600 dark:text-orange-400 uppercase">Oct</span>
+<span class="text-lg font-black text-orange-700 dark:text-orange-300">31</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Halloween Parade</h4>
+<p class="text-xs text-slate-500 mb-1">Main Hall • 02:00 PM</p>
+<span class="inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/30 px-2 py-0.5 text-[10px] font-medium text-orange-800 dark:text-orange-300 w-fit">
+                                                Event
+                                            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Legend / Filters -->
+<div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="px-5 py-4 border-b border-slate-200 dark:border-slate-700">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Categories</h3>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 text-red-500 focus:ring-red-500 size-4" type="checkbox"/>
+<span class="flex size-3 rounded-full bg-red-500"></span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">Holidays</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 text-amber-500 focus:ring-amber-500 size-4" type="checkbox"/>
+<span class="flex size-3 rounded-full bg-amber-500"></span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">Exams</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 text-green-500 focus:ring-green-500 size-4" type="checkbox"/>
+<span class="flex size-3 rounded-full bg-green-500"></span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">Sports</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 text-purple-500 focus:ring-purple-500 size-4" type="checkbox"/>
+<span class="flex size-3 rounded-full bg-purple-500"></span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">Staff Only</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 text-blue-500 focus:ring-blue-500 size-4" type="checkbox"/>
+<span class="flex size-3 rounded-full bg-blue-500"></span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">Events</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

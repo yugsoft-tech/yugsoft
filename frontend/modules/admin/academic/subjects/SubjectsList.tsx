@@ -36,7 +36,6 @@ import { toast } from 'react-hot-toast';
 const subjectSchema = z.object({
     name: z.string().min(1, 'Subject identifier required'),
     code: z.string().min(1, 'Categorical code required'),
-    type: z.enum(['CORE', 'ELECTIVE', 'PRACTICAL']).default('CORE'),
 });
 
 type SubjectFormValues = z.infer<typeof subjectSchema>;
@@ -48,7 +47,6 @@ export default function SubjectsList() {
 
     const { register, handleSubmit, reset } = useForm<SubjectFormValues>({
         resolver: zodResolver(subjectSchema),
-        defaultValues: { type: 'CORE' }
     });
 
     const onRegister = async (data: SubjectFormValues) => {
@@ -79,7 +77,7 @@ export default function SubjectsList() {
                         className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
                     >
                         <Plus size={18} />
-                        Deploy Subject Node
+                        Add New Subject
                     </Button>
                 </div>
             </div>
@@ -101,17 +99,6 @@ export default function SubjectsList() {
                                             placeholder="Theoretical Physics / Macroeconomics..."
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
                                         />
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Categorical Identity (Type)</label>
-                                        <select
-                                            {...register('type')}
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all appearance-none"
-                                        >
-                                            <option value="CORE">Identity: Core Curriculum</option>
-                                            <option value="ELECTIVE">Identity: Optional Elective</option>
-                                            <option value="PRACTICAL">Identity: Laboratory/Practical</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div className="space-y-8">
@@ -169,9 +156,6 @@ export default function SubjectsList() {
                                                             {sub.code}
                                                         </Badge>
                                                     </div>
-                                                    <Badge variant="outline" className={`text-[8px] font-black uppercase tracking-widest border-2 ${sub.type === 'CORE' ? 'text-primary' : 'text-slate-400'}`}>
-                                                        {sub.type} ASSET
-                                                    </Badge>
                                                 </div>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
@@ -196,15 +180,15 @@ export default function SubjectsList() {
                                                 <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
                                                     <Book size={24} className="text-primary" />
                                                     <div className="text-center">
-                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Topics</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">12 Nodes</p>
+                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Assignments</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{sub._count?.homeworks || 0} Sets</p>
                                                     </div>
                                                 </div>
                                                 <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
                                                     <Clock size={24} className="text-indigo-500" />
                                                     <div className="text-center">
-                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Hours</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">45 Units</p>
+                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Sessions</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{sub._count?.timetables || 0} / Week</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -229,7 +213,7 @@ export default function SubjectsList() {
                         </div>
                     )}
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Change Password - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#4F46E5", // Indigo-600 for a professional, trusted look
+                        "primary-hover": "#4338ca",
+                        "background-light": "#F3F4F6", // Gray-100
+                        "background-dark": "#111827", // Gray-900
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1F2937", // Gray-800
+                        "text-light": "#111827",
+                        "text-dark": "#F9FAFB",
+                        "muted-light": "#6B7280",
+                        "muted-dark": "#9CA3AF",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#374151",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark min-h-screen flex flex-col transition-colors duration-200">
+<nav class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<div class="flex items-center">
+<div class="flex-shrink-0 flex items-center gap-2">
+<span class="material-icons-outlined text-primary text-3xl">school</span>
+<span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">EduMaster ERP</span>
+</div>
+<div class="hidden sm:ml-8 sm:flex sm:space-x-8">
+<a class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">
+                            Dashboard
+                        </a>
+<a class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">
+                            Profile
+                        </a>
+<a class="border-primary text-gray-900 dark:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">
+                            Settings
+                        </a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-1 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="sr-only">View notifications</span>
+<span class="material-icons-outlined text-xl">notifications</span>
+</button>
+<div class="ml-3 relative flex items-center gap-2">
+<div>
+<button aria-expanded="false" aria-haspopup="true" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="user-menu-button" type="button">
+<span class="sr-only">Open user menu</span>
+<img alt="User avatar" class="h-8 w-8 rounded-full object-cover border border-gray-200 dark:border-gray-600" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGFCA2KmojKFqh3cL4STkzBobIJX-k0me_lZO3hpqWKignB1OvUG9nJ6uFiuDWX9QxRfOPhy-l4NoUNywuV7yei-fsz_Mr9lq4GNsNpTUkoU8N7owe5G_BsVuWrgthufQ35S1vQikTXWaf6RsbgzVQjuRyGe2jmRflgCzqzgLMPWKdfs6qG82O7ndwWI2m6RbQMgGE7H_INTouSDxbNYI3vv-ZlJftRweReH13-p58IkIpb8DejTYnFlhAPOZt6KF-JLlog6Zlbcyf"/>
+</button>
+</div>
+<div class="hidden md:block text-sm">
+<p class="font-medium text-gray-700 dark:text-gray-200">Alex Johnson</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Admin</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="flex-grow py-10 px-4 sm:px-6 lg:px-8">
+<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
+<aside class="md:col-span-3">
+<nav class="space-y-1">
+<a class="text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md" href="#">
+<span class="material-icons-outlined text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300 mr-3 text-lg flex-shrink-0">person</span>
+                        Profile
+                    </a>
+<a aria-current="page" class="bg-indigo-50 dark:bg-indigo-900/30 text-primary group flex items-center px-3 py-2 text-sm font-medium rounded-md" href="#">
+<span class="material-icons-outlined text-primary group-hover:text-indigo-600 mr-3 text-lg flex-shrink-0">lock</span>
+                        Password &amp; Security
+                    </a>
+<a class="text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md" href="#">
+<span class="material-icons-outlined text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300 mr-3 text-lg flex-shrink-0">notifications</span>
+                        Notifications
+                    </a>
+<a class="text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md" href="#">
+<span class="material-icons-outlined text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300 mr-3 text-lg flex-shrink-0">devices</span>
+                        Sessions
+                    </a>
+</nav>
+</aside>
+<div class="md:col-span-9">
+<div class="bg-card-light dark:bg-card-dark shadow sm:rounded-lg overflow-hidden border border-border-light dark:border-border-dark">
+<div class="px-4 py-5 sm:px-6 border-b border-border-light dark:border-border-dark flex justify-between items-center">
+<div>
+<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Change Password</h3>
+<p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Ensure your account is using a long, random password to stay secure.</p>
+</div>
+<span class="material-icons-outlined text-4xl text-gray-200 dark:text-gray-700 hidden sm:block">lock_reset</span>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<form action="#" class="space-y-6" method="POST">
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="current-password">Current Password</label>
+<div class="mt-1 relative rounded-md shadow-sm">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-sm">vpn_key</span>
+</div>
+<input autocomplete="current-password" class="focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white" id="current-password" name="current-password" placeholder="Enter your current password" type="password"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<a class="text-xs text-primary hover:text-indigo-500 font-medium" href="#">Forgot?</a>
+</div>
+</div>
+</div>
+<hr class="border-gray-200 dark:border-gray-700"/>
+<div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+<div class="sm:col-span-3">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="new-password">New Password</label>
+<div class="mt-1 relative rounded-md shadow-sm">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-sm">lock</span>
+</div>
+<input autocomplete="new-password" class="focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white" id="new-password" name="new-password" placeholder="Min 8 characters" type="password"/>
+</div>
+</div>
+<div class="sm:col-span-3">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="confirm-password">Confirm New Password</label>
+<div class="mt-1 relative rounded-md shadow-sm">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-sm">lock_clock</span>
+</div>
+<input autocomplete="new-password" class="focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white" id="confirm-password" name="confirm-password" placeholder="Re-enter password" type="password"/>
+</div>
+</div>
+</div>
+<div class="rounded-md bg-blue-50 dark:bg-blue-900/20 p-4 border border-blue-100 dark:border-blue-800">
+<div class="flex">
+<div class="flex-shrink-0">
+<span class="material-icons-outlined text-blue-400 dark:text-blue-300 text-lg">info</span>
+</div>
+<div class="ml-3">
+<h3 class="text-sm font-medium text-blue-800 dark:text-blue-200">Password requirements</h3>
+<div class="mt-2 text-sm text-blue-700 dark:text-blue-300">
+<ul class="list-disc pl-5 space-y-1" role="list">
+<li>Minimum 8 characters long</li>
+<li>At least one uppercase character</li>
+<li>At least one number or special character</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-end pt-4">
+<button class="bg-white dark:bg-gray-700 py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary mr-3" type="button">
+                                    Cancel
+                                </button>
+<button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="submit">
+                                    Change Password
+                                </button>
+</div>
+</form>
+</div>
+</div>
+<div class="mt-8 bg-card-light dark:bg-card-dark shadow sm:rounded-lg overflow-hidden border border-border-light dark:border-border-dark">
+<div class="px-4 py-5 sm:px-6 border-b border-border-light dark:border-border-dark">
+<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Recent Security Activity</h3>
+<p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Latest login attempts to your account.</p>
+</div>
+<ul class="divide-y divide-gray-200 dark:divide-gray-700">
+<li class="px-4 py-4 sm:px-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition duration-150">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-sm font-medium text-primary truncate">Successful Login</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Chrome on Windows 10</p>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+<span class="material-icons-outlined text-base mr-1">schedule</span>
+<time datetime="2023-10-27">Just now</time>
+</div>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">IP: 192.168.1.10</p>
+</div>
+</div>
+</li>
+<li class="px-4 py-4 sm:px-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition duration-150">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-sm font-medium text-primary truncate">Successful Login</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Safari on iPhone 13</p>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+<span class="material-icons-outlined text-base mr-1">schedule</span>
+<time datetime="2023-10-26">Yesterday, 4:32 PM</time>
+</div>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">IP: 172.16.0.42</p>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-auto">
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+<p class="text-center text-sm text-gray-500 dark:text-gray-400">
+                © 2023 EduMaster School ERP System. All rights reserved.
+            </p>
+</div>
+</footer>
+<script>
+        // Check for saved user preference, if any, on load of the website
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+        // Add a floating toggle button
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = "fixed bottom-4 right-4 p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary z-50 transition-transform hover:scale-110";
+        toggleBtn.innerHTML = '<span class="material-icons-outlined">dark_mode</span>';
+        toggleBtn.title = "Toggle Dark Mode";
+        document.body.appendChild(toggleBtn);
+        toggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                toggleBtn.innerHTML = '<span class="material-icons-outlined">dark_mode</span>';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                toggleBtn.innerHTML = '<span class="material-icons-outlined">light_mode</span>';
+            }
+        });
+    </script>
+
+</body></html>

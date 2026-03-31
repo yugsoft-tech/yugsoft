@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Library Management - School ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+<div class="flex h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden w-64 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 md:flex">
+<div class="flex h-16 items-center gap-3 border-b border-slate-200 dark:border-slate-800 px-6">
+<div class="flex size-8 items-center justify-center rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined text-xl">school</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">EduCore ERP</h1>
+</div>
+<div class="flex flex-1 flex-col gap-6 overflow-y-auto px-4 py-6">
+<!-- Main Nav -->
+<div class="flex flex-col gap-1">
+<h2 class="px-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Library Admin</h2>
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined filled">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-medium">Book Catalog</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">swap_horiz</span>
+<span class="font-medium">Issue/Return</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium">Members</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">attach_money</span>
+<span class="font-medium">Fines &amp; Fees</span>
+</a>
+</div>
+<!-- Secondary Nav -->
+<div class="flex flex-col gap-1">
+<h2 class="px-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">System</h2>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-medium">Help Center</span>
+</a>
+</div>
+</div>
+<!-- User Profile Snippet -->
+<div class="border-t border-slate-200 dark:border-slate-800 p-4">
+<div class="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-800 p-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Portrait of a librarian user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA6nee3_8K2cv-NhPgp0PLowPcTNEaYD1DoUEJzMFZiPbpOqfhaqYYhX1-EdB-WU7zqc6ZDJxgI4Re6RRWDSMhN-0sQ-joJ-rUDIlgMvGPCte7tO-0FNVlnC5ygOgyhwbq9t2uzGOfH4moIaZl-yguJnZyRKwBMdANNcc7KQ17FX0ZFSTD0zCGOUZN9_u7z57ulmLQ8NdS7nK9X0e0h0jj5uoQuh_jlt1c56368n6sMVO2o4-S9I-xoCGFzzYM1xPBCIcA82uKJrbdM");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Jane Doe</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Head Librarian</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex flex-1 flex-col h-full relative overflow-hidden">
+<!-- Top Header -->
+<header class="flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 shadow-sm z-10">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white hidden sm:block">Library Dashboard</h2>
+</div>
+<div class="flex items-center gap-4">
+<!-- Compact Search for Header -->
+<div class="hidden md:flex relative w-64">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined" style="font-size: 20px;">search</span>
+<input class="h-10 w-full rounded-full border-slate-200 bg-slate-50 pl-10 pr-4 text-sm focus:border-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-white" placeholder="Global search..." type="text"/>
+</div>
+<button class="relative flex size-10 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-white dark:border-slate-900"></span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 bg-background-light dark:bg-background-dark">
+<div class="mx-auto max-w-7xl flex flex-col gap-6">
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<!-- Total Books -->
+<div class="flex flex-col justify-between rounded-xl bg-white p-5 shadow-sm border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Books</p>
+<h3 class="mt-2 text-3xl font-bold text-slate-900 dark:text-white">12,450</h3>
+</div>
+<div class="p-2 bg-blue-50 text-blue-600 rounded-lg dark:bg-blue-900/30 dark:text-blue-400">
+<span class="material-symbols-outlined">library_books</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-sm">
+<span class="flex items-center font-medium text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                    12%
+                                </span>
+<span class="text-slate-400">vs last month</span>
+</div>
+</div>
+<!-- Issued -->
+<div class="flex flex-col justify-between rounded-xl bg-white p-5 shadow-sm border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Books Issued</p>
+<h3 class="mt-2 text-3xl font-bold text-slate-900 dark:text-white">342</h3>
+</div>
+<div class="p-2 bg-purple-50 text-purple-600 rounded-lg dark:bg-purple-900/30 dark:text-purple-400">
+<span class="material-symbols-outlined">output</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-sm">
+<span class="flex items-center font-medium text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                    5%
+                                </span>
+<span class="text-slate-400">vs last week</span>
+</div>
+</div>
+<!-- Overdue -->
+<div class="flex flex-col justify-between rounded-xl bg-white p-5 shadow-sm border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Overdue Books</p>
+<h3 class="mt-2 text-3xl font-bold text-slate-900 dark:text-white">15</h3>
+</div>
+<div class="p-2 bg-red-50 text-red-600 rounded-lg dark:bg-red-900/30 dark:text-red-400">
+<span class="material-symbols-outlined">warning</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-sm">
+<span class="flex items-center font-medium text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined text-sm mr-0.5">arrow_upward</span>
+                                    2%
+                                </span>
+<span class="text-slate-400">requires attention</span>
+</div>
+</div>
+<!-- New Arrivals -->
+<div class="flex flex-col justify-between rounded-xl bg-white p-5 shadow-sm border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">New Arrivals</p>
+<h3 class="mt-2 text-3xl font-bold text-slate-900 dark:text-white">45</h3>
+</div>
+<div class="p-2 bg-teal-50 text-teal-600 rounded-lg dark:bg-teal-900/30 dark:text-teal-400">
+<span class="material-symbols-outlined">new_releases</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-sm">
+<span class="flex items-center font-medium text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-sm mr-0.5">add</span>
+                                    8%
+                                </span>
+<span class="text-slate-400">this month</span>
+</div>
+</div>
+</div>
+<!-- Quick Action & Search Panel -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Search/Filter Area -->
+<div class="lg:col-span-2 flex flex-col gap-4 rounded-xl bg-white p-6 shadow-sm border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Catalog Search</h3>
+<button class="text-sm font-medium text-primary hover:underline">Advanced Search</button>
+</div>
+<div class="flex flex-col sm:flex-row gap-3">
+<div class="relative flex-1">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined">search</span>
+<input class="h-11 w-full rounded-lg border-slate-200 bg-slate-50 pl-10 pr-4 text-slate-900 focus:border-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white" placeholder="Search by title, author, ISBN..." type="text"/>
+</div>
+<select class="h-11 w-full sm:w-40 rounded-lg border-slate-200 bg-slate-50 px-3 text-slate-700 focus:border-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+<option>All Genres</option>
+<option>Fiction</option>
+<option>Science</option>
+<option>History</option>
+<option>Biography</option>
+</select>
+<button class="h-11 rounded-lg bg-primary px-6 font-medium text-white shadow-sm hover:bg-blue-600 transition-colors">
+                                    Search
+                                </button>
+</div>
+<!-- Filter Tags -->
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+                                    Available Only
+                                    <button class="ml-1.5 text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-sm">close</span></button>
+</span>
+<span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+                                    Published &gt; 2020
+                                    <button class="ml-1.5 text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-sm">close</span></button>
+</span>
+</div>
+</div>
+<!-- Quick Actions Card -->
+<div class="flex flex-col justify-center gap-4 rounded-xl bg-gradient-to-br from-primary to-blue-600 p-6 shadow-sm text-white">
+<h3 class="text-lg font-bold">Quick Actions</h3>
+<p class="text-blue-100 text-sm opacity-90">Manage daily library operations efficiently.</p>
+<div class="grid grid-cols-2 gap-3 mt-2">
+<button class="flex flex-col items-center justify-center gap-2 rounded-lg bg-white/10 p-3 text-sm font-medium text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+                                    Scan &amp; Issue
+                                </button>
+<button class="flex flex-col items-center justify-center gap-2 rounded-lg bg-white/10 p-3 text-sm font-medium text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10">
+<span class="material-symbols-outlined">assignment_return</span>
+                                    Return Book
+                                </button>
+<button class="flex flex-col items-center justify-center gap-2 rounded-lg bg-white/10 p-3 text-sm font-medium text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10">
+<span class="material-symbols-outlined">add_box</span>
+                                    Add Book
+                                </button>
+<button class="flex flex-col items-center justify-center gap-2 rounded-lg bg-white/10 p-3 text-sm font-medium text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10">
+<span class="material-symbols-outlined">person_add</span>
+                                    Add Member
+                                </button>
+</div>
+</div>
+</div>
+<!-- Book Table Section -->
+<div class="flex flex-col rounded-xl bg-white shadow-sm border border-slate-200 dark:bg-slate-800 dark:border-slate-700 overflow-hidden">
+<div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 px-6 py-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Recent Transactions</h3>
+<div class="flex gap-2">
+<button class="flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                                    Filter
+                                </button>
+<button class="flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+                                    Export
+                                </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-600 dark:text-slate-400">
+<thead class="bg-slate-50 text-xs uppercase text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+<tr>
+<th class="px-6 py-3 font-semibold" scope="col">Book Info</th>
+<th class="px-6 py-3 font-semibold" scope="col">Member</th>
+<th class="px-6 py-3 font-semibold" scope="col">Issue Date</th>
+<th class="px-6 py-3 font-semibold" scope="col">Due Date</th>
+<th class="px-6 py-3 font-semibold" scope="col">Status</th>
+<th class="px-6 py-3 font-semibold text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-12 w-8 shrink-0 overflow-hidden rounded bg-slate-200 shadow-sm" data-alt="Book cover of The Great Gatsby">
+<!-- Placeholder for book cover -->
+<div class="h-full w-full bg-blue-100 flex items-center justify-center text-[10px] text-blue-500 font-bold">COVER</div>
+</div>
+<div class="flex flex-col">
+<span class="font-medium text-slate-900 dark:text-white">The Great Gatsby</span>
+<span class="text-xs text-slate-500">ISBN: 978-0743273565</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Student avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyEXARL2UL7Ee5XTrQYpRE2K9jVOjlByZHVhjtQ4AV1IGTf3J69XN5lBirjiJroXDK4ZfAb6Sc31PpVCqAGGonoLeNTzRqogIIsHr6kn_Xh0W0hBeA1oh_2nf8FfZO205zQWmSXSaN_kexXRZYcqdO7-lMkQaH1vAJPMm9rQ7EndrYTqvsdna6sXNa3KvrlmvIakhdap3IEOlNdMa0aA5jSv_XfJ9aMsmWV7mH1YK2Y5IpbWJd5Mn8OKl1EZihOuItNVWK8uBSUsLg");'></div>
+<span class="text-slate-900 dark:text-white">Alex Morgan</span>
+</div>
+</td>
+<td class="px-6 py-4">Oct 24, 2023</td>
+<td class="px-6 py-4 text-red-600 font-medium">Nov 07, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-600 dark:bg-red-900/30 dark:text-red-400">
+<span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                                                Overdue
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-12 w-8 shrink-0 overflow-hidden rounded bg-slate-200 shadow-sm" data-alt="Book cover of Clean Code">
+<div class="h-full w-full bg-green-100 flex items-center justify-center text-[10px] text-green-500 font-bold">COVER</div>
+</div>
+<div class="flex flex-col">
+<span class="font-medium text-slate-900 dark:text-white">Clean Code</span>
+<span class="text-xs text-slate-500">ISBN: 978-0132350884</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Student avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCn-vpv4yiAZaL2X2ceRjM5l9YusYlT4GnvAG5LwjbG5RQJj-j89oKu5LzhJ9y_tbS0oISP8qRwJR0uFulqsdad-ajpX9rrQjBw86iVCS1uF0uKbsFW_tb_a9PBf0EPjI5aASMr7dQCTUkLJlD65XIGEGsOHtqFUr_vVvsiA9HHSfuT6Opg_O1wTmbWhAVlyu82JAzo8fajfhBXfsNQS2n8_imu64Dh5-J2utLMP-oIFMTdpORCM90em6L9CdOrFEOKWRjvlIaKAzVA");'></div>
+<span class="text-slate-900 dark:text-white">Sarah Smith</span>
+</div>
+</td>
+<td class="px-6 py-4">Nov 01, 2023</td>
+<td class="px-6 py-4">Nov 15, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+<span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
+                                                Issued
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-12 w-8 shrink-0 overflow-hidden rounded bg-slate-200 shadow-sm" data-alt="Book cover of To Kill a Mockingbird">
+<div class="h-full w-full bg-amber-100 flex items-center justify-center text-[10px] text-amber-500 font-bold">COVER</div>
+</div>
+<div class="flex flex-col">
+<span class="font-medium text-slate-900 dark:text-white">To Kill a Mockingbird</span>
+<span class="text-xs text-slate-500">ISBN: 978-0061120084</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Student avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBcuYeJrs0p0s2WHyaJWyJCpSjOhtPRumbwT6au_zre7DGDougPVylbW_HQ_Xn-Ex1EjAJfOVtJ4wQ1VuEd8QiPHPC1XwO8YZsxuIGEVYIMinch-j3fY36BmDWGuVtb6L3HBKg8eUS-64Ba4sXUpa99JDn5e96QJx47t2iyhLty_0wAcOboPkYpx1voulAV3o_MkbPWJ4UHMZ1KTU5a3zhOq6f0XJrKiMxpENhqFNTJEIMKXZaTHBLIdKyqGADr2ExmXB6SQvz1FvuE");'></div>
+<span class="text-slate-900 dark:text-white">Michael Brown</span>
+</div>
+</td>
+<td class="px-6 py-4">Nov 05, 2023</td>
+<td class="px-6 py-4">Nov 19, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+<span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
+                                                Issued
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 (Returned/Available example) -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-12 w-8 shrink-0 overflow-hidden rounded bg-slate-200 shadow-sm" data-alt="Book cover of 1984">
+<div class="h-full w-full bg-purple-100 flex items-center justify-center text-[10px] text-purple-500 font-bold">COVER</div>
+</div>
+<div class="flex flex-col">
+<span class="font-medium text-slate-900 dark:text-white">1984</span>
+<span class="text-xs text-slate-500">ISBN: 978-0451524935</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-slate-400 italic">N/A</span>
+</td>
+<td class="px-6 py-4 text-slate-400">-</td>
+<td class="px-6 py-4 text-slate-400">-</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-600 dark:bg-green-900/30 dark:text-green-400">
+<span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                                                Available
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between border-t border-slate-200 dark:border-slate-700 px-6 py-3">
+<span class="text-sm text-slate-500">Showing 1 to 4 of 124 entries</span>
+<div class="flex gap-2">
+<button class="rounded border border-slate-200 p-1 text-slate-600 hover:bg-slate-50 disabled:opacity-50 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="rounded border border-slate-200 p-1 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

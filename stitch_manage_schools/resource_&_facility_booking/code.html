@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resource &amp; Facility Booking - School ERP</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "primary-dark": "#1a6bbd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "text-main": "#0d141b",
+                        "text-secondary": "#4c739a",
+                        "border-color": "#e7edf3",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white transition-colors duration-200">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-border-color dark:border-gray-800 flex flex-col transition-colors duration-200">
+<div class="h-16 flex items-center px-6 border-b border-border-color dark:border-gray-800">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl">school</span>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">School ERP</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
+<!-- User Profile Snippet -->
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-gray-200 bg-center bg-cover" data-alt="Admin user profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRUnMcF1veibzyV5wj4yZ0EG_HKS5gFnh3T_nSOg7BbUbzHsMfrkDb7fMA0ZQQqXT2rKAqFo_rdUoqB6RfUhGrJ9CZXmke_gN8HYbJvNJMnMWYSq3GzPcDiK1GBt7qpwMRlE-4r_dzZDkbFKMsFz_UpgSMRdQGPqVElpCGjRnCkylt1f2ZwiGG8HnVQXK4Ol76NEkyWTj-hhEeKB9CBL2TOqAMlWINv206sb5lOA2uQqMgQtobAoA1CEvQvmykXaerL8CN2cIL0208');"></div>
+<div>
+<p class="text-sm font-bold text-text-main dark:text-white">Admin Console</p>
+<p class="text-xs text-text-secondary">Logged in</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-background-light dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-background-light dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-medium text-sm">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-background-light dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-medium text-sm">Academics</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined fill-current">domain</span>
+<span class="font-medium text-sm">Facilities</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-background-light dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-medium text-sm">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-background-light dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium text-sm">Staff</span>
+</a>
+</nav>
+<div class="mt-auto">
+<p class="px-3 text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2">Resources</p>
+<nav class="flex flex-col gap-1">
+<div class="flex items-center justify-between px-3 py-2 text-sm text-text-secondary">
+<span>Classrooms</span>
+<span class="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 text-xs px-2 py-0.5 rounded-full">12 Free</span>
+</div>
+<div class="flex items-center justify-between px-3 py-2 text-sm text-text-secondary">
+<span>Labs</span>
+<span class="bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300 text-xs px-2 py-0.5 rounded-full">2 Free</span>
+</div>
+<div class="flex items-center justify-between px-3 py-2 text-sm text-text-secondary">
+<span>Sports</span>
+<span class="bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 text-xs px-2 py-0.5 rounded-full">Full</span>
+</div>
+</nav>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-8 bg-surface-light dark:bg-surface-dark border-b border-border-color dark:border-gray-800 shrink-0">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 text-sm">
+<a class="text-text-secondary hover:text-primary" href="#">Home</a>
+<span class="text-text-secondary">/</span>
+<a class="text-text-secondary hover:text-primary" href="#">Facilities</a>
+<span class="text-text-secondary">/</span>
+<span class="font-medium text-text-main dark:text-white">Booking</span>
+</div>
+<!-- Top Right Actions -->
+<div class="flex items-center gap-4">
+<div class="relative">
+<input class="pl-10 pr-4 py-2 bg-background-light dark:bg-gray-800 rounded-lg text-sm border-none focus:ring-2 focus:ring-primary w-64" placeholder="Search resources..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary text-lg">search</span>
+</div>
+<button class="size-10 flex items-center justify-center rounded-lg hover:bg-background-light dark:hover:bg-gray-800 text-text-secondary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-lg hover:bg-background-light dark:hover:bg-gray-800 text-text-secondary">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Page Heading & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-bold text-text-main dark:text-white mb-1">Resource Management</h1>
+<p class="text-text-secondary">Manage bookings for classrooms, labs, and sports grounds</p>
+</div>
+<button class="bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg font-medium shadow-sm flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined">add</span>
+                            New Booking
+                        </button>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color dark:border-gray-800 shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="text-text-secondary text-sm font-medium">Total Resources</span>
+<span class="bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300 p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+</span>
+</div>
+<span class="text-2xl font-bold text-text-main dark:text-white">120</span>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color dark:border-gray-800 shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="text-text-secondary text-sm font-medium">Occupied Now</span>
+<span class="bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-300 p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-lg">event_busy</span>
+</span>
+</div>
+<span class="text-2xl font-bold text-text-main dark:text-white">45</span>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color dark:border-gray-800 shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="text-text-secondary text-sm font-medium">Available Now</span>
+<span class="bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300 p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-lg">event_available</span>
+</span>
+</div>
+<span class="text-2xl font-bold text-text-main dark:text-white">72</span>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color dark:border-gray-800 shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="text-text-secondary text-sm font-medium">Maintenance</span>
+<span class="bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300 p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-lg">construction</span>
+</span>
+</div>
+<span class="text-2xl font-bold text-text-main dark:text-white">3</span>
+</div>
+</div>
+<!-- Scheduler Section -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-color dark:border-gray-800 shadow-sm flex flex-col overflow-hidden h-[600px]">
+<!-- Scheduler Toolbar -->
+<div class="p-4 border-b border-border-color dark:border-gray-800 flex flex-col lg:flex-row items-center justify-between gap-4">
+<!-- Filters -->
+<div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto no-scrollbar">
+<button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium whitespace-nowrap">All Resources</button>
+<button class="px-4 py-2 bg-background-light dark:bg-gray-800 text-text-secondary hover:text-text-main dark:hover:text-white rounded-lg text-sm font-medium whitespace-nowrap">Classrooms</button>
+<button class="px-4 py-2 bg-background-light dark:bg-gray-800 text-text-secondary hover:text-text-main dark:hover:text-white rounded-lg text-sm font-medium whitespace-nowrap">Labs</button>
+<button class="px-4 py-2 bg-background-light dark:bg-gray-800 text-text-secondary hover:text-text-main dark:hover:text-white rounded-lg text-sm font-medium whitespace-nowrap">Sports</button>
+<button class="px-4 py-2 bg-background-light dark:bg-gray-800 text-text-secondary hover:text-text-main dark:hover:text-white rounded-lg text-sm font-medium whitespace-nowrap">Auditorium</button>
+</div>
+<!-- Date & View Controls -->
+<div class="flex items-center gap-4 shrink-0">
+<div class="flex items-center bg-background-light dark:bg-gray-800 rounded-lg p-1">
+<button class="p-1 rounded hover:bg-white dark:hover:bg-gray-700 shadow-sm transition-all text-text-secondary"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<span class="px-3 text-sm font-medium text-text-main dark:text-white">Oct 24, 2023</span>
+<button class="p-1 rounded hover:bg-white dark:hover:bg-gray-700 shadow-sm transition-all text-text-secondary"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+<div class="hidden sm:flex bg-background-light dark:bg-gray-800 rounded-lg p-1 text-sm font-medium">
+<button class="px-3 py-1.5 rounded shadow bg-white dark:bg-gray-700 text-text-main dark:text-white">Day</button>
+<button class="px-3 py-1.5 rounded text-text-secondary hover:text-text-main dark:hover:text-white">Week</button>
+<button class="px-3 py-1.5 rounded text-text-secondary hover:text-text-main dark:hover:text-white">Month</button>
+</div>
+</div>
+</div>
+<!-- Scheduler Grid -->
+<div class="flex-1 overflow-hidden flex flex-col relative">
+<!-- Header Row (Times) -->
+<div class="flex border-b border-border-color dark:border-gray-800 bg-background-light/50 dark:bg-gray-900/50">
+<div class="w-48 shrink-0 p-3 border-r border-border-color dark:border-gray-800 font-medium text-sm text-text-secondary">Resource</div>
+<div class="flex-1 flex overflow-hidden">
+<div class="flex min-w-[800px] w-full">
+<!-- Time slots -->
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">08:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">09:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">10:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">11:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">12:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">13:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">14:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">15:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary border-r border-border-color dark:border-gray-800">16:00</div>
+<div class="flex-1 text-center p-3 text-xs text-text-secondary">17:00</div>
+</div>
+</div>
+</div>
+<!-- Body Rows -->
+<div class="flex-1 overflow-y-auto">
+<!-- Row 1 -->
+<div class="flex border-b border-border-color dark:border-gray-800 h-20 group hover:bg-background-light/30 dark:hover:bg-gray-800/30 transition-colors">
+<div class="w-48 shrink-0 p-3 border-r border-border-color dark:border-gray-800 flex flex-col justify-center">
+<p class="font-medium text-sm text-text-main dark:text-white">Chemistry Lab A</p>
+<p class="text-xs text-text-secondary">Capacity: 30</p>
+</div>
+<div class="flex-1 relative min-w-[800px]">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex pointer-events-none">
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1"></div>
+</div>
+<!-- Booking Block -->
+<div class="absolute top-2 bottom-2 left-[10%] w-[20%] bg-primary/90 rounded-md shadow-sm flex items-center px-3 cursor-pointer hover:bg-primary transition-colors z-10">
+<div class="truncate">
+<p class="text-xs font-bold text-white truncate">Chemistry 101</p>
+<p class="text-[10px] text-white/80 truncate">Mr. Anderson • 9:00 - 11:00</p>
+</div>
+</div>
+<!-- Booking Block -->
+<div class="absolute top-2 bottom-2 left-[40%] w-[10%] bg-indigo-500/90 rounded-md shadow-sm flex items-center px-3 cursor-pointer hover:bg-indigo-600 transition-colors z-10">
+<div class="truncate">
+<p class="text-xs font-bold text-white truncate">Cleaning</p>
+<p class="text-[10px] text-white/80 truncate">Staff</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex border-b border-border-color dark:border-gray-800 h-20 group hover:bg-background-light/30 dark:hover:bg-gray-800/30 transition-colors">
+<div class="w-48 shrink-0 p-3 border-r border-border-color dark:border-gray-800 flex flex-col justify-center">
+<p class="font-medium text-sm text-text-main dark:text-white">Physics Lab B</p>
+<p class="text-xs text-text-secondary">Capacity: 25</p>
+</div>
+<div class="flex-1 relative min-w-[800px]">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex pointer-events-none">
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1"></div>
+</div>
+<!-- Booking Block -->
+<div class="absolute top-2 bottom-2 left-[50%] w-[20%] bg-primary/90 rounded-md shadow-sm flex items-center px-3 cursor-pointer hover:bg-primary transition-colors z-10">
+<div class="truncate">
+<p class="text-xs font-bold text-white truncate">Adv Physics</p>
+<p class="text-[10px] text-white/80 truncate">Mrs. Clark • 13:00 - 15:00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex border-b border-border-color dark:border-gray-800 h-20 group hover:bg-background-light/30 dark:hover:bg-gray-800/30 transition-colors">
+<div class="w-48 shrink-0 p-3 border-r border-border-color dark:border-gray-800 flex flex-col justify-center">
+<p class="font-medium text-sm text-text-main dark:text-white">Auditorium Main</p>
+<p class="text-xs text-text-secondary">Capacity: 500</p>
+</div>
+<div class="flex-1 relative min-w-[800px]">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex pointer-events-none">
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1"></div>
+</div>
+<!-- Booking Block -->
+<div class="absolute top-2 bottom-2 left-[20%] w-[30%] bg-teal-600/90 rounded-md shadow-sm flex items-center px-3 cursor-pointer hover:bg-teal-700 transition-colors z-10">
+<div class="truncate">
+<p class="text-xs font-bold text-white truncate">Annual Play Rehearsal</p>
+<p class="text-[10px] text-white/80 truncate">Drama Club • 10:00 - 13:00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="flex border-b border-border-color dark:border-gray-800 h-20 group hover:bg-background-light/30 dark:hover:bg-gray-800/30 transition-colors">
+<div class="w-48 shrink-0 p-3 border-r border-border-color dark:border-gray-800 flex flex-col justify-center bg-red-50/50 dark:bg-red-900/10">
+<div class="flex items-center gap-2">
+<p class="font-medium text-sm text-text-main dark:text-white">Soccer Field</p>
+<span class="material-symbols-outlined text-xs text-red-500" title="Maintenance">build</span>
+</div>
+<p class="text-xs text-red-500 dark:text-red-400">Maintenance</p>
+</div>
+<div class="flex-1 relative min-w-[800px] bg-stripes">
+<!-- Custom pattern for maintenance -->
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIi8+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjZjJmMmYyIiBzdHJva2Utd2lkdGg9IjEiLz4KPC9zdmc+')] opacity-50 pointer-events-none"></div>
+<!-- Grid lines -->
+<div class="absolute inset-0 flex pointer-events-none">
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1"></div>
+</div>
+<!-- Blocked Label -->
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="bg-surface-light dark:bg-surface-dark px-3 py-1 rounded-full text-xs font-medium text-text-secondary border border-border-color shadow-sm">Closed for Turf Repair</span>
+</div>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="flex border-b border-border-color dark:border-gray-800 h-20 group hover:bg-background-light/30 dark:hover:bg-gray-800/30 transition-colors">
+<div class="w-48 shrink-0 p-3 border-r border-border-color dark:border-gray-800 flex flex-col justify-center">
+<p class="font-medium text-sm text-text-main dark:text-white">Computer Lab 1</p>
+<p class="text-xs text-text-secondary">Capacity: 40</p>
+</div>
+<div class="flex-1 relative min-w-[800px]">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex pointer-events-none">
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1 border-r border-border-color dark:border-gray-800"></div>
+<div class="flex-1"></div>
+</div>
+<!-- Booking Block -->
+<div class="absolute top-2 bottom-2 left-[0%] w-[10%] bg-primary/90 rounded-md shadow-sm flex items-center px-3 cursor-pointer hover:bg-primary transition-colors z-10">
+<div class="truncate">
+<p class="text-xs font-bold text-white truncate">CS 101</p>
+</div>
+</div>
+<!-- Booking Block -->
+<div class="absolute top-2 bottom-2 left-[30%] w-[20%] bg-primary/90 rounded-md shadow-sm flex items-center px-3 cursor-pointer hover:bg-primary transition-colors z-10">
+<div class="truncate">
+<p class="text-xs font-bold text-white truncate">Java Workshop</p>
+<p class="text-[10px] text-white/80 truncate">External • 11:00 - 13:00</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming List (Alternative View) -->
+<div>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-4">Pending Approvals</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-color dark:border-gray-800 overflow-hidden">
+<table class="w-full text-sm text-left">
+<thead class="bg-background-light dark:bg-gray-800 text-text-secondary font-medium">
+<tr>
+<th class="px-6 py-3">Resource</th>
+<th class="px-6 py-3">Requested By</th>
+<th class="px-6 py-3">Date &amp; Time</th>
+<th class="px-6 py-3">Status</th>
+<th class="px-6 py-3 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color dark:divide-gray-700">
+<tr>
+<td class="px-6 py-4 font-medium text-text-main dark:text-white">Music Room</td>
+<td class="px-6 py-4">Sarah Connor (Student Council)</td>
+<td class="px-6 py-4">Oct 25, 14:00 - 16:00</td>
+<td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 px-2.5 py-1 rounded-full text-xs font-medium">Pending</span></td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-dark font-medium mr-3">Approve</button>
+<button class="text-red-500 hover:text-red-700 font-medium">Deny</button>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-medium text-text-main dark:text-white">Basketball Court</td>
+<td class="px-6 py-4">Coach Carter</td>
+<td class="px-6 py-4">Oct 26, 08:00 - 10:00</td>
+<td class="px-6 py-4"><span class="bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 px-2.5 py-1 rounded-full text-xs font-medium">Conflict</span></td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-dark font-medium mr-3">Review</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Data Import/Export</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white font-display overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-[#1A2633] border-r border-[#e7edf3] dark:border-slate-700 flex flex-col transition-colors duration-200">
+<div class="p-4 flex flex-col h-full justify-between">
+<div class="flex flex-col gap-6">
+<!-- Brand / User Profile -->
+<div class="flex gap-3 items-center px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shadow-sm" data-alt="School logo placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBrZgAoZMQSH5yeOCHR8NvTKIN27L31eQYYX2WBuc2NcWv9AtYnWomEL6eMAV8obeYbs440qpVyLcjWRgPG5sDGF0DAIotmQesYE3GltrxpnqJmE431-bq_wphfahES9Rua5iOSKnlCwDJDdnrerQQ-Rq0I2CEts9lDyQY_BVWui3dC1RTs9OHVXXPrzJMQmT03VGcI_QALJ-UkzooFo5SIhxylTYbIFlMrOmwrcWYszoXHl_aq-V7wnAZVjAp9RwlhLD8opTsdU9ff");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-bold leading-normal">School ERP</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal">Admin Console</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-slate-400">dashboard</span>
+<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-slate-400">school</span>
+<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Students</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-slate-400">group</span>
+<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Staff</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-primary dark:text-slate-400">payments</span>
+<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Finance</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined text-primary fill">settings</span>
+<p class="text-primary font-bold text-sm">Utilities</p>
+</a>
+</nav>
+</div>
+<!-- Bottom Links -->
+<div class="flex flex-col gap-2 border-t border-[#e7edf3] dark:border-slate-700 pt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4c739a] group-hover:text-red-500 dark:text-slate-400">logout</span>
+<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Log Out</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Top Navbar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] dark:border-b-slate-700 bg-white dark:bg-[#1A2633] px-8 py-3 shrink-0">
+<div class="flex items-center gap-4 text-[#0d141b] dark:text-white">
+<button class="text-[#4c739a] hover:text-primary dark:text-slate-400">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Data Management</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="relative w-full max-w-sm hidden md:block">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#4c739a]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border-none rounded-lg bg-[#e7edf3] dark:bg-slate-700 text-sm placeholder-[#4c739a] text-[#0d141b] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Search utilities..." type="text"/>
+</div>
+<button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-[#4c739a] dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border border-white dark:border-[#1A2633]"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border-2 border-white shadow-sm cursor-pointer" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd1LzWce9KDpWTJHxCR3Em9-JwgFpaBw40vxoyhxW9jkh3HOZ13qXbC5YFmJNNGF3VP1o1u1MWEs6IlOUFc-Or9QDm3sMdrywg6gpddFR1CgzIpYGTaZoOjtWOLhoeZRI--018Cp0L6bwzUT_6JYiisOZ5d70kiT7X1zBLeLq7jQHF2fsyntIbx_drD_ACEYixAHv-uTTmW1FvCGD4I6Hw9gd6hQfScgWurGYinAU6tTKbeLWWl24MobLQTAsi3_xN1y5wC9AocjoX");'></div>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6 md:p-10">
+<div class="max-w-5xl mx-auto flex flex-col gap-6">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#0d141b] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Data Utilities</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-base font-normal">Manage bulk data operations for students, staff, and finance.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1A2633] border border-[#e7edf3] dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm text-[#0d141b] dark:text-white">
+<span class="material-symbols-outlined text-sm">history</span>
+                                View History
+                           </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1A2633] border border-[#e7edf3] dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm text-[#0d141b] dark:text-white">
+<span class="material-symbols-outlined text-sm">help</span>
+                                Help Guide
+                           </button>
+</div>
+</div>
+<!-- Main Utility Card -->
+<div class="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-[#e7edf3] dark:border-slate-700 overflow-hidden flex flex-col">
+<!-- Segmented Controls (Tabs) -->
+<div class="border-b border-[#e7edf3] dark:border-slate-700 px-6 py-4 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="inline-flex h-10 items-center justify-center rounded-lg bg-[#e7edf3] dark:bg-slate-700 p-1 w-full max-w-md">
+<label class="cursor-pointer flex-1 h-full rounded-[0.2rem] transition-all has-[:checked]:bg-white dark:has-[:checked]:bg-[#1A2633] has-[:checked]:shadow-sm has-[:checked]:text-primary">
+<input checked="" class="sr-only" name="utility_mode" type="radio" value="import"/>
+<div class="flex items-center justify-center gap-2 h-full px-4 text-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+                                        Import Data
+                                    </div>
+</label>
+<label class="cursor-pointer flex-1 h-full rounded-[0.2rem] transition-all has-[:checked]:bg-white dark:has-[:checked]:bg-[#1A2633] has-[:checked]:shadow-sm has-[:checked]:text-primary text-[#4c739a] dark:text-slate-400">
+<input class="sr-only" name="utility_mode" type="radio" value="export"/>
+<div class="flex items-center justify-center gap-2 h-full px-4 text-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                        Export Data
+                                    </div>
+</label>
+</div>
+</div>
+<!-- Progress Bar (Wizard Step) -->
+<div class="px-6 pt-6 pb-2">
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-[#0d141b] dark:text-white text-base font-bold">Step 1 of 4: Configuration &amp; Upload</p>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm mt-1">Select the data type and upload your source file.</p>
+</div>
+<span class="text-xs font-medium px-2 py-1 rounded bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">25% Complete</span>
+</div>
+<div class="h-2 w-full bg-[#e7edf3] dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/4 rounded-full"></div>
+</div>
+<div class="flex justify-between text-xs text-[#4c739a] dark:text-slate-500 font-medium mt-1">
+<span class="text-primary">Upload</span>
+<span>Map Fields</span>
+<span>Validate</span>
+<span>Import</span>
+</div>
+</div>
+</div>
+<!-- Content Area -->
+<div class="p-6 md:p-8 flex flex-col gap-8">
+<!-- Form Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Left: Configuration -->
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#0d141b] dark:text-white">Data Category</label>
+<div class="relative">
+<select class="w-full appearance-none bg-[#f8fafc] dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-600 text-[#0d141b] dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-3 pr-8">
+<option>Student Records</option>
+<option>Staff Directory</option>
+<option>Class Schedules</option>
+<option>Finance / Fee Payments</option>
+<option>Library Books</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#4c739a]">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<p class="text-xs text-[#4c739a] dark:text-slate-500">Select the module you want to update.</p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#0d141b] dark:text-white">Import Action</label>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 p-3 border border-[#e7edf3] dark:border-slate-600 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-colors">
+<input checked="" class="text-primary focus:ring-primary h-4 w-4 border-gray-300" name="import_action" type="radio"/>
+<div>
+<span class="block text-sm font-medium text-[#0d141b] dark:text-white">Create New Records</span>
+<span class="block text-xs text-[#4c739a] dark:text-slate-400">Add new entries to the database.</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 border border-[#e7edf3] dark:border-slate-600 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-colors">
+<input class="text-primary focus:ring-primary h-4 w-4 border-gray-300" name="import_action" type="radio"/>
+<div>
+<span class="block text-sm font-medium text-[#0d141b] dark:text-white">Update Existing Records</span>
+<span class="block text-xs text-[#4c739a] dark:text-slate-400">Modify existing entries based on ID match.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Right: Upload Zone -->
+<div class="flex flex-col gap-2 h-full">
+<label class="text-sm font-bold text-[#0d141b] dark:text-white">Source File</label>
+<div class="flex-1 flex flex-col items-center justify-center w-full min-h-[240px] border-2 border-dashed border-[#cbd5e1] dark:border-slate-600 rounded-xl bg-[#f8fafc] dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-primary/50 transition-all cursor-pointer group relative overflow-hidden">
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" type="file"/>
+<div class="bg-white dark:bg-slate-700 p-3 rounded-full shadow-sm mb-3 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">cloud_upload</span>
+</div>
+<p class="mb-1 text-sm font-semibold text-[#0d141b] dark:text-white">Click to upload or drag and drop</p>
+<p class="text-xs text-[#4c739a] dark:text-slate-400">CSV, XLS, or XLSX (MAX. 10MB)</p>
+<div class="mt-6 flex items-center gap-2 text-xs text-primary font-medium z-20 relative pointer-events-none">
+<span class="material-symbols-outlined text-[16px]">article</span>
+                                            Download Sample Template
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Validation Message (Example State) -->
+<div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-r-lg flex items-start gap-3">
+<span class="material-symbols-outlined text-blue-500 mt-0.5">info</span>
+<div>
+<h4 class="text-sm font-bold text-blue-900 dark:text-blue-100">Preparation Tip</h4>
+<p class="text-sm text-blue-800 dark:text-blue-200 mt-1">Ensure your CSV headers match the database fields for automatic mapping. Dates should be formatted as YYYY-MM-DD.</p>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="border-t border-[#e7edf3] dark:border-slate-700 p-6 bg-slate-50 dark:bg-slate-800/30 flex justify-end gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-[#e7edf3] dark:border-slate-600 text-sm font-medium text-[#4c739a] dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-[#0d141b] transition-colors">
+                                Cancel
+                            </button>
+<button class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-bold shadow-md shadow-blue-500/20 flex items-center gap-2 transition-all">
+                                Next: Map Fields
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Recent Activity Section -->
+<div class="flex flex-col gap-4">
+<h3 class="text-lg font-bold text-[#0d141b] dark:text-white">Recent Imports</h3>
+<div class="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-[#e7edf3] dark:border-slate-700 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-[#f8fafc] dark:bg-slate-800 border-b border-[#e7edf3] dark:border-slate-700 text-[#4c739a] dark:text-slate-400 font-medium">
+<tr>
+<th class="px-6 py-4">File Name</th>
+<th class="px-6 py-4">Module</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Records</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e7edf3] dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-[#0d141b] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600 text-[20px]">description</span>
+                                                students_2023_batch.csv
+                                            </td>
+<td class="px-6 py-4 text-[#4c739a] dark:text-slate-300">Students</td>
+<td class="px-6 py-4 text-[#4c739a] dark:text-slate-300">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                                    Completed
+                                                </span>
+</td>
+<td class="px-6 py-4 text-right text-[#0d141b] dark:text-white font-medium">1,240</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-[#0d141b] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600 text-[20px]">description</span>
+                                                staff_payroll_sept.xlsx
+                                            </td>
+<td class="px-6 py-4 text-[#4c739a] dark:text-slate-300">Finance</td>
+<td class="px-6 py-4 text-[#4c739a] dark:text-slate-300">Sep 30, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
+<span class="size-1.5 rounded-full bg-amber-500"></span>
+                                                    Warnings
+                                                </span>
+</td>
+<td class="px-6 py-4 text-right text-[#0d141b] dark:text-white font-medium">45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

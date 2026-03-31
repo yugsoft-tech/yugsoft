@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Canteen Management Dashboard</title>
+<!-- Google Fonts: Lexend -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-x-hidden transition-colors duration-200">
+<div class="min-h-screen flex flex-col">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">lunch_dining</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Canteen Manager</h2>
+</div>
+<!-- Search Bar -->
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-500 dark:text-slate-400 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-slate-800 focus:border-none h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Search orders, students..."/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="flex gap-2">
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white">Sarah Connor</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Canteen Manager</p>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="Portrait of the user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLfM7d5U70lUcnkW1yO81xYYnaf1Eo_Jqp5PDO-Ocbc-pgIoj-LpFRhEnZK3UVf87suEMVuPtTMXh-fX0aW7PxdTFW4lmtD9zzbSoEpLYg0oNBDE2g2_uQvEJqdphpVr48tuPQrGusaNV5nvvubKyYerX2qTWaYOU9NQmjAGub50YswgYviCdb7-brqJ-4C5_mTRI7yy0fjG_WoF7r0ksKDtvOAkwG1WLoT-TfyUdHTtjkzvizQamJVNeBoKWTnI8b8CqsDnfocbib");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-4 md:p-6 lg:p-8 max-w-[1600px] mx-auto w-full">
+<!-- Stats Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Stat Card 1 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-green-600 dark:text-green-400 text-sm font-bold bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">+12%</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Sales Today</p>
+<p class="text-slate-900 dark:text-white text-2xl font-bold leading-tight mt-1">$1,240</p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<span class="text-primary text-sm font-bold bg-primary/10 px-2 py-1 rounded-full">+5%</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Active Orders</p>
+<p class="text-slate-900 dark:text-white text-2xl font-bold leading-tight mt-1">45</p>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Most Popular</p>
+<p class="text-slate-900 dark:text-white text-2xl font-bold leading-tight mt-1">Veggie Wrap</p>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-red-600 dark:text-red-400 text-sm font-bold bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-full">Action Needed</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Low Stock</p>
+<p class="text-slate-900 dark:text-white text-2xl font-bold leading-tight mt-1">3 Items</p>
+</div>
+</div>
+</div>
+<!-- Dashboard Columns -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 h-full">
+<!-- LEFT COLUMN: Menu Planner (Span 5) -->
+<div class="xl:col-span-5 flex flex-col gap-6">
+<div class="flex flex-col bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full">
+<div class="p-6 border-b border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Today's Menu</h2>
+<button class="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span>Aug 24</span>
+</button>
+</div>
+<!-- Tabs -->
+<div class="flex gap-6 border-b border-slate-100 dark:border-slate-700">
+<button class="pb-3 border-b-2 border-primary text-primary font-bold text-sm">Lunch</button>
+<button class="pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 font-medium text-sm transition-colors">Breakfast</button>
+<button class="pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 font-medium text-sm transition-colors">Snacks</button>
+</div>
+</div>
+<!-- Menu Grid -->
+<div class="p-4 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 overflow-y-auto max-h-[600px] custom-scrollbar">
+<!-- Menu Item 1 -->
+<div class="group relative flex flex-col rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-shadow">
+<div class="w-full aspect-[4/3] bg-cover bg-center" data-alt="Close up of a pepperoni pizza slice" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsYnA6Z55Xiixr4UJLva1M1NQHRzdArP6cMAaTf7bCFCgp8FxgEIAe1Lkw-MUX5UmdNceYZLxJs-qFMU3Rg8wkd3hjzAHNY1tQ0cL4lwYtyAoYOtwJNpkTYlloeMQ2Y-jj1gklz8SjHDgT3RC8ujuWNEB46Qsgdg3gLoxbXjOBJDDLO1o6uFGTnwj5EvS1rVM3Vj8_mppb99b9QudxreJgRbiU4QUc0TeWMNh0-1Nqo_yUETxyuP9FGMyKjcZbE62sCxImqie2JUAP');">
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-slate-900 dark:text-white">$2.50</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-slate-900 dark:text-white text-base">Pepperoni Pizza</h3>
+</div>
+<div class="flex justify-between items-center mt-2">
+<span class="text-xs font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span> 120 left
+                                        </span>
+<button class="bg-primary hover:bg-primary/90 text-white rounded-full p-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Menu Item 2 -->
+<div class="group relative flex flex-col rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-shadow">
+<div class="w-full aspect-[4/3] bg-cover bg-center" data-alt="Fresh veggie wrap cut in half" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCH2VdZ5OJV3AuRCOrOjhnPc_TkK2-gZu5cDcxCvqVqruDeexFkDygjERClDd4ZQOecq9vOktbCJ7J7Oq0BXJjTU3x1GAlHUjxj2TqCtv7bvxrkPxvTW2yIw3WCsOGggNeXVRjYblJvSG1qtlNl7_hmBDZfM8iuVy4LRMPpOjJkecaPwRyIM6u5chwngHonW4HG-Qxu9n70-gK2CXHrthtFdqpBG30q9Tk3Kjb-QToOLQrDrzYfb4V6VF5RrMCTFBVhR-AFbTWKqUgR');">
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-slate-900 dark:text-white">$3.00</div>
+<div class="absolute top-2 left-2 bg-green-500 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide">Veg</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-base">Veggie Wrap</h3>
+<div class="flex justify-between items-center mt-2">
+<span class="text-xs font-medium text-orange-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> 45 left
+                                        </span>
+<button class="bg-primary hover:bg-primary/90 text-white rounded-full p-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Menu Item 3 -->
+<div class="group relative flex flex-col rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-shadow">
+<div class="w-full aspect-[4/3] bg-cover bg-center" data-alt="Healthy chicken caesar salad in a bowl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlPNEQ5Zoe2mWTG1sjjt4lW-LivIq1rxSBRP6SdOIbVSvXu93L9rU0eWMkV3IHzGlYu5oPlfM4rpqOgD4OWXJXjgXlnqPy5dKnn5jqaMSd4AYB57Ooj8zUUfBpt5l0YCL3M6i9rQEbvQDR7YZO6YQLwXdiWi-WC3ab6QSA610JrYzR9d8IO-VYNZPR6Ht62Eoiz-QGb96EEs2DmfHN8xAOJ45w1i1nXS3Szz0ue5puetL8V4_VTCc5lLhyhbI5ovIUM7wOjMiejHlW');">
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-slate-900 dark:text-white">$4.50</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-base">Caesar Salad</h3>
+<div class="flex justify-between items-center mt-2">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span> 80 left
+                                        </span>
+<button class="bg-primary hover:bg-primary/90 text-white rounded-full p-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Menu Item 4 -->
+<div class="group relative flex flex-col rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-shadow">
+<div class="w-full aspect-[4/3] bg-cover bg-center grayscale opacity-80" data-alt="Glass of fresh orange juice" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBiiDuS_ls3Sam02MGPmzMTsmtoHGeu7wkeu5DataBqha2IGG4KEGbWLHAMVyJDxs2iPOJCW-KiBKdDdmBxfGU-w6fd4hP4JgehpHzHSA-ZSutxUZTdSwIHJ3gg1Zvc3oQjNrEgkrZ5JaQ2MjCvI5BEXun48UXHDJy0gR-lM5GjVKiUgVzGGEsxVX4U99kOCaOO7iIfx9AnmPECMxrUjY5-RswSsuSHHsCep7HEds1zf0E4eWsyFoqva02SkmCU2Et-WZ0Hevs6WdkX');">
+<div class="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
+<span class="text-white font-bold bg-slate-900/80 px-3 py-1 rounded-full text-xs">SOLD OUT</span>
+</div>
+<div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-slate-900 dark:text-white">$1.00</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<h3 class="font-bold text-slate-900 dark:text-white text-base">Orange Juice</h3>
+<div class="flex justify-between items-center mt-2">
+<span class="text-xs font-medium text-red-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">block</span> 0 left
+                                        </span>
+<button class="bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed rounded-full p-1.5 transition-colors" disabled="">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CENTER COLUMN: Order Queue (Span 4) -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col h-full">
+<div class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Order Queue</h2>
+<div class="flex gap-2">
+<span class="flex size-2 bg-green-500 rounded-full animate-pulse"></span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Live Update</span>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-3 overflow-y-auto max-h-[600px] custom-scrollbar">
+<!-- Order Card: Ready -->
+<div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border-l-4 border-green-500 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Order #1024</span>
+<h4 class="font-bold text-slate-900 dark:text-white">John Doe</h4>
+</div>
+<span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-1 rounded">READY</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-3">2x Pizza Slice, 1x Apple Juice</p>
+<button class="w-full text-xs font-bold text-white bg-green-600 hover:bg-green-700 py-2 rounded transition-colors">Mark as Served</button>
+</div>
+<!-- Order Card: Preparing -->
+<div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border-l-4 border-yellow-500 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Order #1025</span>
+<h4 class="font-bold text-slate-900 dark:text-white">Jane Smith</h4>
+</div>
+<span class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-bold px-2 py-1 rounded">PREPARING</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-3">1x Veggie Wrap</p>
+<div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 w-2/3 rounded-full"></div>
+</div>
+</div>
+<!-- Order Card: Preparing -->
+<div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border-l-4 border-yellow-500 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Order #1026</span>
+<h4 class="font-bold text-slate-900 dark:text-white">Michael B.</h4>
+</div>
+<span class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-bold px-2 py-1 rounded">PREPARING</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-3">1x Caesar Salad, 1x Water</p>
+<div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 w-1/4 rounded-full"></div>
+</div>
+</div>
+<!-- Order Card: Pending -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700 opacity-60">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Order #1027</span>
+<h4 class="font-bold text-slate-900 dark:text-white">Emily R.</h4>
+</div>
+<span class="bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 text-xs font-bold px-2 py-1 rounded">PENDING</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">1x Pizza Slice</p>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Finance & Quick Actions (Span 3) -->
+<div class="xl:col-span-3 flex flex-col gap-6">
+<!-- Wallet Widget -->
+<div class="bg-primary text-white rounded-xl shadow-lg p-6 relative overflow-hidden group">
+<!-- Decorative circle -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
+<h3 class="text-primary-50 text-sm font-medium mb-1">Student Wallet Lookup</h3>
+<div class="flex gap-2 mb-6">
+<input class="w-full bg-white/20 border-transparent placeholder:text-white/60 text-white rounded focus:ring-2 focus:ring-white/50 focus:border-transparent text-sm" placeholder="Student ID" type="text"/>
+<button class="bg-white text-primary p-2 rounded hover:bg-white/90 transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+<div class="flex flex-col gap-1 mb-6">
+<span class="text-primary-100 text-xs uppercase tracking-wider">Current Balance</span>
+<span class="text-4xl font-bold tracking-tight">$15.50</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span> Top Up
+                            </button>
+<button class="flex items-center justify-center gap-1 bg-white text-primary hover:bg-white/90 py-2 px-3 rounded text-sm font-bold transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">credit_card</span> Charge
+                            </button>
+</div>
+</div>
+<!-- Quick Categories / Analytics -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 flex-1">
+<h3 class="font-bold text-slate-900 dark:text-white mb-4">Sales by Category</h3>
+<div class="flex flex-col gap-4">
+<!-- Category 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Hot Meals</span>
+<span class="font-bold text-slate-900 dark:text-white">65%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Drinks</span>
+<span class="font-bold text-slate-900 dark:text-white">20%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+<div class="bg-blue-400 h-full rounded-full" style="width: 20%"></div>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Snacks</span>
+<span class="font-bold text-slate-900 dark:text-white">15%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+<div class="bg-blue-300 h-full rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+<h3 class="font-bold text-slate-900 dark:text-white mb-3 text-sm">Quick Actions</h3>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center justify-center gap-2 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">print</span>
+<span class="text-xs font-medium">Daily Report</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">inventory</span>
+<span class="text-xs font-medium">Stock Take</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<style>
+        /* Custom Scrollbar for better UX in dashboard widgets */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</body></html>

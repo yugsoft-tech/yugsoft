@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Certificate Management - School ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
+<div class="relative flex h-screen w-full overflow-hidden">
+<!-- Side Navigation -->
+<aside class="flex w-64 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex-shrink-0">
+<div class="flex flex-col gap-4 p-4 h-full">
+<!-- User Profile -->
+<div class="flex gap-3 items-center pb-4 border-b border-slate-100 dark:border-slate-800">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm" data-alt="Admin user profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD3i3S-ksJF2XTqiDdpxz6rwtmj3Owtfh1m-nzaYU3MuLyRHBlkpkOQcbnpWK1xHxZe8JNsH_-b7bS61JqCisysay3ysptwIfpRKt-oULWPxitVP-GFkbvrRSXZff9EGkjDUeW744luB1x85_8ZexUT0G3p-v2mKh3h-ByPV_XZpdQ2Fol4Vm7v1YMWipKTcOZbAgoW2CE3601xmNWFfr6aa8mgyAlEccL_NmYQUkntBMBmX3sox1aRLtdFT4Uobii9UX59_CvVVw-a");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-slate-900 dark:text-white text-sm font-semibold truncate">James Anderson</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">School Admin</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1 overflow-y-auto flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<!-- Active Link -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined icon-fill text-[20px]">verified</span>
+<span class="text-sm font-semibold">Certificates</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="text-sm font-medium">Fees</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+<span class="text-sm font-medium">Exams</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<!-- Footer / Help -->
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="text-sm font-medium">Help Center</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Top Header Area -->
+<header class="flex-shrink-0 px-8 py-5 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto flex flex-col gap-4">
+<!-- Breadcrumbs -->
+<div class="flex items-center text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="mx-2 text-slate-300">/</span>
+<a class="hover:text-primary transition-colors" href="#">Student Management</a>
+<span class="mx-2 text-slate-300">/</span>
+<span class="text-slate-900 dark:text-white font-medium">Certificates</span>
+</div>
+<!-- Page Title & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Certificate Management</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Generate, track, and manage official student documents.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-all text-sm font-medium shadow-sm">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                                Print Report
+                            </button>
+<button class="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all text-sm font-medium shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                Generate New
+                            </button>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-8 py-8">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Stats Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-4 relative overflow-hidden group">
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Issued Today</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-1">12</h3>
+</div>
+<div class="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm z-10">
+<span class="text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
+                                    +20% 
+                                </span>
+<span class="text-slate-400 dark:text-slate-500">vs yesterday</span>
+</div>
+<div class="absolute right-0 bottom-0 opacity-5 dark:opacity-10 transform translate-x-4 translate-y-4">
+<span class="material-symbols-outlined text-9xl">verified</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-4 relative overflow-hidden">
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Requests</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-1">5</h3>
+</div>
+<div class="p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm z-10">
+<span class="text-orange-600 dark:text-orange-400 font-medium">Needs Review</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-4 relative overflow-hidden">
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Archived</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-1">1,240</h3>
+</div>
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">folder_open</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm z-10">
+<span class="text-slate-500 dark:text-slate-400">All time records</span>
+</div>
+</div>
+</div>
+<!-- Main Content Panel (Tabs + Filters + Table) -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
+<!-- Tabs -->
+<div class="border-b border-slate-200 dark:border-slate-800 px-6">
+<div class="flex gap-8">
+<button class="flex items-center gap-2 border-b-2 border-primary text-primary pb-3 pt-4 px-1 font-semibold text-sm transition-colors">
+                                    All Certificates
+                                    <span class="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full">124</span>
+</button>
+<button class="flex items-center gap-2 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 pb-3 pt-4 px-1 font-medium text-sm transition-colors">
+                                    Requests
+                                    <span class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full">5</span>
+</button>
+<button class="flex items-center gap-2 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 pb-3 pt-4 px-1 font-medium text-sm transition-colors">
+                                    Templates
+                                </button>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="p-5 flex flex-wrap items-center justify-between gap-4">
+<div class="relative w-full md:max-w-xs">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg leading-5 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Search by student name or ID..." type="text"/>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto">
+<div class="relative">
+<select class="appearance-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 pl-3 pr-8 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer">
+<option>All Types</option>
+<option>Leaving Certificate</option>
+<option>Bona Fide</option>
+<option>Transcript</option>
+<option>Character Certificate</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<select class="appearance-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 pl-3 pr-8 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer">
+<option>All Grades</option>
+<option>Grade 12</option>
+<option>Grade 11</option>
+<option>Grade 10</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</div>
+</div>
+<button class="p-2 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 font-semibold border-y border-slate-200 dark:border-slate-800">
+<tr>
+<th class="px-6 py-4 whitespace-nowrap w-12">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</th>
+<th class="px-6 py-4 whitespace-nowrap">Student Name</th>
+<th class="px-6 py-4 whitespace-nowrap">Admission ID</th>
+<th class="px-6 py-4 whitespace-nowrap">Certificate Type</th>
+<th class="px-6 py-4 whitespace-nowrap">Issue Date</th>
+<th class="px-6 py-4 whitespace-nowrap">Status</th>
+<th class="px-6 py-4 whitespace-nowrap text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Student avatar for Emma Thompson" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5JT8s4E4bXKr8EBMa5RaMsy37C26WYfNPHEyC7YrdCWv_io1GC19gzHAf8Xbca9XKVzE0wknjVwf6IRihDRiDIi75px0y7dhdt0oP5AyIKp54AOlI8gWPmVR5XsHlnNMzny0YmB4Ar7Ila_NFzCO1XFnb6BC9swCRaUFIvPOWmsT4Z31CSyfXOK8hdvBzz9Amu2gnwGv7XmfPM-ASATQAbmXgx2eWog5mfuI7C0vmHn2q5LH7A6XlCqVx6HbHsNRwvYgOBTcODUgN')"></div>
+<div class="font-medium text-slate-900 dark:text-white">Emma Thompson</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">#ADM-2023-001</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-slate-300">Leaving Certificate</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 24, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+<span class="size-1.5 rounded-full bg-green-600 dark:bg-green-400"></span>
+                                                Issued
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors" title="Revoke">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Student avatar for Liam Chen" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBFiVlJPF8MSwpbdFbJkEwTTBCU2K5wCT-QeOly0iRIGmExt_hh3ppCEPZrtaTRs3xaqKUO-1_FzyfO1SYn6w25Qa76icx4ZkX0rQFat2vPMAma8V9wiTqI9dL83BrdirLX8yxPN2Dg1x8xd3YUzXhj3gYc62Xe76pJ61OJlH3CDgl-zIGkJt27AAbopTRQjX5ZDxzO52Au0tRS-PvnI2fLNzqoF3x8I3__11BMFby0RuPD6Nvgc4-9EaxxOsb_Wg9I30HFEQuYbk7L')"></div>
+<div class="font-medium text-slate-900 dark:text-white">Liam Chen</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">#ADM-2023-045</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-slate-300">Bona Fide</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 24, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+<span class="size-1.5 rounded-full bg-green-600 dark:bg-green-400"></span>
+                                                Issued
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors" title="Revoke">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Student avatar for Sophia Rodriguez" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDoQFfZEz1tFvV69AHIVJE0Joxbdf7GsD4MDvcqLPSYDe0ZzkPltyxv1kEjxz6eMsMzaRPlZNZB6xuQahTVBgyYi1SX_Sw894cSXAY3tj__Fna3lWb8RnvQhqh-qIyLNof5hPn4A_oGqbS13eF3waUTuJ3vClKzgXikgU4FnzpMvB1PEDmbRZA0rpM-WnPtn5sdc2qY73tYHfDxpltVkHsJ48HYisi4-qLlO1esDYnEK0QAv-ByYgFJ6o_Hpeq4-AKqwuaQw6vS5U3a')"></div>
+<div class="font-medium text-slate-900 dark:text-white">Sophia Rodriguez</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">#ADM-2023-112</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-slate-300">Transcript</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 23, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300">
+<span class="size-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+                                                Processing
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors" title="Revoke">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Student avatar for Michael Chang" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAUEFzIpLTpCm94jXtArj6GZvQNuFV4a9wn_9miZbDbViDikbdzvcZPOTgMKTq2y1XR10zfFoo_ern_ddSDvEVoJoYaZb3mmIR9fnZGHZqcXKIzCp6kWLnLJFBexr7cButoXu8llMpIPRo789GyXtBSHFrUVHDvqIUyKjA_VABUruczqtsz6ka0eOhJ87T_ifTToJvzP0FVosovkfcEO5cqd5IoWm1PQcPFR2a8MWuqTP-IOIycV8RPqf_x2wN-b4nXXXPIu5yJjnrC')"></div>
+<div class="font-medium text-slate-900 dark:text-white">Michael Chang</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">#ADM-2023-089</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-slate-300">Transfer Certificate</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 23, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+<span class="size-1.5 rounded-full bg-green-600 dark:bg-green-400"></span>
+                                                Issued
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors" title="Revoke">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Student avatar for Isabella Kim" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHhflcdTysFbiZbH8yl4elnSDQ7HnMnMEv1trxEaqpGgPEjiM7G2oJGQ13_h15K7JWCtFwUoE4NH4mCC0JOvoPZTO717h4Yo1JkQVYUTuZz8UkwMTSxFipzZQ7eKYGBPVRM034WcKZio6CzyreO-E3w6HOGEchXdCX6z4F5jAZOQvH5oiGtkrrk9sb34njrQvWENhbHB4XrkQjrO_v1pSiJaihH9lfoSkjjMTIeztUtiXorq0258x3_hfeH4i-oy6pON6NcqH2optq')"></div>
+<div class="font-medium text-slate-900 dark:text-white">Isabella Kim</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">#ADM-2023-012</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-slate-300">Character Certificate</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 22, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+<span class="size-1.5 rounded-full bg-red-600 dark:bg-red-400"></span>
+                                                Revoked
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors" title="View">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors" title="Revoke">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<span class="text-sm text-slate-500 dark:text-slate-400">Showing 1 to 5 of 124 results</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-slate-300 dark:border-slate-700 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm disabled:opacity-50">Previous</button>
+<button class="px-3 py-1 border border-slate-300 dark:border-slate-700 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Generate New Slide-over (Simulated as positioned div) -->
+<div class="hidden absolute top-4 right-4 bottom-4 w-96 bg-white dark:bg-slate-900 shadow-2xl rounded-2xl border border-slate-200 dark:border-slate-800 z-50 flex flex-col overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Generate Certificate</h2>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 flex-1 overflow-y-auto flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Student</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">person_search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary placeholder-slate-400" placeholder="Search student name..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Certificate Type</label>
+<select class="block w-full py-2.5 px-3 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary">
+<option>Select type...</option>
+<option>Leaving Certificate</option>
+<option>Bona Fide Certificate</option>
+<option>Transcript</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Issue Date</label>
+<input class="block w-full py-2.5 px-3 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary text-slate-600 dark:text-slate-300" type="date"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Remarks / Reason</label>
+<textarea class="block w-full py-2.5 px-3 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary placeholder-slate-400 resize-none" placeholder="Enter any specific remarks or reason for issuance..." rows="4"></textarea>
+</div>
+<div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[20px]">info</span>
+<p class="text-xs text-blue-800 dark:text-blue-300 leading-relaxed">
+                            Generating this certificate will automatically log an entry in the student's permanent record. Ensure all details are correct before proceeding.
+                        </p>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-slate-100 dark:border-slate-800 flex gap-3">
+<button class="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800">Cancel</button>
+<button class="flex-1 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary/90 shadow-md shadow-primary/20">Generate</button>
+</div>
+</div>
+</div>
+</body></html>

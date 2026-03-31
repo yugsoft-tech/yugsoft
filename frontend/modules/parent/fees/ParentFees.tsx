@@ -45,6 +45,33 @@ export default function ParentFees() {
         fetchFees();
     }, [selectedChildId]);
 
+    const handlePayFee = async (feeId: string | number) => {
+        const promise = new Promise((resolve) => setTimeout(resolve, 1500));
+        toast.promise(promise, {
+            loading: 'Processing secure payment...',
+            success: 'Payment completed successfully!',
+            error: 'Payment failed. Please try again.',
+        });
+    };
+
+    const handlePayAll = () => {
+        if (totalDue === 0) return toast.error('No outstanding balance found.');
+        toast.loading('Redirecting to payment gateway...');
+        setTimeout(() => {
+            toast.dismiss();
+            toast.success('Batch payment session initiated.');
+        }, 1500);
+    };
+
+    const handleDownloadStatement = () => {
+        toast.loading('Generating financial statement...');
+        setTimeout(() => {
+            toast.dismiss();
+            toast.success('Statement downloaded.');
+            window.print();
+        }, 1500);
+    };
+
     // Mocking data if API is empty for visualization
     const displayFees = fees.length > 0 ? fees : [
         { id: 1, title: 'Term 2 Tuition', amount: 1200, dueDate: '2024-11-15', status: 'PENDING', studentId: childrenList[0]?.id },
@@ -84,7 +111,10 @@ export default function ParentFees() {
                             <span className="text-[7px] font-black uppercase tracking-widest text-slate-400">Total Outstanding</span>
                             <span className="text-xl font-black text-slate-900 dark:text-white uppercase">${totalDue.toLocaleString()}</span>
                         </div>
-                        <Button size="sm" className="bg-rose-500 hover:bg-rose-600 text-white border-none rounded-xl ml-4 font-bold shadow-lg shadow-rose-500/20">
+                        <Button 
+                            onClick={handlePayAll}
+                            size="sm" 
+                            className="bg-rose-500 hover:bg-rose-600 text-white border-none rounded-xl ml-4 font-bold shadow-lg shadow-rose-500/20">
                             PAY ALL
                         </Button>
                     </div>
@@ -119,7 +149,10 @@ export default function ParentFees() {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b border-slate-100 dark:border-slate-800 pb-8">
                         <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">Invoice Registry</h2>
                         <div className="flex gap-4">
-                            <Button variant="secondary" className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-400 hover:text-primary transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
+                            <Button 
+                                onClick={handleDownloadStatement}
+                                variant="secondary" 
+                                className="bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-400 hover:text-primary transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
                                 <Download size={16} />
                                 Download Statement
                             </Button>
@@ -159,12 +192,14 @@ export default function ParentFees() {
                                             <div className="flex items-center gap-8">
                                                 <div className="text-right">
                                                     <span className="block text-2xl font-black text-slate-900 dark:text-white">${fee.amount}</span>
-                                                    <Badge variant={fee.status === 'PAID' ? 'success' : fee.status === 'OVERDUE' ? 'destructive' : 'warning'} className="text-[7px] font-black uppercase tracking-widest px-2 py-0.5">
+                                                    <Badge variant={fee.status === 'PAID' ? 'outline' : fee.status === 'OVERDUE' ? 'destructive' : 'secondary'} className={`text-[7px] font-black uppercase tracking-widest px-2 py-0.5 ${fee.status === 'PAID' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : ''}`}>
                                                         {fee.status}
                                                     </Badge>
                                                 </div>
                                                 {fee.status !== 'PAID' && (
-                                                    <Button className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl px-6 py-3 h-auto font-black text-[9px] uppercase tracking-widest border-none hover:opacity-90 transition-opacity whitespace-nowrap">
+                                                    <Button 
+                                                        onClick={() => handlePayFee(fee.id)}
+                                                        className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl px-6 py-3 h-auto font-black text-[9px] uppercase tracking-widest border-none hover:opacity-90 transition-opacity whitespace-nowrap">
                                                         Pay Now
                                                     </Button>
                                                 )}

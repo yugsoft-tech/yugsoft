@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Timetable Management - SchoolERP</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white font-display overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] dark:border-gray-800 bg-white dark:bg-[#1a2634] px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary flex items-center justify-center rounded-lg bg-primary/10">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h2 class="text-[#0d141b] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">SchoolERP</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="hidden md:flex w-full max-w-sm">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#4c739a]">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full rounded-lg border-none bg-[#e7edf3] dark:bg-gray-700 py-2.5 pl-10 pr-3 text-sm placeholder:text-[#4c739a] focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-gray-800 transition-colors" placeholder="Search students, classes, or teachers..." type="text"/>
+</div>
+</div>
+<button class="text-[#4c739a] hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2634]"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border-2 border-white shadow-sm cursor-pointer" data-alt="User profile picture of an administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqypDWJRJzuWTePcRV-3Xsdtzdu0RfV_IV3SYfARimwLn6Koy5KCh5Qx8_Y_-5Gy3IvjBETscBt-58gTp0ZdTqa5tiCE9FUTbS_P3WXMZxxOFBGzY369vV5S2QH0Rvun2vbep_MkPVpNyuY1XeaSxkT2I_DOsK36-0KSnn2JSl1x1JUMEd4QdDB2JSDEUFP8ZD5ZiNAhE0PMx0qPRKrkqHQ89kIObfzQchwDJTz0rOIA-hAamAyfxeuo4L8hikRl4Dhn-CRaTRi1-j");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden lg:flex w-64 flex-col border-r border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-[#1a2634] overflow-y-auto shrink-0 z-10">
+<div class="p-4 flex flex-col gap-6">
+<!-- School Info -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-10 shadow-sm" data-alt="Logo of Springfield High School" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArVpQyECd2yaqmg2UBTP1aiJOISkyR8el6G1R9Q4y-R2u83vFDk01gXJ7pY35zYQtlsxmkdCwwhrXYG1xgfppzdfZRlCb3AoUKiyubRFab0TAe8lPc9bwJiA2vI_DopzP6tGLRf6EL9s0pSW6-vI5FhikhOglXGv-2_9f4AUlUN69rLlzX-O1RGKtLy0AWpvOlfFyT-S8Dl-X5sgiLrJWiZbK4j6KYcuSwtPb51YJ1NMkYKuhTY3Lq8KbNSOFP5QbPLncgpLMy9RWh");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-[#0d141b] dark:text-white text-sm font-bold truncate">Springfield High</h1>
+<p class="text-[#4c739a] text-xs font-normal truncate">Admin Console</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">grid_view</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 transition-all" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-sm font-medium">Timetable</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">group</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">school</span>
+<span class="text-sm font-medium">Teachers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">assignment_turned_in</span>
+<span class="text-sm font-medium">Exams</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Quick Stats -->
+<div class="mt-auto p-4 border-t border-[#e7edf3] dark:border-gray-800">
+<div class="bg-slate-50 dark:bg-gray-800 rounded-xl p-4">
+<p class="text-xs font-semibold text-[#4c739a] mb-2 uppercase tracking-wider">Storage Usage</p>
+<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+</div>
+<p class="text-xs text-[#0d141b] dark:text-gray-300">75% of 100GB used</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex flex-1 flex-col overflow-hidden relative">
+<!-- Toolbar / Filter Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 border-b border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-[#1a2634] shrink-0">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-sm text-[#4c739a]">
+<span>Timetables</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-medium">Manage Schedule</span>
+</div>
+<h1 class="text-2xl font-bold text-[#0d141b] dark:text-white">Grade 5A</h1>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative min-w-[200px]">
+<select class="w-full appearance-none rounded-lg border border-[#cfdbe7] bg-white dark:bg-gray-800 dark:border-gray-700 py-2 pl-3 pr-10 text-sm font-medium focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
+<option>Grade 5A (Primary)</option>
+<option>Grade 5B (Primary)</option>
+<option>Grade 6A (Middle)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#4c739a]">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<div class="flex items-center rounded-lg border border-[#cfdbe7] bg-white dark:bg-gray-800 dark:border-gray-700 p-1">
+<button class="px-3 py-1 rounded bg-primary/10 text-primary text-sm font-medium">Week</button>
+<button class="px-3 py-1 rounded text-[#4c739a] hover:bg-slate-50 dark:hover:bg-gray-700 text-sm font-medium transition-colors">Day</button>
+</div>
+<button class="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                        Save Changes
+                    </button>
+</div>
+</div>
+<!-- Content Split: Grid & Drawer -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Timetable Grid -->
+<div class="flex-1 overflow-auto bg-slate-50 dark:bg-[#101922] p-6 relative">
+<!-- Grid Container -->
+<div class="bg-white dark:bg-[#1a2634] rounded-xl shadow-sm border border-[#e7edf3] dark:border-gray-800 min-w-[800px]">
+<!-- Header Row (Days) -->
+<div class="grid grid-cols-[80px_1fr_1fr_1fr_1fr_1fr] border-b border-[#e7edf3] dark:border-gray-800 sticky top-0 bg-white dark:bg-[#1a2634] z-10">
+<div class="p-4 border-r border-[#e7edf3] dark:border-gray-800 flex items-center justify-center text-[#4c739a] font-medium text-xs uppercase tracking-wider">
+                                Time
+                            </div>
+<div class="p-4 border-r border-[#e7edf3] dark:border-gray-800 text-center last:border-r-0">
+<span class="block text-sm font-bold text-[#0d141b] dark:text-white">Monday</span>
+<span class="text-xs text-[#4c739a]">24 Oct</span>
+</div>
+<div class="p-4 border-r border-[#e7edf3] dark:border-gray-800 text-center last:border-r-0">
+<span class="block text-sm font-bold text-[#0d141b] dark:text-white">Tuesday</span>
+<span class="text-xs text-[#4c739a]">25 Oct</span>
+</div>
+<div class="p-4 border-r border-[#e7edf3] dark:border-gray-800 text-center last:border-r-0">
+<span class="block text-sm font-bold text-[#0d141b] dark:text-white">Wednesday</span>
+<span class="text-xs text-[#4c739a]">26 Oct</span>
+</div>
+<div class="p-4 border-r border-[#e7edf3] dark:border-gray-800 text-center last:border-r-0">
+<span class="block text-sm font-bold text-[#0d141b] dark:text-white">Thursday</span>
+<span class="text-xs text-[#4c739a]">27 Oct</span>
+</div>
+<div class="p-4 text-center">
+<span class="block text-sm font-bold text-[#0d141b] dark:text-white">Friday</span>
+<span class="text-xs text-[#4c739a]">28 Oct</span>
+</div>
+</div>
+<!-- 08:00 AM Row -->
+<div class="grid grid-cols-[80px_1fr_1fr_1fr_1fr_1fr] border-b border-[#e7edf3] dark:border-gray-800 min-h-[120px]">
+<div class="p-3 border-r border-[#e7edf3] dark:border-gray-800 text-xs font-medium text-[#4c739a] text-center pt-4">
+                                08:00
+                            </div>
+<!-- Monday Slot (Filled) -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 relative group">
+<div class="h-full w-full bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 rounded-r-md p-2 flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold text-blue-900 dark:text-blue-100">Math</span>
+<button class="opacity-0 group-hover:opacity-100 text-blue-400 hover:text-blue-600 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-[10px] text-blue-700 dark:text-blue-300">
+<span class="material-symbols-outlined text-[12px]">person</span> Mr. Smith
+                                        </div>
+<div class="flex items-center gap-1 text-[10px] text-blue-700 dark:text-blue-300">
+<span class="material-symbols-outlined text-[12px]">room</span> Room 101
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Tuesday Slot (Empty) -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjZTIeOGYwIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')] bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-gray-800/50 transition-colors cursor-grab">
+</div>
+<!-- Wednesday Slot (Filled) -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 relative group">
+<div class="h-full w-full bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400 rounded-r-md p-2 flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold text-green-900 dark:text-green-100">Science</span>
+<button class="opacity-0 group-hover:opacity-100 text-green-400 hover:text-green-600 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-[10px] text-green-700 dark:text-green-300">
+<span class="material-symbols-outlined text-[12px]">person</span> Mrs. Davis
+                                        </div>
+<div class="flex items-center gap-1 text-[10px] text-green-700 dark:text-green-300">
+<span class="material-symbols-outlined text-[12px]">room</span> Lab 3
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Thursday Slot -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 relative group">
+<div class="h-full w-full bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 rounded-r-md p-2 flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold text-blue-900 dark:text-blue-100">Math</span>
+<button class="opacity-0 group-hover:opacity-100 text-blue-400 hover:text-blue-600 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-[10px] text-blue-700 dark:text-blue-300">
+<span class="material-symbols-outlined text-[12px]">person</span> Mr. Smith
+                                        </div>
+<div class="flex items-center gap-1 text-[10px] text-blue-700 dark:text-blue-300">
+<span class="material-symbols-outlined text-[12px]">room</span> Room 101
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Friday Slot -->
+<div class="p-1 relative group">
+<div class="h-full w-full bg-purple-50 dark:bg-purple-900/20 border-l-4 border-purple-400 rounded-r-md p-2 flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold text-purple-900 dark:text-purple-100">English</span>
+<button class="opacity-0 group-hover:opacity-100 text-purple-400 hover:text-purple-600 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-[10px] text-purple-700 dark:text-purple-300">
+<span class="material-symbols-outlined text-[12px]">person</span> Ms. Lee
+                                        </div>
+<div class="flex items-center gap-1 text-[10px] text-purple-700 dark:text-purple-300">
+<span class="material-symbols-outlined text-[12px]">room</span> Room 2B
+                                        </div>
+</div>
+</div>
+</div>
+</div>
+<!-- 09:00 AM Row -->
+<div class="grid grid-cols-[80px_1fr_1fr_1fr_1fr_1fr] border-b border-[#e7edf3] dark:border-gray-800 min-h-[120px]">
+<div class="p-3 border-r border-[#e7edf3] dark:border-gray-800 text-xs font-medium text-[#4c739a] text-center pt-4">
+                                09:00
+                            </div>
+<!-- Monday -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 relative group">
+<div class="h-full w-full bg-purple-50 dark:bg-purple-900/20 border-l-4 border-purple-400 rounded-r-md p-2 flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold text-purple-900 dark:text-purple-100">English</span>
+<button class="opacity-0 group-hover:opacity-100 text-purple-400 hover:text-purple-600 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-[10px] text-purple-700 dark:text-purple-300">
+<span class="material-symbols-outlined text-[12px]">person</span> Ms. Lee
+                                        </div>
+<div class="flex items-center gap-1 text-[10px] text-purple-700 dark:text-purple-300">
+<span class="material-symbols-outlined text-[12px]">room</span> Room 2B
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Tuesday (Empty) -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-gray-800/50 transition-colors cursor-grab relative">
+<!-- Ghost element for drag preview (simulated) -->
+<div class="absolute inset-2 border-2 border-dashed border-primary/40 rounded bg-primary/5 flex items-center justify-center pointer-events-none opacity-0 hover:opacity-100">
+<span class="text-xs font-medium text-primary">Drop Here</span>
+</div>
+</div>
+<!-- Wednesday -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 relative group">
+<div class="h-full w-full bg-orange-50 dark:bg-orange-900/20 border-l-4 border-orange-400 rounded-r-md p-2 flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold text-orange-900 dark:text-orange-100">History</span>
+<button class="opacity-0 group-hover:opacity-100 text-orange-400 hover:text-orange-600 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-[10px] text-orange-700 dark:text-orange-300">
+<span class="material-symbols-outlined text-[12px]">person</span> Mr. Brown
+                                        </div>
+<div class="flex items-center gap-1 text-[10px] text-orange-700 dark:text-orange-300">
+<span class="material-symbols-outlined text-[12px]">room</span> Room 105
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Thursday -->
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-gray-800/50 transition-colors cursor-grab"></div>
+<!-- Friday -->
+<div class="p-1 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-gray-800/50 transition-colors cursor-grab"></div>
+</div>
+<!-- 10:00 AM Row (Break) -->
+<div class="grid grid-cols-[80px_1fr] border-b border-[#e7edf3] dark:border-gray-800 min-h-[40px] bg-slate-50 dark:bg-gray-900">
+<div class="p-2 border-r border-[#e7edf3] dark:border-gray-800 text-xs font-medium text-[#4c739a] text-center flex items-center justify-center">
+                                10:00
+                            </div>
+<div class="px-4 flex items-center justify-center">
+<span class="text-xs font-medium text-[#4c739a] uppercase tracking-widest">Morning Recess</span>
+</div>
+</div>
+<!-- 10:15 AM Row -->
+<div class="grid grid-cols-[80px_1fr_1fr_1fr_1fr_1fr] border-b border-[#e7edf3] dark:border-gray-800 min-h-[120px]">
+<div class="p-3 border-r border-[#e7edf3] dark:border-gray-800 text-xs font-medium text-[#4c739a] text-center pt-4">
+                                10:15
+                            </div>
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800"></div>
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800 relative group">
+<div class="h-full w-full bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 rounded-r-md p-2 flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold text-red-900 dark:text-red-100">PE</span>
+<button class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-[10px] text-red-700 dark:text-red-300">
+<span class="material-symbols-outlined text-[12px]">person</span> Coach K
+                                        </div>
+<div class="flex items-center gap-1 text-[10px] text-red-700 dark:text-red-300">
+<span class="material-symbols-outlined text-[12px]">room</span> Gym
+                                        </div>
+</div>
+</div>
+</div>
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800"></div>
+<div class="p-1 border-r border-[#e7edf3] dark:border-gray-800"></div>
+<div class="p-1"></div>
+</div>
+</div>
+</div>
+<!-- Resource Drawer (Sidebar) -->
+<div class="w-80 bg-white dark:bg-[#1a2634] border-l border-[#e7edf3] dark:border-gray-800 flex flex-col z-10 shadow-lg">
+<!-- Tabs -->
+<div class="flex border-b border-[#e7edf3] dark:border-gray-800">
+<button class="flex-1 py-3 text-sm font-medium text-primary border-b-2 border-primary bg-primary/5">Subjects</button>
+<button class="flex-1 py-3 text-sm font-medium text-[#4c739a] hover:text-[#0d141b] hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors">Teachers</button>
+<button class="flex-1 py-3 text-sm font-medium text-[#4c739a] hover:text-[#0d141b] hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors">Rooms</button>
+</div>
+<!-- Search Filter -->
+<div class="p-4 border-b border-[#e7edf3] dark:border-gray-800">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#4c739a]">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</div>
+<input class="block w-full rounded-lg border border-[#e7edf3] bg-slate-50 dark:bg-gray-800 dark:border-gray-700 py-2 pl-9 pr-3 text-xs placeholder:text-[#4c739a] focus:ring-1 focus:ring-primary focus:border-primary transition-colors" placeholder="Search subjects..." type="text"/>
+</div>
+</div>
+<!-- Draggable Items List -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
+<p class="text-xs font-semibold text-[#4c739a] uppercase tracking-wider mb-1">Unassigned Classes</p>
+<!-- Card 1 -->
+<div class="bg-white dark:bg-gray-800 border border-[#e7edf3] dark:border-gray-700 rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing transition-all hover:border-primary/50 group">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-bold text-[#0d141b] dark:text-white">Art &amp; Design</span>
+<span class="bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300 text-[10px] px-2 py-0.5 rounded-full font-medium">2hrs left</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-[#4c739a]">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Portrait of Ms. Sarah" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQbdV2q_3WUljo5eJ7yyQtQ7JVRVDTd9OXKaQUFnWrPnpCBhPdxhsrVeBUK_mzHQ1f5_HQTVYp1bzw1zSHmKr_VeKh7p3HGfXtIDBWJSxf489ftn-tVS3UvUCIy5M83RjVn6yJFGna4PF__U4GNOgxeziWnHkaoos9eHrsl0aVPuv3t946RhWvzmde6YNMBrywHn0p6oUu7FRHySenzzEraeCPM20KLhnuc9M5LSUJfLQhsJkPT6iwAraeasaq77KFKfTP6KljnaUF");'></div>
+<span>Ms. Sarah</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-gray-800 border border-[#e7edf3] dark:border-gray-700 rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing transition-all hover:border-primary/50 group">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-bold text-[#0d141b] dark:text-white">Computer Sci</span>
+<span class="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-[10px] px-2 py-0.5 rounded-full font-medium">1hr left</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-[#4c739a]">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Portrait of Mr. Anderson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAkz81z4o95JjgspAZFI11JaEs_uLRuhDarGOYvWmRiKz8AbF0UhqGB7H7_lcrRFuCjAjRRTlWLzLNylPi_1ncVdVBaa9aSjP3JqJL8AtZw647NvR0kPD9fK93RXkyijANrVN7oJM0b7toBIbMFaMg_-2h6_1km7QxxF1x4PODpd7MPHLjf2DFTksJdPglOo5WyzCldmSZq2QUkqTPtIoLdPVrAXUISuvKTDEnsovqJfKsAjK0Ftfu_Pu055PZaVR5ij1imUvkaRG6e");'></div>
+<span>Mr. Anderson</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-gray-800 border border-[#e7edf3] dark:border-gray-700 rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing transition-all hover:border-primary/50 group">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-bold text-[#0d141b] dark:text-white">Music</span>
+<span class="bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 text-[10px] px-2 py-0.5 rounded-full font-medium">1hr left</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-[#4c739a]">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Portrait of Mrs. King" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2HgLHYkmcpWhaL40UL9EJmbz2Kf9W4wHrFacRjShltd3mjMx2gfa_9IrZgoIOpdRmSX2cigWF9vdWkX3QGHG8sIW6Ax6VcHK7hKLS3MIbIds7ZpURM_B3XCiWch_WoMow3opB2ugZ7ign1Jjmi8Y-wetP1cFmYS6ELfq5Y5W7ZyxqsJnt7Dv0gkY3gngBZFg7ZekA_fxDmuEkw3fGbIg4m0u02oATKscpmIgkmgD1ASTErwmL-0lu1Egu6t9DT04dj35uvRqdUj1y");'></div>
+<span>Mrs. King</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-[#e7edf3] dark:border-gray-800">
+<p class="text-xs font-semibold text-[#4c739a] uppercase tracking-wider mb-2">Conflict Alerts</p>
+<div class="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30 rounded-lg p-3 flex gap-3 items-start">
+<span class="material-symbols-outlined text-red-500 text-lg shrink-0 mt-0.5">warning</span>
+<div>
+<p class="text-xs font-bold text-red-700 dark:text-red-400">Room Overlap</p>
+<p class="text-[11px] text-red-600/80 dark:text-red-300/70 mt-0.5">Lab 3 is double booked on Wed 10:00 AM.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Stats -->
+<div class="p-4 bg-slate-50 dark:bg-gray-900 border-t border-[#e7edf3] dark:border-gray-800">
+<div class="flex justify-between items-center text-sm mb-1">
+<span class="font-medium text-[#4c739a]">Total Scheduled</span>
+<span class="font-bold text-[#0d141b] dark:text-white">32/40 hrs</span>
+</div>
+<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-green-500 h-2 rounded-full transition-all duration-500" style="width: 80%"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

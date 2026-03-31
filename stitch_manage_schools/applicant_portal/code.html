@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Applicant Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-col hidden md:flex h-full shrink-0">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-primary/10 rounded-full p-2">
+<span class="material-symbols-outlined text-primary text-2xl">school</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-none">School ERP</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium mt-1">Applicant Portal</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+<span class="text-sm font-semibold">Jobs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm font-medium">My Applications</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center shrink-0" data-alt="Portrait of a user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1vYeALHwREg4w8WnOIzf5UHARtVRTtM0h2f0jnh2YM86bNz8ojaJIxlP0ayB61WzUu6r4ghc_5LImoWjXPDAEc1uiDF8NvMB4xpYF3pd6d2-IjOd_Mk-YvJwEdZvVtq4ZUoePB_RoqferYehlzRuDqDQhT2EKVubfxTDC1qZJp_9J7WZM3kedlFGQaMc5TEyX5a7qdoiisvtRmygBZobxwf2Hmh-d8JoqXLROAOJW0bnFNY4OZFC4ZB0b0qLax0G1mqu7XZflJMVX");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-slate-900 dark:text-white text-sm font-semibold truncate">Alex Morgan</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs truncate">alex.m@example.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Mobile Header -->
+<header class="md:hidden flex items-center justify-between p-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shrink-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">school</span>
+<span class="font-bold text-slate-900 dark:text-white">School ERP</span>
+</div>
+<button class="text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<div class="flex-1 overflow-y-auto p-4 lg:p-10 scroll-smooth">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-8 pb-10">
+<!-- Page Heading -->
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-3xl lg:text-4xl font-black tracking-tight">Find Your Next Role</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Join our education community and help shape the future of learning.</p>
+</div>
+<!-- Search and Filter Bar -->
+<div class="flex flex-col lg:flex-row gap-4">
+<!-- Search Input -->
+<div class="flex-1 min-w-0">
+<label class="relative block w-full">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="w-full bg-white dark:bg-slate-800 border-none rounded-lg py-3 pl-10 pr-4 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-primary shadow-sm" placeholder="Search for roles (e.g. Math Teacher, Admin)" type="text"/>
+</label>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-lg text-slate-700 dark:text-slate-200 text-sm font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            Department
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-lg text-slate-700 dark:text-slate-200 text-sm font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            Job Type
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-lg text-slate-700 dark:text-slate-200 text-sm font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            Location
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- Left Column: Job Listings -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Latest Opportunities</h2>
+<a class="text-primary text-sm font-bold hover:underline" href="#">View All</a>
+</div>
+<!-- Job Card 1 -->
+<div class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:border-primary/50 dark:hover:border-primary/50 transition-all flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+<div class="size-12 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">calculate</span>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Senior Math Teacher</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">High School Department • Full-time • North Campus</p>
+</div>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-blue-600 transition-colors shrink-0 whitespace-nowrap">
+                                Apply Now
+                            </button>
+</div>
+<!-- Job Card 2 -->
+<div class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:border-primary/50 dark:hover:border-primary/50 transition-all flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+<div class="size-12 rounded-lg bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 shrink-0">
+<span class="material-symbols-outlined">library_books</span>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Administrative Assistant</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">General Office • Part-time • South Campus</p>
+</div>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-blue-600 transition-colors shrink-0 whitespace-nowrap">
+                                Apply Now
+                            </button>
+</div>
+<!-- Job Card 3 -->
+<div class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:border-primary/50 dark:hover:border-primary/50 transition-all flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+<div class="size-12 rounded-lg bg-green-50 dark:bg-green-900/30 flex items-center justify-center text-green-600 shrink-0">
+<span class="material-symbols-outlined">computer</span>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">IT Support Specialist</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Technology Dept • Full-time • Main Campus</p>
+</div>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-blue-600 transition-colors shrink-0 whitespace-nowrap">
+                                Apply Now
+                            </button>
+</div>
+<!-- Job Card 4 -->
+<div class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:border-primary/50 dark:hover:border-primary/50 transition-all flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+<div class="size-12 rounded-lg bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 shrink-0">
+<span class="material-symbols-outlined">sports_basketball</span>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">PE Instructor</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Athletics • Contract • West Campus</p>
+</div>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-blue-600 transition-colors shrink-0 whitespace-nowrap">
+                                Apply Now
+                            </button>
+</div>
+</div>
+<!-- Right Column: Widgets -->
+<div class="flex flex-col gap-6">
+<!-- Profile Completion Widget -->
+<div class="bg-gradient-to-br from-primary to-blue-600 rounded-xl p-6 text-white shadow-lg relative overflow-hidden">
+<!-- Abstract background shape -->
+<div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div>
+<h3 class="font-bold text-lg">Profile Status</h3>
+<p class="text-blue-100 text-sm">Complete your profile to increase visibility.</p>
+</div>
+<span class="material-symbols-outlined bg-white/20 p-2 rounded-lg">person_outline</span>
+</div>
+<div class="mb-4 relative z-10">
+<div class="flex justify-between text-sm font-medium mb-1">
+<span>Completion</span>
+<span>75%</span>
+</div>
+<div class="w-full bg-black/20 rounded-full h-2">
+<div class="bg-white h-2 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<button class="w-full py-2 bg-white text-primary text-sm font-bold rounded-lg hover:bg-blue-50 transition-colors relative z-10">
+                                Update Profile
+                            </button>
+</div>
+<!-- Application Tracker Widget -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+<h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">timeline</span>
+                                Active Applications
+                            </h3>
+<div class="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700 space-y-6">
+<!-- Item 1 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 rounded-full bg-green-500 ring-4 ring-white dark:ring-slate-800"></div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-slate-900 dark:text-white">Science Lab Assistant</p>
+<p class="text-xs text-green-600 dark:text-green-400 font-medium mt-0.5">Interview Scheduled</p>
+<p class="text-xs text-slate-400 mt-1">Tomorrow, 10:00 AM</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 rounded-full bg-blue-500 ring-4 ring-white dark:ring-slate-800"></div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-slate-900 dark:text-white">English Teacher</p>
+<p class="text-xs text-blue-600 dark:text-blue-400 font-medium mt-0.5">Application Submitted</p>
+<p class="text-xs text-slate-400 mt-1">Applied 2 days ago</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 rounded-full bg-slate-300 dark:bg-slate-600 ring-4 ring-white dark:ring-slate-800"></div>
+<div class="flex flex-col opacity-70">
+<p class="text-sm font-bold text-slate-900 dark:text-white">Librarian</p>
+<p class="text-xs text-slate-500 font-medium mt-0.5">Draft Saved</p>
+<p class="text-xs text-slate-400 mt-1">Updated 1 week ago</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                                View All History
+                            </button>
+</div>
+<!-- Upcoming Interviews Widget -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+<h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">event</span>
+                                Upcoming
+                            </h3>
+<div class="flex gap-4 items-start p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-100 dark:border-slate-700">
+<div class="bg-white dark:bg-slate-800 rounded-md p-2 flex flex-col items-center justify-center w-12 shrink-0 shadow-sm border border-slate-100 dark:border-slate-600">
+<span class="text-[10px] uppercase font-bold text-red-500">Oct</span>
+<span class="text-lg font-black text-slate-900 dark:text-white leading-none">24</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Video Interview</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Science Lab Assistant Role</p>
+<div class="flex items-center gap-1 mt-2">
+<span class="material-symbols-outlined text-[14px] text-slate-400">videocam</span>
+<span class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Zoom Meeting</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

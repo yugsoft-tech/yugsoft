@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Analytics Reports - School ERP</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "primary-dark": "#1a6bb5",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        .sidebar-item:hover .material-symbols-outlined {
+            color: #2b8cee;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-200">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col w-64 bg-white dark:bg-[#15202b] border-r border-slate-200 dark:border-slate-800 h-full flex-shrink-0">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shadow-sm" data-alt="School logo with abstract geometric shape" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxo_C6jFK7v0BZ1dndieR5G6m2Seb8AoG-d-DYRySRz6WRvTfyjQFjHOV1BOC_b4ReW91uzaKWyab6ETN-IQmRlv3-rjubIQC-BeZfiSTs8P6aqjURr_AL74MnFuCbC6zoRMyHpDcxMxcw8Lbc8w3iIgJM2XbHWgWoFCBjYLqo5BaLnWNNVvkvbuRsMExR8SIPTjWPAsM0b5Kztr5vgEdOpBYmMo05qkxjqUtxdwI6R5mJfnKbF6aINT3Bl9DqSUem61nlKIoAjM5R");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-normal">School ERP</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-2">
+<a class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">person</span>
+<span class="text-sm font-medium">Teachers</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">school</span>
+<span class="text-sm font-medium">Academics</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined text-primary fill-1">description</span>
+<span class="text-sm">Reports</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="User avatar profile picture" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBa4YeOcG2f9m_e-XvGVvQofaJbGE3yggSshFaLXA1hEdwPpW2R_dnlJryesT4CqeLzJF1XHfI9zjyzfS44eFjc90RWY98HZ41iBS9Hb_WCPcdb2TUjjvwgdbbJXePjvUZc79cxZrxMdyT6n9SEy0K5dJTTQ6KvRcRoW6BWkND0D1Qvj0BQQHzwqvpjHutPUFQs20phqxif8di8VXcchK_2riH5Ani4DWA6CAmltYQVut8ubkZpDVItB2O73TBEhHBwaGbHUFsb5K9J"/>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Jane Admin</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">View Profile</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Mobile Header -->
+<header class="md:hidden flex items-center justify-between p-4 bg-white dark:bg-[#15202b] border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300">menu</span>
+<span class="font-bold text-lg">School ERP</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfVOkHmU6dm9EmEkdb-OSm1pI6OWUdi8iM4pLPALx5Ythr5tmoxG5aIZK_CRdyo8U49Y5N0het7z9D80MAmtq1Bih4PvjMIv0QK2Vtyh5KZwrah5Jci_d0gOlk77_hjedWaREcDnP3NCDG6WwitgqIFENkfV0Z_zQR8KhMV2TbEp90rRA_d_v7JRBYIhhRXWW7yNVdXz-CVLe-7qMgNZARqskKf8Lh9MdkcP6lExG7O56WK1I8K34GBv9E48tN-qIsGYno-MiS8Kir"/>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-4 md:p-8">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 items-center text-sm">
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-primary transition-colors" href="#">Home</a>
+<span class="text-slate-400 dark:text-slate-600">/</span>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-primary transition-colors" href="#">Reports</a>
+<span class="text-slate-400 dark:text-slate-600">/</span>
+<span class="text-slate-900 dark:text-white font-semibold">Analytics</span>
+</div>
+<!-- Page Heading & Actions -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black tracking-tight">Student Analytics Reports</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base max-w-2xl">Generate and view comprehensive insights on student performance, attendance, and demographics.</p>
+</div>
+<div class="flex gap-3">
+<button class="hidden sm:flex items-center justify-center gap-2 px-4 h-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">file_upload</span>
+<span>Export</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-5 h-10 rounded-lg bg-primary hover:bg-primary-dark text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all">
+<span class="material-symbols-outlined text-[20px]">print</span>
+<span>Print Report</span>
+</button>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="bg-white dark:bg-[#15202b] p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Academic Year -->
+<label class="flex flex-col gap-1.5">
+<span class="text-slate-700 dark:text-slate-300 text-sm font-semibold">Academic Year</span>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white h-11 px-4 pr-10 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+<option value="2023-2024">2023 - 2024</option>
+<option value="2022-2023">2022 - 2023</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-[20px]">keyboard_arrow_down</span>
+</div>
+</label>
+<!-- Term -->
+<label class="flex flex-col gap-1.5">
+<span class="text-slate-700 dark:text-slate-300 text-sm font-semibold">Term</span>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white h-11 px-4 pr-10 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+<option value="term-2">Term 2 (Current)</option>
+<option value="term-1">Term 1</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-[20px]">keyboard_arrow_down</span>
+</div>
+</label>
+<!-- Grade -->
+<label class="flex flex-col gap-1.5">
+<span class="text-slate-700 dark:text-slate-300 text-sm font-semibold">Grade/Class</span>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white h-11 px-4 pr-10 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+<option value="grade-10">Grade 10</option>
+<option value="grade-11">Grade 11</option>
+<option value="grade-12">Grade 12</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-[20px]">keyboard_arrow_down</span>
+</div>
+</label>
+<!-- Section -->
+<label class="flex flex-col gap-1.5">
+<span class="text-slate-700 dark:text-slate-300 text-sm font-semibold">Section</span>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white h-11 px-4 pr-10 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+<option value="all">All Sections</option>
+<option value="a">Section A</option>
+<option value="b">Section B</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-[20px]">keyboard_arrow_down</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Stats Cards (KPIs) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#15202b] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Students</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded-md text-[20px]">group</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-slate-900 dark:text-white text-3xl font-bold">450</p>
+</div>
+<p class="text-emerald-600 dark:text-emerald-400 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +2% vs last term
+                            </p>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#15202b] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg. Attendance</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded-md text-[20px]">event_available</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-slate-900 dark:text-white text-3xl font-bold">94.5%</p>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-slate-400">remove</span> Stable
+                            </p>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#15202b] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Class Avg. GPA</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded-md text-[20px]">grade</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-slate-900 dark:text-white text-3xl font-bold">3.2</p>
+</div>
+<p class="text-emerald-600 dark:text-emerald-400 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> Top 10%
+                            </p>
+</div>
+<!-- Card 4 -->
+<div class="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#15202b] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">At-Risk Students</p>
+<span class="material-symbols-outlined text-red-500 bg-red-500/10 p-1 rounded-md text-[20px]">warning</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-slate-900 dark:text-white text-3xl font-bold">12</p>
+</div>
+<p class="text-red-500 dark:text-red-400 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">priority_high</span> Needs Attention
+                            </p>
+</div>
+</div>
+<!-- Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Performance Trends (Mock Chart) -->
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] p-6 shadow-sm flex flex-col h-80">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Academic Performance Trends</h3>
+<button class="text-primary text-sm font-medium hover:underline">View Details</button>
+</div>
+<!-- Simple CSS Bar Chart Representation -->
+<div class="flex-1 flex items-end justify-between gap-2 sm:gap-4 w-full h-full relative">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-0">
+<div class="w-full h-px bg-slate-100 dark:bg-slate-800"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-800"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-800"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-800"></div>
+<div class="w-full h-px bg-slate-200 dark:bg-slate-700"></div>
+</div>
+<!-- Bars -->
+<div class="relative z-10 flex flex-col items-center gap-2 group flex-1">
+<div class="w-full max-w-[40px] bg-blue-300/50 dark:bg-blue-500/30 rounded-t-sm h-[40%] group-hover:bg-primary transition-all relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded">2.8</div>
+</div>
+<span class="text-xs text-slate-400">Sep</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2 group flex-1">
+<div class="w-full max-w-[40px] bg-blue-300/50 dark:bg-blue-500/30 rounded-t-sm h-[55%] group-hover:bg-primary transition-all relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded">3.0</div>
+</div>
+<span class="text-xs text-slate-400">Oct</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2 group flex-1">
+<div class="w-full max-w-[40px] bg-blue-300/50 dark:bg-blue-500/30 rounded-t-sm h-[45%] group-hover:bg-primary transition-all relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded">2.9</div>
+</div>
+<span class="text-xs text-slate-400">Nov</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2 group flex-1">
+<div class="w-full max-w-[40px] bg-primary rounded-t-sm h-[70%] shadow-lg shadow-blue-500/20 relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded">3.2</div>
+</div>
+<span class="text-xs text-slate-900 dark:text-white font-medium">Dec</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2 group flex-1">
+<div class="w-full max-w-[40px] bg-blue-300/50 dark:bg-blue-500/30 rounded-t-sm h-[75%] group-hover:bg-primary transition-all relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded">3.3</div>
+</div>
+<span class="text-xs text-slate-400">Jan</span>
+</div>
+</div>
+</div>
+<!-- Attendance Overview -->
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] p-6 shadow-sm flex flex-col h-80">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Attendance Breakdown</h3>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-emerald-500"></span><span class="text-xs text-slate-500">Present</span>
+<span class="w-3 h-3 rounded-full bg-orange-400"></span><span class="text-xs text-slate-500">Late</span>
+<span class="w-3 h-3 rounded-full bg-red-400"></span><span class="text-xs text-slate-500">Absent</span>
+</div>
+</div>
+<div class="flex flex-col justify-center gap-6 h-full">
+<!-- Grade 10 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="font-medium text-slate-700 dark:text-slate-300">Grade 10</span>
+<span class="text-slate-500">92%</span>
+</div>
+<div class="w-full h-3 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="h-full bg-emerald-500 w-[85%]"></div>
+<div class="h-full bg-orange-400 w-[7%]"></div>
+<div class="h-full bg-red-400 w-[8%]"></div>
+</div>
+</div>
+<!-- Grade 11 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="font-medium text-slate-700 dark:text-slate-300">Grade 11</span>
+<span class="text-slate-500">95%</span>
+</div>
+<div class="w-full h-3 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="h-full bg-emerald-500 w-[90%]"></div>
+<div class="h-full bg-orange-400 w-[5%]"></div>
+<div class="h-full bg-red-400 w-[5%]"></div>
+</div>
+</div>
+<!-- Grade 12 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="font-medium text-slate-700 dark:text-slate-300">Grade 12</span>
+<span class="text-slate-500">88%</span>
+</div>
+<div class="w-full h-3 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="h-full bg-emerald-500 w-[80%]"></div>
+<div class="h-full bg-orange-400 w-[8%]"></div>
+<div class="h-full bg-red-400 w-[12%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Table Section -->
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] shadow-sm overflow-hidden mb-8">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-wrap gap-4 justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Student Performance Report</h3>
+<div class="flex gap-2">
+<div class="relative">
+<input class="pl-9 pr-4 h-9 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="Search student..." type="text"/>
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+</div>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="p-4 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 whitespace-nowrap">ID</th>
+<th class="p-4 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 whitespace-nowrap">Student Name</th>
+<th class="p-4 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 whitespace-nowrap">Class</th>
+<th class="p-4 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 whitespace-nowrap">Attendance</th>
+<th class="p-4 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 whitespace-nowrap">GPA</th>
+<th class="p-4 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 whitespace-nowrap">Status</th>
+<th class="p-4 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 text-right whitespace-nowrap">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">#ST-2023-001</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8" data-alt="Portrait of student Alex Johnson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCUaiPoCZs0uHfFWHULWX42FB9tBv2lYa-qTQZqFUQ4sZWH1p-BhZ1LSUBtf8_c--4ttb0Ndj44loAvpKnl1QxMbazKTMTTDNjKrjMzIEFyvpV0b0hcCCzqJ9A4qx2o8ilnnNemrELuYNY4z3CbFLuHHTL__AuLefVPg8ReEgU1POZc_nmFBN7xNdmKitjFxUBC3D8C1siChdN7ejM78zPPReS5xQ1rUnurbqvPsLCb9tEUTpxhkonUv8mSP_8PNW4yd5e9n4uOzn5");'></div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Alex Johnson</p>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">10-A</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[98%]"></div>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">98%</span>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-slate-900 dark:text-white">3.8</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400">
+                                                Excellent
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">#ST-2023-045</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8" data-alt="Portrait of student Sarah Lee" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBU7jB7Rl6Dhxr1KPxnB11eChkDHsA-kTmG_XM2fu3pNt2BNs9eO2EWLQp1M38ONr6AdwfHjSuCnygs1yo3JAR_7yMhpJfYKClaSXxGZcMJqsDzFwlscAGm3nIiWiyPEiXpl-gHOKYj6x-e7Kym97PSpfqUdiVx__ib9ioyRyJ3o3mXrJTTMCpLMa1qW-u1pEI34lERZfPUGoS2YT39xgp8opQz3BlMKnKtuzKSCpz01Rc4I3jmCGsrlvqLNBB7XXlgvF5R_p25-3rA");'></div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Sarah Lee</p>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">10-A</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[92%]"></div>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">92%</span>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-slate-900 dark:text-white">3.5</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-blue-100 dark:bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-400">
+                                                Good
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">#ST-2023-089</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8" data-alt="Portrait of student Michael Chen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC8KEC5VlxAcuT_bkrQmKap1GdK0SbkN5-CqQ1Rqn3cJxPG3JoA86n9FidKm6Sq69ta3QPa_LgsaZ2o5paO2F6Ufpd9ZlPhtZYBESMS6Wq5cTSjdZ73xRJN96HQVBfcUmmMhbI0NnJziZjCQFOZv5XhWKY_CTEgbVPUYGhb0xAcYYR1KVGfOwqA_ZmZcro0NMGNDsP5D5uqzGwB7Kk4RrgE4E_2iInDDiotiiuSP-BuB4pdl3pIBnqqujh8mNHUUOPkFT_j4jIitWU8");'></div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Michael Chen</p>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">10-B</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-orange-400 w-[75%]"></div>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">75%</span>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-slate-900 dark:text-white">2.4</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-orange-100 dark:bg-orange-500/10 px-2 py-1 text-xs font-medium text-orange-700 dark:text-orange-400">
+                                                Average
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">#ST-2023-102</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8" data-alt="Portrait of student Emily Davis" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBS7W6FXajlL2y2UF8X8s3-SI1xA1C7qSkitsmStqiQgwgJQeABo03jSjKnoz-PT_1--wG1OgBvGn0lfzfMlp1jo2bMzNkOY3uKYyfrMrKObaa53z5n5fq9yJwTRg0p0I78MkUXYRp2NeFzcMV1EyfxQXbF5c364_4n7OfHAxhL15MLTTVJ5Gkr-ezQEHhtXEZFrZB-jeNH9lEcKR9lNRjiwnrCuToYNJqCxUYlT03tKappqPdVBFIJSiRvrBhIZE_l3GaqpZ1pvFhF");'></div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Emily Davis</p>
+</div>
+</td>
+<td class="p-4 text-sm text-slate-600 dark:text-slate-400">10-B</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-red-400 w-[60%]"></div>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">60%</span>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-slate-900 dark:text-white">1.9</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-red-100 dark:bg-red-500/10 px-2 py-1 text-xs font-medium text-red-700 dark:text-red-400">
+                                                At Risk
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<span class="text-sm text-slate-500 dark:text-slate-400">Showing 1-4 of 45 students</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded">Prev</button>
+<button class="px-3 py-1 text-sm bg-primary text-white rounded shadow-sm">1</button>
+<button class="px-3 py-1 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded">2</button>
+<button class="px-3 py-1 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded">3</button>
+<button class="px-3 py-1 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

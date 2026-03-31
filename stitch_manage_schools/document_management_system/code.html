@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Document Management</title>
+<!-- Google Fonts: Lexend -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        /* Custom scrollbar for sidebar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 !h-10 w-96">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800">
+<div class="text-slate-500 flex border-none items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-full placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search documents, students, or staff..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Students</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Staff</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Finance</a>
+<a class="text-primary text-sm font-medium leading-normal transition-colors" href="#">Documents</a>
+</nav>
+<div class="flex gap-3 items-center">
+<button class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-blue-600 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm shadow-blue-200 dark:shadow-none">
+<span class="truncate">Upload Document</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-white shadow-sm cursor-pointer ml-2" data-alt="Profile picture of the current user, a school administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVaLJtcsh-Uw1as3NX-sj1JMYyZivB9qHDxIE-oEDrggv3JBsflSSmwlB2cG5vhZC1HQJ8FaTbXceZfqztszlBr-a3fW0Dk4LxHaZJo_b2ORh4udENy8ZFQHQSa1AyobQMXGpyZI_sqUUau2WSaGKmhsOpM9fOf3ioQBO0T_RMG5bE92Y_bxmHapNlY-00H093enCgVHGVjpExir_YBarzyrqDe9x2o4VDHRS4UHdWaXiwZqEf3GfkfrbjCdZDhnE_jDq4Mzzrqjrr");'>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout Container -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-col hidden md:flex shrink-0">
+<div class="flex flex-col h-full overflow-y-auto custom-scrollbar p-4 gap-6">
+<!-- Section 1 -->
+<div class="flex flex-col gap-2">
+<div class="px-3">
+<h3 class="text-slate-900 dark:text-white text-base font-bold leading-normal">Documents</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal">Manage School Files</p>
+</div>
+<nav class="flex flex-col gap-1 mt-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">schedule</span>
+<span class="text-sm font-medium">Quick Access</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">folder_open</span>
+<span class="text-sm font-medium">Recent Files</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">star</span>
+<span class="text-sm font-medium">Favorites</span>
+</a>
+</nav>
+</div>
+<!-- Section 2: Categories -->
+<div class="flex flex-col gap-2">
+<div class="px-3 pt-2 pb-1 border-t border-slate-100 dark:border-slate-800">
+<p class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Categories</p>
+</div>
+<nav class="flex flex-col gap-1">
+<!-- Active State Example -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined fill-current">policy</span>
+<span class="text-sm font-bold">Policies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">description</span>
+<span class="text-sm font-medium">Student Forms</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">group</span>
+<span class="text-sm font-medium">Staff Records</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">gavel</span>
+<span class="text-sm font-medium">Legal</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 group transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">account_balance</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+</nav>
+</div>
+<!-- Storage Info -->
+<div class="mt-auto p-4 rounded-xl bg-slate-50 dark:bg-slate-800 mb-2">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">cloud</span>
+<span class="text-sm font-bold text-slate-800 dark:text-slate-200">Storage</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 mb-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+</div>
+<p class="text-xs text-slate-500">75GB used of 100GB</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Breadcrumbs & Header -->
+<div class="px-8 py-6 shrink-0">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 items-center mb-2">
+<a class="text-slate-500 hover:text-primary text-sm font-medium leading-normal" href="#">Home</a>
+<span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+<a class="text-slate-500 hover:text-primary text-sm font-medium leading-normal" href="#">Documents</a>
+<span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+<span class="text-slate-900 dark:text-white text-sm font-bold leading-normal">Policies</span>
+</div>
+<!-- Headline -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">School Policies</h1>
+<p class="text-slate-500 mt-1">Manage, update and distribute official school policy documents.</p>
+</div>
+</div>
+</div>
+<!-- Toolbar -->
+<div class="px-8 pb-4 shrink-0">
+<div class="flex flex-col sm:flex-row justify-between gap-4 items-center bg-white dark:bg-slate-900 p-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<!-- Left: Filters & Selection -->
+<div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
+<div class="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1 gap-1">
+<button class="p-1.5 rounded-md bg-white dark:bg-slate-700 shadow-sm text-primary">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+</button>
+<button class="p-1.5 rounded-md text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">view_list</span>
+</button>
+</div>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                            Filter
+                        </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">sort</span>
+                            Sort by: Date
+                        </button>
+</div>
+<!-- Right: Primary Action -->
+<button class="flex shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 bg-primary hover:bg-blue-600 text-white gap-2 text-sm font-bold px-4 transition-colors w-full sm:w-auto">
+<span class="material-symbols-outlined text-lg">add</span>
+<span class="truncate">Upload Policy</span>
+</button>
+</div>
+</div>
+<!-- Content Grid/List (Scrollable) -->
+<div class="flex-1 overflow-y-auto px-8 pb-8 custom-scrollbar">
+<!-- Folders Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="group flex items-center p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:shadow-md hover:border-primary/50 transition-all cursor-pointer">
+<div class="size-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center mr-3">
+<span class="material-symbols-outlined fill-current">folder</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-slate-900 dark:text-white font-bold text-sm truncate">2024 Academic Year</h4>
+<p class="text-slate-500 text-xs">12 files</p>
+</div>
+</div>
+<div class="group flex items-center p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:shadow-md hover:border-primary/50 transition-all cursor-pointer">
+<div class="size-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 flex items-center justify-center mr-3">
+<span class="material-symbols-outlined fill-current">folder</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-slate-900 dark:text-white font-bold text-sm truncate">HR Policies</h4>
+<p class="text-slate-500 text-xs">8 files • <span class="text-xs text-orange-600 bg-orange-100 px-1 rounded dark:bg-orange-900/50">Admin Only</span></p>
+</div>
+</div>
+<div class="group flex items-center p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:shadow-md hover:border-primary/50 transition-all cursor-pointer">
+<div class="size-10 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 flex items-center justify-center mr-3">
+<span class="material-symbols-outlined fill-current">folder</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-slate-900 dark:text-white font-bold text-sm truncate">Student Conduct</h4>
+<p class="text-slate-500 text-xs">24 files</p>
+</div>
+</div>
+<div class="group flex items-center justify-center p-4 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer text-slate-500 hover:text-primary">
+<span class="material-symbols-outlined mr-2">create_new_folder</span>
+<span class="font-medium text-sm">New Folder</span>
+</div>
+</div>
+<h3 class="text-slate-900 dark:text-white font-bold text-lg mb-4">All Files</h3>
+<!-- Files Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+<!-- File Card 1 -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<!-- Preview Area -->
+<div class="h-32 bg-slate-50 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden">
+<!-- Abstract preview pattern -->
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-400 to-transparent"></div>
+<img alt="Abstract blue gradient representing a document preview" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Abstract blue geometric document cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRpQp-hTuf1A4-rpFmKzy8zPWFp3yrJHlAAmn1wHZU_q2YWaAWbIDBU0FBWs88zus30cC6IRX_P1X75OwM4HfXEE-_lyAWGc6WeyFtTxqnJPdUuAjFaUU_ZgnabBoNC2Enz_gkTScmpGOXIPLff8L0YzXq9xt8klCo90hQeSZgmbRJHX0hoDnB57mBdvNWyz_t-y0Af7LEnO4NPgEu3MoxH58hazgD2c1A1A4gOh9Ff0rT0_gJebl0F5d03Qv9mzDbmF4AOaUZ3ZOF"/>
+<div class="absolute bottom-2 left-2 bg-white dark:bg-slate-900 p-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-red-500 text-xl block">picture_as_pdf</span>
+</div>
+</div>
+<!-- Content -->
+<div class="p-3 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate pr-2" title="Student_Handbook_2024.pdf">Student_Handbook_2024.pdf</h4>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">2.4 MB • Updated 2h ago</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<div class="size-5 rounded-full bg-cover bg-center" data-alt="Small avatar of user Sarah J." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDm1qT2hpPtRSQyJW-WeR97qtAfX48Mxnbo_Lcs4TVeHEjkwhPYat7ZTheuXUSiy6mCRD1ChevXCey8gLqEn8uekz_sHxW6TF7qnn6NYXIaenmXpMDAqdpyCIELcS6OoA6TiaTQuL331NO1cFgEGi0_DlPrCp1zAmW2YKGTMMo-5VPZR0EyfWcj8pjvPR-eQmbwKOwyD6HP8k9D06NDtmcFkuZDWkZblqtRJ2Qp2Qi8BdyT3eJg3LedbS-znPnPIZhfJoo0RHGxQYaa");'></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">Sarah J.</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Published</span>
+</div>
+</div>
+</div>
+<!-- File Card 2 -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="h-32 bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative">
+<span class="material-symbols-outlined text-blue-500 text-5xl">description</span>
+<div class="absolute bottom-2 left-2 bg-white dark:bg-slate-900 p-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-blue-600 text-xl block">article</span>
+</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate pr-2">Dress_Code_Policy_v2.docx</h4>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">145 KB • Updated Yesterday</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<div class="size-5 rounded-full bg-cover bg-center" data-alt="Small avatar of user Mike R." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAS50eDdZ_48sli-bwJ2Z4YWtzXJGXLmQvB1KvxdCdhJnLIlEmVgbS7JC0sG96VbFdRPiql_gM8cwviY3kFnvsF3QQ8vQRPNN9MsRSNOp2Xf_RYmH7_W1wRBmEZhO92_ekcYPEgx8joHBOY7YGtkAWBIxdxQCTggnsM7yojqqfk4PRqHn3FM9aMMoguR6Q3r8wEvigNKGsfD_aZB-xo6bhofigEOi4w_VHkwl34XGPPk-KE7nq2FrET7VyIV4gGNElLIlT2RleoxYKt");'></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">Mike R.</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">Draft</span>
+</div>
+</div>
+</div>
+<!-- File Card 3 -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="h-32 bg-slate-50 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden">
+<img alt="Financial chart showing growth" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Financial spreadsheet preview with charts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtSHkYn2eR60gLqYpTjXyYbK_JJR9d-hLbV1GxNj3uO6rHRjZdsyoCNSz-9NBVqc4mb2eSUe2Rt2YdwSdU_J2UwwSoqqvOdFHmtRQaHDX7yqmkfXIRPsfl1zQzTyOKHkPyDWE3uV71hzM-DlsyxrjuE7sGoifaUobljegKKBrEY_NAt0sNoEuZC2_8bbd1TpBfyLxNbmrzSr7QaIjAzCwC4Jn7D6jhJihODIg_Cdk5VqON9pyjnbCKfovmXHJr5sS578scsUn1sJ1y"/>
+<div class="absolute bottom-2 left-2 bg-white dark:bg-slate-900 p-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-green-600 text-xl block">table_view</span>
+</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate pr-2">Q3_Budget_Review.xlsx</h4>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">850 KB • 3 days ago</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<div class="size-5 rounded-full bg-cover bg-center" data-alt="Small avatar of user Sarah J." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBq-llxMsFQEQxEdwXJokZcYv7fpNPCmjWVy5rBGuqHhcgg9ZLfzCkQwBx9K-Ey5zhCmZaWj__k1iRS_AGoMB2W_sfVVLBJCOKRqcLD7wgYmgPo5_6bxix7zGQtr2cuVox4XoIeRrh_uTji2B5xe1-Le3xlXSfa-bC8ZXuYq1ultkfCXF5u5Dn4Ysu5HDZkJaKy9LT5CjFdEq4OnScYWipctPbibm37CQE1pMy3pcoAuGW_KTUGNPARCgU_JIfzWHmvEBi6f8uIVyw5");'></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">Sarah J.</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">Finance</span>
+</div>
+</div>
+</div>
+<!-- File Card 4 -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="h-32 bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative">
+<span class="material-symbols-outlined text-red-400 text-5xl">picture_as_pdf</span>
+<div class="absolute bottom-2 left-2 bg-white dark:bg-slate-900 p-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-red-500 text-xl block">picture_as_pdf</span>
+</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate pr-2">Safety_Protocols_Fire.pdf</h4>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">3.2 MB • 5 days ago</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<div class="size-5 rounded-full bg-cover bg-center" data-alt="Small avatar of user David L." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUGWL204RXEdUk-DPlBZJ8kQ9CjEk05z5p39Ljs46F6WqAo2ynroVUf2CFz0D3vLJy7j1e2aD3_QMq688fnWMO0pFNOATtWnZSw-H3eV_ETdAf7syPb4EKNBgej2fHAixPobD-j5QAlFPDYYAtyuWqUPXhgEBlAYsYWO4F3Lf5oQ436kc_lzLhYW6_GtdFOYBhAh8fJ06K2776qAk0I-tMqQJmSKoen0Dynda7Ph54uU1DajRlBbXJ0Ipt5oYJAF2tErqHTEfjOCRJ");'></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">David L.</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400">Important</span>
+</div>
+</div>
+</div>
+<!-- File Card 5 -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="h-32 bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative">
+<span class="material-symbols-outlined text-blue-500 text-5xl">description</span>
+<div class="absolute bottom-2 left-2 bg-white dark:bg-slate-900 p-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-blue-600 text-xl block">article</span>
+</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate pr-2">Parent_Letter_Oct.docx</h4>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">56 KB • 1 week ago</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<div class="size-5 rounded-full bg-cover bg-center" data-alt="Small avatar of user Sarah J." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWjHKRXidx1egdM7oaFMXBYeQ7R1NnmwQX_UQdCiX8hiTu0r-xPdP8erNIkEdjJutYqklqDef95xUUGuu87Vk1kBGhgmktGejT9QP3aP8rNGUJ6LjPHndvOv7axeLuLfGrextGaHRUutzNA4tCwFCIZhGKBsLUp6VmQ7fv4EK7tmgy9fJosGb2zpePxbh3bzWhyAUHr_2Q1OOWay8l1cp_I0ZMRfY1xYS3m1m9hqsYWRgUEkP4AUI89XUW9wdgNtKHqKEcr5GKhuft");'></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">Sarah J.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- File Card 6 (Image) -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="h-32 bg-slate-50 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden">
+<img alt="Event poster preview" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Event flyer design preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIPA0tuRh-cbs_CXFrxdLUzwR6EN8qNW0GBIObcXHpeUZHBmRuQPEndF4_b5L3v3jxMmG3DeI3cMdDlJuqv0oUnnhIqQzeqoFuWTWw6p3Wu0DaJ65-ztwrqO428bnQ08ZwcKZr_9njRhmmIsbmobRZpsk3k_Dz5BnaV4TXgypOaig_rvXtI-xOicPwWC8YVznbgtRaN0NYUUhbgB8E-UpDb4izkwEF1JPAlG-N2DFpDnQnBsnjU7onvsrjpUdmpPzImwsnBb3Qch30"/>
+<div class="absolute bottom-2 left-2 bg-white dark:bg-slate-900 p-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-purple-600 text-xl block">image</span>
+</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate pr-2">Event_Poster_Gala.png</h4>
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">4.1 MB • 1 week ago</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<div class="size-5 rounded-full bg-cover bg-center" data-alt="Small avatar of user Mike R." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAT88JE2JNLUcclUvJ7lRiX2DuJUzg3TLdro2Un630iMjFpxspjhhO_k7HMMbt8c8Lbs55bEjCqqaGRJ5vGHtg-vHWesS6aWRG8oS9tOzm-KNEdliuueWaANCcCLLu8btFB4IFt0Li3hsnY90ojs1PZxgihjhwwZhFPrr1OSwbYxrxNntqCpeFJmT332PwRi5bkCYHIktAu7941xn_97fqaOuYZVkxwEyv_MObXU4o_jU5TWgyDuWlzQRfaTUcNaHeHJZusL01Lxk3E");'></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">Mike R.</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Approved</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

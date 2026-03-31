@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - Announcements</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;family=Noto+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "border-light": "#e7edf3",
+                        "border-dark": "#2a3b4d",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-[#0d141b] dark:text-slate-100 overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark px-10 py-3 shadow-sm sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4L2 16L24 28L46 16L24 4ZM24 33L6 23.1V36L24 46L42 36V23.1L24 33Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">School ERP</h2>
+</div>
+<label class="hidden lg:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#4c739a] flex border-none bg-background-light dark:bg-background-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-l-none border-l-0 text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 border-none bg-background-light dark:bg-background-dark focus:border-none h-full placeholder:text-[#4c739a] px-4 pl-2 text-sm font-normal leading-normal" placeholder="Search modules..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<div class="hidden xl:flex items-center gap-9">
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Students</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Staff</a>
+<a class="text-sm font-medium leading-normal text-primary" href="#">Announcements</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Finance</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-blue-600 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm">
+<span class="truncate">Logout</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-slate-700 shadow-md cursor-pointer" data-alt="Profile picture of the school administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBTFngnTN1qz69Xxe-hDnksSvVPr-NZEgr5RV7g8Jukik7ZzOwBiwgZRDcfWg45yNShFoHS9ob_jptZgKsMD23uuArSc6XYCBoSE-qvW9CUIqX_XqWmBekp7tAsRfkWg5UieXjc85eRSLjbuDryMd3dfyPuwOWQFvXfxnKAOzxXXvCR8n19t_spqcVLgB8Mrhcg8KAnDQkLZ0tzu5NQWc9SXRDYzBQKN_6OLca3i5ynafkPlXQWUeNRODIp9VwjcqDmXuikT8XsupVn");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Layout -->
+<div class="flex-1 flex justify-center py-8 px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col max-w-[1024px] w-full flex-1 gap-8">
+<!-- Page Heading & Actions -->
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Announcements &amp; Notices</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-base font-normal leading-normal">Manage and publish updates for students, staff, and parents.</p>
+</div>
+<button class="flex items-center gap-2 cursor-pointer justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary hover:bg-blue-600 text-white text-sm font-bold leading-normal tracking-[0.015em] shadow-md transition-all hover:-translate-y-0.5">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="truncate">Create New Notice</span>
+</button>
+</div>
+<!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Active Notices</p>
+<span class="material-symbols-outlined text-green-500">campaign</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-3xl font-bold leading-tight">12</p>
+<p class="text-[#078838] text-xs font-bold bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-full">+2 new</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Drafts</p>
+<span class="material-symbols-outlined text-orange-400">edit_document</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-3xl font-bold leading-tight">3</p>
+<p class="text-slate-500 text-xs font-medium">Pending review</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Archived</p>
+<span class="material-symbols-outlined text-slate-400">inventory_2</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-3xl font-bold leading-tight">45</p>
+<p class="text-slate-500 text-xs font-medium">Past notices</p>
+</div>
+</div>
+</div>
+<!-- Toolbar: Search & Filter -->
+<div class="flex flex-col md:flex-row gap-4 justify-between items-center bg-surface-light dark:bg-surface-dark p-2 rounded-xl border border-border-light dark:border-border-dark shadow-sm">
+<!-- Search -->
+<div class="w-full md:w-1/3">
+<label class="flex flex-col w-full h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-background-light dark:bg-background-dark border border-transparent focus-within:border-primary/50 transition-colors">
+<div class="text-[#4c739a] flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 bg-transparent border-none text-sm px-3 text-[#0d141b] dark:text-white placeholder:text-[#4c739a] focus:ring-0" placeholder="Search by keyword..."/>
+</div>
+</label>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+<button class="flex h-9 shrink-0 items-center gap-2 rounded-lg bg-primary text-white px-4 text-sm font-medium shadow-sm transition-colors">
+<span>All</span>
+</button>
+<button class="flex h-9 shrink-0 items-center gap-2 rounded-lg bg-background-light dark:bg-background-dark hover:bg-slate-200 dark:hover:bg-slate-700 px-4 text-sm font-medium text-slate-600 dark:text-slate-300 transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-600">
+<span>Students</span>
+</button>
+<button class="flex h-9 shrink-0 items-center gap-2 rounded-lg bg-background-light dark:bg-background-dark hover:bg-slate-200 dark:hover:bg-slate-700 px-4 text-sm font-medium text-slate-600 dark:text-slate-300 transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-600">
+<span>Staff</span>
+</button>
+<button class="flex h-9 shrink-0 items-center gap-2 rounded-lg bg-background-light dark:bg-background-dark hover:bg-slate-200 dark:hover:bg-slate-700 px-4 text-sm font-medium text-slate-600 dark:text-slate-300 transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-600">
+<span>Parents</span>
+</button>
+<div class="w-px h-6 bg-slate-300 dark:bg-slate-700 mx-1 self-center"></div>
+<button class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background-light dark:bg-background-dark hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Notices List -->
+<div class="flex flex-col gap-4">
+<!-- Notice Card 1 (Pinned) -->
+<div class="group relative flex flex-col md:flex-row gap-4 p-5 rounded-xl bg-surface-light dark:bg-surface-dark border-l-4 border-l-primary border-y border-r border-r-border-light dark:border-r-border-dark border-y-border-light dark:border-y-border-dark shadow-sm hover:shadow-md transition-all">
+<!-- Date Block -->
+<div class="flex md:flex-col items-center md:items-center justify-center min-w-[70px] bg-blue-50 dark:bg-blue-900/20 rounded-lg p-2 md:py-3 h-fit gap-2 md:gap-0">
+<span class="text-xs font-bold text-primary uppercase">OCT</span>
+<span class="text-2xl font-bold text-[#0d141b] dark:text-white">24</span>
+</div>
+<!-- Content -->
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Pinned</span>
+<span class="bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Students</span>
+</div>
+<h3 class="text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors">Annual Science Fair Registration</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">Registration is now open for all grades 6-12. Please submit your project proposals by next Friday. Teams can consist of up to 3 members.</p>
+<div class="flex items-center gap-4 mt-2 text-xs text-[#4c739a] font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">person</span> Posted by Admin</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">attach_file</span> 2 Files</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex md:flex-col justify-end items-center gap-2 border-t md:border-t-0 md:border-l border-border-light dark:border-border-dark pt-3 md:pt-0 md:pl-4 mt-2 md:mt-0">
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-primary transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-red-500 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-primary transition-colors" title="Unpin">
+<span class="material-symbols-outlined text-[20px] fill-current">push_pin</span>
+</button>
+</div>
+</div>
+<!-- Notice Card 2 -->
+<div class="group relative flex flex-col md:flex-row gap-4 p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-all">
+<div class="flex md:flex-col items-center md:items-center justify-center min-w-[70px] bg-slate-50 dark:bg-slate-800 rounded-lg p-2 md:py-3 h-fit gap-2 md:gap-0">
+<span class="text-xs font-bold text-slate-500 uppercase">OCT</span>
+<span class="text-2xl font-bold text-[#0d141b] dark:text-white">22</span>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Staff</span>
+</div>
+<h3 class="text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors">Q3 Staff Meeting Agenda</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">The upcoming quarterly review meeting will focus on curriculum updates and the new grading policy implementation. Attendance is mandatory.</p>
+<div class="flex items-center gap-4 mt-2 text-xs text-[#4c739a] font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">person</span> Posted by Principal</span>
+</div>
+</div>
+<div class="flex md:flex-col justify-end items-center gap-2 border-t md:border-t-0 md:border-l border-border-light dark:border-border-dark pt-3 md:pt-0 md:pl-4 mt-2 md:mt-0">
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Notice Card 3 -->
+<div class="group relative flex flex-col md:flex-row gap-4 p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-all">
+<div class="flex md:flex-col items-center md:items-center justify-center min-w-[70px] bg-slate-50 dark:bg-slate-800 rounded-lg p-2 md:py-3 h-fit gap-2 md:gap-0">
+<span class="text-xs font-bold text-slate-500 uppercase">OCT</span>
+<span class="text-2xl font-bold text-[#0d141b] dark:text-white">18</span>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Parents</span>
+</div>
+<h3 class="text-lg font-bold text-[#0d141b] dark:text-white group-hover:text-primary transition-colors">Parent-Teacher Conference Schedule</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">Booking slots are now open. Please log in to the parent portal to reserve your 15-minute slot with class teachers.</p>
+<div class="flex items-center gap-4 mt-2 text-xs text-[#4c739a] font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">person</span> Posted by Admin</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">link</span> External Link</span>
+</div>
+</div>
+<div class="flex md:flex-col justify-end items-center gap-2 border-t md:border-t-0 md:border-l border-border-light dark:border-border-dark pt-3 md:pt-0 md:pl-4 mt-2 md:mt-0">
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Notice Card 4 (Draft) -->
+<div class="group relative flex flex-col md:flex-row gap-4 p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-dashed border-slate-300 dark:border-slate-600 opacity-80 hover:opacity-100 transition-all">
+<div class="flex md:flex-col items-center md:items-center justify-center min-w-[70px] bg-slate-100 dark:bg-slate-800 rounded-lg p-2 md:py-3 h-fit gap-2 md:gap-0">
+<span class="text-xs font-bold text-slate-400 uppercase">--</span>
+<span class="text-2xl font-bold text-slate-400">--</span>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Draft</span>
+<span class="bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">All Audiences</span>
+</div>
+<h3 class="text-lg font-bold text-slate-600 dark:text-slate-300 group-hover:text-primary transition-colors">Library Renovation Notice (Draft)</h3>
+<p class="text-slate-400 dark:text-slate-500 text-sm leading-relaxed line-clamp-2">The school library will be closed for renovation from Nov 1st to Nov 15th. Temporary study areas will be set up in the main hall.</p>
+<div class="flex items-center gap-4 mt-2 text-xs text-[#4c739a] font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">edit_calendar</span> Last edited 2 hours ago</span>
+</div>
+</div>
+<div class="flex md:flex-col justify-end items-center gap-2 border-t md:border-t-0 md:border-l border-border-light dark:border-border-dark pt-3 md:pt-0 md:pl-4 mt-2 md:mt-0">
+<button class="w-full md:w-auto px-3 py-1 bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold rounded mb-0 md:mb-1 transition-colors">Publish</button>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer / Pagination -->
+<div class="flex items-center justify-between pt-4 border-t border-border-light dark:border-border-dark">
+<p class="text-sm text-slate-500">Showing 1 to 4 of 57 entries</p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-slate-500 hover:text-[#0d141b] dark:hover:text-white hover:border-slate-300 transition-colors text-sm font-medium disabled:opacity-50">Previous</button>
+<button class="px-3 py-1.5 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-slate-500 hover:text-[#0d141b] dark:hover:text-white hover:border-slate-300 transition-colors text-sm font-medium">Next</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

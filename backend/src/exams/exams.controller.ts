@@ -20,10 +20,10 @@ import { Role } from '@prisma/client';
 @Controller('exams')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ExamsController {
-  constructor(private readonly examsService: ExamsService) {}
+  constructor(private readonly examsService: ExamsService) { }
 
   @Post()
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   create(
     @Body() createExamDto: CreateExamDto,
     @CurrentUser() user: any,
@@ -36,7 +36,7 @@ export class ExamsController {
   }
 
   @Get()
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
   findAll(
     @Query('classId') classId: string,
     @CurrentUser() user: any,
@@ -52,7 +52,7 @@ export class ExamsController {
   }
 
   @Get(':id')
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
   findOne(@Param('id') id: string, @CurrentUser() user: any) {
     return this.examsService.findOne(id, {
       userId: user.userId,
@@ -62,7 +62,7 @@ export class ExamsController {
   }
 
   @Patch(':id')
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   update(
     @Param('id') id: string,
     @Body() updateExamDto: UpdateExamDto,
@@ -76,7 +76,7 @@ export class ExamsController {
   }
 
   @Delete(':id')
-  @Roles(Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   remove(@Param('id') id: string, @CurrentUser() user: any) {
     return this.examsService.remove(id, {
       userId: user.userId,

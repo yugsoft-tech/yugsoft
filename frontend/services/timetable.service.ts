@@ -21,6 +21,11 @@ class TimetableService {
     return response.data;
   }
 
+  async getMyTimetable() {
+    const response = await apiClient.get(`${API_ENDPOINTS.TIMETABLE}/my-timetable`);
+    return response.data;
+  }
+
   async update(id: string, data: any) {
     const response = await apiClient.patch(`${API_ENDPOINTS.TIMETABLE}/${id}`, data);
     return response.data;

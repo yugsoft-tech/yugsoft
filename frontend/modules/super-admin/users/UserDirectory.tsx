@@ -8,16 +8,35 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
+import { toast } from 'react-hot-toast';
 
 export default function UserDirectory() {
-    // Mock Global Users
-    const [users] = useState([
+    const [users, setUsers] = useState([
         { id: 1, name: 'Alice Admin', email: 'alice@springfield.edu', role: 'SCHOOL_ADMIN', school: 'Springfield High', status: 'ACTIVE' },
         { id: 2, name: 'Bob Principal', email: 'bob@riverdale.edu', role: 'SCHOOL_ADMIN', school: 'Riverdale Academy', status: 'ACTIVE' },
         { id: 3, name: 'Charlie Teacher', email: 'charlie@springfield.edu', role: 'TEACHER', school: 'Springfield High', status: 'LOCKED' },
         { id: 4, name: 'Diana Parent', email: 'diana@gmail.com', role: 'PARENT', school: 'Springfield High', status: 'ACTIVE' },
         { id: 5, name: 'Eve Student', email: 'eve@riverdale.edu', role: 'STUDENT', school: 'Riverdale Academy', status: 'ACTIVE' },
     ]);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleAddUser = () => {
+        toast('Opening Global User Provisioning...', { icon: '👤' });
+        // Should open a modal
+    };
+
+    const handleDeleteUser = (id: number) => {
+        if (confirm('Are you sure you want to revoke global access for this user?')) {
+            toast.success('User access revoked.');
+            setUsers(users.filter(u => u.id !== id));
+        }
+    };
+
+    const filteredUsers = users.filter(u => 
+        u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        u.school.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500 pb-12">
@@ -25,7 +44,7 @@ export default function UserDirectory() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-indigo-500 border-indigo-200 bg-indigo-50">
-                        IDENTITY: GLOBAL
+                        USER: GLOBAL LIST
                     </Badge>
                     <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
                         User Directory
@@ -39,11 +58,15 @@ export default function UserDirectory() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                         <input
                             type="text"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search user by email or ID..."
                             className="pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-medium focus:ring-indigo-500 focus:border-indigo-500 w-64"
                         />
                     </div>
-                    <Button className="bg-indigo-600 text-white rounded-xl px-4 py-2 h-auto font-bold text-xs uppercase tracking-wide hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/30 gap-2">
+                    <Button 
+                        onClick={handleAddUser}
+                        className="bg-indigo-600 text-white rounded-xl px-4 py-2 h-auto font-bold text-xs uppercase tracking-wide hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/30 gap-2">
                         <UserPlus size={16} />
                         Add Global User
                     </Button>
@@ -63,7 +86,7 @@ export default function UserDirectory() {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                        {users.map((user) => (
+                        {filteredUsers.map((user) => (
                             <tr key={user.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                 <td className="px-8 py-4">
                                     <div className="flex items-center gap-4">
@@ -91,9 +114,24 @@ export default function UserDirectory() {
                                     </Badge>
                                 </td>
                                 <td className="px-8 py-4 text-right">
-                                    <Button variant="ghost" size="sm" className="text-slate-400 hover:text-indigo-500">
-                                        <MoreVertical size={16} />
-                                    </Button>
+                                    <div className="flex items-center justify-end gap-2">
+                                        <Button 
+                                            variant="ghost" 
+                                            size="sm" 
+                                            className="text-slate-400 hover:text-indigo-500"
+                                            onClick={() => toast('Edit User Profile UI coming soon', { icon: '✏️' })}
+                                        >
+                                            <Shield size={16} />
+                                        </Button>
+                                        <Button 
+                                            variant="ghost" 
+                                            size="sm" 
+                                            className="text-slate-400 hover:text-red-500"
+                                            onClick={() => handleDeleteUser(user.id)}
+                                        >
+                                            <MoreVertical size={16} />
+                                        </Button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}

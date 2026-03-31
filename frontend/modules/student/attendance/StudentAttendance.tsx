@@ -35,7 +35,7 @@ export default function StudentAttendance() {
                 const data = await attendanceService.getStudentAttendance({});
                 setAttendance(data.data || data);
             } catch (error: any) {
-                toast.error('Failed to synchronize temporal presence nodes.');
+                toast.error('Failed to load attendance.');
             } finally {
                 setLoading(false);
             }
@@ -48,10 +48,10 @@ export default function StudentAttendance() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        PEDAGOGICAL_CORE: TEMPORAL_TRACKING
+                        Student Office: Attendance
                     </Badge>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Attendance Protocol</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Verify your institutional presence nodes, monitor participation vectors, and analyze temporal consistency.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Attendance Record</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Check your daily attendance and monthly reports.</p>
                 </div>
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-3 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-slate-50 dark:border-slate-800 shadow-xl">
@@ -66,9 +66,9 @@ export default function StudentAttendance() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: 'Total Presence', value: '142', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'NODES_ACTIVE' },
-                    { label: 'Total Absence', value: '08', icon: <XCircle className="text-rose-500" />, sub: 'NODES_VOID' },
-                    { label: 'Late Drift', value: '12', icon: <Clock className="text-amber-500" />, sub: 'TEMPORAL_DRIFT' },
+                    { label: 'Present', value: '142', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'Total Days' },
+                    { label: 'Absent', value: '08', icon: <XCircle className="text-rose-500" />, sub: 'Total Missed' },
+                    { label: 'Late', value: '12', icon: <Clock className="text-amber-500" />, sub: 'Total Late' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl relative group overflow-hidden">
                         <div className="relative z-10 flex items-center justify-between mb-6">
@@ -88,13 +88,13 @@ export default function StudentAttendance() {
             <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
                 <div className="p-10">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b border-slate-100 dark:border-slate-800 pb-8">
-                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">Temporal Registry</h2>
+                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">Attendance List</h2>
                         <div className="flex gap-4">
                             <div className="relative group">
                                 <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                 <input
                                     type="text"
-                                    placeholder="Search Node..."
+                                    placeholder="Search..."
                                     className="bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-3 pl-12 pr-6 text-xs font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all shadow-inner"
                                 />
                             </div>
@@ -108,9 +108,9 @@ export default function StudentAttendance() {
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr className="bg-slate-50 dark:bg-slate-800/50 border-b-2 border-slate-100 dark:border-slate-800">
-                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Temporal Node</th>
-                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Matrix Status</th>
-                                    <th className="px-10 py-6 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Subject Node</th>
+                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Date</th>
+                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
+                                    <th className="px-10 py-6 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Subject</th>
                                     <th className="px-10 py-6 text-right text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Action</th>
                                 </tr>
                             </thead>
@@ -130,7 +130,7 @@ export default function StudentAttendance() {
                                             <tr key={node.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
                                                 <td className="px-10 py-6 text-left">
                                                     <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{new Date(node.date).toLocaleDateString()}</p>
-                                                    <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{node.session || 'MORNING_PROTOCOL'}</p>
+                                                    <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{node.session || 'Morning'}</p>
                                                 </td>
                                                 <td className="px-10 py-6 text-left">
                                                     <Badge
@@ -141,7 +141,7 @@ export default function StudentAttendance() {
                                                     </Badge>
                                                 </td>
                                                 <td className="px-10 py-6 text-center">
-                                                    <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tight">{node.subject?.name || 'CORE_PEDAGOGY'}</span>
+                                                    <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tight">{node.subject?.name || 'Class'}</span>
                                                 </td>
                                                 <td className="px-10 py-6 text-right">
                                                     <button className="text-slate-300 hover:text-primary transition-colors">
@@ -155,7 +155,7 @@ export default function StudentAttendance() {
                                             <td colSpan={4} className="px-10 py-12 text-center">
                                                 <div className="flex flex-col items-center gap-4">
                                                     <Info size={32} className="text-slate-200" />
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">No temporal nodes detected in current registry.</p>
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">No attendance records found.</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -168,11 +168,11 @@ export default function StudentAttendance() {
                     <div className="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
                             <ShieldCheck size={14} className="text-emerald-500" />
-                            TEMPORAL_INTEGRITY_VERIFIED_V2
+                            SECURE RECORDS
                         </p>
                         <Button variant="secondary" className="bg-slate-50 dark:bg-slate-800 border-none rounded-[2rem] px-8 py-4 h-auto font-black text-[10px] uppercase tracking-widest gap-2 text-slate-400 hover:text-primary transition-all">
                             <History size={16} />
-                            Historical Protocol Archive
+                            Past Records Archive
                         </Button>
                     </div>
                 </div>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School ERP - System Configuration</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "text-main": "#0d141b",
+                        "text-secondary": "#4c739a",
+                        "border-color": "#e7edf3",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Toggle Switch CSS since no JS allowed */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #2b8cee;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #2b8cee;
+        }
+        
+        /* Custom Scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white font-display overflow-hidden h-screen flex w-full">
+<!-- Sidebar -->
+<aside class="w-64 h-full bg-white dark:bg-[#1a2632] border-r border-border-color dark:border-slate-700 flex flex-col flex-shrink-0 transition-colors duration-200">
+<div class="h-16 flex items-center px-6 border-b border-border-color dark:border-slate-700">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">school</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">School ERP</h2>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-6">
+<!-- Section 1 -->
+<div>
+<h3 class="px-2 text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2">Admin Console</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-sm font-medium">System Config</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">User Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="text-sm font-medium">Roles &amp; Permissions</span>
+</a>
+</div>
+</div>
+<!-- Section 2 -->
+<div>
+<h3 class="px-2 text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2">Modules</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person_outline</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-sm font-medium">Academics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-border-color dark:border-slate-700">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<div class="bg-center bg-cover rounded-full size-9" data-alt="User profile picture of an administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA3Du6yXsuqRIOCJmQBmMmwWv-aOn5C44fysatPErzefattIhqh9C0e28BYQXKq2ebgV1U3rzFrRrX-Jha1n8xxbYIz0e9qur7cffLg00_0pGnHBhyrpFUSmI11c0Tv6YkHng3y7UM0W7zNsUa4XvCe-vMK33peS1k-XoMcdCCvMYZDTLrLyuF8Y3BATFK-UF999TaiIEuVxBq2buvPNfXr39IFTXhEF8ceLI25mv7ysbWxWmpbYb2R3XOEjmCoXx2UounmYFAPr-vE");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-sm font-semibold truncate text-text-main dark:text-white">Admin User</p>
+<p class="text-xs text-text-secondary truncate">admin@school.edu</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header -->
+<header class="h-16 bg-white dark:bg-[#1a2632] border-b border-border-color dark:border-slate-700 flex items-center justify-between px-8 flex-shrink-0 z-20">
+<!-- Search -->
+<div class="flex items-center w-full max-w-md">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full rounded-lg border-none bg-background-light dark:bg-slate-800 py-2 pl-10 pr-3 text-sm placeholder:text-text-secondary focus:ring-2 focus:ring-primary dark:text-white" placeholder="Search settings, students, or reports..." type="text"/>
+</div>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-text-secondary hover:bg-background-light dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2632]"></span>
+</button>
+<button class="p-2 text-text-secondary hover:bg-background-light dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[22px]">help</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8 pb-24">
+<div class="max-w-5xl mx-auto flex flex-col gap-8">
+<!-- Breadcrumbs -->
+<nav class="flex text-sm text-text-secondary">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="mx-2">/</span>
+<a class="hover:text-primary transition-colors" href="#">Settings</a>
+<span class="mx-2">/</span>
+<span class="text-text-main dark:text-white font-medium">System Configuration</span>
+</nav>
+<!-- Page Header -->
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl font-bold text-text-main dark:text-white tracking-tight">System Configuration</h1>
+<p class="text-text-secondary text-base">Manage global settings for your school instance including localization, notifications, and external integrations.</p>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column (General & Localization) -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<!-- General Settings Card -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-border-color dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-border-color dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="font-semibold text-text-main dark:text-white">General Settings</h3>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- School Name & ID -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">School Name</label>
+<input class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full p-2.5 dark:text-white" type="text" value="Springfield High School"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">Institution ID</label>
+<input class="rounded-lg border-border-color bg-slate-100 dark:bg-slate-900 text-text-secondary dark:border-slate-700 text-sm w-full p-2.5 cursor-not-allowed" disabled="" type="text" value="SCH-2023-8842"/>
+</div>
+</div>
+<!-- Logo Upload -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">School Logo</label>
+<div class="flex items-center gap-6 p-4 border border-dashed border-border-color dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+<div class="size-16 rounded-lg bg-white dark:bg-slate-700 shadow-sm border border-slate-100 dark:border-slate-600 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="School logo preview showing an abstract education symbol" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdOzk1bevWm-88dYC91V1RMdVqYos7S-YhIY9xlFaDIFrOJztUVjJzchbDd8XM7pQeJO_eWUVoyYykIFs62klCbgzU7B19OYH15btRtrSQeVlPopldkTLscoin3Iboh2FQIdG4iMXr-GQG6eZL9V6yX9ZzXPds2lhNexCZ95cURBpS_aPs-w4GPiK7mTiuPupv3fcv66pmDSEhsPAh-BBYBURjloUirqDvTHeZnK5U1goO3XM5tMJ1IUuvdFLD-m_xqfYa0sf_xGec"/>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex gap-3">
+<button class="text-sm px-4 py-2 bg-white dark:bg-slate-700 border border-border-color dark:border-slate-600 rounded-md font-medium hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors text-text-main dark:text-white">Change Logo</button>
+<button class="text-sm px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md font-medium transition-colors">Remove</button>
+</div>
+<p class="text-xs text-text-secondary">Recommended size: 200x200px. Max size: 2MB.</p>
+</div>
+</div>
+</div>
+<!-- Contact Email -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">Admin Contact Email</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-secondary text-[20px]">mail</span>
+</div>
+<input class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full py-2.5 pl-10 dark:text-white" type="email" value="admin@springfieldhigh.edu"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Localization Settings Card -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-border-color dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-border-color dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">public</span>
+<h3 class="font-semibold text-text-main dark:text-white">Localization</h3>
+</div>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">Default Language</label>
+<select class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full p-2.5 dark:text-white">
+<option selected="">English (US)</option>
+<option>Spanish (ES)</option>
+<option>French (FR)</option>
+<option>German (DE)</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">Time Zone</label>
+<select class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full p-2.5 dark:text-white">
+<option selected="">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
+<option>(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+<option>(GMT+00:00) London</option>
+<option>(GMT+01:00) Paris</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">Date Format</label>
+<select class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full p-2.5 dark:text-white">
+<option selected="">MM/DD/YYYY</option>
+<option>DD/MM/YYYY</option>
+<option>YYYY-MM-DD</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-text-main dark:text-slate-200">Currency</label>
+<select class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full p-2.5 dark:text-white">
+<option selected="">USD ($)</option>
+<option>EUR (€)</option>
+<option>GBP (£)</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Integrations Card -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-border-color dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-border-color dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">extension</span>
+<h3 class="font-semibold text-text-main dark:text-white">External Integrations</h3>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<!-- Google Classroom -->
+<div class="flex items-center justify-between p-4 border border-border-color dark:border-slate-700 rounded-lg">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-100 dark:border-slate-600 flex items-center justify-center p-2">
+<img class="w-full h-full object-contain opacity-80" data-alt="Google Classroom icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnhb3h7vKYp_kWVMRlWWvH2-6a090mKMt6bPBAvkFo8ks5YgFCMrdFqvlQOBuqYDlLU65x_eCt3hm_xwEB7ZHjXv95vRyJUoGP9ODUDJUgkOvIRScC6-sc5K4bZBy9RoOFOu4pW7JMrdq79ICgcOK4MdSGLlfCmu_aSLjoGoDC8JJNGKDfSarCkZLJhHdwicherqnTnh_TmNaTM4wU4mJjkX8h0dJIqp-PIWKo7b7XfhmgeDDZvqT_kZ47BBaVmSeVokBBctrdtbn7"/>
+</div>
+<div>
+<p class="font-medium text-text-main dark:text-white">Google Classroom</p>
+<p class="text-xs text-text-secondary">Sync courses and student rosters</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-all duration-300" id="toggle-google" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 cursor-pointer transition-colors duration-300" for="toggle-google"></label>
+</div>
+</div>
+<!-- MS Teams -->
+<div class="flex items-center justify-between p-4 border border-border-color dark:border-slate-700 rounded-lg">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-100 dark:border-slate-600 flex items-center justify-center p-2">
+<img class="w-full h-full object-contain opacity-80" data-alt="Microsoft Teams icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyUpqCeD51vie_MOApljxZWf699aW3ttqN2cJtMzODfJPtGBxHV3cmLB9Qrfv6jhplmhW2nzyxGwvvmWrnpqmRUMASjzmp74IBXih2Ob4uQQIqmIr-Gtvb5ELiX9bceUW7F348oAz4NZTO8kX2BBw6qyW1iTF8Y8eCydkvHgBOZnNuFFbrpsCyY1XIGBLAmxig_ACfcnuJPG57T-a92P6185AI5c6B0gfnHWvY3kL_mwxtS9EwT6nwYdklcd6b8p9ykUa2B9vXNqBi"/>
+</div>
+<div>
+<p class="font-medium text-text-main dark:text-white">Microsoft Teams</p>
+<p class="text-xs text-text-secondary">Enable virtual classroom meetings</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-all duration-300" id="toggle-teams" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 cursor-pointer transition-colors duration-300" for="toggle-teams"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Notifications & API) -->
+<div class="flex flex-col gap-8">
+<!-- Notifications Card -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-border-color dark:border-slate-700 shadow-sm overflow-hidden h-fit">
+<div class="px-6 py-4 border-b border-border-color dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<h3 class="font-semibold text-text-main dark:text-white">Notifications</h3>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-5">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-text-main dark:text-white">Email Alerts</p>
+<p class="text-xs text-text-secondary">Send daily summaries</p>
+</div>
+<div class="relative inline-block w-10 align-middle select-none">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-all duration-300" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 cursor-pointer"></label>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-text-main dark:text-white">SMS Alerts</p>
+<p class="text-xs text-text-secondary">Urgent announcements only</p>
+</div>
+<div class="relative inline-block w-10 align-middle select-none">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-all duration-300" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 cursor-pointer"></label>
+</div>
+</div>
+<div class="border-t border-border-color dark:border-slate-700 pt-4 mt-1">
+<h4 class="text-xs font-semibold uppercase text-text-secondary mb-3">SMTP Configuration</h4>
+<div class="flex flex-col gap-3">
+<input class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full p-2 dark:text-white" placeholder="SMTP Host (e.g. smtp.gmail.com)" type="text"/>
+<input class="rounded-lg border-border-color bg-slate-50 dark:bg-slate-800 dark:border-slate-600 text-sm focus:ring-primary focus:border-primary w-full p-2 dark:text-white" placeholder="Port (e.g. 587)" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- API Access Card -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-border-color dark:border-slate-700 shadow-sm overflow-hidden h-fit">
+<div class="px-6 py-4 border-b border-border-color dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">api</span>
+<h3 class="font-semibold text-text-main dark:text-white">API Access</h3>
+</div>
+<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full dark:bg-green-900/30 dark:text-green-400">ACTIVE</span>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<p class="text-xs text-text-secondary">Use this key to authenticate requests from external applications.</p>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-medium text-text-main dark:text-slate-200">Public API Key</label>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<input class="rounded-lg border-border-color bg-slate-100 dark:bg-slate-900 dark:border-slate-700 text-sm text-text-secondary w-full p-2 font-mono" readonly="" type="password" value="sk_live_51Mz..."/>
+</div>
+<button class="p-2 bg-white dark:bg-slate-700 border border-border-color dark:border-slate-600 rounded-lg text-text-secondary hover:text-primary transition-colors" title="Copy">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+</button>
+</div>
+</div>
+<button class="w-full py-2 border border-border-color dark:border-slate-600 rounded-lg text-sm font-medium text-text-main dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+                                    Regenerate Key
+                                </button>
+</div>
+</div>
+<!-- Payment Gateways -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-border-color dark:border-slate-700 shadow-sm overflow-hidden h-fit">
+<div class="px-6 py-4 border-b border-border-color dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">credit_card</span>
+<h3 class="font-semibold text-text-main dark:text-white">Payment Gateway</h3>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<input checked="" class="text-primary focus:ring-primary border-gray-300" id="stripe" name="payment" type="radio"/>
+<label class="flex flex-1 items-center justify-between cursor-pointer" for="stripe">
+<span class="text-sm font-medium text-text-main dark:text-white">Stripe</span>
+<span class="text-xs text-text-secondary bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">Recommended</span>
+</label>
+</div>
+<div class="flex items-center gap-3">
+<input class="text-primary focus:ring-primary border-gray-300" id="paypal" name="payment" type="radio"/>
+<label class="flex flex-1 items-center justify-between cursor-pointer" for="paypal">
+<span class="text-sm font-medium text-text-main dark:text-white">PayPal</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Actions -->
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-white/80 dark:bg-[#1a2632]/90 backdrop-blur-md border-t border-border-color dark:border-slate-700 flex justify-between items-center z-30">
+<p class="text-xs text-text-secondary pl-4">Last updated: 2 mins ago by Admin</p>
+<div class="flex gap-3 pr-4">
+<button class="px-5 py-2.5 rounded-lg border border-border-color dark:border-slate-600 bg-white dark:bg-slate-800 text-sm font-medium text-text-main dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                    Cancel
+                </button>
+<button class="px-5 py-2.5 rounded-lg bg-primary text-sm font-bold text-white hover:bg-blue-600 transition-colors shadow-md shadow-blue-500/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                    Save Changes
+                </button>
+</div>
+</div>
+</main>
+</body></html>
