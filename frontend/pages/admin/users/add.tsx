@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 export default function AddUser() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ name: '', email: '', role: 'STUDENT', password: '' });
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', role: 'STUDENT', password: '' });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -49,9 +49,28 @@ export default function AddUser() {
             {error && <div className="bg-red-50 border-l-4 border-red-500 p-4 text-red-700 text-sm">{error}</div>}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="col-span-2">
-                <label className="block text-sm font-medium text-slate-700">Full Name *</label>
-                <input type="text" required className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="John Doe" />
+              <div>
+                <label className="block text-sm font-medium text-slate-700">First Name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm" 
+                  value={formData.firstName} 
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} 
+                  placeholder="John" 
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700">Last Name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm" 
+                  value={formData.lastName} 
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} 
+                  placeholder="Doe" 
+                />
               </div>
 
               <div className="col-span-2">

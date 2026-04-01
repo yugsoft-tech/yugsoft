@@ -84,9 +84,26 @@ export default function EditUser() {
             {error && <div className="bg-red-50 border-l-4 border-red-500 p-4 text-red-700 text-sm">{error}</div>}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="col-span-2">
-                <label className="block text-sm font-medium text-slate-700">Full Name *</label>
-                <input type="text" required className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} />
+              <div>
+                <label className="block text-sm font-medium text-slate-700">First Name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm" 
+                  value={user.firstName} 
+                  onChange={(e) => setUser({ ...user, firstName: e.target.value })} 
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700">Last Name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm" 
+                  value={user.lastName} 
+                  onChange={(e) => setUser({ ...user, lastName: e.target.value })} 
+                />
               </div>
 
               <div className="col-span-2">
@@ -96,7 +113,7 @@ export default function EditUser() {
 
               <div>
                 <label className="block text-sm font-medium text-slate-700">Role *</label>
-                <select className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm" value={user.role} onChange={(e) => setUser({ ...user, role: e.target.value })}>
+                <select className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm" value={user.role} onChange={(e) => setUser({ ...user, role: e.target.value })}>
                   <option value="STUDENT">Student</option>
                   <option value="TEACHER">Teacher</option>
 
@@ -106,7 +123,7 @@ export default function EditUser() {
 
               <div>
                 <label className="block text-sm font-medium text-slate-700">Status</label>
-                <select className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm" value={user.status || 'ACTIVE'} onChange={(e) => setUser({ ...user, status: e.target.value })}>
+                <select className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm" value={user.status || 'ACTIVE'} onChange={(e) => setUser({ ...user, status: e.target.value })}>
                   <option value="ACTIVE">Active</option>
                   <option value="INACTIVE">Inactive</option>
                   <option value="SUSPENDED">Suspended</option>
