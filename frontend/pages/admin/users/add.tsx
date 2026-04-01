@@ -10,13 +10,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import AdminLayout from '@/components/layouts/AdminLayout';
 import { usersService } from '@/services/users.service';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AddUser() {
   const router = useRouter();
   const [formData, setFormData] = useState({ name: '', email: '', role: 'STUDENT', password: '' });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,15 +69,30 @@ export default function AddUser() {
                 </select>
               </div>
 
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-slate-700">Default Password *</label>
-                <input type="password" required className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                <div className="relative mt-1">
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    required 
+                    className="block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm pr-10" 
+                    value={formData.password} 
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })} 
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
             </div>
 
             <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
               <button type="button" onClick={() => router.back()} className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 text-sm font-medium">Cancel</button>
-              <button type="submit" disabled={loading} className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 disabled:opacity-50">
+              <button type="submit" disabled={loading} className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50">
                 <Save size={18} className="mr-2" />
                 {loading ? 'Creating...' : 'Create User'}
               </button>
