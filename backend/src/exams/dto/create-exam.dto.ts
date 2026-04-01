@@ -5,7 +5,7 @@ import {
   IsEnum,
   IsUUID,
 } from 'class-validator';
-import { ExamType } from '@prisma/client';
+import { ExamType } from '../../common/enums';
 
 export class CreateExamDto {
   @IsString()

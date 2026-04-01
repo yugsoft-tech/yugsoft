@@ -8,7 +8,7 @@ import {
   IsOptional,
   MinLength,
 } from 'class-validator';
-import { Gender } from '@prisma/client';
+import { Gender } from '../../common/enums';
 
 export class CreateStudentDto {
   // User fields

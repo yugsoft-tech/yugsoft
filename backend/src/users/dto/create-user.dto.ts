@@ -7,7 +7,7 @@ import {
   MinLength,
   IsUUID,
 } from 'class-validator';
-import { Role } from '@prisma/client';
+import { Role } from '../../common/enums';
 
 export class CreateUserDto {
   @IsEmail()
