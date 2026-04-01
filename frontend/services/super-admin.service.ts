@@ -44,5 +44,25 @@ export const superAdminService = {
       console.error('Failed to fetch plans', error);
       return { data: [], meta: {} };
     }
+  },
+
+  getSchoolById: async (id: string) => {
+    try {
+      const response = await apiClient.get(`/super-admin/schools/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch school by id', error);
+      throw error;
+    }
+  },
+
+  updateSchool: async (id: string, data: any) => {
+    try {
+      const response = await apiClient.put(`/super-admin/schools/${id}`, data);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to update school', error);
+      throw error;
+    }
   }
 };

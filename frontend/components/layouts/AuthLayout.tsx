@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { ReactNode } from 'react';
 import { GraduationCap, CheckCircle, ShieldCheck, Zap, Globe } from 'lucide-react';
 import { APP_NAME } from '@/utils/constants';
@@ -23,10 +24,12 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
                 <div className="w-full md:w-1/2 relative hidden md:flex flex-col justify-between p-12 lg:p-16 text-white overflow-hidden">
                     {/* Background with Overlay */}
                     <div className="absolute inset-0 z-0">
-                        <img 
+                        <Image 
                             src="/login-bg.png" 
                             className="w-full h-full object-cover"
                             alt="School Management"
+                            fill
+                            priority
                         />
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/80 to-indigo-900/90 mix-blend-multiply"></div>
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.1),transparent)]"></div>
@@ -69,12 +72,15 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
                     <div className="relative z-10 mt-auto pt-6">
                         <div className="flex -space-x-3 mb-4">
                             {[1, 2, 3, 4].map((i) => (
-                                <img
-                                    key={i}
-                                    className="w-10 h-10 rounded-full border-2 border-white/20 object-cover"
-                                    src={`https://i.pravatar.cc/100?img=${i + 10}`}
-                                    alt="User"
-                                />
+                                <div key={i} className="w-10 h-10 relative">
+                                    <Image
+                                        className="rounded-full border-2 border-white/20 object-cover"
+                                        src={`https://i.pravatar.cc/100?img=${i + 10}`}
+                                        alt="User"
+                                        fill
+                                        unoptimized
+                                    />
+                                </div>
                             ))}
                             <div className="w-10 h-10 rounded-full border-2 border-white/20 bg-primary/50 backdrop-blur-md flex items-center justify-center text-[10px] font-bold">
                                 500+

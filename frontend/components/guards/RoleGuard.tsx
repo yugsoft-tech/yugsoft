@@ -49,7 +49,7 @@ export default function RoleGuard({ children, allowedRoles, redirectTo }: RoleGu
         router.push(redirectTo || dashboard);
       }
     }
-  }, [loading, user, isAuthenticated, router, redirectTo, JSON.stringify(allowedRoles)]);
+  }, [loading, user, isAuthenticated, router, redirectTo, allowedRoles]);
 
   if (loading) {
     return (

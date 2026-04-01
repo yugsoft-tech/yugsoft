@@ -246,7 +246,7 @@ export default function SchoolSettings() {
             <div className="bg-rose-50 dark:bg-rose-900/10 rounded-3xl border border-rose-200 dark:border-rose-900/50 p-8 flex flex-col md:flex-row justify-between items-center gap-6">
               <div>
                 <h3 className="text-lg font-black text-rose-900 dark:text-rose-400">Danger Zone</h3>
-                <p className="text-sm font-medium text-rose-700 dark:text-rose-300/80">Permanent actions regarding this institution's data.</p>
+                <p className="text-sm font-medium text-rose-700 dark:text-rose-300/80">Permanent actions regarding this institution&apos;s data.</p>
               </div>
               <div className="flex gap-4 w-full md:w-auto">
                 <button className="flex-1 px-6 py-3 rounded-xl border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-400 font-bold text-sm bg-white dark:bg-card-dark hover:bg-rose-50 transition-all">

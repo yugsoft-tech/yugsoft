@@ -1,4 +1,5 @@
 import { ReactNode, useState } from 'react';
+import Image from 'next/image';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
 import AuthGuard from '@/components/guards/AuthGuard';
@@ -58,8 +59,18 @@ function ChildSwitcher() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-2 pr-4 py-1.5 hover:border-primary/50 transition-all shadow-sm"
       >
-        <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary overflow-hidden">
-          {selectedChildId === 'ALL' ? <Users size={16} /> : <img src={selectedChild?.avatar} alt="" className="size-8 object-cover" />}
+        <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary overflow-hidden relative">
+          {selectedChildId === 'ALL' ? (
+            <Users size={16} />
+          ) : (
+            <Image
+              src={selectedChild?.avatar || ''}
+              alt=""
+              className="size-8 object-cover"
+              fill
+              unoptimized
+            />
+          )}
         </div>
         <div className="text-left hidden lg:block">
           <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest leading-none mb-0.5">Perspective</p>
@@ -88,10 +99,18 @@ function ChildSwitcher() {
                 onClick={() => { setSelectedChildId(child.id); setIsOpen(false); }}
                 className={`w-full flex items-center gap-3 p-3 rounded-xl transition-colors ${selectedChildId === child.id ? 'bg-primary/10 text-primary' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'}`}
               >
-                <img src={child.avatar} alt="" className="size-8 rounded-lg object-cover bg-slate-200" />
+                <div className="size-8 relative">
+                   <Image 
+                    src={child.avatar || ''} 
+                    alt="" 
+                    className="rounded-lg object-cover bg-slate-200"
+                    fill
+                    unoptimized
+                  />
+                </div>
                 <div className="text-left">
                   <p className="text-sm font-bold">{child.name}</p>
-                  <p className="text-[10px] text-slate-400">{child.grade}</p>
+                  <p className="text-[10px] text-slate-400">{child.class}</p>
                 </div>
               </button>
             ))}
