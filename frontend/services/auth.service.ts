@@ -72,6 +72,14 @@ class AuthService {
   }
 
   /**
+   * Update current user profile
+   */
+  async updateProfile(data: Partial<User>): Promise<User> {
+    const response = await apiClient.patch<{ data: User }>(API_ENDPOINTS.AUTH.PROFILE, data);
+    return (response as any).data || response;
+  }
+
+  /**
    * Logout - clears localStorage
    */
   logout() {
