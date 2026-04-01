@@ -200,9 +200,21 @@ export default function DashboardLayout({ children, sections, role, headerExtra 
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl">
-                                <div className="px-4 py-3 mb-2 bg-slate-50 dark:bg-slate-900 rounded-xl">
+                                <div className="px-4 py-3 mb-2 bg-slate-50 dark:bg-slate-900 rounded-xl space-y-1">
                                     <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">{user?.firstName} {user?.lastName}</p>
-                                    <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">{role?.replace('_', ' ')}</p>
+                                    <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{role?.replace('_', ' ')}</p>
+                                    <div className="pt-2 space-y-1 border-t border-slate-200/50 dark:border-slate-700/50 mt-2">
+                                        <p className="text-[8px] font-bold text-slate-500 lowercase tracking-wide flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary" />
+                                            {user?.email}
+                                        </p>
+                                        {user?.phone && (
+                                            <p className="text-[8px] font-bold text-slate-500 lowercase tracking-wide flex items-center gap-2">
+                                                <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                                                {user?.phone}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem asChild>
@@ -211,12 +223,7 @@ export default function DashboardLayout({ children, sections, role, headerExtra 
                                         <span className="text-[10px] font-black uppercase tracking-widest">My Profile</span>
                                     </Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href="/settings" className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
-                                        <Settings size={16} className="text-slate-400" />
-                                        <span className="text-[10px] font-black uppercase tracking-widest">Settings</span>
-                                    </Link>
-                                </DropdownMenuItem>
+
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem 
                                     onClick={logout}
