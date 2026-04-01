@@ -116,7 +116,7 @@ export default function EditUser() {
 
             <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
               <button type="button" onClick={() => router.back()} className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 text-sm font-medium">Cancel</button>
-              <button type="submit" disabled={saving} className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 disabled:opacity-50">
+              <button type="submit" disabled={saving} className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50">
                 <Save size={18} className="mr-2" />
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>
