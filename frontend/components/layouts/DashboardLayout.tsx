@@ -14,8 +14,17 @@ import {
     Sun,
     HelpCircle,
     GraduationCap,
-    UserCircle
+    UserCircle,
+    Settings,
+    User
 } from 'lucide-react';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+    DropdownMenuSeparator
+} from '@/components/ui/DropdownMenu';
 
 export interface NavItem {
     label: string;
@@ -175,6 +184,49 @@ export default function DashboardLayout({ children, sections, role, headerExtra 
                         <button className="hidden sm:flex p-2 text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all">
                             <HelpCircle size={20} />
                         </button>
+
+                        <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button className="flex items-center gap-2 p-1.5 pr-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+                                    <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold overflow-hidden uppercase shadow-sm">
+                                        {user?.firstName?.charAt(0) || <UserCircle size={18} />}
+                                    </div>
+                                    <div className="hidden lg:block text-left">
+                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase leading-none tracking-wider mb-0.5">{user?.firstName}</p>
+                                        <p className="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase leading-none tracking-tighter">{role?.replace('_', ' ')}</p>
+                                    </div>
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl">
+                                <div className="px-4 py-3 mb-2 bg-slate-50 dark:bg-slate-900 rounded-xl">
+                                    <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">{user?.firstName} {user?.lastName}</p>
+                                    <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">{role?.replace('_', ' ')}</p>
+                                </div>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem asChild>
+                                    <Link href="/profile" className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
+                                        <User size={16} className="text-primary" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest">My Profile</span>
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/settings" className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
+                                        <Settings size={16} className="text-slate-400" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest">Settings</span>
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem 
+                                    onClick={logout}
+                                    className="flex items-center gap-3 p-3 rounded-xl cursor-pointer text-rose-500 focus:text-rose-600 focus:bg-rose-50 dark:focus:bg-rose-500/10"
+                                >
+                                    <LogOut size={16} />
+                                    <span className="text-[10px] font-black uppercase tracking-widest">Sign Out</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </header>
 
