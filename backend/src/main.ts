@@ -1,36 +1,52 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, INestApplication } from '@nestjs/common';
 import { AppModule } from './app.module';
-import { AppLogger } from './common/logger';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+let cachedApp: INestApplication;
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+async function bootstrap(): Promise<INestApplication> {
+  if (!cachedApp) {
+    const app = await NestFactory.create(AppModule);
 
-  const allowedOrigins = process.env.ALLOWED_ORIGINS 
-    ? process.env.ALLOWED_ORIGINS.split(',') 
-    : ['http://localhost:3001', 'http://localhost:3000', 'https://school-erp-frontend.vercel.app'];
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
 
-  app.enableCors({
-    origin: allowedOrigins,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-  });
+    const allowedOrigins = process.env.ALLOWED_ORIGINS 
+      ? process.env.ALLOWED_ORIGINS.split(',') 
+      : ['http://localhost:3001', 'http://localhost:3000', 'https://school-erp-frontend.vercel.app'];
 
-  const port = process.env.PORT || 3000;
-  await app.listen(port, '0.0.0.0');
-  console.log(`Application is running on: ${await app.getUrl()}`);
+    app.enableCors({
+      origin: allowedOrigins,
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+      credentials: true,
+    });
 
-  const logger = new AppLogger('Bootstrap');
-  app.useLogger(logger);
+    await app.init();
+    cachedApp = app;
+  }
+  return cachedApp;
 }
-bootstrap();
+
+// Local development
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  bootstrap().then(async (app) => {
+    const port = process.env.PORT || 3000;
+    await app.listen(port, '0.0.0.0');
+    console.log(`Application is running on: ${await app.getUrl()}`);
+  });
+}
+
+// Export for Vercel
+export default async (req: any, res: any) => {
+  const app = await bootstrap();
+  const instance = app.getHttpAdapter().getInstance();
+  instance(req, res);
+};
+
 
