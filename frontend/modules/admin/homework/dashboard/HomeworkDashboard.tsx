@@ -23,9 +23,9 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { homeworkService } from '@/services/homework.service';
-import { useClasses } from '@/hooks/useClasses';
 import { useSubjects } from '@/hooks/useSubjects';
+import { homeworkService } from '@/services/homework.service';
+import AdminLayout from '@/components/layouts/AdminLayout';
 import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
@@ -95,7 +95,8 @@ export default function HomeworkManagement() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12 pt-12">
+        <AdminLayout title="Homework Dashboard">
+            <div className="space-y-8 animate-in fade-in duration-500 pb-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                 <div>
@@ -300,6 +301,7 @@ export default function HomeworkManagement() {
                     )}
                 </div>
             </div>
-        </div>
+            </div>
+        </AdminLayout>
     );
 }

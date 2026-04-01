@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useSubjects } from '@/hooks/useSubjects';
 import { subjectsService } from '@/services/subjects.service';
+import AdminLayout from '@/components/layouts/AdminLayout';
 import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
@@ -65,7 +66,8 @@ export default function SubjectsList() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12 pt-12">
+        <AdminLayout title="Manage Subjects">
+            <div className="space-y-8 animate-in fade-in duration-500 pb-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Manage Subjects</h1>
@@ -215,7 +217,10 @@ export default function SubjectsList() {
                         </div>
                     )}
                 </div>
-            </div >
-        </div >
+            </div>
+            </div>
+        </AdminLayout>
     );
 }
+
+export { SubjectsList };

@@ -19,6 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useClasses } from '@/hooks/useClasses';
 import { classesService } from '@/services/classes.service';
+import AdminLayout from '@/components/layouts/AdminLayout';
 import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
@@ -62,7 +63,8 @@ export default function ClassesList() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12 pt-12">
+        <AdminLayout title="Manage Classes">
+            <div className="space-y-8 animate-in fade-in duration-500 pb-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Manage Classes</h1>
@@ -238,6 +240,7 @@ export default function ClassesList() {
                     )}
                 </div>
             </div>
-        </div>
+            </div>
+        </AdminLayout>
     );
 }
