@@ -1,6 +1,6 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Role, AttendanceStatus } from '@prisma/client';
+import { Role, AttendanceStatus, FeeStatus } from '@prisma/client';
 
 @Injectable()
 export class DashboardService {

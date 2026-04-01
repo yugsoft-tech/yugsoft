@@ -24,7 +24,7 @@ export class HomeworkController {
   constructor(private readonly homeworkService: HomeworkService) {}
 
   @Post()
-  @Roles(Role.TEACHER)
+  @Roles(Role.TEACHER, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
   create(
     @Body() createHomeworkDto: CreateHomeworkDto,
     @CurrentUser() user: any,
@@ -37,7 +37,7 @@ export class HomeworkController {
   }
 
   @Get()
-  @Roles(Role.TEACHER, Role.STUDENT)
+  @Roles(Role.TEACHER, Role.STUDENT, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
   findAll(
     @Query() listHomeworkDto: ListHomeworkDto,
     @CurrentUser() user: any,
@@ -50,7 +50,7 @@ export class HomeworkController {
   }
 
   @Get('class/:classId')
-  @Roles(Role.TEACHER, Role.STUDENT)
+  @Roles(Role.TEACHER, Role.STUDENT, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
   findByClass(
     @Param('classId') classId: string,
     @CurrentUser() user: any,
@@ -63,7 +63,7 @@ export class HomeworkController {
   }
 
   @Get(':id')
-  @Roles(Role.TEACHER, Role.STUDENT)
+  @Roles(Role.TEACHER, Role.STUDENT, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
   findOne(@Param('id') id: string, @CurrentUser() user: any) {
     return this.homeworkService.findOne(id, {
       userId: user.userId,
@@ -73,7 +73,7 @@ export class HomeworkController {
   }
 
   @Patch(':id')
-  @Roles(Role.TEACHER)
+  @Roles(Role.TEACHER, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
   update(
     @Param('id') id: string,
     @Body() updateHomeworkDto: UpdateHomeworkDto,
@@ -87,7 +87,7 @@ export class HomeworkController {
   }
 
   @Delete(':id')
-  @Roles(Role.TEACHER)
+  @Roles(Role.TEACHER, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
   remove(@Param('id') id: string, @CurrentUser() user: any) {
     return this.homeworkService.remove(id, {
       userId: user.userId,

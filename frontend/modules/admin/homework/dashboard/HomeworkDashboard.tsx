@@ -24,6 +24,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { homeworkService } from '@/services/homework.service';
+import { useClasses } from '@/hooks/useClasses';
+import { useSubjects } from '@/hooks/useSubjects';
 import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
@@ -36,10 +38,10 @@ import {
 import { toast } from 'react-hot-toast';
 
 const homeworkSchema = z.object({
-    title: z.string().min(1, 'Assignment title required'),
-    classId: z.string().min(1, 'Academic node required'),
-    subjectId: z.string().min(1, 'Subject identifier required'),
-    dueDate: z.string().min(1, 'Temporal deadline required'),
+    title: z.string().min(1, 'Title is required'),
+    classId: z.string().min(1, 'Class is required'),
+    subjectId: z.string().min(1, 'Subject is required'),
+    dueDate: z.string().min(1, 'Due date is required'),
     description: z.string().optional(),
 });
 
@@ -51,6 +53,9 @@ export default function HomeworkManagement() {
     const [activeTab, setActiveTab] = useState<'matrix' | 'deploy'>('matrix');
     const [registering, setRegistering] = useState(false);
 
+    const { classes, loading: classesLoading } = useClasses();
+    const { subjects, loading: subjectsLoading } = useSubjects();
+
     const { register, handleSubmit, reset } = useForm<HomeworkFormValues>({
         resolver: zodResolver(homeworkSchema),
     });
@@ -61,7 +66,7 @@ export default function HomeworkManagement() {
             const data = await homeworkService.getAll();
             setHomeworks(data.data || data);
         } catch (error: any) {
-            toast.error(error.message || 'Failed to fetch homework registry');
+            toast.error(error.message || 'Failed to fetch homework list');
         } finally {
             setLoading(false);
         }
@@ -73,25 +78,30 @@ export default function HomeworkManagement() {
 
     const onDeploy = async (data: HomeworkFormValues) => {
         setRegistering(true);
+        console.log('Sending Homework Data:', data);
         try {
             await homeworkService.create(data);
-            toast.success('Assignment Protocol: Project successfully deployed to academic nodes.');
+            toast.success('Homework assigned successfully.');
             reset();
             setActiveTab('matrix');
             fetchHomeworks();
-        } catch (error: any) {
-            toast.error(error.message || 'Failed to deploy assignment');
+        } catch (err: any) {
+            console.error('Homework Deployment Error:', err);
+            const errorMessage = err.response?.data?.message || err.message || 'Failed to deploy assignment';
+            toast.error(errorMessage);
         } finally {
             setRegistering(false);
         }
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+        <div className="space-y-8 animate-in fade-in duration-500 pb-12 pt-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Academic Deliverables: Homework</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Deploy assignments, track student submission metrics, and manage evaluation cycles.</p>
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Homework Management</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Create and manage assignments and track student submissions.</p>
+                </div>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button
@@ -99,7 +109,7 @@ export default function HomeworkManagement() {
                         className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
                     >
                         <Plus size={18} />
-                        Deploy Assignment Node
+                        Add New Homework
                     </Button>
                 </div>
             </div>
@@ -109,13 +119,13 @@ export default function HomeworkManagement() {
                     {activeTab === 'deploy' ? (
                         <div className="space-y-10">
                             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-8">
-                                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Assignment Deployment Protocol</h2>
-                                <button onClick={() => setActiveTab('matrix')} className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Return to Matrix</button>
+                                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Assign New Homework</h2>
+                                <button onClick={() => setActiveTab('matrix')} className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Back to List</button>
                             </div>
                             <form onSubmit={handleSubmit(onDeploy)} className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                 <div className="space-y-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Assignment Identifier (Title)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Homework Title</label>
                                         <input
                                             {...register('title')}
                                             placeholder="Thermodynamics Problem Set 4..."
@@ -123,17 +133,33 @@ export default function HomeworkManagement() {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Target Subject Node</label>
-                                        <input
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Class</label>
+                                        <select
+                                            {...register('classId')}
+                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all appearance-none cursor-pointer"
+                                        >
+                                            <option value="">Select Class</option>
+                                            {classes.map((cls) => (
+                                                <option key={cls.id} value={cls.id}>{cls.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Subject</label>
+                                        <select
                                             {...register('subjectId')}
-                                            placeholder="PHY-402..."
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
-                                        />
+                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all appearance-none cursor-pointer"
+                                        >
+                                            <option value="">Select Subject</option>
+                                            {subjects.map((sub) => (
+                                                <option key={sub.id} value={sub.id}>{sub.name}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="space-y-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Temporal Deadline (Due Date)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Due Date</label>
                                         <input
                                             type="date"
                                             {...register('dueDate')}
@@ -141,11 +167,11 @@ export default function HomeworkManagement() {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Execution Framework (Description)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Description</label>
                                         <textarea
                                             {...register('description')}
                                             rows={3}
-                                            placeholder="Detailed protocol for assignment execution..."
+                                            placeholder="Enter assignment instructions..."
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all resize-none"
                                         ></textarea>
                                     </div>
@@ -157,7 +183,7 @@ export default function HomeworkManagement() {
                                         className="bg-primary hover:bg-primary/90 text-white rounded-[2rem] px-12 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20 transition-all active:scale-95"
                                     >
                                         {registering ? <Activity size={18} className="animate-spin" /> : <FileText size={18} />}
-                                        Commit Deployment
+                                        Save Homework
                                     </Button>
                                 </div>
                             </form>
@@ -169,13 +195,13 @@ export default function HomeworkManagement() {
                                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" size={20} />
                                     <input
                                         type="text"
-                                        placeholder="Sync Deliverable Identifier..."
+                                        placeholder="Search homework..."
                                         className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all"
                                     />
                                 </div>
                                 <Button variant="secondary" className="rounded-xl px-6 py-4 h-auto font-black text-[10px] uppercase tracking-widest gap-2 border-2 text-slate-400">
                                     <Filter size={14} />
-                                    Categorical Node Filter
+                                    Filter Homework
                                 </Button>
                             </div>
 
@@ -190,7 +216,7 @@ export default function HomeworkManagement() {
                                             <div className="size-20 rounded-full bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center text-slate-200">
                                                 <FileText size={40} />
                                             </div>
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic font-bold">No Deliverable Nodes Detected</p>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic font-bold">No Homework Found</p>
                                         </div>
                                     </div>
                                 ) : (
@@ -204,7 +230,7 @@ export default function HomeworkManagement() {
                                                             {hw.subjectId}
                                                         </Badge>
                                                     </div>
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Assignment Deliverable</p>
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Assignment Details</p>
                                                 </div>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
@@ -219,7 +245,7 @@ export default function HomeworkManagement() {
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <Activity size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Submission Spectrum</span>
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">View Submissions</span>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
@@ -231,7 +257,7 @@ export default function HomeworkManagement() {
                                                         <Clock size={20} />
                                                     </div>
                                                     <div className="flex-1 min-w-0 text-left">
-                                                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Temporal Deadline</p>
+                                                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Due Date</p>
                                                         <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300 uppercase">{new Date(hw.dueDate).toLocaleDateString()}</p>
                                                     </div>
                                                 </div>
@@ -259,7 +285,7 @@ export default function HomeworkManagement() {
                                                     ACADEMIC_CERTIFIED
                                                 </p>
                                                 <span className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                                    Inspect Spectrum
+                                                    View Submissions
                                                     <ChevronRight size={14} />
                                                 </span>
                                             </div>

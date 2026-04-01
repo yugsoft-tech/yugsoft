@@ -43,17 +43,17 @@ export default function ExamList() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
+        <div className="space-y-8 animate-in fade-in duration-500 pt-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Examination Protocols</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Manage assessment cycles and academic performance metrics.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Manage Exams</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Schedule and manage school examination cycles.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Link href={`/${rolePath}/exams/create`}>
                         <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20">
                             <Plus size={18} />
-                            Initialize Cycle
+                            Schedule New Exam
                         </Button>
                     </Link>
                 </div>
@@ -65,7 +65,7 @@ export default function ExamList() {
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={20} />
                         <input
                             type="text"
-                            placeholder="Query Exam Name or Cycle ID..."
+                            placeholder="Search exam by name or ID..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full bg-white dark:bg-slate-800 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-primary transition-all shadow-sm"
@@ -74,7 +74,7 @@ export default function ExamList() {
 
                     <div className="flex items-center gap-4">
                         <Badge variant="outline" className="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2">
-                            ACTIVE PROTOCOLS: {exams.length}
+                            ACTIVE EXAMS: {exams.length}
                         </Badge>
                     </div>
                 </div>
@@ -83,10 +83,10 @@ export default function ExamList() {
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="border-b border-slate-100 dark:border-slate-800">
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Exam Title / ID</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Temporal Range</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Benchmarking</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Operational Status</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Exam Name / ID</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Exam Date</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Marks Info</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
                                 <th className="px-8 py-6 text-right"></th>
                             </tr>
                         </thead>
@@ -109,8 +109,8 @@ export default function ExamList() {
                                                 <FileText size={32} />
                                             </div>
                                             <div>
-                                                <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">No Cycles Registered</p>
-                                                <p className="text-sm font-medium text-slate-500 italic">Initialize a new examination cycle to begin.</p>
+                                                <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">No Exams Found</p>
+                                                <p className="text-sm font-medium text-slate-500 italic">Schedule a new exam to begin.</p>
                                             </div>
                                         </div>
                                     </td>
@@ -137,7 +137,7 @@ export default function ExamList() {
                                                 </div>
                                                 <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest italic opacity-60">
                                                     <Clock size={12} className="text-indigo-500" />
-                                                    Assessment Phase
+                                                    Exam Phase
                                                 </div>
                                             </div>
                                         </td>
@@ -149,7 +149,7 @@ export default function ExamList() {
                                         </td>
                                         <td className="px-8 py-8">
                                             <Badge variant="outline" className="border-emerald-500/20 text-emerald-500 bg-emerald-500/5 font-black text-[9px] uppercase tracking-widest rounded-lg">
-                                                ACTIVE CYCLE
+                                                ACTIVE
                                             </Badge>
                                         </td>
                                         <td className="px-8 py-8 text-right">
@@ -163,7 +163,7 @@ export default function ExamList() {
                                                     <DropdownMenuItem asChild>
                                                         <Link href={`/${rolePath}/exams/edit/${exam.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <Edit2 size={16} className="text-primary" />
-                                                            <span className="text-xs font-black uppercase tracking-widest">Edit Protocol</span>
+                                                            <span className="text-xs font-black uppercase tracking-widest">Edit Exam</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
@@ -175,7 +175,7 @@ export default function ExamList() {
                                                     <DropdownMenuItem asChild>
                                                         <Link href={`/${rolePath}/exams/results/${exam.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <Target size={16} className="text-indigo-500" />
-                                                            <span className="text-xs font-black uppercase tracking-widest">View Performance</span>
+                                                            <span className="text-xs font-black uppercase tracking-widest">View Results</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuSeparator className="my-2" />
@@ -184,7 +184,7 @@ export default function ExamList() {
                                                         className="flex items-center gap-3 p-3 rounded-xl cursor-pointer text-rose-500 focus:text-rose-600 focus:bg-rose-50"
                                                     >
                                                         <Trash2 size={16} />
-                                                        <span className="text-xs font-black uppercase tracking-widest">Terminate Cycle</span>
+                                                        <span className="text-xs font-black uppercase tracking-widest">Delete Exam</span>
                                                     </DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>

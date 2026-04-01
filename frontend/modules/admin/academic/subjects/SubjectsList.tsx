@@ -53,7 +53,7 @@ export default function SubjectsList() {
         setRegistering(true);
         try {
             await subjectsService.create(data as any);
-            toast.success('Curriculum Expansion: New subject node registered.');
+            toast.success('Subject added successfully.');
             reset();
             setActiveTab('matrix');
             refetch();
@@ -65,11 +65,11 @@ export default function SubjectsList() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+        <div className="space-y-8 animate-in fade-in duration-500 pb-12 pt-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Curriculum Node Registry</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Manage institutional subject entities, syllabus synchronization, and academic credits.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Manage Subjects</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Configure and manage school subjects and curriculum.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button
@@ -87,13 +87,13 @@ export default function SubjectsList() {
                     {activeTab === 'create' ? (
                         <div className="space-y-10">
                             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-8">
-                                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Academic Asset Registry</h2>
-                                <button onClick={() => setActiveTab('matrix')} className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Return to Matrix</button>
+                                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Add New Subject</h2>
+                                <button onClick={() => setActiveTab('matrix')} className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Back to List</button>
                             </div>
                             <form onSubmit={handleSubmit(onRegister)} className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                 <div className="space-y-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Subject Identifier (Name)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Subject Name</label>
                                         <input
                                             {...register('name')}
                                             placeholder="Theoretical Physics / Macroeconomics..."
@@ -103,7 +103,7 @@ export default function SubjectsList() {
                                 </div>
                                 <div className="space-y-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Canonical Code (ID)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Subject Code</label>
                                         <input
                                             {...register('code')}
                                             placeholder="PHY-402 / ECO-101..."
@@ -117,8 +117,8 @@ export default function SubjectsList() {
                                         disabled={registering}
                                         className="bg-primary hover:bg-primary/90 text-white rounded-[2rem] px-12 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20 transition-all active:scale-95"
                                     >
-                                        {registering ? <Activity size={18} className="animate-spin" /> : <BookOpen size={18} />}
-                                        Commit Asset Node
+                                        {registering ? <Activity size={18} className="animate-spin" /> : <Plus size={18} />}
+                                        Add Subject
                                     </Button>
                                 </div>
                             </form>
@@ -130,13 +130,13 @@ export default function SubjectsList() {
                                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" size={20} />
                                     <input
                                         type="text"
-                                        placeholder="Sync Subject Identifier..."
+                                        placeholder="Search subject..."
                                         className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all"
                                     />
                                 </div>
                                 <Button variant="secondary" className="rounded-xl px-6 py-4 h-auto font-black text-[10px] uppercase tracking-widest gap-2 border-2 text-slate-400">
                                     <Filter size={14} />
-                                    Curriculum Filter
+                                    Filter Subjects
                                 </Button>
                             </div>
 
@@ -147,7 +147,7 @@ export default function SubjectsList() {
                                     ))
                                 ) : (
                                     subjects.map((sub) => (
-                                        <div key={sub.id} className="bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-slate-50 dark:border-slate-800 p-10 space-y-8 hover:border-primary transition-all shadow-xl group cursor-pointer overflow-hidden relative">
+                                        <div key={sub.id} className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-slate-50 dark:border-slate-800 p-8 pt-10 min-h-[320px] flex flex-col justify-between hover:border-primary transition-all shadow-xl hover:shadow-2xl hover:shadow-primary/5 group cursor-pointer overflow-hidden relative">
                                             <div className="flex justify-between items-start relative z-10">
                                                 <div className="space-y-2 text-left">
                                                     <div className="flex items-center gap-3">
@@ -158,54 +158,56 @@ export default function SubjectsList() {
                                                     </div>
                                                 </div>
                                                 <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <button className="size-10 rounded-2xl hover:bg-white dark:hover:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 dark:border-slate-800">
+                                                    <DropdownMenuTrigger>
+                                                        <div className="size-10 rounded-2xl hover:bg-white dark:hover:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 dark:border-slate-800 transition-all active:scale-90">
                                                             <MoreVertical size={20} />
-                                                        </button>
+                                                        </div>
                                                     </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl">
-                                                        <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
+                                                    <DropdownMenuContent align="end">
+                                                        <DropdownMenuItem className="gap-3">
                                                             <FileText size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Syllabus Matrix</span>
+                                                            <span>Manage Syllabus</span>
                                                         </DropdownMenuItem>
-                                                        <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
+                                                        <DropdownMenuItem className="gap-3">
                                                             <Activity size={16} className="text-emerald-500" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Assessment Sync</span>
+                                                            <span>View Assessments</span>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </div>
 
-                                            <div className="grid grid-cols-2 gap-4 relative z-10">
-                                                <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
-                                                    <Book size={24} className="text-primary" />
-                                                    <div className="text-center">
-                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Assignments</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{sub._count?.homeworks || 0} Sets</p>
+                                            <div className="space-y-6 relative z-10 w-full">
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div className="bg-slate-50 dark:bg-slate-800/80 p-5 rounded-2xl flex flex-col items-center gap-2 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 transition-all hover:scale-[1.02]">
+                                                        <Book size={20} className="text-primary" />
+                                                        <div className="text-center">
+                                                            <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Homework</p>
+                                                            <p className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{sub._count?.homeworks || 0} Total</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="bg-slate-50 dark:bg-slate-800/80 p-5 rounded-2xl flex flex-col items-center gap-2 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 transition-all hover:scale-[1.02]">
+                                                        <Clock size={20} className="text-indigo-500" />
+                                                        <div className="text-center">
+                                                            <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Classes</p>
+                                                            <p className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{sub._count?.timetables || 0}/Week</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
-                                                    <Clock size={24} className="text-indigo-500" />
-                                                    <div className="text-center">
-                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Sessions</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{sub._count?.timetables || 0} / Week</p>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between relative z-10 text-left">
-                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
-                                                    <ShieldCheck size={14} className="text-emerald-500" />
-                                                    CREDIT_VALIDATED
-                                                </p>
-                                                <span className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                                    Sync Curriculum
-                                                    <ChevronRight size={14} />
-                                                </span>
+                                                <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-left">
+                                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
+                                                        <ShieldCheck size={14} className="text-emerald-500" />
+                                                        ACTIVE
+                                                    </p>
+                                                    <span className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
+                                                        View Details
+                                                        <ChevronRight size={14} />
+                                                    </span>
+                                                </div>
                                             </div>
 
                                             {/* Abstract Design Element */}
-                                            <div className="absolute -left-12 -bottom-12 size-40 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-all"></div>
+                                            <div className="absolute -right-20 -bottom-20 size-64 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all duration-700"></div>
                                         </div>
                                     ))
                                 )}

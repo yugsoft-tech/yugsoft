@@ -63,7 +63,7 @@ export default function AddUser() {
                 <select className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm" value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })}>
                   <option value="STUDENT">Student</option>
                   <option value="TEACHER">Teacher</option>
-                  <option value="ADMIN">Admin</option>
+
                   <option value="PARENT">Parent</option>
                 </select>
               </div>

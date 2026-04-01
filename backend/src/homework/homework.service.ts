@@ -23,23 +23,31 @@ export class HomeworkService {
     createHomeworkDto: CreateHomeworkDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only TEACHER can create homework');
+    const isTeacher = currentUser.role === Role.TEACHER;
+    const isAdmin = currentUser.role === Role.SCHOOL_ADMIN || currentUser.role === Role.SUPER_ADMIN;
+
+    if (!isTeacher && !isAdmin) {
+      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can create homework');
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('Teacher must be associated with a school');
+      throw new ForbiddenException('User must be associated with a school');
     }
 
-    // Verify teacher exists
-    const teacher = await this.prisma.teacher.findFirst({
-      where: {
-        userId: currentUser.userId,
-      },
-    });
+    let teacherId: string | null = null;
 
-    if (!teacher) {
-      throw new NotFoundException('Teacher profile not found');
+    if (isTeacher) {
+      // Verify teacher exists
+      const teacher = await this.prisma.teacher.findFirst({
+        where: {
+          userId: currentUser.userId,
+        },
+      });
+
+      if (!teacher) {
+        throw new NotFoundException('Teacher profile not found');
+      }
+      teacherId = teacher.id;
     }
 
     const { title, description, classId, subjectId, dueDate } =
@@ -73,11 +81,27 @@ export class HomeworkService {
       throw new ForbiddenException('Subject must belong to the same school');
     }
 
-    // Verify teacher is assigned to the subject
-    if (subject.teacherId !== teacher.id) {
+    // Verify teacher is assigned to the subject (Only for teachers)
+    if (isTeacher && subject.teacherId !== teacherId) {
       throw new ForbiddenException(
         'You can only assign homework for subjects assigned to you',
       );
+    }
+
+    // If Admin is creating, use the subject's teacher or the first available teacher in the school
+    if (!teacherId && isAdmin) {
+      teacherId = subject.teacherId;
+      
+      if (!teacherId) {
+        // Fallback: find any teacher in the school if the subject has no teacher
+        const fallbackTeacher = await this.prisma.teacher.findFirst({
+           where: { schoolId: currentUser.schoolId }
+        });
+        if (!fallbackTeacher) {
+          throw new BadRequestException('No teachers found in this school to assign homework to');
+        }
+        teacherId = fallbackTeacher.id;
+      }
     }
 
     // Validate due date is in the future
@@ -93,7 +117,7 @@ export class HomeworkService {
         description: description || null,
         classId,
         subjectId,
-        teacherId: teacher.id,
+        teacherId: teacherId!,
         dueDate: dueDateObj,
       },
       include: {

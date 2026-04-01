@@ -22,10 +22,10 @@ import {
 } from 'lucide-react';
 
 const tabs = [
-  { id: 'personal', label: 'Identity Matrix', icon: Fingerprint, color: 'primary' },
-  { id: 'academic', label: 'Academic Protocol', icon: School, color: 'info' },
-  { id: 'guardian', label: 'Nexus Contacts', icon: Users, color: 'success' },
-  { id: 'documents', label: 'Data Archives', icon: FileText, color: 'warning' },
+  { id: 'personal', label: 'Personal Information', icon: Fingerprint, color: 'primary' },
+  { id: 'academic', label: 'Academic Details', icon: School, color: 'info' },
+  { id: 'guardian', label: 'Guardian Information', icon: Users, color: 'success' },
+  { id: 'documents', label: 'Documents', icon: FileText, color: 'warning' },
 ];
 
 export default function AddStudent() {
@@ -61,16 +61,16 @@ export default function AddStudent() {
         router.push('/admin/students');
       }, 1500);
     } catch (err: any) {
-      setSubmitError(err.message || 'Transmission failure during data commit.');
+      setSubmitError(err.message || 'Failed to add student. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <AdminLayout title="Onboard New Entity">
+    <AdminLayout title="Add New Student">
       <Head>
-        <title>Onboard Entity - Student - EduCore</title>
+        <title>Add Student - {APP_NAME}</title>
       </Head>
 
       <form onSubmit={handleSubmit(onCommit)} className="space-y-10">
@@ -79,10 +79,10 @@ export default function AddStudent() {
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-primary">
               <UserPlus size={20} />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Initiate Onboarding</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">New Student Registration</span>
             </div>
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Onboard Entity</h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium italic">Initialize new student profile within the EduCore ecosystem.</p>
+            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Add Student</h1>
+            <p className="text-slate-500 dark:text-slate-400 font-medium italic">Fill in the details to register a new student.</p>
           </div>
           <div className="flex items-center gap-3">
             <button
@@ -91,7 +91,7 @@ export default function AddStudent() {
               className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-500 hover:text-rose-500 transition-all active:scale-95"
             >
               <X size={18} />
-              Abort
+              Cancel
             </button>
             <button
               type="submit"
@@ -99,7 +99,7 @@ export default function AddStudent() {
               className="flex items-center gap-2 px-8 py-3 bg-primary text-white rounded-xl text-sm font-black shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95 transition-all disabled:opacity-50"
             >
               {isSubmitting ? <Activity className="animate-spin" size={18} /> : <Save size={18} />}
-              {isSubmitting ? 'Processing...' : 'Commit Entity'}
+              {isSubmitting ? 'Saving...' : 'Add Student'}
             </button>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function AddStudent() {
         {submitSuccess && (
           <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
             <CheckCircle2 size={20} />
-            <span className="text-sm font-bold">Entity onboarded successfully. Redirecting to directory...</span>
+            <span className="text-sm font-bold">Student added successfully. Redirecting to list...</span>
           </div>
         )}
 
@@ -157,25 +157,25 @@ export default function AddStudent() {
                     </button>
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Identity Matrix</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Primary Biological Data</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Personal Information</h3>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Enter student details</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <FormInput label="First Identifier" {...register('firstName')} placeholder="Legal first name" error={errors.firstName?.message} />
-                  <FormInput label="Last Identifier" {...register('lastName')} placeholder="Legal last name" error={errors.lastName?.message} />
-                  <FormInput label="Digital Endpoint (Email)" type="email" {...register('email')} placeholder="student@educore.edu" error={errors.email?.message} />
-                  <FormInput label="Primary Signal (Phone)" type="tel" {...register('phone')} placeholder="+1 234 567 890" error={errors.phone?.message} />
+                  <FormInput label="First Name" {...register('firstName')} placeholder="Enter first name" error={errors.firstName?.message} />
+                  <FormInput label="Last Name" {...register('lastName')} placeholder="Enter last name" error={errors.lastName?.message} />
+                  <FormInput label="Email Address" type="email" {...register('email')} placeholder="student@school.com" error={errors.email?.message} />
+                  <FormInput label="Phone Number" type="tel" {...register('phone')} placeholder="Phone number" error={errors.phone?.message} />
                   <FormInput label="Admission Number" {...register('admissionNumber')} error={errors.admissionNumber?.message} />
-                  <FormInput label="Temporal Origin (DOB)" type="date" {...register('dateOfBirth')} error={errors.dateOfBirth?.message} />
+                  <FormInput label="Date of Birth" type="date" {...register('dateOfBirth')} error={errors.dateOfBirth?.message} />
                   <FormSelect
-                    label="Gender Axis"
+                    label="Gender"
                     {...register('gender')}
                     options={[
                       { value: 'MALE', label: 'Male' },
                       { value: 'FEMALE', label: 'Female' },
-                      { value: 'OTHER', label: 'Non-Binary' }
+                      { value: 'OTHER', label: 'Other' }
                     ]}
                     error={errors.gender?.message}
                   />
@@ -190,20 +190,20 @@ export default function AddStudent() {
                     <School size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Academic Protocol</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">System Assignment Hierarchy</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Academic Details</h3>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Class and Section assignment</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormSelect
-                    label="Assigned Unit (Class)"
+                    label="Assigned Class"
                     {...register('classId')}
                     options={classes.map(c => ({ value: c.id, label: c.name }))}
                     error={errors.classId?.message}
                     disabled={classesLoading}
                   />
-                  <FormInput label="Residency Coordinates" {...register('address')} placeholder="Full physical address" error={errors.address?.message} />
+                  <FormInput label="Address" {...register('address')} placeholder="Home address" error={errors.address?.message} />
                 </div>
               </div>
             )}
@@ -215,8 +215,8 @@ export default function AddStudent() {
                     <Users size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Nexus Contacts</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Guardian Liaison Control</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Guardian Information</h3>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Parent or Guardian contact details</p>
                   </div>
                 </div>
                 <div className="p-12 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl">
@@ -232,8 +232,8 @@ export default function AddStudent() {
                     <FileText size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Data Archives</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Static Document Storage</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Documents</h3>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Student document storage</p>
                   </div>
                 </div>
                 <div className="p-12 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl">

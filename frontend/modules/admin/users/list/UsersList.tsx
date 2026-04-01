@@ -55,17 +55,17 @@ export default function UsersList() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
+        <div className="space-y-8 animate-in fade-in duration-500 pt-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Institutional Directory</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Manage administrative nodes and user session authorizations.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Staff & User Management</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Manage user accounts, roles, and administrative access.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Link href="/admin/users/add">
                         <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20">
                             <Plus size={18} />
-                            Initialize New Unit
+                            Add New User
                         </Button>
                     </Link>
                 </div>
@@ -81,7 +81,7 @@ export default function UsersList() {
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={20} />
                         <input
                             type="text"
-                            placeholder="Query Identity or Matrix ID..."
+                            placeholder="Search user by name or email..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full bg-white dark:bg-slate-800 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-primary transition-all shadow-sm"
@@ -89,7 +89,7 @@ export default function UsersList() {
                     </form>
 
                     <div className="flex items-center gap-4 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
-                        {['ALL', 'SUPER_ADMIN', 'ADMIN', 'TEACHER', 'STUDENT', 'PARENT'].map((role) => (
+                        {['ALL', 'TEACHER', 'STUDENT', 'PARENT'].map((role) => (
                             <button
                                 key={role}
                                 onClick={() => handleRoleChange(role)}
@@ -108,10 +108,10 @@ export default function UsersList() {
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="border-b border-slate-100 dark:border-slate-800">
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Identity Profile</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Access Level</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Security Status</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Last Sync</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">User Profile</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Role</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Account Status</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Last Login</th>
                                 <th className="px-8 py-6 text-right"></th>
                             </tr>
                         </thead>
@@ -134,8 +134,8 @@ export default function UsersList() {
                                                 <Search size={32} />
                                             </div>
                                             <div>
-                                                <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">No Identities Found</p>
-                                                <p className="text-sm font-medium text-slate-500 italic">Refine your query parameters or initialize a new unit.</p>
+                                                <p className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">No Users Found</p>
+                                                <p className="text-sm font-medium text-slate-500 italic">Try searching with a different name or email.</p>
                                             </div>
                                         </div>
                                     </td>
@@ -169,9 +169,9 @@ export default function UsersList() {
                                         </td>
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-2">
-                                                <div className={`size-2 rounded-full ${user.isActive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'}`} />
+                                                <div className={`size-2 rounded-full ${user.isActive ? 'bg-emerald-500' : 'bg-slate-300'}`} />
                                                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                                                    {user.isActive ? 'Active Node' : 'Suspended'}
+                                                    {user.isActive ? 'Active' : 'Inactive'}
                                                 </span>
                                             </div>
                                         </td>
@@ -189,19 +189,19 @@ export default function UsersList() {
                                                     <DropdownMenuItem asChild>
                                                         <Link href={`/admin/users/edit/${user.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <Edit3 size={16} className="text-primary" />
-                                                            <span className="text-xs font-black uppercase tracking-widest">Configure Identity</span>
+                                                            <span className="text-xs font-black uppercase tracking-widest">Edit Profile</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
                                                         <Link href={`/admin/users/history/${user.id}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <History size={16} className="text-indigo-500" />
-                                                            <span className="text-xs font-black uppercase tracking-widest">Sync History</span>
+                                                            <span className="text-xs font-black uppercase tracking-widest">Login History</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
                                                         <Link href={`/admin/users/permissions/${user.role}`} className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <ShieldAlert size={16} className="text-amber-500" />
-                                                            <span className="text-xs font-black uppercase tracking-widest">Manage Privileges</span>
+                                                            <span className="text-xs font-black uppercase tracking-widest">Edit Permissions</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuSeparator className="my-2 bg-slate-100 dark:bg-slate-800" />
@@ -210,7 +210,7 @@ export default function UsersList() {
                                                         className="flex items-center gap-3 p-3 rounded-xl cursor-pointer text-rose-500 focus:text-rose-600 focus:bg-rose-50 dark:focus:bg-rose-500/10"
                                                     >
                                                         <Trash2 size={16} />
-                                                        <span className="text-xs font-black uppercase tracking-widest">Terminate Node</span>
+                                                        <span className="text-xs font-black uppercase tracking-widest">Delete User</span>
                                                     </DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
@@ -226,7 +226,7 @@ export default function UsersList() {
                 {pagination.totalPages > 1 && (
                     <div className="p-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                            Matrix Output: {users.length} of {pagination.total} Units
+                            Showing {users.length} of {pagination.total} Users
                         </p>
                         <div className="flex items-center gap-2">
                             <Button
