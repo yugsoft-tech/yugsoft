@@ -43,16 +43,10 @@ export default function ProfileView() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {/* Header / Cover Section */}
-            <div className="relative h-48 rounded-3xl bg-gradient-to-r from-primary to-indigo-600 shadow-xl overflow-hidden">
-                <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
-                </div>
-            </div>
+
 
             {/* Profile Info Card */}
-            <div className="-mt-24 relative px-6">
+            <div className="relative">
                 <div className="bg-white dark:bg-surface-dark rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8">
                     <div className="flex flex-col md:flex-row gap-8 items-start">
                         {/* Avatar */}
@@ -117,7 +111,7 @@ export default function ProfileView() {
             </div>
 
             {/* Additional Sections */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
+            <div className="px-6">
                 {/* School Details */}
                 <div className="bg-white dark:bg-surface-dark rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-8 space-y-6">
                     <div className="flex items-center gap-3">
@@ -138,16 +132,7 @@ export default function ProfileView() {
                     </div>
                 </div>
 
-                {/* Support/Links */}
-                <div className="bg-slate-900 dark:bg-white rounded-3xl p-8 text-white dark:text-slate-900 shadow-xl relative overflow-hidden flex items-center justify-between">
-                    <div className="space-y-2 relative z-10">
-                        <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Privacy & Safety</p>
-                        <h3 className="text-xl font-bold uppercase italic italic tracking-tighter">Manage your privacy</h3>
-                        <p className="text-xs text-slate-400 dark:text-slate-500 font-medium max-w-[200px] leading-relaxed">Ensure your personal information is visible only to authorized staff.</p>
-                    </div>
-                    <Briefcase size={48} className="text-primary opacity-20 relative z-10" />
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                </div>
+
             </div>
         </div>
     );
