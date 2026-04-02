@@ -313,7 +313,7 @@ export class StudentsService {
       console.warn(`[StudentsService] Sub-optimal security state: User ${currentUser.userId} listing students without schoolId association.`);
     }
 
-    const { page = 1, limit = 10, classId, sectionId } = listStudentsDto;
+    const { page = 1, limit = 10, classId, sectionId, search } = listStudentsDto;
     const skip = (page - 1) * limit;
 
     const where: any = {};
@@ -340,6 +340,15 @@ export class StudentsService {
       }
 
       where.classId = classId;
+    }
+
+    if (search) {
+      where.OR = [
+        { user: { firstName: { contains: search, mode: 'insensitive' } } },
+        { user: { lastName: { contains: search, mode: 'insensitive' } } },
+        { user: { email: { contains: search, mode: 'insensitive' } } },
+        { rollNumber: { contains: search, mode: 'insensitive' } },
+      ];
     }
 
     if (sectionId) {

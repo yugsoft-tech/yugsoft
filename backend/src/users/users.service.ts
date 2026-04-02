@@ -51,6 +51,16 @@ export class UsersService {
       where.role = role;
     }
 
+    // Add search filter if provided
+    if (listUsersDto.search) {
+      const search = listUsersDto.search;
+      where.OR = [
+        { firstName: { contains: search, mode: 'insensitive' } },
+        { lastName: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+
     const [data, total] = await Promise.all([
       this.prisma.user.findMany({
         where,

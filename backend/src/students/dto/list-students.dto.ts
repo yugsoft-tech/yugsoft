@@ -1,4 +1,4 @@
-import { IsOptional, IsUUID } from 'class-validator';
+import { IsOptional, IsUUID, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PaginationDto } from '../../common/utils/pagination.dto';
 
@@ -12,5 +12,9 @@ export class ListStudentsDto extends PaginationDto {
   @IsUUID()
   @Type(() => String)
   sectionId?: string;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
 }
 

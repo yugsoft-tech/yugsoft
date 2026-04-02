@@ -1,4 +1,4 @@
-import { IsOptional, IsEnum, IsUUID } from 'class-validator';
+import { IsOptional, IsEnum, IsUUID, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Role } from '../../common/enums';
 import { PaginationDto } from '../../common/utils/pagination.dto';
@@ -12,5 +12,8 @@ export class ListUsersDto extends PaginationDto {
   @IsOptional()
   @IsUUID()
   schoolId?: string;
-}
 
+  @IsOptional()
+  @IsString()
+  search?: string;
+}

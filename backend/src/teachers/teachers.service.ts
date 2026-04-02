@@ -190,12 +190,20 @@ export class TeachersService {
       console.warn(`[TeachersService] Sub-optimal security state: User ${currentUser.userId} listing teachers without schoolId association.`);
     }
 
-    const { page = 1, limit = 10 } = listTeachersDto;
+    const { page = 1, limit = 10, search } = listTeachersDto;
     const skip = (page - 1) * limit;
 
-    const where = {
+    const where: any = {
       schoolId: currentUser.schoolId,
     };
+
+    if (search) {
+      where.OR = [
+        { user: { firstName: { contains: search, mode: 'insensitive' } } },
+        { user: { lastName: { contains: search, mode: 'insensitive' } } },
+        { user: { email: { contains: search, mode: 'insensitive' } } },
+      ];
+    }
 
     const [data, total] = await Promise.all([
       this.prisma.teacher.findMany({
