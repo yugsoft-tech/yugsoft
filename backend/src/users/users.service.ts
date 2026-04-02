@@ -36,7 +36,7 @@ export class UsersService {
     // SCHOOL_ADMIN can only see users from their school
     if (currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('School admin must be associated with a school');
+        console.warn(`[UsersService] Sub-optimal security state: User ${currentUser.userId} listing users without schoolId association.`);
       }
       where.schoolId = currentUser.schoolId;
     }

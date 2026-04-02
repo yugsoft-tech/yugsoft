@@ -125,6 +125,25 @@ export default function StudentsList() {
       </Head>
 
       <div className="space-y-8">
+        {/* Error Display */}
+        {error && (
+          <div className="p-4 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-4 text-rose-600">
+            <div className="size-10 bg-rose-100 rounded-xl flex items-center justify-center animate-pulse">
+              <span className="font-black">!</span>
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-widest">Connection Error</p>
+              <p className="text-sm font-medium italic">{error}</p>
+            </div>
+            <button 
+              onClick={() => window.location.reload()}
+              className="ml-auto px-4 py-2 bg-rose-600 text-white rounded-xl text-xs font-black hover:bg-rose-700 transition-all"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
         {/* Page Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-1">

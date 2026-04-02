@@ -126,6 +126,20 @@ export default function UsersList() {
                                         <td className="px-8 py-6"><Skeleton className="h-8 w-8 ml-auto rounded-lg" /></td>
                                     </tr>
                                 ))
+                            ) : error ? (
+                                <tr>
+                                    <td colSpan={5} className="px-8 py-20 text-center text-rose-500">
+                                        <div className="flex flex-col items-center gap-4">
+                                            <div className="size-16 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center">
+                                                <span className="text-3xl font-black">!</span>
+                                            </div>
+                                            <div>
+                                                <p className="text-xl font-black uppercase tracking-widest">Connection Error</p>
+                                                <p className="text-sm font-medium italic">{error}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             ) : users.length === 0 ? (
                                 <tr>
                                     <td colSpan={5} className="px-8 py-20 text-center">
