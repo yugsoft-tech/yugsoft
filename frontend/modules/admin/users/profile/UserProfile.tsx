@@ -24,9 +24,9 @@ import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
 
 const userProfileSchema = z.object({
-    firstName: z.string().min(2, 'Forename must be valid'),
-    lastName: z.string().min(2, 'Surname must be valid'),
-    email: z.string().email('Institutional ID invalid'),
+    firstName: z.string().min(2, 'First name is required'),
+    lastName: z.string().min(2, 'Last name is required'),
+    email: z.string().email('Invalid email address'),
     phone: z.string().optional(),
     role: z.string(),
     isActive: z.boolean(),
@@ -99,8 +99,8 @@ export default function UserProfile() {
                         <ChevronLeft size={20} />
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1">Identity Config</h1>
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest italic">Unit: {id}</p>
+                        <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1">User Profile</h1>
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest italic">User ID: {id}</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -110,7 +110,7 @@ export default function UserProfile() {
                         className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-8 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
                     >
                         {saving ? <Activity size={18} className="animate-spin" /> : <Save size={18} />}
-                        Sync Profile
+                        Save Profile
                     </Button>
                 </div>
             </div>
@@ -134,16 +134,16 @@ export default function UserProfile() {
                             </div>
 
                             <div className="space-y-1">
-                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">System Node Alpha</h2>
-                                <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] italic">Access: Senior Administrator</p>
+                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Profile Details</h2>
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] italic">Role: Administrator</p>
                             </div>
                         </div>
 
                         <div className="space-y-1 pt-4">
                             {[
-                                { label: 'Uptime', value: '142 Days', icon: Activity },
-                                { label: 'Auth Cycles', value: '1,284', icon: Shield },
-                                { label: 'Latency', value: '12ms', icon: History }
+                                { label: 'Days Active', value: '142 Days', icon: Activity },
+                                { label: 'Total Logins', value: '1,284', icon: Shield },
+                                { label: 'Last Action', value: '12ms', icon: History }
                             ].map((stat, i) => (
                                 <div key={i} className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
                                     <div className="flex items-center gap-3">
@@ -162,9 +162,9 @@ export default function UserProfile() {
                     <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
                         <div className="flex border-b border-slate-100 dark:border-slate-800 p-2">
                             {[
-                                { id: 'profile', label: 'Identity', icon: UserCircle2 },
+                                { id: 'profile', label: 'Personal Info', icon: UserCircle2 },
                                 { id: 'security', label: 'Security', icon: Lock },
-                                { id: 'activity', label: 'Activity', icon: Activity }
+                                { id: 'activity', label: 'Activity Log', icon: Activity }
                             ].map((tab) => (
                                 <button
                                     key={tab.id}
@@ -185,7 +185,7 @@ export default function UserProfile() {
                                 <form className="space-y-8">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="space-y-3">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Forename</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">First Name</label>
                                             <div className="relative group">
                                                 <UserCircle2 size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                                 <input
@@ -196,7 +196,7 @@ export default function UserProfile() {
                                             {errors.firstName && <p className="text-[10px] text-rose-500 font-black uppercase tracking-widest pl-4 italic">{errors.firstName.message}</p>}
                                         </div>
                                         <div className="space-y-3">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Surname</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Last Name</label>
                                             <div className="relative group">
                                                 <UserCircle2 size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                                 <input
@@ -209,7 +209,7 @@ export default function UserProfile() {
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Institutional ID (Email)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Email Address</label>
                                         <div className="relative group">
                                             <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                             <input
@@ -222,7 +222,7 @@ export default function UserProfile() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="space-y-3">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Sync Hub (Phone)</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Phone Number</label>
                                             <div className="relative group">
                                                 <Phone size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                                 <input
@@ -232,7 +232,7 @@ export default function UserProfile() {
                                             </div>
                                         </div>
                                         <div className="space-y-3">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Node Permissions</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">User Role</label>
                                             <div className="relative group">
                                                 <Shield size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                                 <select
@@ -256,24 +256,24 @@ export default function UserProfile() {
                                     <div className="p-8 bg-amber-500/5 border border-amber-500/20 rounded-3xl space-y-4">
                                         <div className="flex items-center gap-3">
                                             <Key size={20} className="text-amber-500" />
-                                            <h3 className="text-sm font-black text-amber-500 uppercase tracking-widest">Security Override</h3>
+                                            <h3 className="text-sm font-black text-amber-500 uppercase tracking-widest">Security Settings</h3>
                                         </div>
                                         <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">
-                                            Initialize a mandatory cipher reset or modify security protocols for this unit. Ensure physical verification of the identity holder before continuing.
+                                            Update password or security settings for this user. Ensure verification of the user before continuing.
                                         </p>
                                     </div>
 
                                     <div className="space-y-6">
                                         <Button variant="secondary" className="w-full justify-between py-6 rounded-2xl font-black text-xs uppercase tracking-widest border-2">
-                                            Dispatch Password Reset Email
+                                            Send Password Reset Email
                                             <Mail size={18} />
                                         </Button>
                                         <Button variant="secondary" className="w-full justify-between py-6 rounded-2xl font-black text-xs uppercase tracking-widest border-2 border-rose-500/20 text-rose-500 hover:bg-rose-500/10">
-                                            Force Synchronous Logout
+                                            Logout from all devices
                                             <History size={18} />
                                         </Button>
                                         <Button variant="secondary" className="w-full justify-between py-6 rounded-2xl font-black text-xs uppercase tracking-widest border-2 border-rose-500 text-rose-500 bg-rose-500/5">
-                                            Terminate Unit Session
+                                            Delete Account
                                             <Lock size={18} />
                                         </Button>
                                     </div>
@@ -288,8 +288,8 @@ export default function UserProfile() {
                                                 <History size={20} />
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">Protocol accessed: [Academic Registry]</p>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] italic">04:21:00 UTC | Index: {9283 - i}</p>
+                                                <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">Page visited: [Academic Registry]</p>
+                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] italic">04:21:00 UTC | ID: {9283 - i}</p>
                                             </div>
                                         </div>
                                     ))}

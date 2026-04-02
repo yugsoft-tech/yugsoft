@@ -20,21 +20,21 @@ import { toast } from 'react-hot-toast';
 import Skeleton from '@/components/ui/Skeleton';
 
 const MODULES = [
-    { id: 'dashboard', name: 'Analytics & Insights' },
-    { id: 'students', name: 'Student Registry' },
-    { id: 'teachers', name: 'Faculty Management' },
-    { id: 'academic', name: 'Academic Protocols' },
-    { id: 'attendance', name: 'Presence Tracking' },
-    { id: 'fees', name: 'Financial Ledger' },
-    { id: 'exams', name: 'Assessment & Grading' },
-    { id: 'settings', name: 'System Parameters' }
+    { id: 'dashboard', name: 'Dashboard & Reports' },
+    { id: 'students', name: 'Student List' },
+    { id: 'teachers', name: 'Teacher Management' },
+    { id: 'academic', name: 'Classes & Subjects' },
+    { id: 'attendance', name: 'Attendance' },
+    { id: 'fees', name: 'Fees & Finance' },
+    { id: 'exams', name: 'Exams & Results' },
+    { id: 'settings', name: 'App Settings' }
 ];
 
 const PERMISSIONS = [
-    { id: 'read', name: 'Read Only', icon: Eye },
-    { id: 'write', name: 'Write Access', icon: Edit },
-    { id: 'delete', name: 'Termination', icon: Trash2 },
-    { id: 'approve', name: 'Authorization', icon: CheckSquare }
+    { id: 'read', name: 'View Only', icon: Eye },
+    { id: 'write', name: 'Can Edit', icon: Edit },
+    { id: 'delete', name: 'Can Delete', icon: Trash2 },
+    { id: 'approve', name: 'Admin Control', icon: CheckSquare }
 ];
 
 export default function RolePermissions() {
@@ -97,9 +97,9 @@ export default function RolePermissions() {
                         <Link href="/admin/users" className="size-10 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 hover:text-primary transition-colors">
                             <ChevronLeft size={20} />
                         </Link>
-                        <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Privilege Matrix</h1>
+                        <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">User Permissions</h1>
                     </div>
-                    <p className="text-sm font-medium text-slate-500 italic pl-12">Configure access level authorizations for: <span className="text-primary font-black uppercase not-italic">[{role}]</span></p>
+                    <p className="text-sm font-medium text-slate-500 italic pl-12">Set what this user can see and do: <span className="text-primary font-black uppercase not-italic">[{role}]</span></p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button
@@ -108,7 +108,7 @@ export default function RolePermissions() {
                         className="rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2"
                     >
                         <RefreshCcw size={18} className={loading ? 'animate-spin' : ''} />
-                        Resync
+                        Refresh
                     </Button>
                     <Button
                         onClick={handleSave}
@@ -120,7 +120,7 @@ export default function RolePermissions() {
                         ) : (
                             <Save size={18} />
                         )}
-                        Deploy Parameters
+                        Save Changes
                     </Button>
                 </div>
             </div>
@@ -130,7 +130,7 @@ export default function RolePermissions() {
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-                                <th className="px-10 py-8 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] w-1/3">Security Node / Module</th>
+                                <th className="px-10 py-8 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] w-1/3">App Feature / Module</th>
                                 {PERMISSIONS.map(p => (
                                     <th key={p.id} className="px-6 py-8 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
                                         <div className="flex flex-col items-center gap-2">
@@ -186,7 +186,7 @@ export default function RolePermissions() {
                 <div className="p-8 bg-slate-50 dark:bg-slate-950/50 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4">
                     <AlertCircle className="text-amber-500" size={20} />
                     <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">
-                        WARNING: Modifying these protocols will immediately impact all nodes assigned to the <span className="text-slate-900 dark:text-white font-black">[{role}]</span> cluster. Ensure valid authorization before deployment.
+                        WARNING: Changing these settings will immediately update access for all users in the <span className="text-slate-900 dark:text-white font-black">[{role}]</span> group.
                     </p>
                 </div>
             </div>
