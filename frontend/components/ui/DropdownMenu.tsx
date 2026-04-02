@@ -85,20 +85,21 @@ export function DropdownMenuContent({ children, align = 'end', className }: Drop
 
     const { triggerRect } = context;
     
-    // Position the menu relative to the trigger button
+    // Position the menu relative to the trigger button using viewport coordinates
     const style: React.CSSProperties = {
         position: 'fixed',
-        top: `${triggerRect.bottom + window.scrollY + 8}px`,
+        top: `${triggerRect.bottom + 8}px`,
         left: align === 'end' 
-            ? `${triggerRect.right + window.scrollX - 160}px` // 160px is a standard width for the menu (w-40)
-            : `${triggerRect.left + window.scrollX}px`,
+            ? `${triggerRect.right - 192}px` // 192px is w-48 (12rem)
+            : `${triggerRect.left}px`,
         zIndex: 9999,
     };
 
-    // To prevent the menu from going off-screen to the right
-    if (align === 'end') {
-        const rightEdge = triggerRect.right + window.scrollX;
-        style.left = `${rightEdge - 192}px`; // Adjusting for w-48 (12rem = 192px)
+    // Edge detection to ensure menu stays within viewport
+    if (triggerRect.right - 192 < 16) {
+        style.left = '16px';
+    } else if (triggerRect.right > window.innerWidth - 16) {
+        style.left = `${window.innerWidth - 192 - 16}px`;
     }
 
     return createPortal(
