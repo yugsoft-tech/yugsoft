@@ -132,7 +132,7 @@ export default function StudentsList() {
               <span className="font-black">!</span>
             </div>
             <div>
-              <p className="text-xs font-black uppercase tracking-widest">Connection Error</p>
+              <p className="text-xs font-black uppercase tracking-widest">Failed to load</p>
               <p className="text-sm font-medium italic">{error}</p>
             </div>
             <button 
@@ -149,10 +149,10 @@ export default function StudentsList() {
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-primary">
               <GraduationCap size={20} />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Verified Students</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Student List</span>
             </div>
             <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Students</h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium italic">List of all students in the school.</p>
+            <p className="text-slate-500 dark:text-slate-400 font-medium italic">List of all students currently in the school.</p>
           </div>
           <Link href="/admin/students/add" className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-black shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95 transition-all">
             <UserPlus size={18} />

@@ -59,8 +59,8 @@ export default function UsersList() {
         <div className="space-y-8 animate-in fade-in duration-500 pt-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Staff & User Management</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Manage user accounts, roles, and administrative access.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Teachers & Staff</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Manage all school staff, teachers, and their accounts.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Link href="/admin/users/add">
@@ -109,9 +109,9 @@ export default function UsersList() {
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="border-b border-slate-100 dark:border-slate-800">
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">User Profile</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">User</th>
                                 <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Role</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Account Status</th>
+                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
                                 <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Last Login</th>
                                 <th className="px-8 py-6 text-right"></th>
                             </tr>
@@ -135,7 +135,7 @@ export default function UsersList() {
                                                 <span className="text-3xl font-black">!</span>
                                             </div>
                                             <div>
-                                                <p className="text-xl font-black uppercase tracking-widest">Connection Error</p>
+                                                <p className="text-xl font-black uppercase tracking-widest">Failed to load</p>
                                                 <p className="text-sm font-medium italic">{error}</p>
                                             </div>
                                         </div>

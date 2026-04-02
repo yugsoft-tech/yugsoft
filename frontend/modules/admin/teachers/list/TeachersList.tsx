@@ -55,9 +55,9 @@ export default function TeachersList() {
     };
 
     return (
-        <AdminLayout title="Faculty Directory">
+        <AdminLayout title="Teachers List">
             <Head>
-                <title>Faculty Directory - EduCore</title>
+                <title>Teachers List - EduCore</title>
             </Head>
 
             {/* Header Section */}
@@ -65,10 +65,10 @@ export default function TeachersList() {
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 text-primary mb-1">
                         <ShieldCheck size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Authorized Faculty Access</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Manage Teachers</span>
                     </div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Faculty Directory</h1>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">Comprehensive management of institutional academic personnel.</p>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Teachers List</h1>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">Full list of all teachers in the school.</p>
                 </div>
                 <div className="flex gap-4">
                     <button
@@ -76,7 +76,7 @@ export default function TeachersList() {
                         className="px-8 py-4 bg-primary text-white rounded-2xl font-black text-sm shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-2"
                     >
                         <Plus size={18} />
-                        Onboard Faculty
+                        Add New Teacher
                     </button>
                 </div>
             </div>
@@ -90,7 +90,7 @@ export default function TeachersList() {
                         </div>
                         <input
                             type="text"
-                            placeholder="Search faculty name, ID, or department..."
+                            placeholder="Search teacher by name or department..."
                             className="flex-1 bg-transparent border-none outline-none text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-400 px-2"
                             value={searchTerm}
                             onChange={handleSearch}
@@ -101,7 +101,7 @@ export default function TeachersList() {
                             onChange={(e) => setFilter({ status: e.target.value })}
                             className="bg-transparent border-none outline-none text-xs font-black uppercase tracking-widest text-slate-500 px-4 cursor-pointer"
                         >
-                            <option value="">Status Protocol</option>
+                            <option value="">Status Filter</option>
                             <option value="ACTIVE">Verified Active</option>
                             <option value="INACTIVE">Protocol Suspended</option>
                         </select>
@@ -109,8 +109,8 @@ export default function TeachersList() {
                 </div>
                 <div className="lg:col-span-4 bg-slate-900 text-white rounded-[2rem] p-6 flex items-center justify-between shadow-xl shadow-slate-900/10">
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Total Faculty Count</p>
-                        <h4 className="text-2xl font-black tracking-tight">{total} Entities</h4>
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Total Teachers</p>
+                        <h4 className="text-2xl font-black tracking-tight">{total} Teachers</h4>
                     </div>
                     <div className="size-12 rounded-2xl bg-white/10 flex items-center justify-center">
                         <Users size={24} />
@@ -123,10 +123,10 @@ export default function TeachersList() {
                 <div className="p-10 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-[2.5rem] flex flex-col items-center justify-center text-center gap-4 mb-10 animate-in fade-in zoom-in">
                     <AlertCircle size={48} />
                     <div className="space-y-1">
-                        <h3 className="text-xl font-black uppercase tracking-widest">Data Synchronization Failure</h3>
+                        <h3 className="text-xl font-black uppercase tracking-widest">Failed to load data</h3>
                         <p className="font-bold italic">{error}</p>
                     </div>
-                    <button onClick={() => refetch()} className="px-6 py-2 bg-rose-500 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Retry Authorization</button>
+                    <button onClick={() => refetch()} className="px-6 py-2 bg-rose-500 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Try Again</button>
                 </div>
             )}
 
@@ -136,11 +136,11 @@ export default function TeachersList() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
-                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Faculty Entity</th>
-                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Departmental Matrix</th>
-                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Communication Endpoints</th>
-                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Registry Status</th>
-                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em] text-right">Operations</th>
+                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Teacher Name</th>
+                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Department</th>
+                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Contact</th>
+                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
+                                <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em] text-right">Settings</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -176,10 +176,10 @@ export default function TeachersList() {
                                             <div className="flex flex-col gap-1">
                                                 <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-bold text-sm">
                                                     <Briefcase size={12} className="text-primary" />
-                                                    {teacher.department || 'General Matrix'}
+                                                    {teacher.department || 'Not Assigned'}
                                                 </div>
                                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">
-                                                    {teacher.designation || 'Academic Staff'}
+                                                    {teacher.designation || 'Teacher'}
                                                 </p>
                                             </div>
                                         </td>
@@ -187,11 +187,11 @@ export default function TeachersList() {
                                             <div className="flex flex-col gap-2">
                                                 <div className="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-primary transition-colors cursor-pointer">
                                                     <Mail size={12} />
-                                                    {teacher.email || 'No Digital Endpoint'}
+                                                    {teacher.email || 'No email set'}
                                                 </div>
                                                 <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                                                     <Phone size={12} />
-                                                    {teacher.phone || 'Null Signal'}
+                                                    {teacher.phone || 'No phone set'}
                                                 </div>
                                             </div>
                                         </td>
@@ -233,7 +233,7 @@ export default function TeachersList() {
                 {/* Dynamic Pagination */}
                 <div className="px-8 py-8 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] italic">
-                        Displaying {teachers.length} of {total} verified faculty entities.
+                        Showing {teachers.length} of {total} teachers.
                     </div>
                     <div className="flex items-center gap-3">
                         <button
@@ -241,7 +241,7 @@ export default function TeachersList() {
                             onClick={() => setPage(params.page! - 1)}
                             className="px-6 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-black uppercase tracking-widest text-slate-500 disabled:opacity-30 hover:bg-primary hover:text-white transition-all"
                         >
-                            Previous Cycle
+                            Back
                         </button>
                         <div className="size-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-xs font-black shadow-lg shadow-slate-900/10">
                             {params.page}
@@ -251,7 +251,7 @@ export default function TeachersList() {
                             onClick={() => setPage(params.page! + 1)}
                             className="px-6 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-black uppercase tracking-widest text-slate-500 disabled:opacity-30 hover:bg-primary hover:text-white transition-all"
                         >
-                            Next Cycle
+                            Next
                         </button>
                     </div>
                 </div>
@@ -263,14 +263,14 @@ export default function TeachersList() {
                         <Search size={48} />
                     </div>
                     <div className="space-y-2">
-                        <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-widest uppercase">Null Results In Directory</h3>
-                        <p className="text-slate-500 italic max-w-sm">No faculty entities match your current synchronization criteria within the institutional data vault.</p>
+                        <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-widest uppercase">No Teachers Found</h3>
+                        <p className="text-slate-500 italic max-w-sm">We couldn't find any teachers matching your current search filters.</p>
                     </div>
                     <button
                         onClick={() => { setSearch(''); setSearchTerm(''); }}
                         className="px-8 py-4 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20"
                     >
-                        Reset Signal Matrix
+                        Clear Filters
                     </button>
                 </div>
             )}
