@@ -86,16 +86,23 @@ export function DropdownMenuContent({ children, align = 'end', className }: Drop
     const { triggerRect } = context;
     
     // Position the menu relative to the trigger button using viewport coordinates
+    const availableSpaceBelow = window.innerHeight - triggerRect.bottom;
+    const menuHeight = 280; // Estimated height for the menu with all items
+    const shouldFlipUp = availableSpaceBelow < menuHeight;
+
     const style: React.CSSProperties = {
         position: 'fixed',
-        top: `${triggerRect.bottom + 8}px`,
+        top: shouldFlipUp 
+            ? `${triggerRect.top - 8}px` 
+            : `${triggerRect.bottom + 8}px`,
+        transform: shouldFlipUp ? 'translateY(-100%)' : 'none',
         left: align === 'end' 
-            ? `${triggerRect.right - 192}px` // 192px is w-48 (12rem)
+            ? `${triggerRect.right - 192}px` 
             : `${triggerRect.left}px`,
         zIndex: 9999,
     };
 
-    // Edge detection to ensure menu stays within viewport
+    // Edge detection to ensure menu stays within viewport horizontally
     if (triggerRect.right - 192 < 16) {
         style.left = '16px';
     } else if (triggerRect.right > window.innerWidth - 16) {
