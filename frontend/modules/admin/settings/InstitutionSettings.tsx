@@ -21,12 +21,17 @@ import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
 import { toast } from 'react-hot-toast';
+import AdminLayout from '@/components/layouts/AdminLayout';
+import AuthGuard from '@/components/guards/AuthGuard';
+import RoleGuard from '@/components/guards/RoleGuard';
+import { USER_ROLES } from '@/utils/role-config';
+import Head from 'next/head';
 
 const settingsSchema = z.object({
-    institutionName: z.string().min(3, 'Identity too short'),
-    address: z.string().min(10, 'Geographic metadata required'),
-    contactEmail: z.string().email('Invalid institutional ID'),
-    phone: z.string().min(10, 'Phone sync required'),
+    institutionName: z.string().min(3, 'Name too short'),
+    address: z.string().min(10, 'Address required'),
+    contactEmail: z.string().email('Invalid email address'),
+    phone: z.string().min(10, 'Phone number required'),
     accreditationNo: z.string().optional(),
     currency: z.string(),
 });
@@ -58,31 +63,39 @@ export default function InstitutionSettings() {
 
     if (loading) {
         return (
-            <div className="space-y-8 animate-pulse">
-                <Skeleton className="h-40 w-full rounded-[2.5rem]" />
-                <Skeleton className="h-96 w-full rounded-[2.5rem]" />
-            </div>
+            <AdminLayout title="School Settings">
+                <div className="space-y-8 animate-pulse p-8">
+                    <Skeleton className="h-40 w-full rounded-[2.5rem]" />
+                    <Skeleton className="h-96 w-full rounded-[2.5rem]" />
+                </div>
+            </AdminLayout>
         );
     }
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Institutional profile</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Synchronize core identity and accreditation metadata.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Button
-                        onClick={handleSubmit(onSubmit)}
-                        disabled={saving}
-                        className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-10 py-6 h-auto font-black text-xs uppercase tracking-widest gap-3 shadow-xl shadow-primary/20"
-                    >
-                        {saving ? <Activity size={18} className="animate-spin" /> : <Save size={18} />}
-                        Sync Parameters
-                    </Button>
-                </div>
-            </div>
+        <AuthGuard>
+            <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
+                <AdminLayout title="School Settings">
+                    <Head>
+                        <title>School Settings | School ERP</title>
+                    </Head>
+                    <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div>
+                                <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1">School Profile</h1>
+                                <p className="text-xs font-black text-slate-400 uppercase tracking-widest italic text-primary">Manage your school details and branding</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <Button
+                                    onClick={handleSubmit(onSubmit)}
+                                    disabled={saving}
+                                    className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-10 py-6 h-auto font-black text-xs uppercase tracking-widest gap-3 shadow-xl shadow-primary/20"
+                                >
+                                    {saving ? <Activity size={18} className="animate-spin" /> : <Save size={18} />}
+                                    Save Settings
+                                </Button>
+                            </div>
+                        </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Branding & Entity Profile */}
@@ -110,7 +123,7 @@ export default function InstitutionSettings() {
 
                         <div className="space-y-2 pt-4">
                             <Button variant="secondary" className="w-full justify-center py-4 rounded-xl font-black text-[10px] uppercase tracking-widest border-2">
-                                Update Branding Logic
+                                Change Logo
                                 <Layers size={14} className="ml-2" />
                             </Button>
                         </div>
@@ -124,13 +137,13 @@ export default function InstitutionSettings() {
                             <div className="size-10 bg-indigo-500 text-white rounded-xl flex items-center justify-center shadow-lg">
                                 <Settings2 size={20} />
                             </div>
-                            <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-widest">Configuration Matrix</h2>
+                            <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-widest">General Settings</h2>
                         </div>
 
                         <div className="p-10">
                             <form className="space-y-8">
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Legal Identity (Institutional Name)</label>
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">School Name</label>
                                     <div className="relative group">
                                         <School size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                         <input
@@ -142,7 +155,7 @@ export default function InstitutionSettings() {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Institutional Hub (Address)</label>
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">School Address</label>
                                     <div className="relative group">
                                         <MapPin size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                         <input
@@ -154,7 +167,7 @@ export default function InstitutionSettings() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Sync Email</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Email Address</label>
                                         <div className="relative group">
                                             <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                             <input
@@ -164,7 +177,7 @@ export default function InstitutionSettings() {
                                         </div>
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Primary Gateway (Phone)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Phone Number</label>
                                         <div className="relative group">
                                             <Phone size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                             <input
@@ -177,7 +190,7 @@ export default function InstitutionSettings() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Accreditation Protocol</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Accreditation Number</label>
                                         <div className="relative group">
                                             <ShieldCheck size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                             <input
@@ -187,7 +200,7 @@ export default function InstitutionSettings() {
                                         </div>
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Fiscal Unit (Currency)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Currency</label>
                                         <div className="relative group">
                                             <Globe size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" />
                                             <select
@@ -207,6 +220,9 @@ export default function InstitutionSettings() {
                     </div>
                 </div>
             </div>
-        </div>
+                    </div>
+                </AdminLayout>
+            </RoleGuard>
+        </AuthGuard>
     );
 }

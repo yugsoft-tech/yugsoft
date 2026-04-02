@@ -11,8 +11,14 @@ import {
     MoreVertical, 
     ChevronLeft, 
     ChevronRight,
-    Search as SearchIcon
+    Search as SearchIcon,
+    Plus
 } from 'lucide-react';
+import AdminLayout from '@/components/layouts/AdminLayout';
+import AuthGuard from '@/components/guards/AuthGuard';
+import RoleGuard from '@/components/guards/RoleGuard';
+import { USER_ROLES } from '@/utils/role-config';
+import Head from 'next/head';
 
 // Mock Data
 const staffData = [
@@ -33,14 +39,30 @@ export default function StaffDashboard() {
     );
 
     return (
-        <div className="flex-1 p-6 max-w-[1400px] w-full mx-auto animate-in fade-in duration-700">
+        <AuthGuard>
+            <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
+                <AdminLayout title="Staff Directory">
+                    <Head>
+                        <title>Staff Directory | School ERP</title>
+                    </Head>
+                    <div className="flex-1 p-6 max-w-[1400px] w-full mx-auto animate-in fade-in duration-700">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                            <div>
+                                <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Employees</h1>
+                                <p className="text-sm font-medium text-slate-500 italic">View and manage all teachers and staff members.</p>
+                            </div>
+                            <button className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95">
+                                <Plus size={18} />
+                                <span>Add New Staff</span>
+                            </button>
+                        </div>
             {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 {[
-                    { title: 'Total Staff', value: '142', change: '+2% gain', icon: Users, color: 'text-primary', bg: 'bg-primary/5', changeColor: 'text-emerald-500 bg-emerald-500/10' },
-                    { title: 'Active Node', value: '130', change: '+1%', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-500/5', changeColor: 'text-emerald-500 bg-emerald-500/10' },
+                    { title: 'Total Employees', value: '142', change: '+2%', icon: Users, color: 'text-primary', bg: 'bg-primary/5', changeColor: 'text-emerald-500 bg-emerald-500/10' },
+                    { title: 'Active', value: '130', change: '+1%', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-500/5', changeColor: 'text-emerald-500 bg-emerald-500/10' },
                     { title: 'On Leave', value: '8', change: 'Stable', icon: TreePalm, color: 'text-amber-500', bg: 'bg-amber-500/5', changeColor: 'text-slate-400 bg-slate-100' },
-                    { title: 'New Onboarding', value: '4', change: '+4%', icon: UserPlus, color: 'text-purple-500', bg: 'bg-purple-500/5', changeColor: 'text-emerald-500 bg-emerald-500/10' },
+                    { title: 'New Staff', value: '4', change: '+4%', icon: UserPlus, color: 'text-purple-500', bg: 'bg-purple-500/5', changeColor: 'text-emerald-500 bg-emerald-500/10' },
                 ].map((stat, index) => (
                     <div key={index} className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-xl transition-all group overflow-hidden relative">
                         <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800/50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-transform duration-700" />
@@ -72,7 +94,7 @@ export default function StaffDashboard() {
                                 onClick={() => setFilter(tab)}
                                 className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${filter === tab ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}
                             >
-                                {tab === 'All' ? 'All Personnel' : tab}
+                                {tab === 'All' ? 'All Employees' : tab}
                                 {filter === tab && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full animate-in slide-in-from-left duration-300" />}
                             </button>
                         ))}
@@ -85,13 +107,13 @@ export default function StaffDashboard() {
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="w-full h-12 pl-12 pr-6 rounded-2xl border-none ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold outline-none focus:ring-2 focus:ring-primary transition-all shadow-sm"
-                                placeholder="Search by name or serial..."
+                                placeholder="Search staff members..."
                                 type="text"
                             />
                         </div>
                         <button className="h-12 px-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
                             <Filter size={16} className="text-primary" />
-                            <span className="hidden sm:inline">Advanced Filter</span>
+                            <span className="hidden sm:inline">Filter</span>
                         </button>
                     </div>
                 </div>
@@ -104,10 +126,10 @@ export default function StaffDashboard() {
                                 <th className="py-6 px-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 w-12">
                                     <input className="rounded-md border-slate-300 text-primary focus:ring-primary size-4" type="checkbox" />
                                 </th>
-                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 min-w-[240px]">Personnel Node</th>
-                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Departmental Matrix</th>
-                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Sync Status</th>
-                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Operation Terminal</th>
+                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 min-w-[240px]">Staff Member</th>
+                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Department</th>
+                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Status</th>
+                                <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800/50">
@@ -154,7 +176,7 @@ export default function StaffDashboard() {
 
                 {/* Pagination */}
                 <div className="p-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/30 dark:bg-slate-900/30">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Displaying <span className="text-slate-900 dark:text-white">{filteredStaff.length} Nodes</span> of 142 total entities</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Displaying <span className="text-slate-900 dark:text-white">{filteredStaff.length} members</span> of 142 total staff</p>
                     <div className="flex gap-3">
                         <button className="size-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary transition-all flex items-center justify-center disabled:opacity-30">
                             <ChevronLeft size={18} />
@@ -165,6 +187,9 @@ export default function StaffDashboard() {
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+                </AdminLayout>
+            </RoleGuard>
+        </AuthGuard>
     );
 }

@@ -26,6 +26,11 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator
 } from '@/components/ui/DropdownMenu';
+import AdminLayout from '@/components/layouts/AdminLayout';
+import AuthGuard from '@/components/guards/AuthGuard';
+import RoleGuard from '@/components/guards/RoleGuard';
+import { USER_ROLES } from '@/utils/role-config';
+import Head from 'next/head';
 
 export default function ExamList() {
     const { user } = useAuth();
@@ -43,21 +48,27 @@ export default function ExamList() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pt-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Manage Exams</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Schedule and manage school examination cycles.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Link href={`/${rolePath}/exams/create`}>
-                        <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20">
-                            <Plus size={18} />
-                            Schedule New Exam
-                        </Button>
-                    </Link>
-                </div>
-            </div>
+        <AuthGuard>
+            <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
+                <AdminLayout title="Exams">
+                    <Head>
+                        <title>Exams | School ERP</title>
+                    </Head>
+                    <div className="space-y-8 animate-in fade-in duration-500 pt-8 pb-12">
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div>
+                                <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1">Exams</h1>
+                                <p className="text-xs font-black text-slate-400 uppercase tracking-widest italic text-primary">Schedule and manage school exams</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <Link href={`/${rolePath}/exams/create`}>
+                                    <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20">
+                                        <Plus size={18} />
+                                        New Exam
+                                    </Button>
+                                </Link>
+                            </div>
+                        </div>
 
             <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
                 <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-slate-50/50 dark:bg-slate-900/50">
@@ -72,21 +83,21 @@ export default function ExamList() {
                         />
                     </form>
 
-                    <div className="flex items-center gap-4">
-                        <Badge variant="outline" className="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2">
-                            ACTIVE EXAMS: {exams.length}
-                        </Badge>
-                    </div>
+                        <div className="flex items-center gap-4">
+                            <Badge variant="outline" className="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2">
+                                Active: {exams.length}
+                            </Badge>
+                        </div>
                 </div>
 
                 <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="border-b border-slate-100 dark:border-slate-800">
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Exam Name / ID</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Exam Date</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Marks Info</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
+                                    <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Exam Name</th>
+                                    <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Exam Date</th>
+                                    <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Marks</th>
+                                    <th className="px-8 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
                                 <th className="px-8 py-6 text-right"></th>
                             </tr>
                         </thead>
@@ -196,6 +207,9 @@ export default function ExamList() {
                     </table>
                 </div>
             </div>
-        </div>
+                    </div>
+                </AdminLayout>
+            </RoleGuard>
+        </AuthGuard>
     );
 }

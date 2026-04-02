@@ -20,14 +20,14 @@ import {
 import { toast } from 'react-hot-toast';
 
 const registerSchema = z.object({
-    schoolName: z.string().min(3, 'Institutional name must be at least 3 characters'),
+    schoolName: z.string().min(3, 'School name must be at least 3 characters'),
     firstName: z.string().min(2, 'First name is required'),
     lastName: z.string().min(2, 'Last name is required'),
-    email: z.string().email('Institutional ID format invalid'),
-    password: z.string().min(8, 'Security protocol requires at least 8 characters'),
+    email: z.string().email('Invalid email format'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
     confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
-    message: "Security ciphers do not match",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
 });
 
@@ -45,32 +45,32 @@ export default function Register() {
         setLoading(true);
         try {
             await authService.register(data);
-            toast.success('Institutional node created. Verify your ID to proceed.');
+            toast.success('Account created successfully. Please login to proceed.');
             router.push('/auth/login');
         } catch (err: any) {
-            toast.error(err.message || 'Institutional registration failed');
+            toast.error(err.message || 'Registration failed');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <AuthLayout title="Institutional Onboarding">
+        <AuthLayout title="Create School Account">
             <div className="space-y-8">
                 <div className="text-center">
-                    <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest leading-none mb-3">Protocol Initiation</h2>
-                    <p className="text-sm font-medium text-slate-500 italic">Initialize your institutional shard in the EduCore matrix.</p>
+                    <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest leading-none mb-3">Get Started</h2>
+                    <p className="text-sm font-medium text-slate-500 italic">Set up your school management system in minutes.</p>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <div className="space-y-2">
                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
                             <Building2 size={12} className="text-primary" />
-                            Institutional Designation
+                            School Name
                         </label>
                         <input
                             {...register('schoolName')}
-                            placeholder="e.g. EduCore International Academy"
+                            placeholder="e.g. Green Valley High School"
                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-3xl py-4 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/20 transition-all placeholder:text-slate-300"
                         />
                         {errors.schoolName && <p className="text-[10px] text-rose-500 font-black uppercase tracking-widest pl-4 italic">{errors.schoolName.message}</p>}
@@ -78,7 +78,7 @@ export default function Register() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Administrator Forename</label>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">First Name</label>
                             <input
                                 {...register('firstName')}
                                 placeholder="John"
@@ -87,7 +87,7 @@ export default function Register() {
                             {errors.firstName && <p className="text-[10px] text-rose-500 font-black uppercase tracking-widest pl-4 italic">{errors.firstName.message}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Administrator Surname</label>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Last Name</label>
                             <input
                                 {...register('lastName')}
                                 placeholder="Doe"
@@ -100,12 +100,12 @@ export default function Register() {
                     <div className="space-y-2">
                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
                             <Mail size={12} className="text-primary" />
-                            Institutional ID
+                            Email Address
                         </label>
                         <input
                             {...register('email')}
                             type="email"
-                            placeholder="admin@school.edu"
+                            placeholder="admin@school.com"
                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-3xl py-4 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/20 transition-all placeholder:text-slate-300"
                         />
                         {errors.email && <p className="text-[10px] text-rose-500 font-black uppercase tracking-widest pl-4 italic">{errors.email.message}</p>}
@@ -115,7 +115,7 @@ export default function Register() {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
                                 <Lock size={12} className="text-primary" />
-                                Security Cipher
+                                Password
                             </label>
                             <input
                                 {...register('password')}
@@ -126,7 +126,7 @@ export default function Register() {
                             {errors.password && <p className="text-[10px] text-rose-500 font-black uppercase tracking-widest pl-4 italic">{errors.password.message}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Confirm Cipher</label>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Confirm Password</label>
                             <input
                                 {...register('confirmPassword')}
                                 type="password"
@@ -141,7 +141,7 @@ export default function Register() {
                         <div className="flex items-start gap-3">
                             <ShieldCheck size={16} className="text-emerald-500 mt-0.5 shrink-0" />
                             <p className="text-[10px] font-bold text-slate-500 italic uppercase leading-relaxed tracking-wider">
-                                By initializing, you agree to the Institutional Data Sovereignty protocols and security guidelines of the EduCore ERP ecosystem.
+                                By signing up, you agree to our terms and conditions and privacy policy.
                             </p>
                         </div>
                     </div>
@@ -154,11 +154,11 @@ export default function Register() {
                         {loading ? (
                             <>
                                 <Loader2 size={18} className="animate-spin" />
-                                Initializing Matrix...
+                                Creating account...
                             </>
                         ) : (
                             <>
-                                Confirm Initialization
+                                Create Account
                                 <ArrowRight size={18} />
                             </>
                         )}
@@ -166,9 +166,9 @@ export default function Register() {
                 </form>
 
                 <div className="pt-6 border-t border-slate-50 dark:border-slate-800 text-center">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-4">Already synchronized?</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-4">Already have an account?</p>
                     <Link href="/auth/login" className="inline-flex items-center gap-2 text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest hover:text-primary transition-colors">
-                        Access Gateway <CheckCircle2 size={16} />
+                        Login here <CheckCircle2 size={16} />
                     </Link>
                 </div>
             </div>

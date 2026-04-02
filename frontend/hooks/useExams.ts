@@ -29,7 +29,7 @@ export const useExams = (initialParams?: PaginationParams & { status?: string; s
                 totalPages: response.totalPages,
             });
         } catch (err: any) {
-            const message = err.message || 'Failed to fetch examination protocols';
+            const message = err.message || 'Failed to fetch exams';
             setError(message);
             toast.error(message);
         } finally {
@@ -44,10 +44,10 @@ export const useExams = (initialParams?: PaginationParams & { status?: string; s
     const deleteExam = async (id: string) => {
         try {
             await examsService.deleteExam(id);
-            toast.success('Examination cycle terminated.');
+            toast.success('Exam deleted.');
             fetchExams();
         } catch (err: any) {
-            toast.error(err.message || 'Termination failed');
+            toast.error(err.message || 'Failed to delete exam');
         }
     };
 

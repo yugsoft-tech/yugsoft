@@ -75,8 +75,8 @@ export default function InventoryDashboard() {
                         {/* Header */}
                         <div className="flex flex-wrap justify-between items-end gap-4">
                             <div className="flex flex-col gap-1">
-                                <h1 className="text-3xl md:text-4xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">Inventory Management</h1>
-                                <p className="text-slate-500 dark:text-slate-400 text-base font-normal">Track assets, manage supplies, and audit stock levels.</p>
+                                <h1 className="text-3xl md:text-4xl font-black leading-tight tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Inventory</h1>
+                                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium italic">Track school assets and stock levels.</p>
                             </div>
                             <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-5 bg-primary hover:bg-blue-600 transition-colors text-white text-sm font-bold shadow-md">
                                 <span className="material-symbols-outlined text-[20px]">add</span>
@@ -88,19 +88,19 @@ export default function InventoryDashboard() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <div className="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 shadow-sm">
                                 <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Asset Value</p>
+                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Value</p>
                                     <span className="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-xl">monetization_on</span>
                                 </div>
                                 <p className="text-slate-900 dark:text-white text-2xl font-bold leading-tight">$124,500</p>
                                 <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
                                     <span className="material-symbols-outlined text-sm">trending_up</span>
-                                    <span>+2.4% from last month</span>
+                                    <span>+2.4%</span>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 rounded-xl p-5 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden">
                                 <div className="absolute right-0 top-0 w-1 h-full bg-orange-400"></div>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Low Stock Items</p>
+                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Low Stock</p>
                                     <span className="material-symbols-outlined text-orange-500 bg-orange-100 dark:bg-orange-900/30 p-1.5 rounded-lg text-xl">warning</span>
                                 </div>
                                 <p className="text-slate-900 dark:text-white text-2xl font-bold leading-tight">12 Items</p>

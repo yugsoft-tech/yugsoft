@@ -39,8 +39,8 @@ import {
 import { toast } from 'react-hot-toast';
 
 const subjectSchema = z.object({
-    name: z.string().min(1, 'Subject identifier required'),
-    code: z.string().min(1, 'Categorical code required'),
+    name: z.string().min(1, 'Subject name is required'),
+    code: z.string().min(1, 'Subject code is required'),
 });
 
 type SubjectFormValues = z.infer<typeof subjectSchema>;
@@ -59,7 +59,7 @@ export default function SubjectsList() {
         setRegistering(true);
         try {
             await subjectsService.create(data as any);
-            toast.success('Curriculum Node: Subject registered successfully.');
+            toast.success('Success: Subject added.');
             reset();
             setActiveTab('matrix');
             refetch();
@@ -72,13 +72,13 @@ export default function SubjectsList() {
 
     const filteredSubjects = subjects.filter(s => 
         s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        s.code.toLowerCase().includes(searchTerm.toLowerCase())
+        (s.code && s.code.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     return (
-        <AdminLayout title="Curriculum Matrix">
+        <AdminLayout title="Subjects List">
             <Head>
-                <title>Curriculum Matrix - EduCore</title>
+                <title>Subjects List - EduCore</title>
             </Head>
 
             <div className="flex-1 flex flex-col gap-10 animate-in fade-in duration-700 pb-12">
@@ -87,11 +87,11 @@ export default function SubjectsList() {
                     <div className="space-y-1">
                         <div className="flex items-center gap-2 text-primary mb-1">
                             <BookOpen size={18} />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Curriculum Intelligence</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Academic Subjects</span>
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Curriculum Matrix</h1>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Subjects List</h1>
                         <p className="text-slate-500 dark:text-slate-400 font-medium italic">
-                            Define scholarly domains and synchronize academic resources.
+                            Manage subjects, syllabus, and academic resources.
                         </p>
                     </div>
                     <div className="flex gap-4">
@@ -103,7 +103,7 @@ export default function SubjectsList() {
                             className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95"
                         >
                             <Plus size={18} />
-                            <span>Initialize Subject</span>
+                            <span>Add New Subject</span>
                         </button>
                     </div>
                 </div>
@@ -111,10 +111,10 @@ export default function SubjectsList() {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                        { label: 'Domain Nodes', value: `${subjects.length || 0}`, icon: Book, color: 'text-primary', bg: 'bg-primary/5', trend: 'Global Curriculum' },
-                        { label: 'Evaluation Sets', value: '142', icon: FileText, color: 'text-indigo-500', bg: 'bg-indigo-500/5', trend: 'Active Assessment' },
-                        { label: 'Sync Status', value: '100%', icon: Zap, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Fully Integrated' },
-                        { label: 'Audit Vector', value: 'Verified', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Compliance Pass' },
+                        { label: 'Total Subjects', value: `${subjects.length || 0}`, icon: Book, color: 'text-primary', bg: 'bg-primary/5', trend: 'Global Curriculum' },
+                        { label: 'Question Papers', value: '142', icon: FileText, color: 'text-indigo-500', bg: 'bg-indigo-500/5', trend: 'Active Assessment' },
+                        { label: 'Status', value: '100%', icon: Zap, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Fully Integrated' },
+                        { label: 'Audit', value: 'Verified', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Compliance Pass' },
                     ].map((stat, i) => (
                         <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl group relative overflow-hidden">
                             <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
@@ -140,10 +140,10 @@ export default function SubjectsList() {
                     {/* Toolbar */}
                     <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
                         <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
-                            {['Structural Matrix', 'Resource Map', 'Allocations'].map((tab) => (
-                                <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'Structural Matrix' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
+                            {['All Subjects', 'Syllabus', 'Allocations'].map((tab) => (
+                                <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'All Subjects' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
                                     {tab}
-                                    {tab === 'Structural Matrix' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
+                                    {tab === 'All Subjects' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
                                 </button>
                             ))}
                         </div>
@@ -154,12 +154,12 @@ export default function SubjectsList() {
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
-                                    placeholder="Sync subject node..." 
+                                    placeholder="Search for a subject..." 
                                 />
                             </div>
                             <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
                                 <Filter size={16} className="text-primary" />
-                                <span className="hidden sm:inline">Advanced Grid</span>
+                                <span className="hidden sm:inline">Filters</span>
                             </button>
                         </div>
                     </div>
@@ -173,21 +173,21 @@ export default function SubjectsList() {
                                         <Plus size={32} />
                                     </div>
                                     <div>
-                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Domain Acquisition</h2>
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Initialize Scholarly Identity Node</p>
+                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Add New Subject</h2>
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Subject Details</p>
                                     </div>
                                 </div>
                                 <form onSubmit={handleSubmit(onRegister)} className="space-y-10">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Domain Identity (Name)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Subject Name</label>
                                         <input
                                             {...register('name')}
-                                            placeholder="e.g. Theoretical Astrophysics..."
+                                            placeholder="e.g. Mathematics..."
                                             className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all shadow-sm"
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Categorical Hash (Code)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Subject Code</label>
                                         <input
                                             {...register('code')}
                                             placeholder="e.g. PHY-402"
@@ -200,7 +200,7 @@ export default function SubjectsList() {
                                             onClick={() => setActiveTab('matrix')}
                                             className="flex-1 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-100 dark:border-slate-700 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-slate-50 active:scale-95 transition-all"
                                         >
-                                            Abort Initialization
+                                            Cancel
                                         </button>
                                         <button 
                                             type="submit"
@@ -208,7 +208,7 @@ export default function SubjectsList() {
                                             className="flex-[2] bg-primary text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-3"
                                         >
                                             {registering ? <Activity size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                                            Commit Node to Curriculum
+                                            Create Subject
                                         </button>
                                     </div>
                                 </form>
@@ -234,26 +234,26 @@ export default function SubjectsList() {
                                                     <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl">
                                                         <DropdownMenuItem className="p-3 rounded-xl cursor-pointer flex items-center gap-3">
                                                             <FileText size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Syllabus Node</span>
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">View Syllabus</span>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="p-3 rounded-xl cursor-pointer flex items-center gap-3">
                                                             <Clock size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Time Allocation</span>
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">Timetable</span>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Categorical ID: {item.code}</p>
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Code: {item.code}</p>
                                                 <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter truncate">{item.name}</h3>
                                             </div>
                                             <div className="mt-8 pt-8 border-t border-slate-50 dark:border-slate-800 flex items-center gap-4">
                                                 <div className="flex items-center gap-1 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">
                                                     <TrendingUp size={12} className="text-primary" />
-                                                    <span>Active Domain</span>
+                                                    <span>Active Subject</span>
                                                 </div>
                                                 <div className="ml-auto flex items-center gap-2 group-hover:translate-x-1 transition-transform">
-                                                    <span className="text-[8px] font-black uppercase text-primary tracking-widest leading-none italic">Configure Node</span>
+                                                    <span className="text-[8px] font-black uppercase text-primary tracking-widest leading-none italic">Edit Subject</span>
                                                     <ArrowRight size={14} className="text-primary" />
                                                 </div>
                                             </div>
@@ -267,11 +267,11 @@ export default function SubjectsList() {
                     {/* Footer Stats */}
                     <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
-                            Synchronizing <span className="text-slate-900 dark:text-white">{filteredSubjects.length} Curriculum Nodes</span> in current repository
+                            Total <span className="text-slate-900 dark:text-white">{filteredSubjects.length} Subjects</span> in current repository
                         </p>
                         <div className="flex gap-3">
                             <button className="h-10 px-6 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm">
-                                Export Academic Schema
+                                Download List
                             </button>
                         </div>
                     </div>

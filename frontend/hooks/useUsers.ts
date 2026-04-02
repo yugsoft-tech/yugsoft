@@ -44,20 +44,20 @@ export const useUsers = (initialParams?: PaginationParams & { role?: string; sea
     const updateUserRole = async (userId: string, role: string) => {
         try {
             await usersService.updateRole(userId, role);
-            toast.success('User role synchronized');
+            toast.success('User role updated');
             fetchUsers();
         } catch (err: any) {
-            toast.error(err.message || 'Role update protocol failed');
+            toast.error(err.message || 'Failed to update user role');
         }
     };
 
     const deleteUser = async (id: string) => {
         try {
             await usersService.delete(id);
-            toast.success('User session terminated and removed');
+            toast.success('User removed');
             fetchUsers();
         } catch (err: any) {
-            toast.error(err.message || 'User deletion protocol failed');
+            toast.error(err.message || 'Failed to delete user');
         }
     };
 

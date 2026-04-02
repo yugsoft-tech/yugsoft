@@ -41,7 +41,7 @@ export default function ClassTeachers() {
                     setSelectedClassId(classesData[0].id);
                 }
             } catch (err: any) {
-                setError(err.message || 'Failed to synchronize institutional data');
+                setError(err.message || 'Failed to load school data');
             } finally {
                 setLoading(false);
             }
@@ -60,10 +60,7 @@ export default function ClassTeachers() {
         return (
             <AdminLayout title="System Error">
                 <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
-                    <div className="p-4 rounded-full bg-rose-500/10 text-rose-500">
-                        <AlertCircle size={48} />
-                    </div>
-                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Protocol Failure</h2>
+                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Error</h2>
                     <p className="text-slate-500 max-w-sm italic">{error}</p>
                 </div>
             </AdminLayout>
@@ -71,7 +68,7 @@ export default function ClassTeachers() {
     }
 
     return (
-        <AdminLayout title="Faculty Allocation">
+        <AdminLayout title="Assign Teachers">
             <Head>
                 <title>Class Teachers - EduCore</title>
             </Head>
@@ -81,10 +78,10 @@ export default function ClassTeachers() {
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 text-primary mb-1">
                         <UserCheck size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Faculty Deployment</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Teacher Selection</span>
                     </div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Mentorship Matrix</h1>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">Deploy lead faculty mentors to academic sectors for institutional oversight.</p>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Class Teachers</h1>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">Assign class teachers to manage specific classes and students.</p>
                 </div>
             </div>
 
@@ -92,7 +89,7 @@ export default function ClassTeachers() {
                 {/* Class Selection Sidebar */}
                 <div className="lg:col-span-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] flex flex-col overflow-hidden shadow-sm">
                     <div className="p-6 border-b border-slate-100 dark:border-slate-800">
-                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Sector Registry</h3>
+                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Class List</h3>
                     </div>
                     <div className="flex-1 overflow-y-auto p-4 space-y-2 no-scrollbar">
                         {loading ? (
@@ -127,15 +124,15 @@ export default function ClassTeachers() {
                         <div className="flex justify-between items-center relative z-10">
                             <div>
                                 <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-none mb-2">
-                                    {selectedClass?.name || 'Loading Sector...'}
+                                    {selectedClass?.name || 'Loading Classes...'}
                                 </h2>
-                                <p className="text-slate-500 text-sm font-medium italic">Current Lead Mentor: <span className="text-primary font-bold not-italic">Sarah Jenkins</span></p>
+                                <p className="text-slate-500 text-sm font-medium italic">Class Teacher: <span className="text-primary font-bold not-italic">Sarah Jenkins</span></p>
                             </div>
                             <div className="relative group w-64">
                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={14} />
                                 <input
                                     type="text"
-                                    placeholder="Search faculty..."
+                                    placeholder="Search teachers..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-xl py-3 pl-10 pr-4 text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/20 transition-all"
@@ -165,23 +162,23 @@ export default function ClassTeachers() {
                                         <h3 className="text-lg font-black text-slate-900 dark:text-white leading-none mb-1 group-hover:text-primary transition-colors">
                                             {teacher.firstName} {teacher.lastName}
                                         </h3>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">{teacher.designation || 'Faculty Member'}</p>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">{teacher.designation || 'Teacher'}</p>
                                     </div>
                                 </div>
 
                                 <div className="space-y-3 mb-6">
                                     <div className="flex items-center gap-3 text-slate-500">
                                         <Briefcase size={14} className="text-slate-400" />
-                                        <span className="text-[10px] font-bold uppercase tracking-tight">{teacher.department || 'General Dept'}</span>
+                                        <span className="text-[10px] font-bold uppercase tracking-tight">{teacher.department || 'General Department'}</span>
                                     </div>
                                     <div className="flex items-center gap-3 text-slate-500">
                                         <ShieldCheck size={14} className="text-slate-400" />
-                                        <span className="text-[10px] font-bold uppercase tracking-tight">Ident: {teacher.employeeId}</span>
+                                        <span className="text-[10px] font-bold uppercase tracking-tight">Teacher ID: {teacher.employeeId}</span>
                                     </div>
                                 </div>
 
                                 <button className="mt-auto w-full py-4 bg-slate-50 dark:bg-slate-800/50 hover:bg-primary hover:text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
-                                    Deploy to Sector
+                                    Assign to Class
                                     <ArrowRight size={14} />
                                 </button>
                             </div>

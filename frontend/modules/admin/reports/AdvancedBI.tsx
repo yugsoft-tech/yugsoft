@@ -32,9 +32,9 @@ export default function AdvancedBI() {
     const [activeReport, setActiveReport] = useState<'attendance' | 'academic' | 'fees'>('attendance');
 
     const reportCategories = [
-        { id: 'attendance', label: 'Presence Spectrum', icon: <Activity size={18} />, color: 'text-emerald-500' },
-        { id: 'academic', label: 'Curriculum Performance', icon: <TrendingUp size={18} />, color: 'text-primary' },
-        { id: 'fees', label: 'Financial Liquidity', icon: <Zap size={18} />, color: 'text-amber-500' },
+        { id: 'attendance', label: 'Attendance Reports', icon: <Activity size={18} />, color: 'text-emerald-500' },
+        { id: 'academic', label: 'Academic Performance', icon: <TrendingUp size={18} />, color: 'text-primary' },
+        { id: 'fees', label: 'Fees & Finance', icon: <Zap size={18} />, color: 'text-amber-500' },
     ];
 
     return (
@@ -42,17 +42,17 @@ export default function AdvancedBI() {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2 text-primary">
-                        INTEL_CORE: ADVANCED_BI
+                        SYSTEM REPORTS
                     </Badge>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Institutional Intelligence Hub</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Synthesize complex institutional data into actionable performance nodes and trend visualizations.</p>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight">School Reports & Analytics</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">View detailed reports and analytics for attendance, academics, and finance.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button
                         className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-8 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
                     >
                         <Download size={18} />
-                        Export Intel Matrix
+                        Download Report
                     </Button>
                 </div>
             </div>
@@ -61,7 +61,7 @@ export default function AdvancedBI() {
                 {/* Category Sidebar */}
                 <div className="lg:col-span-3 space-y-6">
                     <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl space-y-8">
-                        <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Intelligence Sectors</h3>
+                        <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Report Categories</h3>
                         <div className="space-y-3">
                             {reportCategories.map((cat) => (
                                 <button
@@ -91,10 +91,10 @@ export default function AdvancedBI() {
                                 <Zap size={24} className="text-white" />
                             </div>
                             <div>
-                                <h4 className="text-lg font-black uppercase tracking-tight">AI Insights Node</h4>
-                                <p className="text-white/60 text-[10px] font-medium leading-relaxed mt-2 italic">Automated institutional trend analysis indicates a 12% optimization in resource allocation.</p>
+                                <h4 className="text-lg font-black uppercase tracking-tight">Automatic Summary</h4>
+                                <p className="text-white/60 text-[10px] font-medium leading-relaxed mt-2 italic">Analysis shows a 12% improvement in school performance this month.</p>
                             </div>
-                            <Button variant="secondary" className="w-full bg-white/10 hover:bg-white/20 text-white border-none rounded-2xl py-4 text-[9px] font-black uppercase tracking-widest">Invoke Analysis</Button>
+                            <Button variant="secondary" className="w-full bg-white/10 hover:bg-white/20 text-white border-none rounded-2xl py-4 text-[9px] font-black uppercase tracking-widest">Run Analysis</Button>
                         </div>
                         <div className="absolute top-0 right-0 size-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
                     </div>
@@ -110,8 +110,8 @@ export default function AdvancedBI() {
                         <div className="relative z-10 space-y-12">
                             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                                 <div>
-                                    <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">{activeReport} Performance Matrix</h2>
-                                    <p className="text-slate-500 text-sm font-medium italic">Synchronized data visualization for the Q1 2024 academic cycle.</p>
+                                    <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">{activeReport} Analytics</h2>
+                                    <p className="text-slate-500 text-sm font-medium italic">Showing data for the current academic session.</p>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <div className="flex p-1 bg-slate-50 dark:bg-slate-800 rounded-2xl">
@@ -132,7 +132,7 @@ export default function AdvancedBI() {
                                         ))}
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Node Distribution Spectrum</p>
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Growth Chart</p>
                                     </div>
                                 </div>
 
@@ -144,9 +144,9 @@ export default function AdvancedBI() {
                                         </div>
                                         <div className="space-y-6">
                                             {[
-                                                { label: 'Efficiency Index', value: '94%', color: 'bg-primary' },
-                                                { label: 'Retention Protocol', value: '88%', color: 'bg-indigo-500' },
-                                                { label: 'Academic Synergy', value: '91%', color: 'bg-emerald-500' },
+                                                { label: 'Overall Efficiency', value: '94%', color: 'bg-primary' },
+                                                { label: 'Student Retention', value: '88%', color: 'bg-indigo-500' },
+                                                { label: 'Academic Growth', value: '91%', color: 'bg-emerald-500' },
                                             ].map((kpi, i) => (
                                                 <div key={i} className="space-y-2">
                                                     <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
@@ -167,14 +167,14 @@ export default function AdvancedBI() {
                                                 <TrendingUp size={16} />
                                                 <span className="text-[10px] font-black uppercase tracking-widest">+12.4%</span>
                                             </div>
-                                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Positive Drift</p>
+                                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Improvement</p>
                                         </div>
                                         <div className="bg-rose-500/5 border border-rose-500/20 rounded-[2rem] p-6 flex flex-col gap-3">
                                             <div className="flex items-center gap-2 text-rose-600">
                                                 <TrendingDown size={16} />
                                                 <span className="text-[10px] font-black uppercase tracking-widest">-02.1%</span>
                                             </div>
-                                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Variance Node</p>
+                                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Difference</p>
                                         </div>
                                     </div>
                                 </div>
@@ -182,14 +182,14 @@ export default function AdvancedBI() {
 
                             <div className="pt-10 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 text-[8px] font-black uppercase tracking-widest">REAL_TIME_SYNC</Badge>
+                                    <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 text-[8px] font-black uppercase tracking-widest">LIVE DATA</Badge>
                                     <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
                                         <ShieldCheck size={14} className="text-emerald-500" />
-                                        DATA_VERIFIED_BY_CORE
+                                        VERIFIED DATA
                                     </p>
                                 </div>
                                 <span className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all cursor-pointer">
-                                    Full Detailed Spectrum
+                                    View Full Report
                                     <ArrowRight size={14} />
                                 </span>
                             </div>

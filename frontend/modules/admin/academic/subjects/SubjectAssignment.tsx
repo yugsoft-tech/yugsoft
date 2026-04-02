@@ -56,7 +56,7 @@ export default function SubjectAssignment() {
                     setSelectedClassId(classesData[0].id);
                 }
             } catch (err: any) {
-                setError(err.message || 'Institutional synchronization failure');
+                setError(err.message || 'Failed to load school data');
             } finally {
                 setLoading(false);
             }
@@ -67,7 +67,7 @@ export default function SubjectAssignment() {
     const handleAssign = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!selectedClassId || !subjectId || !teacherId) {
-            toast.error('Complete all protocol fields before proceeding');
+            toast.error('Please fill in all fields before proceeding');
             return;
         }
 
@@ -78,11 +78,11 @@ export default function SubjectAssignment() {
                 subjectId,
                 teacherId
             });
-            toast.success('Curriculum mapping successfully synchronized');
+            toast.success('Success: Subject assigned successfully.');
             setSubjectId('');
             setTeacherId('');
         } catch (err: any) {
-            toast.error(err.message || 'Mapping protocols failed');
+            toast.error(err.message || 'Failed to assign subject');
         } finally {
             setAssigning(false);
         }
@@ -95,7 +95,7 @@ export default function SubjectAssignment() {
                     <div className="p-4 rounded-full bg-rose-500/10 text-rose-500">
                         <AlertCircle size={48} />
                     </div>
-                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Protocol Failure</h2>
+                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Error</h2>
                     <p className="text-slate-500 max-w-sm italic">{error}</p>
                 </div>
             </AdminLayout>
@@ -103,7 +103,7 @@ export default function SubjectAssignment() {
     }
 
     return (
-        <AdminLayout title="Curriculum Mapping">
+        <AdminLayout title="Subject Assignment">
             <Head>
                 <title>Assign Subjects - EduCore</title>
             </Head>
@@ -113,10 +113,10 @@ export default function SubjectAssignment() {
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 text-primary mb-1">
                         <Link size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Curriculum Orchestration</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Manage Subjects</span>
                     </div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Institutional Mapping</h1>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">Synchronize curriculum entities with academic sectors and faculty deployments.</p>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Assign Subjects</h1>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium italic">Assign subjects to specific classes and assign teachers to those subjects.</p>
                 </div>
             </div>
 
@@ -125,8 +125,8 @@ export default function SubjectAssignment() {
                 <div className="lg:col-span-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] flex flex-col overflow-hidden shadow-sm h-[calc(100vh-280px)]">
                     <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
                         <div>
-                            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Sector Registry</h3>
-                            <p className="text-lg font-black text-slate-900 dark:text-white leading-none">Select Class</p>
+                            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Class List</h3>
+                            <p className="text-lg font-black text-slate-900 dark:text-white leading-none">Select a Class</p>
                         </div>
                         <div className="size-10 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-300">
                             <Layers size={18} />
@@ -147,7 +147,7 @@ export default function SubjectAssignment() {
                             >
                                 <div className="flex flex-col items-start text-left">
                                     <span className={`text-[10px] font-black uppercase tracking-widest mb-1 ${selectedClassId === cls.id ? 'text-white/60' : 'text-slate-400'}`}>
-                                        {cls.grade || 'SEC-00'}
+                                        {cls.grade || 'Grade'}
                                     </span>
                                     <p className="text-sm font-bold truncate leading-none">{cls.name}</p>
                                 </div>
@@ -169,8 +169,8 @@ export default function SubjectAssignment() {
                                     <Database size={32} />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-none mb-2">Initialize Mapping</h2>
-                                    <p className="text-slate-500 text-sm font-medium italic">Define strategic links between curriculum and faculty assets.</p>
+                                    <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-none mb-2">Assign Subject</h2>
+                                    <p className="text-slate-500 text-sm font-medium italic">Assign a teacher to a subject for the selected class.</p>
                                 </div>
                             </div>
 
@@ -178,14 +178,14 @@ export default function SubjectAssignment() {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                         <BookOpen size={12} />
-                                        Academic Subject
+                                        Select Subject
                                     </label>
                                     <select
                                         value={subjectId}
                                         onChange={(e) => setSubjectId(e.target.value)}
                                         className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-3xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/20 transition-all appearance-none"
                                     >
-                                        <option value="" disabled>Select Subject Entity</option>
+                                        <option value="" disabled>Choose Subject</option>
                                         {subjects.map(sub => (
                                             <option key={sub.id} value={sub.id}>{sub.name} ({sub.code})</option>
                                         ))}
@@ -195,14 +195,14 @@ export default function SubjectAssignment() {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                         <Users size={12} />
-                                        Faculty Resource
+                                        Select Teacher
                                     </label>
                                     <select
                                         value={teacherId}
                                         onChange={(e) => setTeacherId(e.target.value)}
                                         className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-3xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/20 transition-all appearance-none"
                                     >
-                                        <option value="" disabled>Deploy Lead Mentor</option>
+                                        <option value="" disabled>Choose Teacher</option>
                                         {teachers.map(teacher => (
                                             <option key={teacher.id} value={teacher.id}>{teacher.firstName} {teacher.lastName} ({teacher.employeeId})</option>
                                         ))}
@@ -226,11 +226,11 @@ export default function SubjectAssignment() {
                                     {assigning ? (
                                         <>
                                             <div className="size-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                            Processing...
+                                            Assigning...
                                         </>
                                     ) : (
                                         <>
-                                            Synchronize Matrix
+                                            Confirm Assignment
                                             <ArrowRight size={16} />
                                         </>
                                     )}
@@ -245,11 +245,11 @@ export default function SubjectAssignment() {
                             <UserCheck size={32} />
                         </div>
                         <div className="space-y-1">
-                            <h4 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-widest">Active Deployments</h4>
-                            <p className="text-slate-500 text-sm font-medium italic">View and manage existing institutional links for the selected sector.</p>
+                            <h4 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-widest">Current Assignments</h4>
+                            <p className="text-slate-500 text-sm font-medium italic">View and manage subjects and teachers already assigned to this class.</p>
                         </div>
                         <button className="px-8 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:text-primary hover:border-primary transition-all">
-                            Review Active Protocols
+                            View Current Assignments
                         </button>
                     </div>
                 </div>

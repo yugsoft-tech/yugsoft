@@ -29,35 +29,35 @@ export default function HostelDashboard() {
 
     const roomBlocks = [
         {
-            name: 'Block A - Alpha Prime',
-            floor: 'Level 01',
+            name: 'Block A',
+            floor: 'Floor 1',
             type: 'Boys',
             rooms: [
-                { id: '101', number: '101', status: '1 Spot Left', statusColor: 'emerald', capacity: 3, occupied: 2, type: 'occupied' },
-                { id: '102', number: '102', status: 'Full Capacity', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
-                { id: '103', number: '103', status: 'Vacant Node', statusColor: 'emerald', capacity: 2, occupied: 0, type: 'vacant' },
-                { id: '104', number: '104', status: 'Maint. Mode', statusColor: 'rose', capacity: 2, occupied: 0, type: 'maintenance' },
-                { id: '105', number: '105', status: 'Full Capacity', statusColor: 'slate', capacity: 3, occupied: 3, type: 'full' },
+                { id: '101', number: '101', status: '1 Available', statusColor: 'emerald', capacity: 3, occupied: 2, type: 'occupied' },
+                { id: '102', number: '102', status: 'Full', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
+                { id: '103', number: '103', status: 'Empty', statusColor: 'emerald', capacity: 2, occupied: 0, type: 'vacant' },
+                { id: '104', number: '104', status: 'Under Repair', statusColor: 'rose', capacity: 2, occupied: 0, type: 'maintenance' },
+                { id: '105', number: '105', status: 'Full', statusColor: 'slate', capacity: 3, occupied: 3, type: 'full' },
             ]
         },
         {
-            name: 'Block B - Delta Omega',
-            floor: 'Level 01',
+            name: 'Block B',
+            floor: 'Floor 1',
             type: 'Girls',
             rooms: [
-                { id: 'G-01', number: 'G-01', status: 'Full Capacity', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
-                { id: 'G-02', number: 'G-02', status: 'Full Capacity', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
-                { id: 'G-03', number: 'G-03', status: '1 Spot Left', statusColor: 'emerald', capacity: 2, occupied: 1, type: 'occupied' },
-                { id: 'G-04', number: 'G-04', status: 'Vacant Node', statusColor: 'emerald', capacity: 2, occupied: 0, type: 'vacant' },
+                { id: 'G-01', number: 'G-01', status: 'Full', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
+                { id: 'G-02', number: 'G-02', status: 'Full', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
+                { id: 'G-03', number: 'G-03', status: '1 Available', statusColor: 'emerald', capacity: 2, occupied: 1, type: 'occupied' },
+                { id: 'G-04', number: 'G-04', status: 'Empty', statusColor: 'emerald', capacity: 2, occupied: 0, type: 'vacant' },
             ]
         }
     ];
 
     const stats = [
-        { title: 'Global Capacity', value: '500 Beds', sub: 'Total Allocation', icon: Bed, color: 'text-primary', bg: 'bg-primary/5', trend: 'Static' },
-        { title: 'Occupancy Vector', value: '85%', sub: '+2% this term', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Surging' },
-        { title: 'Vacant Nodes', value: '75', sub: 'Instant Availability', icon: DoorOpen, color: 'text-blue-500', bg: 'bg-blue-500/5', trend: 'Stable' },
-        { title: 'Allocation Queue', value: '12', sub: 'Pending Review', icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Urgent' },
+        { title: 'Total Beds', value: '500', sub: 'Total capacity', icon: Bed, color: 'text-primary', bg: 'bg-primary/5', trend: 'Static' },
+        { title: 'Occupancy', value: '85%', sub: 'Currently filled', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Increasing' },
+        { title: 'Available Beds', value: '75', sub: 'Empty spots', icon: DoorOpen, color: 'text-blue-500', bg: 'bg-blue-500/5', trend: 'Stable' },
+        { title: 'Pending Requests', value: '12', sub: 'For allocation', icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Urgent' },
     ];
 
     return (
@@ -65,7 +65,7 @@ export default function HostelDashboard() {
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
                 <AdminLayout title="Hostel Management">
                     <Head>
-                        <title>Hostel Hub - EduCore</title>
+                        <title>Hostel Management - Yugsoft</title>
                     </Head>
 
                     <div className="flex-1 flex flex-col gap-10 animate-in fade-in duration-700">
@@ -74,17 +74,17 @@ export default function HostelDashboard() {
                             <div className="space-y-1">
                                 <div className="flex items-center gap-2 text-primary mb-1">
                                     <Home size={18} />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Residency Logic</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Overview</span>
                                 </div>
-                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Hostel Hub</h1>
+                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Hostel Management</h1>
                                 <p className="text-slate-500 dark:text-slate-400 font-medium italic">
-                                    Coordinate housing allocations, asset maintenance, and residency metrics.
+                                    Manage rooms and student stays.
                                 </p>
                             </div>
                             <div className="flex gap-4">
                                 <button className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95">
                                     <Plus size={18} />
-                                    <span>Allocate Room</span>
+                                    <span>Add New Room</span>
                                 </button>
                             </div>
                         </div>
@@ -114,9 +114,9 @@ export default function HostelDashboard() {
                         {/* Main Grid Section */}
                         <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden min-h-[600px]">
                             {/* Toolbar */}
-                            <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
+                             <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
                                 <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
-                                    {['Room View', 'Student Matrix', 'Facilities', 'Billing'].map((tab) => (
+                                    {['Room View', 'Student List', 'Facilities', 'Billing'].map((tab) => (
                                         <button key={tab} onClick={() => setActiveTab(tab)} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${activeTab === tab ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
                                             {tab}
                                             {activeTab === tab && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
@@ -130,7 +130,7 @@ export default function HostelDashboard() {
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                             className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
-                                            placeholder="Search residency index..." 
+                                            placeholder="Search for student or room..." 
                                         />
                                     </div>
                                     <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
@@ -150,8 +150,8 @@ export default function HostelDashboard() {
                                                     <Shield size={14} className={block.type === 'Boys' ? 'text-blue-500' : 'text-rose-500'} />
                                                     <span className="text-[9px] font-black uppercase tracking-[0.2em]">{block.type} Hub</span>
                                                 </div>
-                                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{block.name}</h2>
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{block.floor} Repository</p>
+                                                 <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{block.name}</h2>
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{block.floor} - {block.type === 'Boys' ? 'Boys Side' : 'Girls Side'}</p>
                                             </div>
                                             <div className="flex gap-2">
                                                 {[Coffee, Zap, Wind, Droplets].map((Icon, i) => (
@@ -173,7 +173,7 @@ export default function HostelDashboard() {
                                                     <div className="relative z-10 flex flex-col h-full">
                                                         <div className="flex justify-between items-start mb-6">
                                                             <div>
-                                                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Unit ID</p>
+                                                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Room No.</p>
                                                                 <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Room {room.number}</h3>
                                                             </div>
                                                             <div className={`size-10 rounded-xl flex items-center justify-center bg-slate-50 dark:bg-slate-800 group-hover:bg-primary group-hover:text-white transition-all shadow-sm`}>
@@ -198,7 +198,7 @@ export default function HostelDashboard() {
                                                             </div>
                                                             <button className="w-full py-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-[9px] font-black uppercase tracking-widest text-slate-400 group-hover:bg-primary group-hover:text-white transition-all flex items-center justify-center gap-2">
                                                                 {room.type === 'maintenance' ? <Wrench size={10} /> : <Users size={10} />}
-                                                                Details Node
+                                                                Details
                                                             </button>
                                                         </div>
                                                     </div>
@@ -210,13 +210,13 @@ export default function HostelDashboard() {
                             </div>
 
                             {/* Footer / Pagination */}
-                            <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
+                             <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
-                                    Displaying <span className="text-slate-900 dark:text-white">Active Housing Grid</span> of internal repository
+                                    Total <span className="text-slate-900 dark:text-white">Rooms and Beds</span> currently active
                                 </p>
                                 <div className="flex gap-3">
                                     <button className="h-10 px-6 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm">
-                                        Export Occupancy Logs
+                                        Export Records
                                     </button>
                                 </div>
                             </div>

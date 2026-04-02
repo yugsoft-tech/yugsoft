@@ -48,10 +48,10 @@ export const useCommunication = () => {
         setLoading(true);
         try {
             await communicationService.sendEmail(data);
-            toast.success('Broadcast protocol initiated: Email dispatched.');
+            toast.success('Email sent.');
             return true;
         } catch (error: any) {
-            toast.error(error.message || 'Transmission failure');
+            toast.error(error.message || 'Failed to send email');
             return false;
         } finally {
             setLoading(false);
@@ -62,10 +62,10 @@ export const useCommunication = () => {
         setLoading(true);
         try {
             await communicationService.sendSMS(data);
-            toast.success('Broadcast protocol initiated: SMS dispatched.');
+            toast.success('SMS sent.');
             return true;
         } catch (error: any) {
-            toast.error(error.message || 'Transmission failure');
+            toast.error(error.message || 'Failed to send SMS');
             return false;
         } finally {
             setLoading(false);
@@ -76,7 +76,7 @@ export const useCommunication = () => {
         setLoading(true);
         try {
             await communicationService.createNotice(data);
-            toast.success('Notice published to the institutional node.');
+            toast.success('Notice published.');
             return true;
         } catch (error: any) {
             toast.error(error.message || 'Publication failure');

@@ -59,19 +59,19 @@ export default function ResetPassword() {
 
     if (success) {
         return (
-            <AuthLayout title="Cipher Updated">
+            <AuthLayout title="Password Updated">
                 <div className="text-center space-y-8">
                     <div className="size-20 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
                         <CheckCircle2 size={40} />
                     </div>
                     <div className="space-y-4">
-                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Access Restored</h2>
+                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Password Updated</h2>
                         <p className="text-sm font-medium text-slate-500 italic leading-relaxed">
-                            Your security cipher has been successfully updated. You may now initialize your session matrix using the new credentials.
+                            Your password has been successfully updated. You can now log in with your new password.
                         </p>
                     </div>
                     <Link href="/auth/login" className="w-full py-5 bg-primary text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
-                        Access Gateway Node
+                        Go to Login
                         <ArrowRight size={18} />
                     </Link>
                 </div>
@@ -80,18 +80,18 @@ export default function ResetPassword() {
     }
 
     return (
-        <AuthLayout title="Cipher Update">
+        <AuthLayout title="Reset Password">
             <div className="space-y-8">
                 <div className="text-center">
-                    <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest leading-none mb-3">Cipher Update</h2>
-                    <p className="text-sm font-medium text-slate-500 italic">Configure your new institutional security credentials.</p>
+                    <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest leading-none mb-3">Reset Password</h2>
+                    <p className="text-sm font-medium text-slate-500 italic">Enter your new password below.</p>
                 </div>
 
                 {!token && (
                     <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl flex items-center gap-3">
                         <AlertTriangle className="text-rose-500 shrink-0" size={20} />
                         <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest leading-tight">
-                            Security token undetected. Ensure you utilized the official recovery link.
+                            Invalid or missing reset token. Please use the link sent to your email.
                         </p>
                     </div>
                 )}
@@ -100,7 +100,7 @@ export default function ResetPassword() {
                     <div className="space-y-2">
                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
                             <Lock size={12} className="text-primary" />
-                            New Security Cipher
+                            New Password
                         </label>
                         <input
                             {...register('password')}
@@ -113,7 +113,7 @@ export default function ResetPassword() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Confirm New Cipher</label>
+                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Confirm New Password</label>
                         <input
                             {...register('confirmPassword')}
                             type="password"
@@ -129,14 +129,14 @@ export default function ResetPassword() {
                         disabled={loading || !token}
                         className="w-full py-5 bg-primary text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                     >
-                        {loading ? (
+                         {loading ? (
                             <>
                                 <Loader2 size={18} className="animate-spin" />
-                                Updating Cipher...
+                                Updating password...
                             </>
                         ) : (
                             <>
-                                Confirm Reset
+                                Update Password
                                 <ShieldCheck size={18} />
                             </>
                         )}
@@ -145,7 +145,7 @@ export default function ResetPassword() {
 
                 <div className="pt-6 border-t border-slate-50 dark:border-slate-800 text-center">
                     <Link href="/auth/login" className="inline-flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-colors">
-                        <ChevronLeft size={16} /> Back to Gateway
+                         <ChevronLeft size={16} /> Back to Login
                     </Link>
                 </div>
             </div>

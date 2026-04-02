@@ -102,17 +102,17 @@ export default function TransportDashboard() {
                             <div className="space-y-1">
                                 <div className="flex items-center gap-2 text-primary mb-1">
                                     <Navigation size={18} />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Fleet Intelligence</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Transport Status</span>
                                 </div>
-                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Transport Hub</h1>
+                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Transport Management</h1>
                                 <p className="text-slate-500 dark:text-slate-400 font-medium italic">
-                                    Coordinate fleet deployment, route synchronization, and driver allocation.
+                                    Manage all school buses, routes, and drivers from here.
                                 </p>
                             </div>
                             <div className="flex gap-4">
                                 <button className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95">
                                     <Plus size={18} />
-                                    <span>Initialize Route</span>
+                                    <span>Add New Route</span>
                                 </button>
                             </div>
                         </div>
@@ -144,10 +144,10 @@ export default function TransportDashboard() {
                             {/* Toolbar */}
                             <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
                                 <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
-                                    {['Active Fleet', 'Route Matrix', 'Dispatch Logs', 'Maintenance'].map((tab) => (
-                                        <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'Active Fleet' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
+                                    {['View Routes', 'Bus List', 'Service Logs', 'Maintenance'].map((tab) => (
+                                        <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'View Routes' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
                                             {tab}
-                                            {tab === 'Active Fleet' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full" />}
+                                            {tab === 'View Routes' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
                                         </button>
                                     ))}
                                 </div>
@@ -158,12 +158,12 @@ export default function TransportDashboard() {
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                             className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
-                                            placeholder="Search fleet index..." 
+                                            placeholder="Search bus or route..." 
                                         />
                                     </div>
                                     <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
                                         <Filter size={16} className="text-primary" />
-                                        <span className="hidden sm:inline">Advanced Grid</span>
+                                        <span className="hidden sm:inline">Advanced Search</span>
                                     </button>
                                 </div>
                             </div>
@@ -174,12 +174,12 @@ export default function TransportDashboard() {
                                     <thead>
                                         <tr className="border-b border-slate-50 dark:border-slate-800">
                                             <th className="py-6 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 w-12"><input type="checkbox" className="rounded-md border-slate-200 size-4" /></th>
-                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 min-w-[300px]">Deployment Node (Route)</th>
-                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Operator Identity</th>
-                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Vessel ID</th>
-                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Occupancy Vector</th>
-                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Status Code</th>
-                                            <th className="py-6 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Terminal</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 min-w-[300px]">Route Details</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Driver Name</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Bus Number</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Students on Board</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Status</th>
+                                            <th className="py-6 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-50 dark:divide-slate-800/50">
@@ -244,7 +244,7 @@ export default function TransportDashboard() {
                                                     <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <button 
                                                             className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-primary transition-all hover:shadow-md"
-                                                            title="Fleet Telemetry"
+                                                            title="View Map"
                                                         >
                                                             <Navigation size={16} />
                                                         </button>
@@ -262,13 +262,13 @@ export default function TransportDashboard() {
                             </div>
 
                             {/* Pagination Terminal */}
-                            <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
+                             <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
-                                    Syncing <span className="text-slate-900 dark:text-white">{routes.length} Active Vessels</span> in current dispatch window
+                                    Total <span className="text-slate-900 dark:text-white">{routes.length} Buses</span> in this list
                                 </p>
                                 <div className="flex gap-3">
                                     <button className="h-10 px-6 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm">
-                                        Export Fleet Logs
+                                        Export Records
                                     </button>
                                 </div>
                             </div>

@@ -24,13 +24,13 @@ export default function AdminDashboard() {
   const { stats, loading } = useStats();
 
   return (
-    <AdminLayout title="Admin Dashboard">
+    <AdminLayout title="School Dashboard">
       <div className="space-y-8 animate-in fade-in duration-500 pb-12">
         {/* Page Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Admin Dashboard</h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1">Quick look at how the school is doing today.</p>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">School Dashboard</h1>
+            <p className="text-slate-500 dark:text-slate-400 mt-1">Overview of school activities and statistics.</p>
           </div>
           <div className="flex gap-3">
             <button 
@@ -38,14 +38,14 @@ export default function AdminDashboard() {
               className="inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
             >
               <Download size={18} className="mr-2" />
-              Get Report
+              Download Report
             </button>
             <Link 
               href="/admin/students/add"
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-lg shadow-primary/20 text-sm font-medium text-white bg-primary hover:bg-indigo-700 transition-all transform hover:-translate-y-0.5"
             >
               <Plus size={18} className="mr-2" />
-              New Admission
+              Add Student
             </Link>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <Calendar size={20} className="text-primary" />
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Attendance Trend</h2>
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Weekly Attendance</h2>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded font-bold uppercase tracking-widest">Last 7 Days</span>
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
           {/* Activity Log */}
           <div className="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 transition-all hover:shadow-md">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Live Activities</h2>
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Recent Updates</h2>
                 <Activity size={18} className="text-purple-500 animate-pulse" />
             </div>
             <div className="space-y-6">
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
               href="/admin/audit"
               className="w-full mt-8 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-primary border border-dashed border-slate-200 dark:border-slate-700 rounded-xl transition-all hover:bg-slate-50 flex items-center justify-center"
             >
-                View Performance Logs
+                View Activity Logs
             </Link>
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function AdminDashboard() {
                     <span className="text-slate-400">{item.icon}</span>
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{item.label}</span>
                 </div>
-                <span className="text-sm font-black text-slate-900 dark:text-white">{item.value} <span className="text-[10px] text-slate-400 font-bold ml-1">Total Assets</span></span>
+                <span className="text-sm font-black text-slate-900 dark:text-white">{item.value} <span className="text-[10px] text-slate-400 font-bold ml-1">Total</span></span>
               </div>
               <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
                 <div

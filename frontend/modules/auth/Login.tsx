@@ -116,7 +116,7 @@ export default function Login() {
                         {/* Email Field */}
                         <div className="space-y-1 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-200">
                             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 ml-1" htmlFor="email">
-                                Email ID
+                                Email Address
                             </label>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">

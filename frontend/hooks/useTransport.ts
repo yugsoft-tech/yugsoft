@@ -35,7 +35,7 @@ export const useTransport = () => {
         setLoading(true);
         try {
             await transportService.createRoute(data);
-            toast.success('Logistics protocol: New route successfully registered.');
+            toast.success('New route added.');
             fetchRoutes();
             return true;
         } catch (error: any) {
@@ -50,7 +50,7 @@ export const useTransport = () => {
         setLoading(true);
         try {
             await transportService.createVehicle(data);
-            toast.success('Asset management: New vehicle added to the fleet.');
+            toast.success('New vehicle added.');
             fetchVehicles();
             return true;
         } catch (error: any) {

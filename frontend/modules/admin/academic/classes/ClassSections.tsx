@@ -34,8 +34,8 @@ import {
 import { toast } from 'react-hot-toast';
 
 const sectionSchema = z.object({
-    name: z.string().min(1, 'Section identifier required'),
-    capacity: z.number().min(1, 'Capacity node required'),
+    name: z.string().min(1, 'Section name is required'),
+    capacity: z.number().min(1, 'Capacity is required'),
 });
 
 type SectionFormValues = z.infer<typeof sectionSchema>;
@@ -56,7 +56,7 @@ export default function ClassSections({ classId }: { classId: string }) {
             const data = await classesService.getSections(classId);
             setSections(data);
         } catch (error: any) {
-            toast.error(error.message || 'Failed to fetch section matrix');
+            toast.error(error.message || 'Failed to load sections');
         } finally {
             setLoading(false);
         }
@@ -70,7 +70,7 @@ export default function ClassSections({ classId }: { classId: string }) {
         setRegistering(true);
         try {
             await classesService.createSection({ ...data, classId });
-            toast.success('Academic Protocol: Section node successfully registered.');
+            toast.success('Section added successfully.');
             reset();
             setActiveTab('matrix');
             fetchSections();
@@ -86,10 +86,10 @@ export default function ClassSections({ classId }: { classId: string }) {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-2 mb-2">
-                        CONTEXT: NODE_SEGMENTATION
+                        Class Information
                     </Badge>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Section Matrix Configuration</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Define academic segments, manage student distributions, and assign faculty oversight nodes.</p>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Manage Sections</h1>
+                    <p className="text-sm font-medium text-slate-500 italic">Add or edit sections, manage student limits, and assign class teachers.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button
@@ -97,7 +97,7 @@ export default function ClassSections({ classId }: { classId: string }) {
                         className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
                     >
                         <Plus size={18} />
-                        Register Section Node
+                        Add New Section
                     </Button>
                 </div>
             </div>
@@ -107,13 +107,13 @@ export default function ClassSections({ classId }: { classId: string }) {
                     {activeTab === 'create' ? (
                         <div className="space-y-10">
                             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-8">
-                                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Academic Segment Architecture</h2>
-                                <button onClick={() => setActiveTab('matrix')} className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Return to Matrix</button>
+                                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Add Section</h2>
+                                <button onClick={() => setActiveTab('matrix')} className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Back to List</button>
                             </div>
                             <form onSubmit={handleSubmit(onRegister)} className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                 <div className="space-y-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Section Identifier (Label)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Section Name (A/B/C)</label>
                                         <input
                                             {...register('name')}
                                             placeholder="Section A / Alpha..."
@@ -123,7 +123,7 @@ export default function ClassSections({ classId }: { classId: string }) {
                                 </div>
                                 <div className="space-y-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Payload Limit (Capacity)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Student Limit (Capacity)</label>
                                         <input
                                             type="number"
                                             {...register('capacity', { valueAsNumber: true })}
@@ -139,7 +139,7 @@ export default function ClassSections({ classId }: { classId: string }) {
                                         className="bg-primary hover:bg-primary/90 text-white rounded-[2rem] px-12 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20 transition-all active:scale-95"
                                     >
                                         {registering ? <Activity size={18} className="animate-spin" /> : <Building size={18} />}
-                                        Commit Section Node
+                                        Create Section
                                     </Button>
                                 </div>
                             </form>
@@ -151,13 +151,13 @@ export default function ClassSections({ classId }: { classId: string }) {
                                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" size={20} />
                                     <input
                                         type="text"
-                                        placeholder="Sync Section Identifier..."
+                                        placeholder="Search for a section..."
                                         className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all"
                                     />
                                 </div>
                                 <Button variant="secondary" className="rounded-xl px-6 py-4 h-auto font-black text-[10px] uppercase tracking-widest gap-2 border-2 text-slate-400">
                                     <Filter size={14} />
-                                    Distribution Sync
+                                    Manage Sections
                                 </Button>
                             </div>
 
@@ -172,7 +172,7 @@ export default function ClassSections({ classId }: { classId: string }) {
                                             <div className="size-20 rounded-full bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center text-slate-200">
                                                 <Building size={40} />
                                             </div>
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">No Segments Detected for this Class Master Node</p>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">No sections found for this class.</p>
                                         </div>
                                     </div>
                                 ) : (
@@ -186,7 +186,7 @@ export default function ClassSections({ classId }: { classId: string }) {
                                                             SYNCED
                                                         </Badge>
                                                     </div>
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Academic Sub-Node</p>
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Class Section</p>
                                                 </div>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
@@ -197,11 +197,11 @@ export default function ClassSections({ classId }: { classId: string }) {
                                                     <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl">
                                                         <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <UserCheck size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Assign Faculty Master</span>
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">Assign Class Teacher</span>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
                                                             <Activity size={16} className="text-indigo-500" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Attendance Spectrum</span>
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">View Attendance</span>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
@@ -212,14 +212,14 @@ export default function ClassSections({ classId }: { classId: string }) {
                                                     <Users size={24} className="text-primary" />
                                                     <div className="text-center">
                                                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Students</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{section._count?.students || 0} Nodes</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{section._count?.students || 0} Students</p>
                                                     </div>
                                                 </div>
                                                 <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
                                                     <Zap size={24} className="text-amber-500" />
                                                     <div className="text-center">
                                                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Capacity</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{section.capacity} UNITS</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{section.capacity} LIMIT</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,10 +227,10 @@ export default function ClassSections({ classId }: { classId: string }) {
                                             <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between relative z-10">
                                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                                     <ShieldCheck size={14} className="text-emerald-500" />
-                                                    NODE_VALIDATED
+                                                    Validated
                                                 </p>
                                                 <span className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                                    Inspect Segment
+                                                    View Section
                                                     <ChevronRight size={14} />
                                                 </span>
                                             </div>

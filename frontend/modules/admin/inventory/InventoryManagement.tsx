@@ -35,9 +35,9 @@ import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
 
 const itemSchema = z.object({
-    name: z.string().min(3, 'Asset identifier too short'),
-    category: z.string().min(1, 'Category node required'),
-    quantity: z.number().min(0, 'Quantity node required'),
+    name: z.string().min(3, 'Item name too short'),
+    category: z.string().min(1, 'Category required'),
+    quantity: z.number().min(0, 'Quantity required'),
     price: z.string().optional(),
 });
 
@@ -87,11 +87,11 @@ export default function InventoryManagement() {
                             <div className="space-y-1">
                                 <div className="flex items-center gap-2 text-primary mb-1">
                                     <Box size={18} />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Resource Lifecycle</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Inventory Status</span>
                                 </div>
-                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Inventory Hub</h1>
+                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Inventory Management</h1>
                                 <p className="text-slate-500 dark:text-slate-400 font-medium italic">
-                                    Track institutional assets, monitor supply depletion, and synchronize fulfillment.
+                                    Track school supplies, monitor stock levels, and manage items.
                                 </p>
                             </div>
                             <div className="flex gap-4">
@@ -103,7 +103,7 @@ export default function InventoryManagement() {
                                     className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95"
                                 >
                                     <Plus size={18} />
-                                    <span>Register Asset Node</span>
+                                    <span>Add New Item</span>
                                 </button>
                             </div>
                         </div>
@@ -111,10 +111,10 @@ export default function InventoryManagement() {
                         {/* Stats Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {[
-                                { title: 'Global Item Load', value: items.length || '124', sub: 'Active Assets', icon: Box, color: 'text-primary', bg: 'bg-primary/5', trend: 'Stable' },
-                                { title: 'Depletion Alert', value: items.filter(i => i.quantity < 10).length || '3', sub: 'Low Stock Nodes', icon: AlertTriangle, color: 'text-rose-500', bg: 'bg-rose-500/5', trend: 'Critical' },
-                                { title: 'Disbursement', value: history.length || '42', sub: 'Last 30 days', icon: ClipboardList, color: 'text-blue-500', bg: 'bg-blue-500/5', trend: '+12% surge' },
-                                { title: 'Total Valuation', value: '$45k', sub: 'Asset Network', icon: Tag, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Audit Ready' },
+                                { title: 'Total Items', value: items.length || '124', sub: 'In stock', icon: Box, color: 'text-primary', bg: 'bg-primary/5', trend: 'Stable' },
+                                { title: 'Low Stock', value: items.filter(i => i.quantity < 10).length || '3', sub: 'Items running low', icon: AlertTriangle, color: 'text-rose-500', bg: 'bg-rose-500/5', trend: 'Alert' },
+                                { title: 'Items Issued', value: history.length || '42', sub: 'Last 30 days', icon: ClipboardList, color: 'text-blue-500', bg: 'bg-blue-500/5', trend: 'Normal' },
+                                { title: 'Stock Value', value: '₹45k', sub: 'Total value', icon: Tag, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Updated' },
                             ].map((stat, i) => (
                                 <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 border border-slate-100 dark:border-slate-800 shadow-2xl group relative overflow-hidden">
                                     <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
@@ -142,9 +142,9 @@ export default function InventoryManagement() {
                             <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
                                 <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
                                     {[
-                                        { id: 'inventory', label: 'Resource Matrix' },
-                                        { id: 'history', label: 'Issuance Logs' },
-                                        { id: 'add', label: 'Registration Protocol' }
+                                        { id: 'inventory', label: 'Stock List' },
+                                        { id: 'history', label: 'Issue Records' },
+                                        { id: 'add', label: 'Add New Item' }
                                     ].map((tab) => (
                                         <button 
                                             key={tab.id} 
@@ -162,12 +162,12 @@ export default function InventoryManagement() {
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                             className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
-                                            placeholder="Search asset index..." 
+                                            placeholder="Search inventory..." 
                                         />
                                     </div>
                                     <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
                                         <Filter size={16} className="text-primary" />
-                                        <span className="hidden sm:inline">Advanced Search</span>
+                                        <span className="hidden sm:inline">Filters</span>
                                     </button>
                                 </div>
                             </div>
@@ -181,32 +181,28 @@ export default function InventoryManagement() {
                                                 <Boxes size={32} />
                                             </div>
                                             <div>
-                                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Asset Registration Protocol</h2>
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Node Acquisition & Cataloging</p>
+                                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Add New Item Details</h2>
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Enter new item information below</p>
                                             </div>
                                         </div>
                                         <form onSubmit={handleSubmit(onRegister)} className="grid grid-cols-2 gap-10">
                                             <div className="col-span-2 space-y-2">
-                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Resource Name</label>
-                                                <input {...register('name')} placeholder="e.g. Quantum Analytics Board" className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all shadow-sm" />
+                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Item Name</label>
+                                                <input {...register('name')} placeholder="e.g. Whiteboard Markers" className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all shadow-sm" />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Node Category</label>
+                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Item Category</label>
                                                 <select {...register('category')} className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-5 px-8 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all appearance-none">
-                                                    <option value="">Select Domain...</option>
-                                                    <option value="ELECTRONICS">Domain: Electronics</option>
-                                                    <option value="FURNITURE">Domain: Infrastructure</option>
-                                                    <option value="STATIONERY">Domain: Consumables</option>
-                                                    <option value="SPORTS">Domain: Athletics</option>
+                                                    <option value="">Select Category...</option>
+                                                    <option value="ELECTRONICS">Electronics</option>
+                                                    <option value="FURNITURE">Furniture</option>
+                                                    <option value="STATIONERY">Stationery</option>
+                                                    <option value="SPORTS">Sports</option>
                                                 </select>
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Load Count</label>
-                                                <input type="number" {...register('quantity', { valueAsNumber: true })} placeholder="150" className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all" />
                                             </div>
                                             <div className="col-span-2 flex justify-end pt-8">
                                                 <button type="submit" disabled={registering} className="bg-primary text-white px-12 py-5 rounded-[1.5rem] font-black text-[10px] uppercase tracking-widest shadow-2xl shadow-primary/30 transition-all hover:-translate-y-1 active:scale-95">
-                                                    {registering ? <Activity size={18} className="animate-spin" /> : <span>Commit Node to Matrix</span>}
+                                                    {registering ? <Activity size={18} className="animate-spin" /> : <span>Save Item</span>}
                                                 </button>
                                             </div>
                                         </form>
@@ -243,7 +239,7 @@ export default function InventoryManagement() {
                                                     </div>
                                                     <button className="mt-auto py-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-[9px] font-black uppercase tracking-widest text-slate-400 group-hover:bg-primary group-hover:text-white transition-all flex items-center justify-center gap-2">
                                                         <ShoppingCart size={12} />
-                                                        Execute Issue
+                                                        Issue Item
                                                     </button>
                                                 </div>
                                             </div>
@@ -254,9 +250,9 @@ export default function InventoryManagement() {
                                         <table className="w-full text-left">
                                             <thead>
                                                 <tr className="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700">
-                                                    <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Resource Node</th>
-                                                    <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Identity Context</th>
-                                                    <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Temporal Node</th>
+                                                    <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Item Name</th>
+                                                    <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Issued To</th>
+                                                    <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Date</th>
                                                     <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Status</th>
                                                 </tr>
                                             </thead>
@@ -274,7 +270,7 @@ export default function InventoryManagement() {
                                                         <td className="px-10 py-6">
                                                             <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 text-[9px] font-black uppercase tracking-widest w-fit">
                                                                 <CheckCircle2 size={10} />
-                                                                Distributed
+                                                                Issued
                                                             </div>
                                                         </td>
                                                     </tr>

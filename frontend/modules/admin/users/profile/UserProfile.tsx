@@ -22,6 +22,11 @@ import Button from '@/components/ui/Button';
 import { toast } from 'react-hot-toast';
 import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
+import AdminLayout from '@/components/layouts/AdminLayout';
+import AuthGuard from '@/components/guards/AuthGuard';
+import RoleGuard from '@/components/guards/RoleGuard';
+import { USER_ROLES } from '@/utils/role-config';
+import Head from 'next/head';
 
 const userProfileSchema = z.object({
     firstName: z.string().min(2, 'First name is required'),
@@ -64,7 +69,7 @@ export default function UserProfile() {
                 isActive: user.isActive,
             });
         } catch (err: any) {
-            toast.error(err.message || 'Identity retrieval failed');
+            toast.error(err.message || 'Failed to load user profile');
         } finally {
             setLoading(false);
         }
@@ -74,9 +79,9 @@ export default function UserProfile() {
         setSaving(true);
         try {
             await usersService.update(id as string, data);
-            toast.success('Identity profile synchronized');
+            toast.success('Profile updated successfully');
         } catch (err: any) {
-            toast.error(err.message || 'Synchronization protocol failed');
+            toast.error(err.message || 'Failed to save changes');
         } finally {
             setSaving(false);
         }
@@ -84,36 +89,44 @@ export default function UserProfile() {
 
     if (loading) {
         return (
-            <div className="space-y-8 animate-pulse">
-                <Skeleton className="h-40 w-full rounded-[2.5rem]" />
-                <Skeleton className="h-96 w-full rounded-[2.5rem]" />
-            </div>
+            <AdminLayout title="User Profile">
+                <div className="space-y-8 animate-pulse p-8">
+                    <Skeleton className="h-40 w-full rounded-[2.5rem]" />
+                    <Skeleton className="h-96 w-full rounded-[2.5rem]" />
+                </div>
+            </AdminLayout>
         );
     }
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div className="flex items-center gap-4">
-                    <Link href="/admin/users" className="size-10 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 hover:text-primary transition-colors">
-                        <ChevronLeft size={20} />
-                    </Link>
-                    <div>
-                        <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1">User Profile</h1>
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest italic">User ID: {id}</p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Button
-                        onClick={handleSubmit(onSubmit)}
-                        disabled={saving}
-                        className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-8 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
-                    >
-                        {saving ? <Activity size={18} className="animate-spin" /> : <Save size={18} />}
-                        Save Profile
-                    </Button>
-                </div>
-            </div>
+        <AuthGuard>
+            <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
+                <AdminLayout title="Manage User">
+                    <Head>
+                        <title>User Profile | School ERP</title>
+                    </Head>
+                    <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div className="flex items-center gap-4">
+                                <Link href="/admin/users" className="size-10 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 hover:text-primary transition-colors">
+                                    <ChevronLeft size={20} />
+                                </Link>
+                                <div>
+                                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tightLeading-none mb-1">User Details</h1>
+                                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest italic text-primary">Manage account and permissions</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <Button
+                                    onClick={handleSubmit(onSubmit)}
+                                    disabled={saving}
+                                    className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-8 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
+                                >
+                                    {saving ? <Activity size={18} className="animate-spin" /> : <Save size={18} />}
+                                    Save Profile
+                                </Button>
+                            </div>
+                        </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Sidebar / Quick Stats */}
@@ -157,7 +170,7 @@ export default function UserProfile() {
                     </div>
                 </div>
 
-                {/* Main Configuration Matrix */}
+                {/* Profile Settings */}
                 <div className="lg:col-span-8 space-y-8">
                     <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
                         <div className="flex border-b border-slate-100 dark:border-slate-800 p-2">
@@ -288,7 +301,7 @@ export default function UserProfile() {
                                                 <History size={20} />
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">Page visited: [Academic Registry]</p>
+                                                <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">Page visited: [Academic Records]</p>
                                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] italic">04:21:00 UTC | ID: {9283 - i}</p>
                                             </div>
                                         </div>
@@ -299,6 +312,9 @@ export default function UserProfile() {
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+                </AdminLayout>
+            </RoleGuard>
+        </AuthGuard>
     );
 }

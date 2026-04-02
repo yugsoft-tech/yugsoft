@@ -13,7 +13,7 @@ export const useInventory = () => {
             const data = await inventoryService.getItems();
             setItems(data.data || data);
         } catch (error: any) {
-            toast.error(error.message || 'Failed to fetch inventory assets');
+            toast.error(error.message || 'Failed to fetch inventory');
         } finally {
             setLoading(false);
         }
@@ -35,7 +35,7 @@ export const useInventory = () => {
         setLoading(true);
         try {
             await inventoryService.createItem(data);
-            toast.success('Asset Management: New resource node registered.');
+            toast.success('Inventory item added.');
             fetchItems();
             return true;
         } catch (error: any) {
@@ -50,7 +50,7 @@ export const useInventory = () => {
         setLoading(true);
         try {
             await inventoryService.issueItem(data);
-            toast.success('Resource Dispatch: Item successfully issued to node.');
+            toast.success('Item issued successfully.');
             fetchHistory();
             return true;
         } catch (error: any) {

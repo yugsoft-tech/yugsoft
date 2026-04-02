@@ -19,7 +19,7 @@ export const useSettings = () => {
             setSettings(settingsData);
             setAcademicYears(years);
         } catch (err: any) {
-            const message = err.message || 'Failed to fetch institutional parameters';
+            const message = err.message || 'Failed to fetch settings';
             setError(message);
             // Fallback for demo
             setSettings({
@@ -46,20 +46,20 @@ export const useSettings = () => {
     const updateSettings = async (data: any) => {
         try {
             await settingsService.updateSettings(data);
-            toast.success('Institutional parameters synchronized.');
+            toast.success('Settings saved.');
             fetchData();
         } catch (err: any) {
-            toast.error(err.message || 'Synchronization protocol failed');
+            toast.error(err.message || 'Failed to save settings');
         }
     };
 
     const activateYear = async (id: string) => {
         try {
             await settingsService.setActiveYear(id);
-            toast.success('Academic cycle activated.');
+            toast.success('Academic year activated.');
             fetchData();
         } catch (err: any) {
-            toast.error(err.message || 'Cycle activation failed');
+            toast.error(err.message || 'Failed to activate year');
         }
     };
 

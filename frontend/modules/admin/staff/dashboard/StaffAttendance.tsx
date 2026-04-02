@@ -16,12 +16,18 @@ import {
     ArrowRight,
     CheckCircle2,
     XCircle,
-    AlertCircle
+    AlertCircle,
+    LayoutDashboard
 } from 'lucide-react';
 import { attendanceService } from '@/services/attendance.service';
 import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
+import AdminLayout from '@/components/layouts/AdminLayout';
+import AuthGuard from '@/components/guards/AuthGuard';
+import RoleGuard from '@/components/guards/RoleGuard';
+import { USER_ROLES } from '@/utils/role-config';
+import Head from 'next/head';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -42,7 +48,7 @@ export default function StaffAttendance() {
             const registry = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
             setAttendance(registry);
         } catch (error: any) {
-            toast.error(error.message || 'Failed to fetch attendance registry');
+            toast.error(error.message || 'Failed to load attendance');
         } finally {
             setLoading(false);
         }
@@ -55,7 +61,7 @@ export default function StaffAttendance() {
     const onMark = async (staffId: string, status: string) => {
         try {
             await attendanceService.markTeacherAttendance({ teacherId: staffId, status, date });
-            toast.success('Protocol: Attendance node successfully synchronized.');
+            toast.success('Attendance marked successfully.');
             fetchAttendance();
         } catch (error: any) {
             toast.error(error.message || 'Failed to mark attendance');
@@ -63,12 +69,18 @@ export default function StaffAttendance() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Faculty HR: Attendance</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Monitor teacher presence, manage leave protocols, and track institutional HR metrics.</p>
-                </div>
+        <AuthGuard>
+            <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
+                <AdminLayout title="Staff Attendance">
+                    <Head>
+                        <title>Staff Attendance | School ERP</title>
+                    </Head>
+                    <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div>
+                                <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Attendance</h1>
+                                <p className="text-sm font-medium text-slate-500 italic">Mark daily attendance for all employees.</p>
+                            </div>
                 <div className="flex items-center gap-3">
                     <input
                         type="date"
@@ -80,7 +92,7 @@ export default function StaffAttendance() {
                         className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
                     >
                         <Activity size={18} />
-                        Sync Matrix
+                        <span>Mark All</span>
                     </Button>
                 </div>
             </div>
@@ -92,7 +104,7 @@ export default function StaffAttendance() {
                             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" size={20} />
                             <input
                                 type="text"
-                                placeholder="Search Faculty ID / Name..."
+                                placeholder="Search name or ID..."
                                 className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all"
                             />
                         </div>
@@ -112,10 +124,10 @@ export default function StaffAttendance() {
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr className="bg-slate-50 dark:bg-slate-800/50 border-b-2 border-slate-100 dark:border-slate-800">
-                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Faculty Entity</th>
-                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Department/Role</th>
-                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Sync Status</th>
-                                    <th className="px-10 py-6 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Deployment Protocol</th>
+                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Staff Name</th>
+                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Department</th>
+                                    <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
+                                    <th className="px-10 py-6 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -130,7 +142,7 @@ export default function StaffAttendance() {
                                     ))
                                 ) : attendance.length === 0 ? (
                                     <tr>
-                                        <td colSpan={4} className="py-20 text-center italic text-slate-400 text-xs font-black uppercase tracking-widest">No Attendance Nodes Detected for this Temporal Cycle</td>
+                                        <td colSpan={4} className="py-20 text-center italic text-slate-400 text-xs font-black uppercase tracking-widest">No records found.</td>
                                     </tr>
                                 ) : (
                                     (attendance || []).filter(att => att && (att.teacherId || att.id)).map((att) => (
@@ -141,39 +153,39 @@ export default function StaffAttendance() {
                                                         {String(att?.teacherName || '').substring(0, 2) || 'ST'}
                                                     </div>
                                                     <div>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{att?.teacherName || 'Unknown Faculty'}</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">{att?.teacherName || 'Staff Member'}</p>
                                                         <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest italic">ID: {att?.teacherId || 'N/A'}</p>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">FACULTY_SCIENCE</td>
+                                            <td className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Department</td>
                                             <td className="px-10 py-6 text-left">
                                                 <Badge
                                                     variant="outline"
                                                     className={`text-[8px] font-black uppercase tracking-widest border-lg ${att.status === 'PRESENT' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-rose-500/10 text-rose-600 border-rose-500/20'}`}
                                                 >
-                                                    {att.status || 'UNSYNCED'}
+                                                    {att.status || 'Not Marked'}
                                                 </Badge>
                                             </td>
                                             <td className="px-10 py-6 text-center">
-                                                <div className="flex items-center justify-center gap-2">
+                                                 <div className="flex items-center justify-center gap-2">
                                                     <button
                                                         onClick={() => onMark(att.teacherId, 'PRESENT')}
                                                         className="px-4 py-2 bg-emerald-500/5 hover:bg-emerald-500 text-emerald-500 hover:text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border border-emerald-500/20"
                                                     >
-                                                        Presence
+                                                        Present
                                                     </button>
                                                     <button
                                                         onClick={() => onMark(att.teacherId, 'ABSENT')}
                                                         className="px-4 py-2 bg-rose-500/5 hover:bg-rose-500 text-rose-500 hover:text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border border-rose-500/20"
                                                     >
-                                                        Absence
+                                                        Absent
                                                     </button>
                                                     <button
                                                         onClick={() => onMark(att.teacherId, 'LEAVE')}
                                                         className="px-4 py-2 bg-amber-500/5 hover:bg-amber-500 text-amber-500 hover:text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border border-amber-500/20"
                                                     >
-                                                        Leave Node
+                                                        On Leave
                                                     </button>
                                                 </div>
                                             </td>
@@ -187,15 +199,18 @@ export default function StaffAttendance() {
                     <div className="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic font-bold">
                             <ShieldCheck size={14} className="text-emerald-500" />
-                            ACCREDITED_HR_PROTOCOL_V4.2
+                            Attendance Records
                         </p>
                         <div className="flex items-center gap-4">
-                            <Button variant="secondary" className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-primary rounded-xl h-auto px-6 py-3">Download HR Report</Button>
-                            <Button className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl px-10 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-slate-900/10">Commit Sync Matrix</Button>
+                            <Button variant="secondary" className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-primary rounded-xl h-auto px-6 py-3">Report</Button>
+                            <Button className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl px-10 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-slate-900/10">Save</Button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+                </AdminLayout>
+            </RoleGuard>
+        </AuthGuard>
     );
 }

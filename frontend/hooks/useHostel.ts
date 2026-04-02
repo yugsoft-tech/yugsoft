@@ -13,7 +13,7 @@ export const useHostel = () => {
             const data = await hostelService.getHostels();
             setHostels(data.data || data);
         } catch (error: any) {
-            toast.error(error.message || 'Failed to fetch hostel nodes');
+            toast.error(error.message || 'Failed to fetch hostels');
         } finally {
             setLoading(false);
         }
@@ -25,7 +25,7 @@ export const useHostel = () => {
             const data = await hostelService.getAllocations(params);
             setAllocations(data.data || data);
         } catch (error: any) {
-            toast.error(error.message || 'Failed to fetch allocation matrix');
+            toast.error(error.message || 'Failed to fetch data');
         } finally {
             setLoading(false);
         }
@@ -35,7 +35,7 @@ export const useHostel = () => {
         setLoading(true);
         try {
             await hostelService.createHostel(data);
-            toast.success('Infrastructural Node: Hostel successfully registered.');
+            toast.success('Hostel registered.');
             fetchHostels();
             return true;
         } catch (error: any) {
@@ -50,7 +50,7 @@ export const useHostel = () => {
         setLoading(true);
         try {
             await hostelService.allocateRoom(data);
-            toast.success('Resource Allocation: Room successfully assigned.');
+            toast.success('Room assigned.');
             fetchAllocations();
             return true;
         } catch (error: any) {

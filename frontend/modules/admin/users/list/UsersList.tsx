@@ -25,6 +25,11 @@ import {
     DropdownMenuSeparator
 } from '@/components/ui/DropdownMenu';
 import { Badge } from '@/components/ui/Badge';
+import AdminLayout from '@/components/layouts/AdminLayout';
+import AuthGuard from '@/components/guards/AuthGuard';
+import RoleGuard from '@/components/guards/RoleGuard';
+import { USER_ROLES } from '@/utils/role-config';
+import Head from 'next/head';
 
 export default function UsersList() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -56,17 +61,23 @@ export default function UsersList() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 pt-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Teachers & Staff</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">Manage all school staff, teachers, and their accounts.</p>
-                </div>
+        <AuthGuard>
+            <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
+                <AdminLayout title="User Management">
+                    <Head>
+                        <title>User Management | School ERP</title>
+                    </Head>
+                    <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div>
+                                <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Users</h1>
+                                <p className="text-sm font-medium text-slate-500 italic">View and manage all system users.</p>
+                            </div>
                 <div className="flex items-center gap-3">
                     <Link href="/admin/users/add">
                         <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20">
                             <Plus size={18} />
-                            Add New User
+                            <span>New User</span>
                         </Button>
                     </Link>
                 </div>
@@ -278,6 +289,9 @@ export default function UsersList() {
                     </div>
                 )}
             </div>
-        </div>
+            </div>
+                </AdminLayout>
+            </RoleGuard>
+        </AuthGuard>
     );
 }

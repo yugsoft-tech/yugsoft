@@ -29,13 +29,13 @@ export const useParents = (initialParams?: PaginationParams & { search?: string 
                 totalPages: response.totalPages,
             });
         } catch (err: any) {
-            const message = err.message || 'Failed to fetch guardian registry';
+            const message = err.message || 'Failed to fetch parents';
             setError(message);
             toast.error(message);
         } finally {
             setLoading(false);
         }
-    }, [params]);
+    }, []);
 
     useEffect(() => {
         fetchParents();
@@ -44,10 +44,10 @@ export const useParents = (initialParams?: PaginationParams & { search?: string 
     const deleteParent = async (id: string) => {
         try {
             await parentsService.deleteParent(id);
-            toast.success('Guardian record removed from registry.');
+            toast.success('Parent removed');
             fetchParents();
         } catch (err: any) {
-            toast.error(err.message || 'Removal protocol failed');
+            toast.error(err.message || 'Failed to remove parent');
         }
     };
 

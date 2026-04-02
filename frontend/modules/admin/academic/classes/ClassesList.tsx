@@ -37,8 +37,8 @@ import {
 import { toast } from 'react-hot-toast';
 
 const classSchema = z.object({
-    name: z.string().min(1, 'Class identifier required'),
-    numericName: z.number().min(1, 'Numeric node required'),
+    name: z.string().min(1, 'Class name is required'),
+    numericName: z.number().min(1, 'Class number is required'),
 });
 
 type ClassFormValues = z.infer<typeof classSchema>;
@@ -57,7 +57,7 @@ export default function ClassesList() {
         setRegistering(true);
         try {
             await classesService.create(data);
-            toast.success('Academic Architecture: New class node registered.');
+            toast.success('Success: New class added.');
             reset();
             setActiveTab('matrix');
             refetch();
@@ -70,13 +70,13 @@ export default function ClassesList() {
 
     const filteredClasses = classes.filter(c => 
         c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.numericName.toString().includes(searchTerm)
+        (c.numericName && c.numericName.toString().includes(searchTerm))
     );
 
     return (
-        <AdminLayout title="Academic Matrix">
+        <AdminLayout title="Classes List">
             <Head>
-                <title>Academic Matrix - EduCore</title>
+                <title>Classes List - EduCore</title>
             </Head>
 
             <div className="flex-1 flex flex-col gap-10 animate-in fade-in duration-700 pb-12">
@@ -85,11 +85,11 @@ export default function ClassesList() {
                     <div className="space-y-1">
                         <div className="flex items-center gap-2 text-primary mb-1">
                             <LayoutGrid size={18} />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Institutional Schema</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">School Structure</span>
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Academic Matrix</h1>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Classes List</h1>
                         <p className="text-slate-500 dark:text-slate-400 font-medium italic">
-                            Construct and manage the foundational layers of academic advancement.
+                            Manage classes, sections, and student information.
                         </p>
                     </div>
                     <div className="flex gap-4">
@@ -101,7 +101,7 @@ export default function ClassesList() {
                             className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95"
                         >
                             <Plus size={18} />
-                            <span>Initialize Class Node</span>
+                            <span>Add New Class</span>
                         </button>
                     </div>
                 </div>
@@ -109,10 +109,10 @@ export default function ClassesList() {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                        { label: 'Academic Nodes', value: `${classes.length || 0}`, icon: Layers, color: 'text-primary', bg: 'bg-primary/5', trend: 'Global Stack' },
+                        { label: 'Total Classes', value: `${classes.length || 0}`, icon: Layers, color: 'text-primary', bg: 'bg-primary/5', trend: 'In School' },
                         { label: 'Total Enrolment', value: '1,840', icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-500/5', trend: '+4% Growth' },
-                        { label: 'Curriculum Sync', value: 'National', icon: Target, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Verified' },
-                        { label: 'Operational Hub', value: 'Prime', icon: Activity, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Active' },
+                        { label: 'Curriculum', value: 'National', icon: Target, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Verified' },
+                        { label: 'Status', value: 'Prime', icon: Activity, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Active' },
                     ].map((stat, i) => (
                         <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl overflow-hidden relative group hover:border-primary/50 transition-all">
                             <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
@@ -138,10 +138,10 @@ export default function ClassesList() {
                     {/* Toolbar */}
                     <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
                         <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
-                            {['Structural Matrix', 'Deployment Map', 'Archives'].map((tab) => (
-                                <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'Structural Matrix' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
+                            {['All Classes', 'Sections', 'Previous Years'].map((tab) => (
+                                <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'All Classes' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
                                     {tab}
-                                    {tab === 'Structural Matrix' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
+                                    {tab === 'All Classes' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
                                 </button>
                             ))}
                         </div>
@@ -152,7 +152,7 @@ export default function ClassesList() {
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
-                                    placeholder="Sync node identifier..." 
+                                    placeholder="Search for a class..." 
                                 />
                             </div>
                             <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
@@ -171,13 +171,13 @@ export default function ClassesList() {
                                         <Plus size={32} />
                                     </div>
                                     <div>
-                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Academic Expansion</h2>
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Structural Node Integration Protocol</p>
+                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Add New Class</h2>
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Class Information</p>
                                     </div>
                                 </div>
                                 <form onSubmit={handleSubmit(onRegister)} className="space-y-10">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Node Identifier (Name)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Class Name</label>
                                         <input
                                             {...register('name')}
                                             placeholder="e.g. Science Stream Alpha..."
@@ -185,7 +185,7 @@ export default function ClassesList() {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Numeric Map (Order)</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Class Number (Order)</label>
                                         <input
                                             type="number"
                                             {...register('numericName', { valueAsNumber: true })}
@@ -199,7 +199,7 @@ export default function ClassesList() {
                                             onClick={() => setActiveTab('matrix')}
                                             className="flex-1 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-100 dark:border-slate-700 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-slate-50 active:scale-95 transition-all"
                                         >
-                                            Abort Initialization
+                                            Cancel
                                         </button>
                                         <button 
                                             type="submit"
@@ -207,7 +207,7 @@ export default function ClassesList() {
                                             className="flex-[2] bg-primary text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-3"
                                         >
                                             {registering ? <Activity size={18} className="animate-spin" /> : <Zap size={18} />}
-                                            Commit Node to Architecture
+                                            Create Class
                                         </button>
                                     </div>
                                 </form>
@@ -233,26 +233,26 @@ export default function ClassesList() {
                                                     <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl">
                                                         <DropdownMenuItem className="p-3 rounded-xl cursor-pointer flex items-center gap-3">
                                                             <UserCheck size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Assign Faculty</span>
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">Assign Teacher</span>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="p-3 rounded-xl cursor-pointer flex items-center gap-3">
                                                             <BookOpen size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Resource Allocation</span>
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">Subjects & Books</span>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Class Node {item.numericName}</p>
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Class {item.numericName}</p>
                                                 <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter truncate">{item.name}</h3>
                                             </div>
                                             <div className="mt-8 pt-8 border-t border-slate-50 dark:border-slate-800 flex items-center gap-4">
                                                 <div className="flex items-center gap-1 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">
                                                     <Users size={12} className="text-primary" />
-                                                    <span>120 Nodes</span>
+                                                    <span>120 Students</span>
                                                 </div>
                                                 <div className="ml-auto flex items-center gap-2 group-hover:translate-x-1 transition-transform">
-                                                    <span className="text-[8px] font-black uppercase text-primary tracking-widest leading-none italic">View Depth</span>
+                                                    <span className="text-[8px] font-black uppercase text-primary tracking-widest leading-none italic">View Details</span>
                                                     <ChevronRight size={14} className="text-primary" />
                                                 </div>
                                             </div>
@@ -266,11 +266,11 @@ export default function ClassesList() {
                     {/* Footer Stats */}
                     <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
-                            Synchronizing <span className="text-slate-900 dark:text-white">{filteredClasses.length} Structural Nodes</span> in current term
+                            Total <span className="text-slate-900 dark:text-white">{filteredClasses.length} Classes</span> in current term
                         </p>
                         <div className="flex gap-3">
                             <button className="h-10 px-6 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm">
-                                Export Matrix Map
+                                Download List
                             </button>
                         </div>
                     </div>

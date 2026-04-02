@@ -30,7 +30,7 @@ export default function FeeDashboard() {
             <AdminLayout>
                 <div className="flex flex-col h-96 items-center justify-center gap-4">
                     <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent shadow-lg shadow-primary/20"></div>
-                    <p className="text-sm font-bold text-slate-400 italic animate-pulse tracking-widest uppercase">Syncing Financial Records...</p>
+                    <p className="text-sm font-bold text-slate-400 italic animate-pulse tracking-widest uppercase">Loading financial data...</p>
                 </div>
             </AdminLayout>
         );
@@ -47,7 +47,7 @@ export default function FeeDashboard() {
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
                 <AdminLayout title="Fee Management">
                     <Head>
-                        <title>Fee Management - School ERP</title>
+                        <title>Fees - School ERP</title>
                     </Head>
 
                     <div className="flex flex-col gap-8 animate-in fade-in duration-500">
@@ -56,11 +56,11 @@ export default function FeeDashboard() {
                             <div className="space-y-1">
                                 <div className="flex items-center gap-2 text-primary">
                                     <Wallet size={20} />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Financial Intelligence</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Finance Overview</span>
                                 </div>
-                                <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Fee Management</h1>
+                                <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Fees</h1>
                                 <p className="text-slate-500 dark:text-slate-400 font-medium h-5">
-                                    Total of ${statistics.totalCollected.toLocaleString()} processed in the current cycle.
+                                    Total of {statistics.totalCollected.toLocaleString()} collected in this period.
                                 </p>
                             </div>
                             <div className="flex gap-3">
@@ -69,7 +69,7 @@ export default function FeeDashboard() {
                                     className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:-translate-y-0.5 active:scale-95 transition-all"
                                 >
                                     <Plus size={18} />
-                                    <span>Collect Fee</span>
+                                    <span>New Payment</span>
                                 </Link>
                             </div>
                         </div>
@@ -97,10 +97,10 @@ export default function FeeDashboard() {
                                 trend="Today"
                             />
                             <StatCard 
-                                label="Overdue Notices" 
+                                label="Due Fees" 
                                 value={statistics.overdueCount || 0} 
                                 icon={<Bell className="text-orange-500" />}
-                                trend="Attention Required"
+                                trend="Requires Action"
                                 highlight={statistics.overdueCount > 0}
                             />
                         </div>
@@ -111,13 +111,13 @@ export default function FeeDashboard() {
                             <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm group hover:shadow-md transition-all">
                                 <div className="flex justify-between items-center mb-10">
                                     <div className="space-y-1">
-                                        <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Revenue Trajectory</h3>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Rolling 6-Month Collection Analysis</p>
+                                        <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Monthly Collection</h3>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Comparison of last 6 months</p>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800 text-[10px] font-black text-slate-500 uppercase tracking-widest border border-slate-100 dark:border-slate-700">
                                             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                                            Real-time Analytics
+                                            Live Data
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@ export default function FeeDashboard() {
                                     {(!monthlyOverview || monthlyOverview.length === 0) && (
                                         <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 italic py-12 gap-4">
                                             <Search className="opacity-20" size={48} />
-                                            <p className="font-bold">Protocol check: No historical data synchronized.</p>
+                                            <p className="font-bold">No history found.</p>
                                         </div>
                                     )}
                                 </div>
@@ -166,7 +166,7 @@ export default function FeeDashboard() {
                                         </div>
                                         <div className="space-y-1">
                                             <h3 className="text-2xl font-black tracking-tight">Recent Status</h3>
-                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Latest confirmed intake</p>
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Recently Paid</p>
                                         </div>
                                         <div className="space-y-3">
                                             {recentTransactions.slice(0, 3).map((item: any, i: number) => (
@@ -182,22 +182,22 @@ export default function FeeDashboard() {
                                                 </div>
                                             ))}
                                             {(!recentTransactions || recentTransactions.length === 0) && (
-                                                <p className="text-xs text-slate-500 italic py-4 text-center">No active transactions in current stack.</p>
+                                                <p className="text-xs text-slate-500 italic py-4 text-center">No recent transactions found.</p>
                                             )}
                                         </div>
                                         <button className="w-full py-4 bg-primary rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:translate-y-[-2px] active:scale-95 transition-all flex items-center justify-center gap-2">
                                             <Bell size={14} />
-                                            Send Overdue Alerts
+                                            Send Reminders
                                         </button>
                                     </div>
                                 </div>
 
                                 <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
-                                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] px-2">Quick Protocol</h4>
+                                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] px-2">Quick Actions</h4>
                                     <div className="grid grid-cols-1 gap-2">
-                                        <QuickAction icon={<Receipt size={18} />} label="Invoicing Service" />
-                                        <QuickAction icon={<CreditCard size={18} />} label="Stripe Integration" />
-                                        <QuickAction icon={<Filter size={18} />} label="Reconciliation" />
+                                        <QuickAction icon={<Receipt size={18} />} label="Create Invoice" />
+                                        <QuickAction icon={<CreditCard size={18} />} label="Online Payments" />
+                                        <QuickAction icon={<Filter size={18} />} label="Check Balances" />
                                     </div>
                                 </div>
                             </div>
@@ -207,15 +207,15 @@ export default function FeeDashboard() {
                         <div className="space-y-4">
                             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                                 <div className="space-y-1">
-                                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Ledger Logs</h3>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chronological transaction record</p>
+                                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Recent Transactions</h3>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">List of recent fee payments</p>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <div className="relative group">
                                         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
                                         <input 
                                             type="text" 
-                                            placeholder="Find record..." 
+                                            placeholder="Search transactions..." 
                                             className="pl-9 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-primary/20 w-48 transition-all"
                                         />
                                     </div>
@@ -230,13 +230,13 @@ export default function FeeDashboard() {
                                     <table className="w-full text-left">
                                         <thead>
                                             <tr className="bg-slate-50 dark:bg-slate-800/50 text-slate-400 uppercase text-[10px] font-black tracking-[0.2em] border-b border-slate-100 dark:border-slate-800">
-                                                <th className="px-8 py-5">Record ID</th>
-                                                <th className="px-8 py-5">Entity</th>
-                                                <th className="px-8 py-5">Classification</th>
-                                                <th className="px-8 py-5">Timestamp</th>
+                                                <th className="px-8 py-5">ID</th>
+                                                <th className="px-8 py-5">Student Name</th>
+                                                <th className="px-8 py-5">Class</th>
+                                                <th className="px-8 py-5">Date</th>
                                                 <th className="px-8 py-5">Amount</th>
-                                                <th className="px-8 py-5">Validation</th>
-                                                <th className="px-8 py-5 text-right">Menu</th>
+                                                <th className="px-8 py-5">Status</th>
+                                                <th className="px-8 py-5 text-right">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -285,7 +285,7 @@ export default function FeeDashboard() {
                                                     <td colSpan={7} className="px-8 py-20 text-center">
                                                         <div className="flex flex-col items-center gap-3 opacity-20">
                                                             <Receipt size={48} />
-                                                            <p className="text-sm font-bold italic">Ledger is empty for this period.</p>
+                                                            <p className="text-sm font-bold italic">No records found for this period.</p>
                                                         </div>
                                                     </td>
                                                 </tr>
