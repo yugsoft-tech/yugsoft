@@ -567,7 +567,15 @@ export class TimetableService {
     });
 
     if (!teacher) {
-      throw new NotFoundException('Teacher profile not found');
+      return {
+        teacher: {
+          id: null,
+          name: `${currentUser['firstName'] || ''} ${currentUser['lastName'] || ''}`.trim() || 'Teacher',
+        },
+        timetable: {},
+        totalEntries: 0,
+        message: 'Teacher profile not found. Please contact administration.'
+      };
     }
 
     const timetables = await this.prisma.timetable.findMany({

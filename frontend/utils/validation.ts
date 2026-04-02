@@ -10,7 +10,8 @@ export const studentSchema = z.object({
     gender: z.enum(['MALE', 'FEMALE', 'OTHER']).optional(),
     address: z.string().optional(),
     classId: z.string().min(1, 'Please select a class'),
-    sectionId: z.string().optional(),
+    sectionId: z.string().min(1, 'Please select a section'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
     parentId: z.string().optional(),
 });
 

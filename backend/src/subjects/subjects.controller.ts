@@ -50,7 +50,7 @@ export class SubjectsController {
   }
 
   @Get('class/:classId')
-  @Roles(Role.SCHOOL_ADMIN)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   findByClass(
     @Param('classId') classId: string,
     @CurrentUser() user: any,

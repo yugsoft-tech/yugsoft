@@ -64,7 +64,7 @@ export class StudentsController {
   }
 
   @Get('class/:classId')
-  @Roles(Role.SCHOOL_ADMIN)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
   findByClass(
     @Param('classId') classId: string,
     @CurrentUser() user: any,
@@ -77,7 +77,7 @@ export class StudentsController {
   }
 
   @Get(':id')
-  @Roles(Role.SCHOOL_ADMIN, Role.STUDENT)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT)
   findOne(@Param('id') id: string, @CurrentUser() user: any) {
     return this.studentsService.findOne(id, {
       userId: user.userId,

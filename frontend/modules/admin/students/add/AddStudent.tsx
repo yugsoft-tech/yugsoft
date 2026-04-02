@@ -7,6 +7,7 @@ import AdminLayout from '@/components/layouts/AdminLayout';
 import { useClasses } from '@/hooks/useClasses';
 import { studentSchema, StudentSchema } from '@/utils/validation';
 import { studentsService } from '@/services/students.service';
+import { APP_NAME } from '@/utils/constants';
 import {
   UserPlus,
   School,
@@ -18,7 +19,10 @@ import {
   Camera,
   AlertCircle,
   CheckCircle2,
-  Fingerprint
+  Fingerprint,
+  Lock,
+  Hash,
+  Loader2
 } from 'lucide-react';
 
 const tabs = [
@@ -40,14 +44,21 @@ export default function AddStudent() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<StudentSchema>({
     resolver: zodResolver(studentSchema),
     defaultValues: {
       admissionNumber: 'AD-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000),
       gender: 'MALE',
+      password: 'Student@' + Math.floor(1000 + Math.random() * 9000),
     }
   });
+
+  const selectedClassId = watch('classId');
+  const selectedClass = classes.find(c => c.id === selectedClassId);
+  const sections = selectedClass?.sections || [];
 
   const onCommit = async (data: StudentSchema) => {
     setIsSubmitting(true);
@@ -55,7 +66,12 @@ export default function AddStudent() {
     setSubmitSuccess(false);
 
     try {
-      await studentsService.create(data);
+      const payload = {
+        ...data,
+        rollNumber: data.admissionNumber,
+        dob: data.dateOfBirth,
+      };
+      await studentsService.create(payload);
       setSubmitSuccess(true);
       setTimeout(() => {
         router.push('/admin/students');
@@ -98,7 +114,7 @@ export default function AddStudent() {
               disabled={isSubmitting}
               className="flex items-center gap-2 px-8 py-3 bg-primary text-white rounded-xl text-sm font-black shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95 transition-all disabled:opacity-50"
             >
-              {isSubmitting ? <Activity className="animate-spin" size={18} /> : <Save size={18} />}
+              {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
               {isSubmitting ? 'Saving...' : 'Add Student'}
             </button>
           </div>
@@ -168,6 +184,7 @@ export default function AddStudent() {
                   <FormInput label="Email Address" type="email" {...register('email')} placeholder="student@school.com" error={errors.email?.message} />
                   <FormInput label="Phone Number" type="tel" {...register('phone')} placeholder="Phone number" error={errors.phone?.message} />
                   <FormInput label="Admission Number" {...register('admissionNumber')} error={errors.admissionNumber?.message} />
+                  <FormInput label="Login Password" type="text" {...register('password')} placeholder="Set a password" icon={Lock} error={errors.password?.message} />
                   <FormInput label="Date of Birth" type="date" {...register('dateOfBirth')} error={errors.dateOfBirth?.message} />
                   <FormSelect
                     label="Gender"
@@ -202,6 +219,13 @@ export default function AddStudent() {
                     options={classes.map(c => ({ value: c.id, label: c.name }))}
                     error={errors.classId?.message}
                     disabled={classesLoading}
+                  />
+                  <FormSelect
+                    label="Assigned Section"
+                    {...register('sectionId')}
+                    options={sections.map(s => ({ value: s.id, label: s.name }))}
+                    error={errors.sectionId?.message}
+                    disabled={!selectedClassId || sections.length === 0}
                   />
                   <FormInput label="Address" {...register('address')} placeholder="Home address" error={errors.address?.message} />
                 </div>
