@@ -1,287 +1,349 @@
+import { useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import AuthGuard from '@/components/guards/AuthGuard';
 import RoleGuard from '@/components/guards/RoleGuard';
 import AdminLayout from '@/components/layouts/AdminLayout';
 import { USER_ROLES } from '@/utils/role-config';
+import { useLibrary } from '@/hooks/useLibrary';
+import { 
+    Book as BookIcon, 
+    BookOpen, 
+    Users, 
+    AlertCircle, 
+    Plus, 
+    Search, 
+    History, 
+    ArrowUpRight, 
+    ArrowDownLeft,
+    MoreVertical,
+    Trash2,
+    Calendar,
+    Hash,
+    User,
+    Library,
+    ChevronLeft,
+    ChevronRight,
+    Filter
+} from 'lucide-react';
 
 export default function LibraryDashboard() {
-    const overdueItems = [
-        {
-            id: 1,
-            borrower: {
-                name: 'Alex Johnson',
-                class: 'Class 10-B',
-                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBA91DnojFtASW59QBD0LT3uB4SfvaKbK9vXLiqtwiICXxYEAE3KHepQUQyHW9Go-yqCVMZ4dmfVQn7hy-yRECY5M5KBpNKTbgMQdhpT-Gje8Oy6u6OKt_xJ5WERIXqLkyGrStPSRcDXBh_DX8cj7Wgx29LFsCPkezYYx9g1nrU082ikqNvfXQD0y99bOHf9CQO53BiGaTkwj1zWCKJYRf9S9G2COdGcKDSTLEYUsb_sraXYtSfZCqmeKnruTXwnshCwMFPAzpCd4bw'
-            },
-            book: {
-                title: 'To Kill a Mockingbird',
-                isbn: '978-0446310789'
-            },
-            dueDate: 'Oct 24, 2023',
-            fine: '$2.50'
-        },
-        {
-            id: 2,
-            borrower: {
-                name: 'Mr. David Smith',
-                class: 'Staff - History',
-                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAZvTKxoXbxSyCPsYHYsBOjCEOgb4DiqQldz8tvaaYhcDn3klDy4LULkjH63N_diiBhZKFIJouPsjU5v0ZS-3nelJEroZy9dOWA1FfUvYR0YanWFrjTL8kGuhkfMK5WSU8EVYNhHXwz4GO-EU9DUiBM_sswZcJT1eop4PVU_b2NwJfNbwidESEMsWfSRWZyn666cjK1dQgx9YUa5DVdgY1WWKmjg-1KO0AZFah6p3yaUkVccy-HCOuctXMND4-8DaFm7X7f1EmsN17I'
-            },
-            book: {
-                title: 'Sapiens: A Brief History',
-                isbn: '978-0062316097'
-            },
-            dueDate: 'Oct 25, 2023',
-            fine: '$1.00'
-        },
-        {
-            id: 3,
-            borrower: {
-                name: 'Liam Wong',
-                class: 'Class 9-A',
-                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAXH2roaUcDE7ik008ApldJ-ot7tNLAuX9Qlx62XXrDPFq70PwEj5V6TQYvNppnGb0c539K6nQJ4Qn8irE80iQAqr7RqmoP6h28CzHei-vsbN26Tl1l-5FNdak9PczPmENygbdf3k-eJfxfdMsmEW4MbahG4KSzUD9r7z4kpNGJSCimQgYZ3N1ESYGA3xXDskezGH9nJrWjfKUzTO3xOv3FudpQEFrgmN81pBHd3sR1s6H5UMu6oWjD7FKxP91RZEIQ3eF0TLnUywdG'
-            },
-            book: {
-                title: 'Physics for Scientists',
-                isbn: '978-0134019727'
-            },
-            dueDate: 'Yesterday',
-            fine: '$0.50'
+    const { books, loading, stats, addBook, deleteBook, refresh } = useLibrary();
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [newBook, setNewBook] = useState({ title: '', author: '', isbn: '', publisher: '', quantity: 1 });
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleAddBook = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const result = await addBook(newBook);
+        if (result.success) {
+            setIsAddModalOpen(false);
+            setNewBook({ title: '', author: '', isbn: '', publisher: '', quantity: 1 });
+        } else {
+            alert(result.error);
         }
-    ];
+    };
 
-    const recentActivity = [
-        { text: 'Book Returned', desc: '"The Great Gatsby" returned by Emma Watson', time: '2 mins ago', icon: 'check_circle', color: 'emerald' },
-        { text: 'Book Issued', desc: '"1984" issued to James Anderson', time: '15 mins ago', icon: 'outbound', color: 'blue' },
-        { text: 'New Title Added', desc: '"Dune: Part Two" added to catalog', time: '1 hour ago', icon: 'add_circle', color: 'purple' },
-        { text: 'Book Issued', desc: '"Calculus Vol 1" issued to Sarah Lee', time: '2 hours ago', icon: 'outbound', color: 'blue' },
-    ];
+    const handleDelete = async (id: string, title: string) => {
+        if (window.confirm(`Are you sure you want to remove "${title}"?`)) {
+            await deleteBook(id);
+        }
+    };
 
-    const newArrivals = [
-        { title: 'Milk and Honey', author: 'Rupi Kaur', cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCiftqsGIltM0Jx6XtBD_khXduK5bLFPqJn8aNa_foBQNCKf190-fAF_yj9HCsYH3G8jPn5uDwUewTJG2T1TMZ4Yys_KzYLaK0AyZJd8fCrF_MkyzUGdteNWltUg8PvCphtuSrrlOUB6KF7h2np-t7Vsw-4PWXP8OeiaW0RuKRGYpYeEfda5k_H-BEM_jxibRRCu1x68mzszwYfwIISKP9__HS6yF0fI4qzy2Tzhqp9iOO05ba7KW9p-C-6udjborQnd2_7e2Hp5TUN' },
-        { title: 'Design Systems', author: 'Alla Kholmatova', cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCeadYxV0mNWHNOz-YPz7gGakGWcTJykTtV_CU317Q-xYjtA_dNEFbPiGgvkyHZfRke1pkzgD9ATtQ0VUnWSfbdKkDdYkll02yn_L1H4jVrTBrCDbnsm1xGtjiRQXtG9vrAd3bU3PNlAeadwy38w5rZ3o87pm8iJDdAZy4HW6vG6nBs6UYOP7JYloD2gHVsPXvYA-apoKXw2rfiCzl19JE4VeMBTEw0CaUcUDYIYyXll087MwGPMiyqL0aDT0yzgBbVcQU2VNZSn6Xk' },
-        { title: 'Strategic Mgmt', author: 'Fred R. David', cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBNgNDMXC4QAnO6jo9XK4uYHZzY_wgU9JC0TCG2Wzzp5mqMCUEv9jy_XjuBrH8rB3cTATpU0zchHsn34llEmgdpFZYOd60yomO6dasSxXsdu7pzbDwJNxEuB7cRnL3yLrC4D516P5Qi0uQXZUeidz6k3JOQSypnmD4_z2Zg-xo8b5r-UsSWoJNKbCcMB2HSzKpKgKkzr5E7I-xPr_O_62M51gAM9yu2ozQ1mDQyadq_p3xbqL3e7uz1MKJCG_HaNpyErRGK1eZsDdmQ' },
-        { title: 'Modern Art', author: 'Taschen', cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCb3cuzrIuk4sNwoASa88coxaVPWSae3ASsBsPtosNhnImKWZxZelX7tyr8oNl1eAdYk9J3I7XGDdBIJKMGhObBfG8VyE2m-r0dDD9VcY7U6mZDfhvX7TlIzq0qWLprRXg41WsMbPX_0iqFgdA5BMzOgAgcGFMSe6oeg29fk0h1Ya68ZyFZUe8YkOZFeaM7xfDVafxAJ6WZdaWjbQT-mdrtZ7qV81ghZ0Qk8B_EVNOdsTwQReqhv_Mlpfjd8XUlsEuujYTYkPez_UtP' },
-        { title: 'Psychology of Money', author: 'Morgan Housel', cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBb7iuxDSSMSoBYuGvW2J-0Sv9STrfXux_0gXa_u-iHJS71YFgHccHwydXH10SZQiNIjeEzMBpguu4-XmDebLVJIjOzphr9ZqqpaIczEsGTslHqwsXJylHaBfbptS4UNiGSm2vkS1l60RRxy9JOP_hBRdshmYkhGO7zLPY8os_f3aafuq9ORMviX1AnBa2Kh_ITRsAgWdGsA3XRljeGDNXLQe8-4dIMM14ORVujbkQ-nqBA-ik4XkjdgiwRDiKb28-VEiXqgehS53lm' },
-    ];
+    const filteredBooks = books.filter(book => 
+        book.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.isbn.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout>
+                <AdminLayout title="Library Hub">
                     <Head>
-                        <title>Library Management - School ERP</title>
+                        <title>Library Hub - EduCore</title>
                     </Head>
 
-                    <div className="flex flex-col gap-8">
-                        {/* Header */}
-                        <div className="flex flex-col gap-1">
-                            <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">Library Dashboard</h1>
-                            <p className="text-slate-500 dark:text-slate-400">Manage inventory, track borrowers, and handle daily operations.</p>
+                    <div className="flex-1 flex flex-col gap-10 animate-in fade-in duration-700">
+                        {/* Header Section */}
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <div className="space-y-1">
+                                <div className="flex items-center gap-2 text-primary mb-1">
+                                    <Library size={18} />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Archival Control</span>
+                                </div>
+                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Library Hub</h1>
+                                <p className="text-slate-500 dark:text-slate-400 font-medium italic">
+                                    {loading ? 'Synchronizing global repository...' : 'Aggregate scholarly resources and monitor asset distribution.'}
+                                </p>
+                            </div>
+                            <div className="flex gap-4">
+                                <button 
+                                    onClick={() => refresh()}
+                                    className="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-[1.5rem] hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm"
+                                >
+                                    <History size={20} />
+                                </button>
+                                <button 
+                                    onClick={() => setIsAddModalOpen(true)}
+                                    className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95"
+                                >
+                                    <Plus size={18} />
+                                    <span>Register New Volume</span>
+                                </button>
+                            </div>
                         </div>
 
                         {/* Stats Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div className="bg-white dark:bg-[#1e2936] p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col gap-2">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Collection</p>
-                                    <span className="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-xl">library_books</span>
-                                </div>
-                                <p className="text-3xl font-bold text-slate-900 dark:text-white">12,450</p>
-                                <p className="text-emerald-600 text-sm font-medium flex items-center gap-1">
-                                    <span className="material-symbols-outlined text-base">trending_up</span> +12 this month
-                                </p>
-                            </div>
-                            <div className="bg-white dark:bg-[#1e2936] p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col gap-2">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Currently Issued</p>
-                                    <span className="material-symbols-outlined text-orange-500 bg-orange-50 dark:bg-orange-900/20 p-1.5 rounded-lg text-xl">assignment_ind</span>
-                                </div>
-                                <p className="text-3xl font-bold text-slate-900 dark:text-white">342</p>
-                                <p className="text-slate-400 text-sm font-medium">Active borrowers</p>
-                            </div>
-                            <div className="bg-white dark:bg-[#1e2936] p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col gap-2 ring-1 ring-red-100 dark:ring-red-900/30">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Overdue Returns</p>
-                                    <span className="material-symbols-outlined text-red-500 bg-red-50 dark:bg-red-900/20 p-1.5 rounded-lg text-xl">warning</span>
-                                </div>
-                                <p className="text-3xl font-bold text-slate-900 dark:text-white">15</p>
-                                <p className="text-red-600 text-sm font-medium flex items-center gap-1">
-                                    <span className="material-symbols-outlined text-base">error</span> +3 today
-                                </p>
-                            </div>
-                            <div className="bg-white dark:bg-[#1e2936] p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col gap-2">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">New Arrivals</p>
-                                    <span className="material-symbols-outlined text-purple-500 bg-purple-50 dark:bg-purple-900/20 p-1.5 rounded-lg text-xl">new_releases</span>
-                                </div>
-                                <p className="text-3xl font-bold text-slate-900 dark:text-white">24</p>
-                                <p className="text-emerald-600 text-sm font-medium flex items-center gap-1">
-                                    <span className="material-symbols-outlined text-base">add</span> In last 30 days
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Actions Bar */}
-                        <div className="flex flex-col lg:flex-row gap-4 items-stretch">
-                            <div className="flex-1 relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span className="material-symbols-outlined text-slate-400">search</span>
-                                </div>
-                                <input className="block w-full pl-12 pr-12 py-3.5 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm" placeholder="Search by ISBN, Title, Author, or scan barcode..." type="text" />
-                                <div className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer text-slate-400 hover:text-primary transition-colors">
-                                    <span className="material-symbols-outlined" title="Scan Barcode">barcode_reader</span>
-                                </div>
-                            </div>
-                            <div className="flex gap-3 overflow-x-auto pb-1 lg:pb-0">
-                                <button 
-                                    onClick={() => alert('Book Issue system coming soon!')}
-                                    className="flex-shrink-0 flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm shadow-primary/30"
-                                >
-                                    <span className="material-symbols-outlined text-xl">outbound</span>
-                                    <span>Issue Book</span>
-                                </button>
-                                <button 
-                                    onClick={() => alert('Book Return system coming soon!')}
-                                    className="flex-shrink-0 flex items-center gap-2 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 px-6 py-3 rounded-xl font-bold transition-all shadow-sm"
-                                >
-                                    <span className="material-symbols-outlined text-xl">input</span>
-                                    <span>Return Book</span>
-                                </button>
-                                <button 
-                                    onClick={() => alert('Add Title system coming soon!')}
-                                    className="flex-shrink-0 flex items-center gap-2 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 px-6 py-3 rounded-xl font-bold transition-all shadow-sm"
-                                >
-                                    <span className="material-symbols-outlined text-xl">add</span>
-                                    <span>Add Title</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Split View: Overdue & Recent */}
-                        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                            {/* Left Col: Overdue List (2/3 width) */}
-                            <div className="xl:col-span-2 flex flex-col gap-4">
-                                <div className="flex items-center justify-between">
-                                    <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                        <span className="material-symbols-outlined text-red-500">warning</span>
-                                        Overdue Items
-                                    </h2>
-                                    <button 
-                                        onClick={() => alert('Complete overdue list coming soon!')}
-                                        className="text-sm font-medium text-primary hover:text-blue-600 hover:underline"
-                                    >
-                                        View All
-                                    </button>
-                                </div>
-                                <div className="bg-white dark:bg-[#1e2936] rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-                                    <div className="overflow-x-auto">
-                                        <table className="w-full text-left border-collapse">
-                                            <thead>
-                                                <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                                    <th className="px-6 py-4 font-semibold">Borrower</th>
-                                                    <th className="px-6 py-4 font-semibold">Book Title</th>
-                                                    <th className="px-6 py-4 font-semibold">Due Date</th>
-                                                    <th className="px-6 py-4 font-semibold">Fine</th>
-                                                    <th className="px-6 py-4 font-semibold text-right">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
-                                                {overdueItems.map((item) => (
-                                                    <tr key={item.id} className="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                                        <td className="px-6 py-4">
-                                                            <div className="flex items-center gap-3">
-                                                                <div className="w-8 h-8 rounded-full bg-cover bg-center" style={{ backgroundImage: `url('${item.borrower.image}')` }}></div>
-                                                                <div>
-                                                                    <p className="font-medium text-slate-900 dark:text-white text-sm">{item.borrower.name}</p>
-                                                                    <p className="text-xs text-slate-500">{item.borrower.class}</p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td className="px-6 py-4">
-                                                            <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">{item.book.title}</p>
-                                                            <p className="text-xs text-slate-500">ISBN: {item.book.isbn}</p>
-                                                        </td>
-                                                        <td className="px-6 py-4">
-                                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${item.dueDate === 'Yesterday' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'}`}>
-                                                                {item.dueDate}
-                                                            </span>
-                                                        </td>
-                                                        <td className="px-6 py-4 text-sm text-slate-700 dark:text-slate-300 font-bold">{item.fine}</td>
-                                                        <td className="px-6 py-4 text-right">
-                                                            <button 
-                                                                onClick={() => alert('Reminder sent to ' + item.borrower.name)}
-                                                                className="text-primary hover:bg-primary/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
-                                                            >
-                                                                Remind
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Right Col: Recent Activity */}
-                            <div className="flex flex-col gap-4">
-                                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-slate-400">history</span>
-                                    Recent Activity
-                                </h2>
-                                <div className="bg-white dark:bg-[#1e2936] rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 h-full">
-                                    <div className="flex flex-col gap-6 relative">
-                                        <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-slate-100 dark:bg-slate-800"></div>
-                                        {recentActivity.map((activity, i) => (
-                                            <div key={i} className="flex gap-4 relative">
-                                                <div className={`w-8 h-8 rounded-full bg-${activity.color}-100 dark:bg-${activity.color}-900/30 border border-white dark:border-[#1e2936] flex items-center justify-center shrink-0 z-10`}>
-                                                    <span className={`material-symbols-outlined text-${activity.color === 'primary' ? 'primary' : activity.color + '-600'} dark:text-${activity.color === 'primary' ? 'primary' : activity.color + '-400'} text-sm`}>{activity.icon}</span>
-                                                </div>
-                                                <div className="flex flex-col gap-1">
-                                                    <p className="text-sm text-slate-900 dark:text-white font-medium">{activity.text}</p>
-                                                    <p className="text-xs text-slate-500 dark:text-slate-400">{activity.desc}</p>
-                                                    <span className="text-[10px] text-slate-400 font-medium">{activity.time}</span>
-                                                </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {[
+                                { title: 'Global Volume', value: stats.totalBooks, sub: '+12 added', icon: BookIcon, color: 'text-primary', bg: 'bg-primary/5', trend: '+4% gain' },
+                                { title: 'Active Loans', value: stats.issuedBooks, sub: 'Currently borrowed', icon: Users, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Stable' },
+                                { title: 'Overdue Assets', value: stats.overdueBooks, sub: 'Immediate return', icon: AlertCircle, color: 'text-rose-500', bg: 'bg-rose-500/5', trend: 'Critical' },
+                                { title: 'New Acquisitions', value: '42', sub: 'Last 30 days', icon: ArrowUpRight, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: '+18% surge' },
+                            ].map((stat, i) => (
+                                <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 border border-slate-100 dark:border-slate-800 shadow-2xl relative group overflow-hidden">
+                                    <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
+                                    <div className="relative z-10 flex flex-col h-full">
+                                        <div className="flex justify-between items-start mb-6">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.title}</p>
+                                            <div className={`size-10 rounded-xl flex items-center justify-center ${stat.bg} ${stat.color} group-hover:scale-110 transition-transform`}>
+                                                <stat.icon size={20} />
                                             </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* New Arrivals */}
-                        <div className="flex flex-col gap-4 pb-8">
-                            <div className="flex items-center justify-between">
-                                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-purple-500">auto_awesome</span>
-                                    New Arrivals
-                                </h2>
-                            </div>
-                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                                {newArrivals.map((book, i) => (
-                                    <div key={i} className="group relative aspect-[2/3] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                                        <div className="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-105 duration-500" style={{ backgroundImage: `url('${book.cover}')` }}></div>
-                                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 pt-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <p className="text-white text-sm font-bold truncate">{book.title}</p>
-                                            <p className="text-slate-300 text-xs truncate">{book.author}</p>
+                                        </div>
+                                        <div className="flex items-end gap-3">
+                                            <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{stat.value}</h3>
+                                            <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-1 rounded-lg ${stat.trend === 'Critical' ? 'bg-rose-500/10 text-rose-500' : 'bg-emerald-500/10 text-emerald-500'}`}>{stat.trend}</span>
                                         </div>
                                     </div>
-                                ))}
-                                <div 
-                                    onClick={() => alert('Multiple book addition coming soon!')}
-                                    className="group relative aspect-[2/3] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                >
-                                    <span className="material-symbols-outlined text-3xl text-slate-400">add</span>
-                                    <span className="text-sm font-medium text-slate-500">Add New</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Main Repository List */}
+                        <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden min-h-[600px]">
+                            {/* Inventory Toolbar */}
+                            <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
+                                <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
+                                    {['All Volumes', 'Available', 'Distributed', 'Archived'].map((tab) => (
+                                        <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'All Volumes' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
+                                            {tab}
+                                            {tab === 'All Volumes' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="flex gap-4 w-full sm:w-auto">
+                                    <div className="relative group w-full sm:w-72">
+                                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
+                                        <input 
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
+                                            placeholder="Search repository index..." 
+                                        />
+                                    </div>
+                                    <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
+                                        <Filter size={16} className="text-primary" />
+                                        <span className="hidden sm:inline">Advanced Search</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Inventory Table */}
+                            <div className="flex-1 overflow-x-auto">
+                                <table className="w-full text-left">
+                                    <thead>
+                                        <tr className="border-b border-slate-50 dark:border-slate-800">
+                                            <th className="py-6 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 w-12"><input type="checkbox" className="rounded-md border-slate-200 size-4" /></th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 min-w-[280px]">Literary Node</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Authorial Signature</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Inventory Load</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Status Vector</th>
+                                            <th className="py-6 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Op Console</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-50 dark:divide-slate-800/50">
+                                        {filteredBooks.map((book) => (
+                                            <tr key={book.id} className="group hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                                                <td className="py-8 px-10">
+                                                    <input type="checkbox" className="rounded-md border-slate-200 size-4 group-hover:border-primary transition-colors" />
+                                                </td>
+                                                <td className="py-8 px-4">
+                                                    <div className="flex items-center gap-5">
+                                                        <div className="size-12 rounded-2xl bg-primary/5 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                                                            <BookIcon size={20} />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">{book.title}</p>
+                                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{book.isbn}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-8 px-4 text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">{book.author}</td>
+                                                <td className="py-8 px-4">
+                                                    <div className="flex flex-col gap-2 w-32">
+                                                        <div className="flex justify-between items-center text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                                            <span>Load: {book.quantity} Units</span>
+                                                            <span className="text-primary">100%</span>
+                                                        </div>
+                                                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                            <div className="h-full bg-primary rounded-full" style={{ width: '100%' }} />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-8 px-4">
+                                                    <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 text-[10px] font-black uppercase tracking-widest">
+                                                        <div className="size-1.5 rounded-full bg-emerald-500" />
+                                                        Available
+                                                    </span>
+                                                </td>
+                                                <td className="py-8 px-10 text-right">
+                                                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <button 
+                                                            className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-primary transition-all hover:shadow-md"
+                                                            title="Edit Details"
+                                                        >
+                                                            <MoreVertical size={16} />
+                                                        </button>
+                                                        <button 
+                                                            onClick={(e) => { e.stopPropagation(); handleDelete(book.id, book.title); }}
+                                                            className="p-3 rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white transition-all hover:shadow-md"
+                                                            title="Purge Node"
+                                                        >
+                                                            <Trash2 size={16} />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* Pagination Terminal */}
+                            <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                                    Displaying <span className="text-slate-900 dark:text-white">{filteredBooks.length} Active Nodes</span> of internal repository
+                                </p>
+                                <div className="flex gap-3">
+                                    <button className="size-12 rounded-2xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary transition-all flex items-center justify-center shadow-sm disabled:opacity-30">
+                                        <ChevronLeft size={20} />
+                                    </button>
+                                    <button className="size-12 rounded-2xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary transition-all flex items-center justify-center shadow-sm">
+                                        <ChevronRight size={20} />
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
+                    {/* Add Book Modal Upgrade */}
+                    {isAddModalOpen && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300 px-6">
+                            <div className="bg-white dark:bg-slate-900 rounded-[3rem] w-full max-w-lg shadow-2xl border border-slate-100 dark:border-slate-800 p-10 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 size-48 bg-primary/5 rounded-full -translate-y-24 translate-x-24 blur-3xl" />
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-4 mb-10">
+                                        <div className="size-14 rounded-2xl bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20">
+                                            <BookIcon size={28} />
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Volume Registration</h2>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Node Acquisition Protocol</p>
+                                        </div>
+                                    </div>
+
+                                    <form onSubmit={handleAddBook} className="space-y-6">
+                                        <div className="grid grid-cols-2 gap-6">
+                                            <InputGroup 
+                                                label="Volume Title" 
+                                                id="title" 
+                                                value={newBook.title} 
+                                                onChange={(val) => setNewBook({ ...newBook, title: val })}
+                                                icon={<BookOpen size={16} />}
+                                                span={2}
+                                            />
+                                            <InputGroup 
+                                                label="Authorial Node" 
+                                                id="author" 
+                                                value={newBook.author} 
+                                                onChange={(val) => setNewBook({ ...newBook, author: val })}
+                                                icon={<User size={16} />}
+                                            />
+                                            <InputGroup 
+                                                label="ISBN Signature" 
+                                                id="isbn" 
+                                                value={newBook.isbn} 
+                                                onChange={(val) => setNewBook({ ...newBook, isbn: val })}
+                                                icon={<Hash size={16} />}
+                                            />
+                                            <InputGroup 
+                                                label="Publisher" 
+                                                id="publisher" 
+                                                value={newBook.publisher} 
+                                                onChange={(val) => setNewBook({ ...newBook, publisher: val })}
+                                                icon={<Calendar size={16} />}
+                                            />
+                                            <InputGroup 
+                                                label="Load Count" 
+                                                id="quantity" 
+                                                type="number"
+                                                value={newBook.quantity} 
+                                                onChange={(val) => setNewBook({ ...newBook, quantity: parseInt(val) || 1 })}
+                                                icon={<ArrowUpRight size={16} />}
+                                            />
+                                        </div>
+                                        <div className="flex gap-4 mt-12">
+                                            <button 
+                                                type="button"
+                                                onClick={() => setIsAddModalOpen(false)}
+                                                className="flex-1 px-8 py-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all active:scale-95"
+                                            >
+                                                Abort
+                                            </button>
+                                            <button 
+                                                type="submit"
+                                                className="flex-[2] px-8 py-5 rounded-2xl bg-primary text-white font-black text-[10px] uppercase tracking-widest shadow-2xl shadow-primary/30 hover:-translate-y-1 transition-all active:scale-95"
+                                            >
+                                                Initialize Capture
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </AdminLayout>
             </RoleGuard>
         </AuthGuard>
+    );
+}
+
+// Sub-components
+interface InputGroupProps {
+    label: string;
+    id: string;
+    type?: string;
+    value: string | number;
+    onChange: (val: string) => void;
+    icon: React.ReactNode;
+    span?: number;
+}
+
+function InputGroup({ label, id, type = 'text', value, onChange, icon, span = 1 }: InputGroupProps) {
+    return (
+        <div className={`space-y-2 ${span === 2 ? 'col-span-2' : ''}`}>
+            <label htmlFor={id} className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                {icon}
+                {label}
+            </label>
+            <input 
+                id={id}
+                type={type}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl px-4 py-4 text-xs font-bold text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all shadow-sm"
+                required
+            />
+        </div>
     );
 }

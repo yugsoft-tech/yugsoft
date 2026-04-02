@@ -351,15 +351,19 @@ model Notice {
 }
 
 model Book {
-  id     String @id @default(uuid())
-  title  String
-  author String
-  isbn   String
+  id        String  @id @default(uuid())
+  title     String
+  author    String
+  isbn      String?
+  publisher String?
+  quantity  Int     @default(1)
+  category  String?
 
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Vehicle {

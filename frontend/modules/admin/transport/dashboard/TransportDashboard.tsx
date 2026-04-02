@@ -1,198 +1,275 @@
+import { useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import AuthGuard from '@/components/guards/AuthGuard';
 import RoleGuard from '@/components/guards/RoleGuard';
 import AdminLayout from '@/components/layouts/AdminLayout';
 import { USER_ROLES } from '@/utils/role-config';
+import { 
+    Bus, 
+    Route, 
+    Users, 
+    Wrench, 
+    Plus, 
+    Search, 
+    MapPin, 
+    Clock, 
+    ShieldCheck, 
+    MoreVertical,
+    ChevronRight,
+    ArrowUpRight,
+    Filter,
+    Navigation,
+    User as UserIcon,
+    AlertCircle
+} from 'lucide-react';
 
 export default function TransportDashboard() {
+    const [searchTerm, setSearchTerm] = useState('');
+    
     const routes = [
         {
-            id: 'Route A - North',
+            id: 'RT-001',
+            name: 'North Sector Alpha',
             time: '07:30 AM - 08:45 AM',
             driverName: 'John Doe',
-            driverAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPTkjftOTGjBC8JXU5q3eQOu7z6LFJ8Aeyj-Gp04BlqdKxvA-AVi7a3gU4BzoByZJRwus9DO-w1526s0C8xo7axFXxmbwhaIrp9LQd7wbDrqf3KCfGR_oca1op2XfUvjMOMDCyxJS1RCMss1fEvfdB8vuBDUdMGRLnA8ahTmuq2lwxt4Uustd0mSLs6a8GlFMpi72lv5x1u4o7QNqLeifP4UveU_7wBaWN9bBLvts5oJdHX_mVZXoQWHXsMiOI-SglS-TRYVniUh9J',
-            busNo: '#BUS-04',
+            driverAvatar: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100&h=100&fit=crop',
+            busNo: 'BUS-104',
             capacity: 48,
             totalCapacity: 60,
             status: 'On Route',
-            color: 'green'
+            type: 'Primary',
+            color: 'emerald'
         },
         {
-            id: 'Route B - East Lake',
+            id: 'RT-002',
+            name: 'East Lake Meridian',
             time: '07:15 AM - 08:30 AM',
             driverName: 'Mike Smith',
-            driverAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD4ckikweHm1INGAYBb74R65AeRrdPXOXgC2EnXw_GbJqZmtng7PH5pHxDsOrAUraCXarZrca2yJd82AHEbjhsS24i7preMsLUTCSROd4HuRvgajCi4sYRggmkpsll4YdTE7Gnv3eZzWUJ68sasP-gkTmm2zOn4hsT66QpHys9QT8gUdTMoxcghEJ8sttK6P0mhXA_rxuBBUWfHMsW6TY8y3sC7tLd9mp_uESbrqR-pGGyVT6ldufipjp8gZBoSxMjaIkVaTwemnB-m',
-            busNo: '#BUS-02',
+            driverAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop',
+            busNo: 'BUS-202',
             capacity: 58,
             totalCapacity: 60,
             status: 'Completed',
+            type: 'Secondary',
             color: 'blue'
         },
         {
-            id: 'Route C - Downtown',
+            id: 'RT-003',
+            name: 'Downtown Central',
             time: '07:45 AM - 09:00 AM',
             driverName: 'Unassigned',
             driverAvatar: '',
-            busNo: '#BUS-09',
+            busNo: 'BUS-909',
             capacity: 0,
             totalCapacity: 60,
             status: 'Maintenance',
-            color: 'orange'
+            type: 'Special',
+            color: 'rose'
         },
         {
-            id: 'Route D - West Valley',
+            id: 'RT-004',
+            name: 'West Valley Express',
             time: '06:50 AM - 08:00 AM',
             driverName: 'Sarah Jenkins',
-            driverAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDComX8XkPtSSQD3T_ksyR5DLo8j7sEQ3SvpJICTiufmNVfUzhJkAS3y7TZbzXSepUqtdfBSb7xqkK3-JyDkCzDuUW3ua7VerGYdJ9ZN1feqkoXv3e1_8rEbdhaWtwm7n9-mIsQ1PQ1bzPt_ZKwMuOrhyIRVHWeagzAok8DX5aBE_HL1ykU9t8HBtjLp2AtZzfQVNkxHUeTJYGj3oYoR9ycAJlfWMUV6josFKtNqqbJNxJZNu50PuhnWQoLSbMm8bO0HeWibXqfvImH',
-            busNo: '#BUS-11',
+            driverAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+            busNo: 'BUS-111',
             capacity: 36,
             totalCapacity: 60,
             status: 'On Route',
-            color: 'green'
+            type: 'Express',
+            color: 'emerald'
         }
+    ];
+
+    const stats = [
+        { title: 'Fleet Strength', value: '12', icon: Bus, color: 'text-primary', bg: 'bg-primary/5', trend: 'Full Deployment' },
+        { title: 'Active Routes', value: '8', icon: Route, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Live Sync' },
+        { title: 'Student Load', value: '450', icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/5', trend: '92% Occupancy' },
+        { title: 'Maintenance', value: '1', icon: Wrench, color: 'text-rose-500', bg: 'bg-rose-500/5', trend: 'Critical Node' },
     ];
 
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout>
+                <AdminLayout title="Transport Logistics">
                     <Head>
-                        <title>Transport Management - School ERP</title>
+                        <title>Transport Logistics - EduCore</title>
                     </Head>
 
-                    <div className="flex flex-col h-full overflow-hidden relative">
-                        {/* Header Area */}
-                        <div className="flex flex-wrap justify-between items-end gap-4 mb-8">
-                            <div className="flex flex-col gap-1">
-                                <h2 className="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">Transport Management</h2>
-                                <p className="text-slate-500 dark:text-slate-400 text-sm">Manage routes, track fleet maintenance, and assign drivers.</p>
+                    <div className="flex-1 flex flex-col gap-10 animate-in fade-in duration-700">
+                        {/* Header */}
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <div className="space-y-1">
+                                <div className="flex items-center gap-2 text-primary mb-1">
+                                    <Navigation size={18} />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Fleet Intelligence</span>
+                                </div>
+                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Transport Hub</h1>
+                                <p className="text-slate-500 dark:text-slate-400 font-medium italic">
+                                    Coordinate fleet deployment, route synchronization, and driver allocation.
+                                </p>
                             </div>
-                            <button className="bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm shadow-blue-500/20 flex items-center gap-2 transition-all active:scale-95">
-                                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>add</span>
-                                Add New Route
-                            </button>
+                            <div className="flex gap-4">
+                                <button className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95">
+                                    <Plus size={18} />
+                                    <span>Initialize Route</span>
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto">
-                            <div className="max-w-[1280px] mx-auto flex flex-col gap-8">
-                                {/* Stats Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                                    <div className="bg-white dark:bg-[#1e2936] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-start justify-between">
-                                        <div className="flex flex-col gap-1">
-                                            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Buses</p>
-                                            <p className="text-slate-900 dark:text-white text-2xl font-bold">12</p>
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {stats.map((stat, i) => (
+                                <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 border border-slate-100 dark:border-slate-800 shadow-2xl group relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
+                                    <div className="relative z-10">
+                                        <div className="flex justify-between items-start mb-6">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.title}</p>
+                                            <div className={`size-10 rounded-xl flex items-center justify-center ${stat.bg} ${stat.color}`}>
+                                                <stat.icon size={20} />
+                                            </div>
                                         </div>
-                                        <div className="bg-blue-50 dark:bg-blue-900/20 p-2 rounded-lg">
-                                            <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>directions_bus</span>
-                                        </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-[#1e2936] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-start justify-between">
-                                        <div className="flex flex-col gap-1">
-                                            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Active Routes</p>
-                                            <p className="text-slate-900 dark:text-white text-2xl font-bold">8</p>
-                                        </div>
-                                        <div className="bg-green-50 dark:bg-green-900/20 p-2 rounded-lg">
-                                            <span className="material-symbols-outlined text-green-600 dark:text-green-400" style={{ fontSize: '24px' }}>alt_route</span>
-                                        </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-[#1e2936] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-start justify-between">
-                                        <div className="flex flex-col gap-1">
-                                            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Students Assigned</p>
-                                            <p className="text-slate-900 dark:text-white text-2xl font-bold">450</p>
-                                        </div>
-                                        <div className="bg-purple-50 dark:bg-purple-900/20 p-2 rounded-lg">
-                                            <span className="material-symbols-outlined text-purple-600 dark:text-purple-400" style={{ fontSize: '24px' }}>groups</span>
-                                        </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-[#1e2936] rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-start justify-between">
-                                        <div className="flex flex-col gap-1">
-                                            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Maintenance</p>
-                                            <p className="text-slate-900 dark:text-white text-2xl font-bold">1</p>
-                                        </div>
-                                        <div className="bg-orange-50 dark:bg-orange-900/20 p-2 rounded-lg">
-                                            <span className="material-symbols-outlined text-orange-600 dark:text-orange-400" style={{ fontSize: '24px' }}>build_circle</span>
+                                        <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{stat.value}</h3>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <div className={`size-1.5 rounded-full ${stat.color === 'text-rose-500' ? 'bg-rose-500 animate-pulse' : 'bg-emerald-500'}`} />
+                                            <span className="text-[9px] font-black uppercase text-slate-400 tracking-widest">{stat.trend}</span>
                                         </div>
                                     </div>
                                 </div>
+                            ))}
+                        </div>
 
-                                {/* Tabs & Controls */}
-                                <div className="flex flex-col gap-4">
-                                    <div className="border-b border-slate-200 dark:border-slate-700">
-                                        <div className="flex gap-8">
-                                            <button className="pb-3 border-b-[3px] border-primary text-primary font-bold text-sm px-1">Routes</button>
-                                            <button className="pb-3 border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm px-1 transition-colors">Vehicles</button>
-                                            <button className="pb-3 border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm px-1 transition-colors">Drivers</button>
-                                            <button className="pb-3 border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm px-1 transition-colors">Allocations</button>
-                                        </div>
-                                    </div>
+                        {/* Inventory Table Container */}
+                        <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden min-h-[600px]">
+                            {/* Toolbar */}
+                            <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
+                                <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
+                                    {['Active Fleet', 'Route Matrix', 'Dispatch Logs', 'Maintenance'].map((tab) => (
+                                        <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'Active Fleet' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
+                                            {tab}
+                                            {tab === 'Active Fleet' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full" />}
+                                        </button>
+                                    ))}
                                 </div>
-
-                                {/* Content View (Split Layout) */}
-                                <div className="flex flex-col xl:flex-row gap-6 h-full min-h-[500px]">
-                                    {/* List / Table View */}
-                                    <div className="flex-1 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden flex flex-col">
-                                        <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
-                                            <h3 className="font-semibold text-slate-800 dark:text-white">Active Routes</h3>
-                                            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">8 Routes</span>
-                                        </div>
-                                        <div className="overflow-y-auto flex-1">
-                                            <table className="w-full text-left text-sm">
-                                                <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 sticky top-0">
-                                                    <tr>
-                                                        <th className="px-5 py-3 font-medium">Route ID</th>
-                                                        <th className="px-5 py-3 font-medium">Driver</th>
-                                                        <th className="px-5 py-3 font-medium">Bus No.</th>
-                                                        <th className="px-5 py-3 font-medium">Capacity</th>
-                                                        <th className="px-5 py-3 font-medium">Status</th>
-                                                        <th className="px-5 py-3 font-medium text-right">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-                                                    {routes.map((route, i) => (
-                                                        <tr key={i} className="group hover:bg-blue-50/50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer border-l-4 border-transparent hover:border-primary">
-                                                            <td className="px-5 py-4 font-medium text-slate-900 dark:text-white">
-                                                                <div className="flex flex-col">
-                                                                    <span>{route.id}</span>
-                                                                    <span className="text-xs text-slate-400 font-normal">{route.time}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-5 py-4">
-                                                                <div className="flex items-center gap-2">
-                                                                    {route.driverAvatar ? (
-                                                                        <div className="size-6 rounded-full bg-cover bg-center" style={{ backgroundImage: `url('${route.driverAvatar}')` }}></div>
-                                                                    ) : (
-                                                                        <div className="size-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-medium text-slate-500 dark:text-slate-300">N/A</div>
-                                                                    )}
-                                                                    <span className={`text-slate-700 dark:text-slate-300 ${!route.driverAvatar ? 'italic text-slate-400' : ''}`}>{route.driverName}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-5 py-4 text-slate-600 dark:text-slate-400">{route.busNo}</td>
-                                                            <td className="px-5 py-4 text-slate-600 dark:text-slate-400">
-                                                                <div className="flex items-center gap-2">
-                                                                    <div className="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                                                                        <div className={`h-full bg-${route.color === 'orange' ? 'slate-400' : route.color === 'blue' ? 'yellow-500' : 'green-500'} w-[${(route.capacity / route.totalCapacity) * 100}%]`}></div>
-                                                                    </div>
-                                                                    <span className="text-xs">{route.capacity}/{route.totalCapacity}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-5 py-4">
-                                                                <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-${route.color}-100 text-${route.color}-800 dark:bg-${route.color}-900/30 dark:text-${route.color}-400`}>
-                                                                    <span className={`size-1.5 rounded-full bg-${route.color}-500`}></span>
-                                                                    {route.status}
-                                                                </span>
-                                                            </td>
-                                                            <td className="px-5 py-4 text-right">
-                                                                <button className="text-slate-400 hover:text-primary transition-colors">
-                                                                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>more_vert</span>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                <div className="flex gap-4 w-full sm:w-auto">
+                                    <div className="relative group w-full sm:w-72">
+                                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
+                                        <input 
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
+                                            placeholder="Search fleet index..." 
+                                        />
                                     </div>
+                                    <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
+                                        <Filter size={16} className="text-primary" />
+                                        <span className="hidden sm:inline">Advanced Grid</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Table */}
+                            <div className="flex-1 overflow-x-auto">
+                                <table className="w-full text-left">
+                                    <thead>
+                                        <tr className="border-b border-slate-50 dark:border-slate-800">
+                                            <th className="py-6 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 w-12"><input type="checkbox" className="rounded-md border-slate-200 size-4" /></th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 min-w-[300px]">Deployment Node (Route)</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Operator Identity</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Vessel ID</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Occupancy Vector</th>
+                                            <th className="py-6 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Status Code</th>
+                                            <th className="py-6 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Terminal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-50 dark:divide-slate-800/50">
+                                        {routes.map((route) => (
+                                            <tr key={route.id} className="group hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                                                <td className="py-8 px-10">
+                                                    <input type="checkbox" className="rounded-md border-slate-200 size-4 group-hover:border-primary transition-colors" />
+                                                </td>
+                                                <td className="py-8 px-4">
+                                                    <div className="flex items-center gap-5">
+                                                        <div className={`size-12 rounded-2xl ${route.status === 'Maintenance' ? 'bg-rose-500/10 text-rose-500' : 'bg-primary/5 text-primary'} flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm`}>
+                                                            <Route size={20} />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">{route.name}</p>
+                                                            <div className="flex items-center gap-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                                                <span className="flex items-center gap-1"><MapPin size={10} /> {route.id}</span>
+                                                                <span className="flex items-center gap-1 font-bold text-primary italic"><Clock size={10} /> {route.time}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-8 px-4">
+                                                    <div className="flex items-center gap-3">
+                                                        {route.driverAvatar ? (
+                                                            <img src={route.driverAvatar} className="size-8 rounded-xl object-cover ring-2 ring-slate-100 dark:ring-slate-800" alt="Driver" />
+                                                        ) : (
+                                                            <div className="size-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+                                                                <UserIcon size={14} />
+                                                            </div>
+                                                        )}
+                                                        <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">{route.driverName}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="py-8 px-4 text-xs font-black text-slate-500 uppercase tracking-widest">{route.busNo}</td>
+                                                <td className="py-8 px-4">
+                                                    <div className="flex flex-col gap-2 w-32">
+                                                        <div className="flex justify-between items-center text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                                            <span>Load: {route.capacity} Unit</span>
+                                                            <span className="text-primary">{Math.round((route.capacity/route.totalCapacity)*100)}%</span>
+                                                        </div>
+                                                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                            <div className={`h-full ${route.status === 'Maintenance' ? 'bg-slate-300' : 'bg-primary'} rounded-full`} style={{ width: `${(route.capacity/route.totalCapacity)*100}%` }} />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-8 px-4">
+                                                    <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest ${
+                                                        route.status === 'On Route' ? 'bg-emerald-500/10 text-emerald-500' :
+                                                        route.status === 'Maintenance' ? 'bg-rose-500/10 text-rose-500' :
+                                                        'bg-blue-500/10 text-blue-500'
+                                                    }`}>
+                                                        <div className={`size-1.5 rounded-full ${
+                                                            route.status === 'On Route' ? 'bg-emerald-500 animate-pulse' :
+                                                            route.status === 'Maintenance' ? 'bg-rose-500' :
+                                                            'bg-blue-500'
+                                                        }`} />
+                                                        {route.status}
+                                                    </span>
+                                                </td>
+                                                <td className="py-8 px-10 text-right">
+                                                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <button 
+                                                            className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-primary transition-all hover:shadow-md"
+                                                            title="Fleet Telemetry"
+                                                        >
+                                                            <Navigation size={16} />
+                                                        </button>
+                                                        <button 
+                                                            className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-primary transition-all hover:shadow-md"
+                                                        >
+                                                            <MoreVertical size={16} />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* Pagination Terminal */}
+                            <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                                    Syncing <span className="text-slate-900 dark:text-white">{routes.length} Active Vessels</span> in current dispatch window
+                                </p>
+                                <div className="flex gap-3">
+                                    <button className="h-10 px-6 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm">
+                                        Export Fleet Logs
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -1,3 +1,4 @@
+import { Download, Plus } from 'lucide-react';
 import Head from 'next/head';
 import AuthGuard from '@/components/guards/AuthGuard';
 import RoleGuard from '@/components/guards/RoleGuard';
@@ -22,11 +23,11 @@ export default function AdminStaffDashboardPage() {
                             </div>
                             <div className="flex gap-3">
                                 <button className="flex items-center justify-center gap-2 px-4 h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1e2936] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                                    <span className="material-symbols-outlined text-[18px]">download</span>
+                                    <Download size={18} />
                                     Export
                                 </button>
                                 <button className="flex items-center justify-center gap-2 px-4 h-10 rounded-lg bg-primary text-white text-sm font-semibold shadow-sm hover:bg-blue-600 transition-colors">
-                                    <span className="material-symbols-outlined text-[18px]">add</span>
+                                    <Plus size={18} />
                                     Add New Staff
                                 </button>
                             </div>

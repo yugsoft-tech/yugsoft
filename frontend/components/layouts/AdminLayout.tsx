@@ -26,7 +26,8 @@ import {
   ShieldCheck,
   MessageSquare,
   BookMarked,
-  Smartphone
+  Smartphone,
+  Building
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -56,19 +57,26 @@ const ADMIN_SECTIONS: NavSection[] = [
     ]
   },
   {
+    title: 'Resource Management',
+    items: [
+      { label: 'Transport', href: '/admin/transport/vehicles', icon: Bus },
+      { label: 'Library', href: '/admin/library', icon: BookOpen },
+      { label: 'Hostel', href: '/admin/hostel', icon: Building },
+      { label: 'Inventory', href: '/admin/inventory', icon: Database },
+    ]
+  },
+  {
     title: 'Office',
     items: [
-      { label: 'Messages', href: '/admin/communication', icon: MessageSquare },
+      { label: 'Communication', href: '/admin/communication', icon: MessageSquare },
       { label: 'Announcements', href: '/admin/announcements', icon: Megaphone },
       { label: 'Fees', href: '/admin/fees', icon: FileText },
-      { label: 'Library', href: '/admin/library', icon: BookOpen },
     ]
   },
   {
     title: 'Settings',
     items: [
-      { label: 'Logs', href: '/admin/audit', icon: Database },
-      { label: 'Notice Board', href: '/admin/notices', icon: Bell },
+      { label: 'Activity Logs', href: '/admin/audit', icon: Database },
       { label: 'General Settings', href: '/admin/settings', icon: Settings },
     ]
   }

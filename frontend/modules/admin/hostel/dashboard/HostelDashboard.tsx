@@ -1,181 +1,206 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import AuthGuard from '@/components/guards/AuthGuard';
 import RoleGuard from '@/components/guards/RoleGuard';
 import AdminLayout from '@/components/layouts/AdminLayout';
 import { USER_ROLES } from '@/utils/role-config';
+import { 
+    Home, 
+    Bed, 
+    TrendingUp, 
+    DoorOpen, 
+    Clock, 
+    Plus, 
+    Search, 
+    Filter, 
+    MoreVertical, 
+    Wrench,
+    Users,
+    Shield,
+    Coffee,
+    Zap,
+    Wind,
+    Droplets
+} from 'lucide-react';
 
 export default function HostelDashboard() {
+    const [activeTab, setActiveTab] = useState('Room View');
+    const [searchTerm, setSearchTerm] = useState('');
+
     const roomBlocks = [
         {
-            name: 'Block A - Boys Hostel',
-            floor: 'Ground Floor',
+            name: 'Block A - Alpha Prime',
+            floor: 'Level 01',
+            type: 'Boys',
             rooms: [
-                { id: '101', number: '101', status: '1 Spot Left', statusColor: 'green', capacity: 3, occupied: 2, type: 'occupied' },
-                { id: '102', number: '102', status: 'Full', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
-                { id: '103', number: '103', status: 'Vacant', statusColor: 'green', capacity: 2, occupied: 0, type: 'vacant' },
-                { id: '104', number: '104', status: 'Maint.', statusColor: 'orange', capacity: 2, occupied: 0, type: 'maintenance' },
-                { id: '105', number: '105', status: 'Full', statusColor: 'slate', capacity: 3, occupied: 3, type: 'full' },
+                { id: '101', number: '101', status: '1 Spot Left', statusColor: 'emerald', capacity: 3, occupied: 2, type: 'occupied' },
+                { id: '102', number: '102', status: 'Full Capacity', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
+                { id: '103', number: '103', status: 'Vacant Node', statusColor: 'emerald', capacity: 2, occupied: 0, type: 'vacant' },
+                { id: '104', number: '104', status: 'Maint. Mode', statusColor: 'rose', capacity: 2, occupied: 0, type: 'maintenance' },
+                { id: '105', number: '105', status: 'Full Capacity', statusColor: 'slate', capacity: 3, occupied: 3, type: 'full' },
             ]
         },
         {
-            name: 'Block B - Girls Hostel',
-            floor: 'Ground Floor',
+            name: 'Block B - Delta Omega',
+            floor: 'Level 01',
+            type: 'Girls',
             rooms: [
-                { id: 'G-01', number: 'G-01', status: 'Full', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
-                { id: 'G-02', number: 'G-02', status: 'Full', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
-                { id: 'G-03', number: 'G-03', status: '1 Spot Left', statusColor: 'green', capacity: 2, occupied: 1, type: 'occupied' },
-                { id: 'G-04', number: 'G-04', status: 'Vacant', statusColor: 'green', capacity: 2, occupied: 0, type: 'vacant' },
+                { id: 'G-01', number: 'G-01', status: 'Full Capacity', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
+                { id: 'G-02', number: 'G-02', status: 'Full Capacity', statusColor: 'slate', capacity: 2, occupied: 2, type: 'full' },
+                { id: 'G-03', number: 'G-03', status: '1 Spot Left', statusColor: 'emerald', capacity: 2, occupied: 1, type: 'occupied' },
+                { id: 'G-04', number: 'G-04', status: 'Vacant Node', statusColor: 'emerald', capacity: 2, occupied: 0, type: 'vacant' },
             ]
         }
+    ];
+
+    const stats = [
+        { title: 'Global Capacity', value: '500 Beds', sub: 'Total Allocation', icon: Bed, color: 'text-primary', bg: 'bg-primary/5', trend: 'Static' },
+        { title: 'Occupancy Vector', value: '85%', sub: '+2% this term', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Surging' },
+        { title: 'Vacant Nodes', value: '75', sub: 'Instant Availability', icon: DoorOpen, color: 'text-blue-500', bg: 'bg-blue-500/5', trend: 'Stable' },
+        { title: 'Allocation Queue', value: '12', sub: 'Pending Review', icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Urgent' },
     ];
 
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout>
+                <AdminLayout title="Hostel Management">
                     <Head>
-                        <title>Hostel Management - School ERP</title>
+                        <title>Hostel Hub - EduCore</title>
                     </Head>
 
-                    <div className="flex flex-col gap-8">
+                    <div className="flex-1 flex flex-col gap-10 animate-in fade-in duration-700">
                         {/* Header */}
-                        <div className="flex flex-col gap-4">
-                            <div className="flex flex-wrap justify-between items-end gap-4">
-                                <div className="flex flex-col gap-1">
-                                    <h1 className="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">Hostel Management</h1>
-                                    <p className="text-slate-500 dark:text-slate-400 text-base">Manage student accommodation, room allocations, and facilities.</p>
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <div className="space-y-1">
+                                <div className="flex items-center gap-2 text-primary mb-1">
+                                    <Home size={18} />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Residency Logic</span>
                                 </div>
-                                <button className="group flex items-center justify-center gap-2 cursor-pointer overflow-hidden rounded-lg h-10 px-6 bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-sm transition-all">
-                                    <span className="material-symbols-outlined text-[20px]">add</span>
-                                    <span className="truncate">Allocate Room</span>
+                                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Hostel Hub</h1>
+                                <p className="text-slate-500 dark:text-slate-400 font-medium italic">
+                                    Coordinate housing allocations, asset maintenance, and residency metrics.
+                                </p>
+                            </div>
+                            <div className="flex gap-4">
+                                <button className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95">
+                                    <Plus size={18} />
+                                    <span>Allocate Room</span>
                                 </button>
                             </div>
                         </div>
 
-                        {/* Stats Section */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div className="flex flex-col gap-1 rounded-xl p-5 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 shadow-sm">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Capacity</p>
-                                    <span className="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-md">bed</span>
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {stats.map((stat, i) => (
+                                <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 border border-slate-100 dark:border-slate-800 shadow-2xl group relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
+                                    <div className="relative z-10 flex flex-col h-full">
+                                        <div className="flex justify-between items-start mb-6">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.title}</p>
+                                            <div className={`size-10 rounded-xl flex items-center justify-center ${stat.bg} ${stat.color}`}>
+                                                <stat.icon size={20} />
+                                            </div>
+                                        </div>
+                                        <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter mb-1">{stat.value}</h3>
+                                        <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest leading-none">{stat.sub}</p>
+                                        <div className="mt-4 h-1 w-full bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
+                                            <div className={`h-full ${stat.color.replace('text-', 'bg-')} rounded-full`} style={{ width: stat.value.includes('%') ? stat.value : '100%' }} />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex items-end gap-2 mt-2">
-                                    <p className="text-slate-900 dark:text-white text-2xl font-bold leading-tight">500 Beds</p>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1 rounded-xl p-5 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 shadow-sm">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Occupancy Rate</p>
-                                    <span className="material-symbols-outlined text-green-600 bg-green-100 dark:bg-green-900/30 p-1.5 rounded-md">trending_up</span>
-                                </div>
-                                <div className="flex items-end gap-2 mt-2">
-                                    <p className="text-slate-900 dark:text-white text-2xl font-bold leading-tight">85%</p>
-                                    <span className="text-green-600 text-xs font-bold mb-1 px-1.5 py-0.5 bg-green-100 dark:bg-green-900/30 rounded">+2%</span>
-                                </div>
-                                <div className="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 mt-3">
-                                    <div className="bg-green-500 h-1.5 rounded-full" style={{ width: '85%' }}></div>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1 rounded-xl p-5 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 shadow-sm">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Vacant Beds</p>
-                                    <span className="material-symbols-outlined text-slate-500 bg-slate-100 dark:bg-slate-700 p-1.5 rounded-md">door_open</span>
-                                </div>
-                                <div className="flex items-end gap-2 mt-2">
-                                    <p className="text-slate-900 dark:text-white text-2xl font-bold leading-tight">75 Beds</p>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1 rounded-xl p-5 bg-white dark:bg-[#1e2936] border border-slate-200 dark:border-slate-700 shadow-sm">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Requests</p>
-                                    <span className="material-symbols-outlined text-orange-500 bg-orange-100 dark:bg-orange-900/30 p-1.5 rounded-md">pending_actions</span>
-                                </div>
-                                <div className="flex items-end gap-2 mt-2">
-                                    <p className="text-slate-900 dark:text-white text-2xl font-bold leading-tight">12</p>
-                                    <span className="text-orange-600 text-xs font-bold mb-1 px-1.5 py-0.5 bg-orange-100 dark:bg-orange-900/30 rounded">New</span>
-                                </div>
-                            </div>
+                            ))}
                         </div>
 
-                        {/* Tabs & Content */}
-                        <div className="flex flex-col gap-0 bg-white dark:bg-[#1e2936] rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-                            {/* Tabs Header */}
-                            <div className="flex flex-wrap items-center justify-between border-b border-slate-200 dark:border-slate-700 px-4 pt-2 bg-slate-50/50 dark:bg-slate-800/50">
-                                <div className="flex gap-6 overflow-x-auto">
-                                    <button className="flex flex-col items-center justify-center border-b-[3px] border-primary text-primary pb-3 pt-2 px-1">
-                                        <p className="text-sm font-bold leading-normal tracking-wide">Room View</p>
-                                    </button>
-                                    <button className="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 pb-3 pt-2 px-1 transition-colors">
-                                        <p className="text-sm font-bold leading-normal tracking-wide">Student List</p>
-                                    </button>
-                                    <button className="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 pb-3 pt-2 px-1 transition-colors">
-                                        <p className="text-sm font-bold leading-normal tracking-wide">Facilities & Maintenance</p>
-                                    </button>
+                        {/* Main Grid Section */}
+                        <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden min-h-[600px]">
+                            {/* Toolbar */}
+                            <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
+                                <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
+                                    {['Room View', 'Student Matrix', 'Facilities', 'Billing'].map((tab) => (
+                                        <button key={tab} onClick={() => setActiveTab(tab)} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${activeTab === tab ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
+                                            {tab}
+                                            {activeTab === tab && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
+                                        </button>
+                                    ))}
                                 </div>
-                            </div>
-
-                            {/* Filters Toolbar */}
-                            <div className="p-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex flex-wrap gap-3 items-center justify-between">
-                                <div className="flex flex-wrap gap-3 flex-1">
-                                    <div className="relative w-full max-w-[280px]">
-                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px]">search</span>
-                                        <input className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-slate-400" placeholder="Search room or student..." type="text" />
+                                <div className="flex gap-4 w-full sm:w-auto">
+                                    <div className="relative group w-full sm:w-72">
+                                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
+                                        <input 
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
+                                            placeholder="Search residency index..." 
+                                        />
                                     </div>
-                                    <select className="px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary cursor-pointer">
-                                        <option>All Blocks</option>
-                                        <option>Block A (Boys)</option>
-                                        <option>Block B (Girls)</option>
-                                    </select>
-                                    <select className="px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary cursor-pointer">
-                                        <option>All Floors</option>
-                                        <option>Ground Floor</option>
-                                        <option>1st Floor</option>
-                                        <option>2nd Floor</option>
-                                    </select>
-                                    <select className="px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary cursor-pointer">
-                                        <option>Status: Any</option>
-                                        <option>Vacant</option>
-                                        <option>Occupied</option>
-                                        <option>Maintenance</option>
-                                    </select>
-                                </div>
-                                <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                                    <div className="flex items-center gap-1"><div className="w-3 h-3 rounded-full bg-green-500"></div> Vacant</div>
-                                    <div className="flex items-center gap-1"><div className="w-3 h-3 rounded-full bg-primary"></div> Occupied</div>
-                                    <div className="flex items-center gap-1"><div className="w-3 h-3 rounded-full bg-orange-500"></div> Maint.</div>
+                                    <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
+                                        <Filter size={16} className="text-primary" />
+                                        <span className="hidden sm:inline">Advanced Search</span>
+                                    </button>
                                 </div>
                             </div>
 
-                            {/* Tab Content Area */}
-                            <div className="p-6 bg-slate-50/30 dark:bg-slate-800/20 min-h-[500px]">
+                            {/* View Content */}
+                            <div className="p-10 bg-slate-50/20 dark:bg-slate-900/20 flex-1">
                                 {roomBlocks.map((block, idx) => (
-                                    <div key={idx} className="mb-8 last:mb-0">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <h2 className="text-slate-900 dark:text-white text-lg font-bold">{block.name}</h2>
-                                            <span className="px-2 py-0.5 rounded text-xs font-semibold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">{block.floor}</span>
+                                    <div key={idx} className="mb-14 last:mb-0">
+                                        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                                            <div className="space-y-1">
+                                                <div className="flex items-center gap-2 text-primary mb-1">
+                                                    <Shield size={14} className={block.type === 'Boys' ? 'text-blue-500' : 'text-rose-500'} />
+                                                    <span className="text-[9px] font-black uppercase tracking-[0.2em]">{block.type} Hub</span>
+                                                </div>
+                                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{block.name}</h2>
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{block.floor} Repository</p>
+                                            </div>
+                                            <div className="flex gap-2">
+                                                {[Coffee, Zap, Wind, Droplets].map((Icon, i) => (
+                                                    <div key={i} className="size-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-300 hover:text-primary transition-colors shadow-sm">
+                                                        <Icon size={14} />
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                                             {block.rooms.map((room) => (
-                                                <div key={room.id} className={`group flex flex-col border rounded-lg p-4 shadow-sm hover:shadow-md hover:border-primary/50 transition-all cursor-pointer relative overflow-hidden ${room.type === 'maintenance' ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800/30' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
-                                                    {room.type === 'maintenance' && (
-                                                        <div className="absolute -right-3 -top-3 opacity-10">
-                                                            <span className="material-symbols-outlined text-[80px] text-orange-500">build</span>
+                                                <div key={room.id} className={`group bg-white dark:bg-slate-900 border-2 rounded-[2rem] p-6 shadow-xl transition-all hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden ${
+                                                    room.type === 'maintenance' ? 'border-rose-500/20 bg-rose-50/20' : 
+                                                    room.type === 'vacant' ? 'border-emerald-500/20 bg-emerald-50/10' :
+                                                    'border-slate-50 dark:border-slate-800'
+                                                }`}>
+                                                    <div className="absolute top-0 right-0 size-20 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-transform duration-700" />
+                                                    <div className="relative z-10 flex flex-col h-full">
+                                                        <div className="flex justify-between items-start mb-6">
+                                                            <div>
+                                                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Unit ID</p>
+                                                                <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Room {room.number}</h3>
+                                                            </div>
+                                                            <div className={`size-10 rounded-xl flex items-center justify-center bg-slate-50 dark:bg-slate-800 group-hover:bg-primary group-hover:text-white transition-all shadow-sm`}>
+                                                                <Bed size={20} />
+                                                            </div>
                                                         </div>
-                                                    )}
-                                                    <div className="flex justify-between items-center mb-3 relative z-10">
-                                                        <h3 className="font-bold text-slate-800 dark:text-slate-100">Room {room.number}</h3>
-                                                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${room.statusColor === 'green' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400' : room.statusColor === 'orange' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
-                                                            {room.status}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 mb-3 relative z-10">
-                                                        {[...Array(room.capacity)].map((_, i) => (
-                                                            <span key={i} className={`material-symbols-outlined text-[24px] ${i < room.occupied ? 'text-primary' : room.type === 'maintenance' ? 'text-orange-300' : 'text-slate-300 dark:text-slate-600'}`}>{room.occupied > i ? 'bed' : 'bed'}</span>
-                                                        ))}
-                                                    </div>
-                                                    <div className={`mt-auto pt-3 border-t flex justify-between items-center text-xs relative z-10 ${room.type === 'maintenance' ? 'border-orange-100 dark:border-orange-800/30 text-orange-600 dark:text-orange-400' : 'border-slate-100 dark:border-slate-700 text-slate-500'}`}>
-                                                        <span>{room.type === 'maintenance' ? 'Repairs ongoing' : `${room.capacity} Bed Capacity`}</span>
-                                                        <span className="group-hover:text-primary font-medium transition-colors">{room.type === 'maintenance' ? 'Report →' : 'Details →'}</span>
+
+                                                        <div className="flex items-center gap-2 mb-6">
+                                                            {[...Array(room.capacity)].map((_, i) => (
+                                                                <div key={i} className={`size-1.5 rounded-full ${i < room.occupied ? 'bg-primary' : 'bg-slate-200 dark:bg-slate-700'}`} />
+                                                            ))}
+                                                            <span className="text-[10px] font-black text-slate-500 uppercase ml-auto">{room.occupied}/{room.capacity}</span>
+                                                        </div>
+
+                                                        <div className="mt-auto space-y-4">
+                                                            <div className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest text-center ${
+                                                                room.statusColor === 'emerald' ? 'bg-emerald-500/10 text-emerald-500' :
+                                                                room.statusColor === 'rose' ? 'bg-rose-500/10 text-rose-500' :
+                                                                'bg-slate-100 text-slate-500'
+                                                            }`}>
+                                                                {room.status}
+                                                            </div>
+                                                            <button className="w-full py-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-[9px] font-black uppercase tracking-widest text-slate-400 group-hover:bg-primary group-hover:text-white transition-all flex items-center justify-center gap-2">
+                                                                {room.type === 'maintenance' ? <Wrench size={10} /> : <Users size={10} />}
+                                                                Details Node
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ))}
@@ -183,8 +208,19 @@ export default function HostelDashboard() {
                                     </div>
                                 ))}
                             </div>
-                        </div>
 
+                            {/* Footer / Pagination */}
+                            <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                                    Displaying <span className="text-slate-900 dark:text-white">Active Housing Grid</span> of internal repository
+                                </p>
+                                <div className="flex gap-3">
+                                    <button className="h-10 px-6 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm">
+                                        Export Occupancy Logs
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </AdminLayout>
             </RoleGuard>

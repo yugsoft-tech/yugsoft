@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 import {
     Users,
     Plus,
@@ -12,7 +13,11 @@ import {
     TrendingUp,
     BookOpen,
     UserCheck,
-    Building
+    Building,
+    LayoutGrid,
+    Target,
+    Zap,
+    History
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,6 +47,7 @@ export default function ClassesList() {
     const { classes, loading, refetch } = useClasses();
     const [activeTab, setActiveTab] = useState<'matrix' | 'create'>('matrix');
     const [registering, setRegistering] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const { register, handleSubmit, reset } = useForm<ClassFormValues>({
         resolver: zodResolver(classSchema),
@@ -62,184 +68,213 @@ export default function ClassesList() {
         }
     };
 
+    const filteredClasses = classes.filter(c => 
+        c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        c.numericName.toString().includes(searchTerm)
+    );
+
     return (
-        <AdminLayout title="Manage Classes">
-            <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">Manage Classes</h1>
-                    <p className="text-sm font-medium text-slate-500 italic">View and manage all academic classes and sections.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Button
-                        onClick={() => setActiveTab('create')}
-                        className="bg-primary hover:bg-primary/90 text-white rounded-2xl px-6 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20"
-                    >
-                        <Plus size={18} />
-                        Add New Class
-                    </Button>
-                </div>
-            </div>
+        <AdminLayout title="Academic Matrix">
+            <Head>
+                <title>Academic Matrix - EduCore</title>
+            </Head>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                    { label: 'Total Classes', value: `${classes.length || 0}`, icon: <Layers className="text-primary" /> },
-                    { label: 'Total Students', value: '1,840', icon: <Users className="text-indigo-500" /> },
-                    { label: 'Curriculum', value: 'National', icon: <ShieldCheck className="text-emerald-500" /> },
-                    { label: 'Status', value: 'ACTIVE', icon: <Activity className="text-amber-500" /> },
-                ].map((stat, i) => (
-                    <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden relative group hover:border-primary/50 transition-all">
-                        <div className="relative z-10 flex flex-col gap-6">
-                            <div className="size-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors">
-                                {stat.icon}
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{stat.label}</p>
-                                <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{stat.value}</h3>
-                            </div>
+            <div className="flex-1 flex flex-col gap-10 animate-in fade-in duration-700 pb-12">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2 text-primary mb-1">
+                            <LayoutGrid size={18} />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Institutional Schema</span>
                         </div>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">Academic Matrix</h1>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium italic">
+                            Construct and manage the foundational layers of academic advancement.
+                        </p>
                     </div>
-                ))}
-            </div>
+                    <div className="flex gap-4">
+                        <button className="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-[1.5rem] hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
+                            <History size={20} />
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab('create')}
+                            className="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95"
+                        >
+                            <Plus size={18} />
+                            <span>Initialize Class Node</span>
+                        </button>
+                    </div>
+                </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-                <div className="p-10">
-                    {activeTab === 'create' ? (
-                        <div className="space-y-10">
-                            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-8">
-                                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Add New Class</h2>
-                                <button onClick={() => setActiveTab('matrix')} className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Back to List</button>
-                            </div>
-                            <form onSubmit={handleSubmit(onRegister)} className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                <div className="space-y-8">
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Class Name</label>
-                                        <input
-                                            {...register('name')}
-                                            placeholder="Grade 10 / Secondary..."
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
-                                        />
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                        { label: 'Academic Nodes', value: `${classes.length || 0}`, icon: Layers, color: 'text-primary', bg: 'bg-primary/5', trend: 'Global Stack' },
+                        { label: 'Total Enrolment', value: '1,840', icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-500/5', trend: '+4% Growth' },
+                        { label: 'Curriculum Sync', value: 'National', icon: Target, color: 'text-emerald-500', bg: 'bg-emerald-500/5', trend: 'Verified' },
+                        { label: 'Operational Hub', value: 'Prime', icon: Activity, color: 'text-amber-500', bg: 'bg-amber-500/5', trend: 'Active' },
+                    ].map((stat, i) => (
+                        <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl overflow-hidden relative group hover:border-primary/50 transition-all">
+                            <div className="absolute top-0 right-0 size-24 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
+                            <div className="relative z-10 flex flex-col gap-6">
+                                <div className={`size-12 rounded-2xl ${stat.bg} ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                                    <stat.icon size={24} />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{stat.label}</p>
+                                    <h3 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-2">{stat.value}</h3>
+                                    <div className="flex items-center gap-1">
+                                        <div className="size-1 rounded-full bg-primary" />
+                                        <span className="text-[8px] font-black uppercase text-slate-400 tracking-widest leading-none italic">{stat.trend}</span>
                                     </div>
                                 </div>
-                                <div className="space-y-8">
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Main Content Area */}
+                <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden min-h-[600px]">
+                    {/* Toolbar */}
+                    <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex flex-col sm:flex-row gap-8 justify-between items-center bg-slate-50/30 dark:bg-slate-900/30">
+                        <div className="flex items-center gap-12 overflow-x-auto no-scrollbar w-full sm:w-auto">
+                            {['Structural Matrix', 'Deployment Map', 'Archives'].map((tab) => (
+                                <button key={tab} className={`relative py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === 'Structural Matrix' ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`}>
+                                    {tab}
+                                    {tab === 'Structural Matrix' && <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-full transition-all duration-500" />}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="flex gap-4 w-full sm:w-auto">
+                            <div className="relative group w-full sm:w-72">
+                                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
+                                <input 
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full h-14 pl-14 pr-6 rounded-2xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary text-xs font-bold text-slate-900 dark:text-white outline-none transition-all shadow-sm" 
+                                    placeholder="Sync node identifier..." 
+                                />
+                            </div>
+                            <button className="h-14 px-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-sm">
+                                <Filter size={16} className="text-primary" />
+                                <span className="hidden sm:inline">Advanced Search</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* View Port */}
+                    <div className="p-10 flex-1 relative min-h-[500px]">
+                        {activeTab === 'create' ? (
+                            <div className="max-w-xl mx-auto space-y-12 animate-in slide-in-from-bottom-8 duration-700 py-12">
+                                <div className="flex items-center gap-6 mb-10">
+                                    <div className="size-16 rounded-[1.5rem] bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20">
+                                        <Plus size={32} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Academic Expansion</h2>
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Structural Node Integration Protocol</p>
+                                    </div>
+                                </div>
+                                <form onSubmit={handleSubmit(onRegister)} className="space-y-10">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Numeric Level</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Node Identifier (Name)</label>
+                                        <input
+                                            {...register('name')}
+                                            placeholder="e.g. Science Stream Alpha..."
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all shadow-sm"
+                                        />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Numeric Map (Order)</label>
                                         <input
                                             type="number"
                                             {...register('numericName', { valueAsNumber: true })}
                                             placeholder="10"
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white ring-1 ring-slate-100 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all shadow-sm"
                                         />
                                     </div>
-                                </div>
-                                <div className="md:col-span-2 flex justify-end">
-                                    <Button
-                                        type="submit"
-                                        disabled={registering}
-                                        className="bg-primary hover:bg-primary/90 text-white rounded-[2rem] px-12 py-6 h-auto font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-primary/20 transition-all active:scale-95"
-                                    >
-                                        {registering ? <Activity size={18} className="animate-spin" /> : <Plus size={18} />}
-                                        Add Class
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
-                    ) : (
-                        <div className="space-y-8">
-                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                                <div className="relative group max-w-md w-full">
-                                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors" size={20} />
-                                    <input
-                                        type="text"
-                                        placeholder="Search class..."
-                                        className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all"
-                                    />
-                                </div>
-                                <Button variant="secondary" className="rounded-xl px-6 py-4 h-auto font-black text-[10px] uppercase tracking-widest gap-2 border-2 text-slate-400">
-                                    <Filter size={14} />
-                                    Filter Categories
-                                </Button>
+                                    <div className="flex gap-4 pt-10">
+                                        <button 
+                                            type="button"
+                                            onClick={() => setActiveTab('matrix')}
+                                            className="flex-1 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-100 dark:border-slate-700 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-slate-50 active:scale-95 transition-all"
+                                        >
+                                            Abort Initialization
+                                        </button>
+                                        <button 
+                                            type="submit"
+                                            disabled={registering}
+                                            className="flex-[2] bg-primary text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-3"
+                                        >
+                                            {registering ? <Activity size={18} className="animate-spin" /> : <Zap size={18} />}
+                                            Commit Node to Architecture
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                                 {loading ? (
-                                    Array.from({ length: 3 }).map((_, i) => (
-                                        <Skeleton key={i} className="h-64 rounded-[2.5rem]" />
-                                    ))
-                                ) : (
-                                    classes.map((cls) => (
-                                        <div key={cls.id} className="bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-slate-50 dark:border-slate-800 p-10 space-y-8 hover:border-primary transition-all shadow-xl group cursor-pointer overflow-hidden relative">
-                                            <div className="flex justify-between items-start relative z-10">
-                                                <div className="space-y-2">
-                                                    <div className="flex items-center gap-3">
-                                                        <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{cls.name}</h3>
-                                                        <Badge color="blue" className="bg-blue-500/10 text-blue-600 border-none text-[8px] font-black uppercase tracking-widest px-3">
-                                                            LVL-{cls.numericName}
-                                                        </Badge>
-                                                    </div>
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Class Level</p>
+                                    Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="h-48 rounded-[2.5rem]" />)
+                                ) : filteredClasses.map((item) => (
+                                    <div key={item.id} className="bg-white dark:bg-slate-900 border border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-8 shadow-xl transition-all hover:border-primary hover:-translate-y-2 group overflow-hidden relative">
+                                        <div className="absolute top-0 right-0 size-20 bg-slate-50 dark:bg-slate-800 rounded-full translate-x-8 -translate-y-8 group-hover:scale-150 transition-all duration-700" />
+                                        <div className="relative z-10 flex flex-col h-full">
+                                            <div className="flex justify-between items-start mb-10">
+                                                <div className="size-14 rounded-2xl bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20 group-hover:scale-110 transition-transform">
+                                                    <Building size={24} />
                                                 </div>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <button className="size-10 rounded-2xl hover:bg-white dark:hover:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 dark:border-slate-800">
+                                                        <button className="size-10 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-primary transition-all">
                                                             <MoreVertical size={20} />
                                                         </button>
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl">
-                                                        <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
-                                                            <Layers size={16} className="text-primary" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Manage Sections</span>
+                                                        <DropdownMenuItem className="p-3 rounded-xl cursor-pointer flex items-center gap-3">
+                                                            <UserCheck size={16} className="text-primary" />
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">Assign Faculty</span>
                                                         </DropdownMenuItem>
-                                                        <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
-                                                            <UserCheck size={16} className="text-emerald-500" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">Assign Teacher</span>
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer">
-                                                            <BookOpen size={16} className="text-indigo-500" />
-                                                            <span className="text-[10px] font-black uppercase tracking-widest">View Subjects</span>
+                                                        <DropdownMenuItem className="p-3 rounded-xl cursor-pointer flex items-center gap-3">
+                                                            <BookOpen size={16} className="text-primary" />
+                                                            <span className="text-[10px] font-black uppercase tracking-widest">Resource Allocation</span>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </div>
-
-                                            <div className="grid grid-cols-2 gap-4 relative z-10">
-                                                <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
-                                                    <Users size={24} className="text-primary" />
-                                                    <div className="text-center">
-                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Students</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{cls._count?.students || 0} Enrolled</p>
-                                                    </div>
+                                            <div className="space-y-1">
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Class Node {item.numericName}</p>
+                                                <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter truncate">{item.name}</h3>
+                                            </div>
+                                            <div className="mt-8 pt-8 border-t border-slate-50 dark:border-slate-800 flex items-center gap-4">
+                                                <div className="flex items-center gap-1 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                                                    <Users size={12} className="text-primary" />
+                                                    <span>120 Nodes</span>
                                                 </div>
-                                                <div className="bg-slate-50 dark:bg-slate-800/80 p-6 rounded-[2rem] flex flex-col items-center gap-3 border border-slate-100 dark:border-slate-800">
-                                                    <Building size={24} className="text-indigo-500" />
-                                                    <div className="text-center">
-                                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Sections</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{cls._count?.sections || 0} Active</p>
-                                                    </div>
+                                                <div className="ml-auto flex items-center gap-2 group-hover:translate-x-1 transition-transform">
+                                                    <span className="text-[8px] font-black uppercase text-primary tracking-widest leading-none italic">View Depth</span>
+                                                    <ChevronRight size={14} className="text-primary" />
                                                 </div>
                                             </div>
-
-                                            <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between relative z-10">
-                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                                    <TrendingUp size={14} className="text-emerald-500" />
-                                                    Performance: 88%
-                                                </p>
-                                                <span className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                                    Manage Class
-                                                    <ChevronRight size={14} />
-                                                </span>
-                                            </div>
-
-                                            {/* Abstract Design Element */}
-                                            <div className="absolute -right-12 -top-12 size-40 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all"></div>
                                         </div>
-                                    ))
-                                )}
+                                    </div>
+                                ))}
                             </div>
+                        )}
+                    </div>
+
+                    {/* Footer Stats */}
+                    <div className="p-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between mt-auto bg-slate-50/20 dark:bg-slate-900/20">
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                            Synchronizing <span className="text-slate-900 dark:text-white">{filteredClasses.length} Structural Nodes</span> in current term
+                        </p>
+                        <div className="flex gap-3">
+                            <button className="h-10 px-6 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm">
+                                Export Matrix Map
+                            </button>
                         </div>
-                    )}
+                    </div>
                 </div>
-            </div>
             </div>
         </AdminLayout>
     );

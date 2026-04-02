@@ -11,7 +11,9 @@ import {
   MoreHorizontal,
   Clock,
   CheckCircle2,
-  Activity
+  Activity,
+  Bus,
+  BookOpen
 } from 'lucide-react';
 import Link from 'next/link';
 import AdminLayout from '@/components/layouts/AdminLayout';
@@ -161,16 +163,15 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Resources Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
-            { label: 'Transport Vehicles', value: stats?.statistics?.totalVehicles || 0, icon: 'local_shipping', color: 'bg-indigo-500', max: 50 },
-            { label: 'Library Books', value: stats?.statistics?.totalBooks || 0, icon: 'menu_book', color: 'bg-emerald-500', max: 5000 },
+            { label: 'Transport Vehicles', value: stats?.statistics?.totalVehicles || 0, icon: <Bus size={20} />, color: 'bg-indigo-500', max: 50 },
+            { label: 'Library Books', value: stats?.statistics?.totalBooks || 0, icon: <BookOpen size={20} />, color: 'bg-emerald-500', max: 5000 },
           ].map((item, i) => (
             <div key={i} className="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-700 transition-all hover:shadow-md">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-slate-400">{item.icon}</span>
+                    <span className="text-slate-400">{item.icon}</span>
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{item.label}</span>
                 </div>
                 <span className="text-sm font-black text-slate-900 dark:text-white">{item.value} <span className="text-[10px] text-slate-400 font-bold ml-1">Total Assets</span></span>

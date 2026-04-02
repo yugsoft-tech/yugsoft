@@ -1,32 +1,57 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
 @Injectable()
 export class LibraryService {
-  createBook(createBookDto: CreateBookDto) {
-    // TODO: Implement create book logic
-    throw new Error('Method not implemented.');
+  constructor(private readonly prisma: PrismaService) {}
+
+  async createBook(createBookDto: CreateBookDto, schoolId: string) {
+    return this.prisma.book.create({
+      data: {
+        ...createBookDto,
+        school: {
+          connect: { id: schoolId },
+        },
+      },
+    });
   }
 
-  findAllBooks() {
-    // TODO: Implement find all books logic
-    throw new Error('Method not implemented.');
+  async findAllBooks(schoolId: string) {
+    return this.prisma.book.findMany({
+      where: { schoolId },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
-  findOneBook(id: string) {
-    // TODO: Implement find one book logic
-    throw new Error('Method not implemented.');
+  async findOneBook(id: string, schoolId: string) {
+    const book = await this.prisma.book.findFirst({
+      where: { id, schoolId },
+    });
+
+    if (!book) {
+      throw new NotFoundException('Book not found');
+    }
+
+    return book;
   }
 
-  updateBook(id: string, updateBookDto: UpdateBookDto) {
-    // TODO: Implement update book logic
-    throw new Error('Method not implemented.');
+  async updateBook(id: string, updateBookDto: UpdateBookDto, schoolId: string) {
+    await this.findOneBook(id, schoolId);
+
+    return this.prisma.book.update({
+      where: { id },
+      data: updateBookDto,
+    });
   }
 
-  removeBook(id: string) {
-    // TODO: Implement remove book logic
-    throw new Error('Method not implemented.');
+  async removeBook(id: string, schoolId: string) {
+    await this.findOneBook(id, schoolId);
+
+    return this.prisma.book.delete({
+      where: { id },
+    });
   }
 }
 
