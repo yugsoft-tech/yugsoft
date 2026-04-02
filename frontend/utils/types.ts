@@ -32,6 +32,13 @@ export interface ApiResponse<T = any> {
   message?: string;
   error?: string;
   statusCode?: number;
+  meta?: {
+    total?: number;
+    page?: number;
+    limit?: number;
+    totalPages?: number;
+    [key: string]: any;
+  };
 }
 
 // Pagination params

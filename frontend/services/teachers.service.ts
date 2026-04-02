@@ -5,12 +5,21 @@
 import { apiClient } from '@/utils/api-client';
 import { API_ENDPOINTS } from '@/utils/constants';
 import { PaginationParams, PaginatedResponse, Teacher, CreateTeacherDto, UpdateTeacherDto, Document } from '@/utils/types';
-import { mapTeacher } from '@/utils/mappers';
+import { mapTeacher, mapArray } from '@/utils/mappers';
 
 class TeachersService {
   async getAll(params?: PaginationParams): Promise<PaginatedResponse<Teacher>> {
-    const response = await apiClient.get<PaginatedResponse<Teacher>>(API_ENDPOINTS.TEACHERS, { params });
-    return response as any;
+    const response = await apiClient.get<any>(API_ENDPOINTS.TEACHERS, { params });
+    const data = response.data || [];
+    const meta = response.meta || {};
+    
+    return {
+      data: mapArray(mapTeacher)(data),
+      total: meta.total || data.length || 0,
+      page: meta.page || params?.page || 1,
+      limit: meta.limit || params?.limit || 10,
+      totalPages: meta.totalPages || 0,
+    };
   }
 
   async getById(id: string): Promise<Teacher> {

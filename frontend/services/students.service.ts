@@ -14,13 +14,13 @@ class StudentsService {
    */
   async getAll(params?: PaginationParams): Promise<PaginatedResponse<Student>> {
     const response = await apiClient.get<any>(API_ENDPOINTS.STUDENTS, { params });
-    const rawData = response.data || response;
-    const meta = rawData.meta || {};
+    // response is directly the body { data: [], meta: { total: ... } }
+    const data = response.data || [];
+    const meta = response.meta || {};
     
-    // Handle NestJS PaginatedResult structure { data: [], meta: { total: ... } }
     return {
-      data: mapArray(mapStudent)(rawData.data || []),
-      total: meta.total || rawData.total || 0,
+      data: mapArray(mapStudent)(data),
+      total: meta.total || data.length || 0,
       page: meta.page || params?.page || 1,
       limit: meta.limit || params?.limit || 10,
       totalPages: meta.totalPages || 0,

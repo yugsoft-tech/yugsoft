@@ -12,9 +12,18 @@ class UsersService {
    * Get all users with optional filtering and pagination
    */
   async getAll(params?: PaginationParams & { role?: string; search?: string }): Promise<PaginatedResponse<User>> {
-    const response = await apiClient.get<PaginatedResponse<User>>(API_ENDPOINTS.USERS, { params });
-    // Response is already the body
-    return response as any;
+    const response = await apiClient.get<any>(API_ENDPOINTS.USERS, { params });
+    // response is directly the body { data: [], meta: { total: ... } }
+    const data = response.data || [];
+    const meta = response.meta || {};
+    
+    return {
+      data: data,
+      total: meta.total || data.length || 0,
+      page: meta.page || params?.page || 1,
+      limit: meta.limit || params?.limit || 10,
+      totalPages: meta.totalPages || 0,
+    };
   }
 
   /**
