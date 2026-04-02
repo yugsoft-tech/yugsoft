@@ -33,6 +33,7 @@ export default function UsersList() {
     const {
         users,
         loading,
+        error,
         pagination,
         params,
         setParams,
