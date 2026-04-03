@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Menu, Bell, User, LogOut } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { APP_NAME } from '@/utils/constants';
+import { getDashboardRoute } from '@/utils/role-config';
 
 interface NavbarProps {
     onMenuClick: () => void;
@@ -29,14 +31,14 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                         <Menu size={24} />
                     </button>
 
-                    <div className="flex items-center gap-3">
+                    <Link href={getDashboardRoute(user?.role) || "/"} className="flex items-center gap-3">
                         <div className="h-8 w-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold shadow-sm">
                             {APP_NAME.charAt(0)}
                         </div>
                         <span className="text-xl font-bold text-slate-900 hidden sm:block">
                             {APP_NAME}
                         </span>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className="flex items-center gap-4">

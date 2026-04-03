@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { APP_NAME } from '@/utils/constants';
+import { getDashboardRoute } from '@/utils/role-config';
+
 import {
     Menu,
     X,
@@ -82,7 +84,7 @@ export default function DashboardLayout({ children, sections, role, headerExtra 
             `}>
                 {/* Sidebar Header */}
                 <div className="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-700 shrink-0">
-                    <Link href="/" className="flex items-center gap-2 text-primary font-bold text-xl tracking-tight">
+                    <Link href={getDashboardRoute(user?.role) || "/"} className="flex items-center gap-2 text-primary font-bold text-xl tracking-tight">
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
                             <GraduationCap size={20} />
                         </div>
