@@ -31,8 +31,9 @@ class StudentsService {
    * Get student by ID
    */
   async getById(id: string): Promise<Student> {
-    const response = await apiClient.get(`${API_ENDPOINTS.STUDENTS}/${id}`);
-    return mapStudent(response.data) as Student;
+    const response = await apiClient.get<any>(`${API_ENDPOINTS.STUDENTS}/${id}`);
+    const data = response.data || response;
+    return mapStudent(data) as Student;
   }
 
   /**
@@ -48,15 +49,16 @@ class StudentsService {
    */
   async create(data: CreateStudentDto): Promise<Student> {
     const response = await apiClient.post(API_ENDPOINTS.STUDENTS, data);
-    return mapStudent(response.data) as Student;
+    return mapStudent(response) as Student;
   }
 
   /**
    * Update student
    */
   async update(id: string, data: UpdateStudentDto): Promise<Student> {
-    const response = await apiClient.patch(`${API_ENDPOINTS.STUDENTS}/${id}`, data);
-    return mapStudent(response.data) as Student;
+    const response = await apiClient.patch<any>(`${API_ENDPOINTS.STUDENTS}/${id}`, data);
+    const resultData = response.data || response;
+    return mapStudent(resultData) as Student;
   }
 
   /**

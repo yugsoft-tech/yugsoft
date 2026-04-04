@@ -43,6 +43,15 @@ export function useStudents(initialParams: PaginationParams = { page: 1, limit: 
         }
     };
 
+    const toggleSort = (field: string) => {
+        setParams(prev => ({
+            ...prev,
+            sortBy: field,
+            sortOrder: prev.sortBy === field && prev.sortOrder === 'asc' ? 'desc' : 'asc',
+            page: 1
+        }));
+    };
+
     return {
         students: data,
         total,
@@ -53,6 +62,7 @@ export function useStudents(initialParams: PaginationParams = { page: 1, limit: 
         setLimit,
         setSearch,
         setFilter,
+        toggleSort,
         deleteStudent,
         refetch: fetchStudents
     };

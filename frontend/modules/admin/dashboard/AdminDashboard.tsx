@@ -51,7 +51,15 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <StatCard
+            title="Total Users"
+            value={stats?.statistics?.totalUsers || '0'}
+            icon={<Users size={24} />}
+            trend="Stable"
+            trendType="neutral"
+            color="orange"
+          />
           <StatCard
             title="Total Students"
             value={stats?.statistics?.totalStudents || '0'}
