@@ -45,6 +45,14 @@ export class StudentsService {
       classId,
       sectionId,
       parentId,
+      parentFirstName,
+      parentLastName,
+      parentEmail,
+      parentPhone,
+      parentFatherName,
+      parentMotherName,
+      parentAddress,
+      parentSecondaryPhone,
     } = createStudentDto;
 
     // Check if user with email already exists
@@ -192,61 +200,92 @@ export class StudentsService {
         },
       });
 
-      // Link parent if provided
-      if (parentId) {
+      // Link or Create Parent
+      let finalParentId = parentId;
+
+      if (!finalParentId && parentEmail && parentFirstName && parentLastName) {
+        // Create a new parent user
+        const parentHashedPassword = await bcrypt.hash('Parent@123', 10); // Default password for new parents
+        const parentUser = await tx.user.create({
+          data: {
+            email: parentEmail,
+            password: parentHashedPassword,
+            firstName: parentFirstName,
+            lastName: parentLastName,
+            phone: parentPhone,
+            role: Role.PARENT,
+            schoolId: currentUser.schoolId,
+          },
+        });
+
+        const newParent = await tx.parent.create({
+          data: {
+            userId: parentUser.id,
+            schoolId: currentUser.schoolId,
+            fatherName: parentFatherName,
+            motherName: parentMotherName,
+            address: parentAddress,
+            secondaryPhone: parentSecondaryPhone,
+          },
+        });
+
+        finalParentId = newParent.id;
+      }
+
+      // Link parent if we have one (either provided or just created)
+      if (finalParentId) {
         await tx.student.update({
           where: { id: student.id },
           data: {
             parents: {
-              connect: { id: parentId },
-            },
-          },
-        });
-
-        // Fetch updated student with parent
-        return await tx.student.findUnique({
-          where: { id: student.id },
-          include: {
-            user: {
-              select: {
-                id: true,
-                email: true,
-                firstName: true,
-                lastName: true,
-                phone: true,
-                isActive: true,
-              },
-            },
-            class: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-            section: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-            parents: {
-              select: {
-                id: true,
-                user: {
-                  select: {
-                    id: true,
-                    firstName: true,
-                    lastName: true,
-                    email: true,
-                  },
-                },
-              },
+              connect: { id: finalParentId },
             },
           },
         });
       }
 
-      return student;
+      // Fetch refined student with parent
+      return await tx.student.findUnique({
+        where: { id: student.id },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true,
+              phone: true,
+              isActive: true,
+            },
+          },
+          class: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          section: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          parents: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  lastName: true,
+                  email: true,
+                  phone: true,
+                },
+              },
+            },
+          },
+        },
+      });
     });
   }
 
@@ -313,7 +352,7 @@ export class StudentsService {
       console.warn(`[StudentsService] Sub-optimal security state: User ${currentUser.userId} listing students without schoolId association.`);
     }
 
-    const { page = 1, limit = 10, classId, sectionId, search } = listStudentsDto;
+    const { page = 1, limit = 10, classId, sectionId, search, sortBy, sortOrder = 'asc' } = listStudentsDto;
     const skip = (page - 1) * limit;
 
     const where: any = {};
@@ -412,7 +451,13 @@ export class StudentsService {
             },
           },
         },
-        orderBy: { rollNumber: 'asc' },
+        orderBy: sortBy === 'class' 
+          ? { class: { name: sortOrder } }
+          : sortBy === 'section'
+          ? { section: { name: sortOrder } }
+          : sortBy === 'firstName'
+          ? { user: { firstName: sortOrder } }
+          : { rollNumber: sortOrder },
       }),
       this.prisma.student.count({ where }),
     ]);
