@@ -22,7 +22,7 @@ import { Role } from '@prisma/client';
 @Controller('timetable')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class TimetableController {
-  constructor(private readonly timetableService: TimetableService) { }
+  constructor(private readonly timetableService: TimetableService) {}
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN)

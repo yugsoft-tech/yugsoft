@@ -17,8 +17,10 @@ export class SettingsController {
   }
 
   @Patch(':key')
-  update(@Param('key') key: string, @Body() updateSettingDto: UpdateSettingDto) {
+  update(
+    @Param('key') key: string,
+    @Body() updateSettingDto: UpdateSettingDto,
+  ) {
     return this.settingsService.update(key, updateSettingDto);
   }
 }
-

@@ -34,9 +34,7 @@ export class NoticesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException(
-        'User must be associated with a school',
-      );
+      throw new ForbiddenException('User must be associated with a school');
     }
 
     const { title, message, audience, classId } = createNoticeDto;

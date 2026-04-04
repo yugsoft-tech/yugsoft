@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { SmsService } from './sms.service';
 import { SendSmsDto } from './dto/send-sms.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
@@ -18,10 +13,7 @@ export class SmsController {
 
   @Post('send')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  sendSms(
-    @Body() sendSmsDto: SendSmsDto,
-    @CurrentUser() user: any,
-  ) {
+  sendSms(@Body() sendSmsDto: SendSmsDto, @CurrentUser() user: any) {
     return this.smsService.sendSms(sendSmsDto, {
       userId: user.userId,
       role: user.role,

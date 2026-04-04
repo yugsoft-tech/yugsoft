@@ -1,6 +1,5 @@
 import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
 
-
 export class GenerateResultDto {
   @IsString()
   @IsNotEmpty()
@@ -10,4 +9,3 @@ export class GenerateResultDto {
   @IsOptional()
   classId?: string;
 }
-

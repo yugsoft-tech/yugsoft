@@ -13,7 +13,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private prisma: PrismaService,
-  ) { }
+  ) {}
 
   async register(registerDto: RegisterDto) {
     const { email, password, firstName, lastName } = registerDto;
@@ -49,7 +49,7 @@ export class AuthService {
       user.role,
       user.schoolId || null,
     );
-    
+
     // In a production app, we would hash & save the refresh token to DB here.
     // await this.updateRefreshToken(user.id, tokens.refresh_token);
 
@@ -127,7 +127,12 @@ export class AuthService {
     }
   }
 
-  private async getTokens(userId: string, email: string, role: string, schoolId: string | null) {
+  private async getTokens(
+    userId: string,
+    email: string,
+    role: string,
+    schoolId: string | null,
+  ) {
     const payload = { sub: userId, email, role, schoolId };
 
     const [accessToken, refreshToken] = await Promise.all([
@@ -164,11 +169,15 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({ where: { email } });
     if (!user) {
       // Return same message for security (don't reveal user existence)
-      return { message: 'If the email exists, a password reset link has been sent.' };
+      return {
+        message: 'If the email exists, a password reset link has been sent.',
+      };
     }
 
     // Generate a random token
-    const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const token =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
     const expires = new Date();
     expires.setHours(expires.getHours() + 1); // 1 hour expiry
 
@@ -182,14 +191,18 @@ export class AuthService {
 
     // 📧 IN PROD: Send actual email here.
     // FOR NOW: Log to console as a "Real-Mock" to allow developer testing.
-    console.log(`[AUTH-SECURITY] CRITICAL: Password reset link for ${email}: http://localhost:3001/auth/reset-password?token=${token}`);
-    
-    return { message: 'If the email exists, a password reset link has been sent.' };
+    console.log(
+      `[AUTH-SECURITY] CRITICAL: Password reset link for ${email}: http://localhost:3001/auth/reset-password?token=${token}`,
+    );
+
+    return {
+      message: 'If the email exists, a password reset link has been sent.',
+    };
   }
 
   async resetPassword(resetDto: any) {
     const { token, password } = resetDto;
-    
+
     const user = await this.prisma.user.findFirst({
       where: {
         resetToken: token,
@@ -219,8 +232,10 @@ export class AuthService {
     // Basic logic for a fixed test OTP or could be linked to a user
     // Implementing a "dummy-but-functional" version that requires specific code '123456' for now
     // until we link it to a full SMS/Email service.
-    const isValid = otp === '123456'; 
-    console.log(`[AUTH-SECURITY] OTP Verification attempt: ${otp} -> ${isValid ? 'VALID' : 'INVALID'}`);
+    const isValid = otp === '123456';
+    console.log(
+      `[AUTH-SECURITY] OTP Verification attempt: ${otp} -> ${isValid ? 'VALID' : 'INVALID'}`,
+    );
     return { valid: isValid };
   }
 
@@ -230,4 +245,3 @@ export class AuthService {
     return { message: 'Password changed successfully' };
   }
 }
-

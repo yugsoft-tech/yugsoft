@@ -20,14 +20,11 @@ import { Role } from '@prisma/client';
 @Controller('marks')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class MarksController {
-  constructor(private readonly marksService: MarksService) { }
+  constructor(private readonly marksService: MarksService) {}
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  create(
-    @Body() createMarkDto: CreateMarkDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createMarkDto: CreateMarkDto, @CurrentUser() user: any) {
     return this.marksService.create(createMarkDto, {
       userId: user.userId,
       role: user.role,
@@ -37,10 +34,7 @@ export class MarksController {
 
   @Post('bulk')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  createBulk(
-    @Body() bulkMarksDto: BulkMarksDto,
-    @CurrentUser() user: any,
-  ) {
+  createBulk(@Body() bulkMarksDto: BulkMarksDto, @CurrentUser() user: any) {
     return this.marksService.createBulk(bulkMarksDto, {
       userId: user.userId,
       role: user.role,
@@ -50,10 +44,7 @@ export class MarksController {
 
   @Get('exam/:examId')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
-  findAll(
-    @Param('examId') examId: string,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Param('examId') examId: string, @CurrentUser() user: any) {
     return this.marksService.findAll(examId, {
       userId: user.userId,
       role: user.role,

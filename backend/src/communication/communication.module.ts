@@ -8,4 +8,3 @@ import { ChatModule } from './chat/chat.module';
   imports: [NoticesModule, SmsModule, EmailModule, ChatModule],
 })
 export class CommunicationModule {}
-

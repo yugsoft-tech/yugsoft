@@ -20,14 +20,11 @@ import { Role } from '@prisma/client';
 @Controller('exams')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ExamsController {
-  constructor(private readonly examsService: ExamsService) { }
+  constructor(private readonly examsService: ExamsService) {}
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  create(
-    @Body() createExamDto: CreateExamDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createExamDto: CreateExamDto, @CurrentUser() user: any) {
     return this.examsService.create(createExamDto, {
       userId: user.userId,
       role: user.role,
@@ -37,10 +34,7 @@ export class ExamsController {
 
   @Get()
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
-  findAll(
-    @Query('classId') classId: string,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query('classId') classId: string, @CurrentUser() user: any) {
     return this.examsService.findAll(
       {
         userId: user.userId,

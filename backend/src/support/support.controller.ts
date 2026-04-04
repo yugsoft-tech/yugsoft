@@ -49,10 +49,7 @@ export class SupportController {
   }
 
   @Get('tickets/:id')
-  findOneTicket(
-    @Param('id') id: string,
-    @CurrentUser() user: any,
-  ) {
+  findOneTicket(@Param('id') id: string, @CurrentUser() user: any) {
     return this.supportService.findOneTicket(id, {
       userId: user.userId,
       role: user.role,

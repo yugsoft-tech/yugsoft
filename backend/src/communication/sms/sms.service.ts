@@ -101,9 +101,7 @@ export class SmsService {
         },
       });
 
-      const studentPhones = students
-        .map((s) => s.user.phone)
-        .filter(Boolean);
+      const studentPhones = students.map((s) => s.user.phone).filter(Boolean);
       recipients.push(...studentPhones);
 
       // Also get parent phones for students in the class

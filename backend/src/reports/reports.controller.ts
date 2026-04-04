@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Get,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { AttendanceReportDto } from './dto/attendance-report.dto';
 import { FeesReportDto } from './dto/fees-report.dto';
@@ -46,7 +41,7 @@ export class ReportsController {
   getExamsReport(
     @Query() examsReportDto: ExamsReportDto,
     @CurrentUser() user: any,
-    ) {
+  ) {
     return this.reportsService.getExamsReport(examsReportDto, {
       userId: user.userId,
       role: user.role,

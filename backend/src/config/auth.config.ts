@@ -7,4 +7,3 @@ export default registerAs('auth', () => ({
   refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   saltRounds: parseInt(process.env.SALT_ROUNDS, 10) || 10,
 }));
-

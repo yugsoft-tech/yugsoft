@@ -13,4 +13,3 @@ export class ListDocumentsDto extends PaginationDto {
   @IsEnum(DocumentType)
   documentType?: DocumentType;
 }
-

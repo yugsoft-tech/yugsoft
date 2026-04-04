@@ -28,7 +28,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AppController } from './app.controller';
 import authConfig from './config/auth.config';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -67,4 +66,3 @@ import authConfig from './config/auth.config';
   controllers: [AppController],
 })
 export class AppModule {}
-

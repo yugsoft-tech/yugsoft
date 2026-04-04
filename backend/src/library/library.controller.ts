@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { LibraryService } from './library.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -10,7 +19,7 @@ import { Role } from '@prisma/client';
 @Controller('library')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class LibraryController {
-  constructor(private readonly libraryService: LibraryService) { }
+  constructor(private readonly libraryService: LibraryService) {}
 
   @Post('books')
   @Roles(Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
@@ -46,4 +55,3 @@ export class LibraryController {
     return this.libraryService.removeBook(id, user.schoolId);
   }
 }
-

@@ -26,10 +26,7 @@ export class TeachersController {
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN)
-  create(
-    @Body() createTeacherDto: CreateTeacherDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createTeacherDto: CreateTeacherDto, @CurrentUser() user: any) {
     return this.teachersService.create(createTeacherDto, {
       userId: user.userId,
       role: user.role,
@@ -39,10 +36,7 @@ export class TeachersController {
 
   @Get()
   @Roles(Role.SCHOOL_ADMIN)
-  findAll(
-    @Query() listTeachersDto: ListTeachersDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listTeachersDto: ListTeachersDto, @CurrentUser() user: any) {
     return this.teachersService.findAll(listTeachersDto, {
       userId: user.userId,
       role: user.role,

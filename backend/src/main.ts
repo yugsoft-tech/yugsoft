@@ -17,13 +17,13 @@ async function bootstrap(): Promise<INestApplication> {
       }),
     );
 
-    const allowedOrigins = process.env.ALLOWED_ORIGINS 
-      ? process.env.ALLOWED_ORIGINS.split(',') 
+    const allowedOrigins = process.env.ALLOWED_ORIGINS
+      ? process.env.ALLOWED_ORIGINS.split(',')
       : [
-          'http://localhost:3001', 
-          'http://localhost:3000', 
+          'http://localhost:3001',
+          'http://localhost:3000',
           'https://yugsoft-utog.vercel.app',
-          'https://yugsoft.vercel.app'
+          'https://yugsoft.vercel.app',
         ];
 
     app.enableCors({
@@ -53,5 +53,3 @@ export default async (req: any, res: any) => {
   const instance = app.getHttpAdapter().getInstance();
   instance(req, res);
 };
-
-

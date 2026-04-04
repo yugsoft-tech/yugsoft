@@ -18,7 +18,10 @@ export class FeesService {
   /**
    * Determine fee status based on due date and current status
    */
-  private calculateFeeStatus(dueDate: Date, currentStatus: FeeStatus): FeeStatus {
+  private calculateFeeStatus(
+    dueDate: Date,
+    currentStatus: FeeStatus,
+  ): FeeStatus {
     // If already paid, keep it as paid
     if (currentStatus === FeeStatus.PAID) {
       return FeeStatus.PAID;
@@ -50,7 +53,9 @@ export class FeesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { studentId, amount, dueDate } = createFeeDto;
@@ -133,7 +138,9 @@ export class FeesService {
 
     if (currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('School admin must be associated with a school');
+        throw new ForbiddenException(
+          'School admin must be associated with a school',
+        );
       }
 
       // SCHOOL_ADMIN can view all fees in their school
@@ -294,7 +301,10 @@ export class FeesService {
 
     // RBAC checks
     if (currentUser.role === Role.SCHOOL_ADMIN) {
-      if (!currentUser.schoolId || fee.student.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        fee.student.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view fees for students in your school',
         );
@@ -417,9 +427,15 @@ export class FeesService {
 
     // Calculate statistics
     const totalFees = feesWithStatus.length;
-    const paidFees = feesWithStatus.filter((f) => f.status === FeeStatus.PAID).length;
-    const pendingFees = feesWithStatus.filter((f) => f.status === FeeStatus.PENDING).length;
-    const overdueFees = feesWithStatus.filter((f) => f.status === FeeStatus.OVERDUE).length;
+    const paidFees = feesWithStatus.filter(
+      (f) => f.status === FeeStatus.PAID,
+    ).length;
+    const pendingFees = feesWithStatus.filter(
+      (f) => f.status === FeeStatus.PENDING,
+    ).length;
+    const overdueFees = feesWithStatus.filter(
+      (f) => f.status === FeeStatus.OVERDUE,
+    ).length;
 
     const totalAmount = feesWithStatus.reduce((sum, f) => sum + f.amount, 0);
     const paidAmount = feesWithStatus
@@ -467,7 +483,9 @@ export class FeesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const fee = await this.prisma.fee.findUnique({
@@ -564,7 +582,9 @@ export class FeesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const fee = await this.prisma.fee.findUnique({
@@ -631,7 +651,9 @@ export class FeesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const fee = await this.prisma.fee.findUnique({
@@ -733,7 +755,7 @@ export class FeesService {
       d.setMonth(d.getMonth() - i);
       d.setDate(1);
       d.setHours(0, 0, 0, 0);
-      
+
       const nextMonth = new Date(d);
       nextMonth.setMonth(nextMonth.getMonth() + 1);
 
@@ -758,7 +780,7 @@ export class FeesService {
         outstandingBalance: outstandingBalance._sum.amount || 0,
         todayCollection: todayCollection._sum.amount || 0,
       },
-      recentTransactions: (recentTransactions as any[]).map(t => ({
+      recentTransactions: (recentTransactions as any[]).map((t) => ({
         id: t.id,
         studentName: `${t.student.user.firstName} ${t.student.user.lastName}`,
         class: t.student.class?.name || 'N/A',

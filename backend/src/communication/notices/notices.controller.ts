@@ -25,10 +25,7 @@ export class NoticesController {
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  create(
-    @Body() createNoticeDto: CreateNoticeDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createNoticeDto: CreateNoticeDto, @CurrentUser() user: any) {
     return this.noticesService.create(createNoticeDto, {
       userId: user.userId,
       role: user.role,
@@ -37,10 +34,7 @@ export class NoticesController {
   }
 
   @Get()
-  findAll(
-    @Query() listNoticesDto: ListNoticesDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listNoticesDto: ListNoticesDto, @CurrentUser() user: any) {
     return this.noticesService.findAll(listNoticesDto, {
       userId: user.userId,
       role: user.role,

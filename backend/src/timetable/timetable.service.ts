@@ -14,7 +14,7 @@ import { Role, DayOfWeek } from '@prisma/client';
 
 @Injectable()
 export class TimetableService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Convert time string (HH:mm) to minutes for comparison
@@ -79,7 +79,14 @@ export class TimetableService {
     });
 
     for (const entry of existingEntries) {
-      if (this.timeSlotsOverlap(startTime, endTime, entry.startTime, entry.endTime)) {
+      if (
+        this.timeSlotsOverlap(
+          startTime,
+          endTime,
+          entry.startTime,
+          entry.endTime,
+        )
+      ) {
         return {
           hasClash: true,
           conflictingEntry: entry,
@@ -103,7 +110,9 @@ export class TimetableService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { classId, day, startTime, endTime, subjectId, teacherId, room } =
@@ -157,9 +166,7 @@ export class TimetableService {
 
     // Verify teacher is assigned to the subject
     if (subject.teacherId !== teacherId) {
-      throw new BadRequestException(
-        'Teacher is not assigned to this subject',
-      );
+      throw new BadRequestException('Teacher is not assigned to this subject');
     }
 
     // Detect teacher clash
@@ -231,7 +238,9 @@ export class TimetableService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { classId, entries } = createWeeklyTimetableDto;
@@ -265,8 +274,7 @@ export class TimetableService {
     for (const entry of entries) {
       // Validate time range
       if (
-        this.timeToMinutes(entry.startTime) >=
-        this.timeToMinutes(entry.endTime)
+        this.timeToMinutes(entry.startTime) >= this.timeToMinutes(entry.endTime)
       ) {
         clashErrors.push(
           `Invalid time range for ${entry.day}: startTime must be before endTime`,
@@ -397,14 +405,20 @@ export class TimetableService {
 
     // RBAC: SCHOOL_ADMIN can view any class in their school
     if (currentUser.role === Role.SCHOOL_ADMIN) {
-      if (!currentUser.schoolId || classEntity.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        classEntity.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view timetable for classes in your school',
         );
       }
     }
     // Other roles (TEACHER, STUDENT, PARENT) can view if they belong to the school
-    else if (currentUser.schoolId && classEntity.schoolId !== currentUser.schoolId) {
+    else if (
+      currentUser.schoolId &&
+      classEntity.schoolId !== currentUser.schoolId
+    ) {
       throw new ForbiddenException(
         'Access denied. You can only view timetable for classes in your school',
       );
@@ -440,10 +454,7 @@ export class TimetableService {
           },
         },
       },
-      orderBy: [
-        { day: 'asc' },
-        { startTime: 'asc' },
-      ],
+      orderBy: [{ day: 'asc' }, { startTime: 'asc' }],
     });
 
     // Group by day for better structure
@@ -485,7 +496,9 @@ export class TimetableService {
     // SCHOOL_ADMIN can view all timetables in their school
     if (currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('School admin must be associated with a school');
+        throw new ForbiddenException(
+          'School admin must be associated with a school',
+        );
       }
 
       where.class = {
@@ -534,11 +547,7 @@ export class TimetableService {
           },
         },
       },
-      orderBy: [
-        { classId: 'asc' },
-        { day: 'asc' },
-        { startTime: 'asc' },
-      ],
+      orderBy: [{ classId: 'asc' }, { day: 'asc' }, { startTime: 'asc' }],
     });
 
     return timetables;
@@ -547,11 +556,15 @@ export class TimetableService {
   /**
    * Get current teacher's timetable
    */
-  async getMyTimetable(
-    currentUser: { userId: string; role: Role; schoolId?: string },
-  ) {
+  async getMyTimetable(currentUser: {
+    userId: string;
+    role: Role;
+    schoolId?: string;
+  }) {
     if (currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only teachers can access their own timetable');
+      throw new ForbiddenException(
+        'Only teachers can access their own timetable',
+      );
     }
 
     if (!currentUser.schoolId) {
@@ -570,11 +583,13 @@ export class TimetableService {
       return {
         teacher: {
           id: null,
-          name: `${currentUser['firstName'] || ''} ${currentUser['lastName'] || ''}`.trim() || 'Teacher',
+          name:
+            `${currentUser['firstName'] || ''} ${currentUser['lastName'] || ''}`.trim() ||
+            'Teacher',
         },
         timetable: {},
         totalEntries: 0,
-        message: 'Teacher profile not found. Please contact administration.'
+        message: 'Teacher profile not found. Please contact administration.',
       };
     }
 
@@ -597,10 +612,7 @@ export class TimetableService {
           },
         },
       },
-      orderBy: [
-        { day: 'asc' },
-        { startTime: 'asc' },
-      ],
+      orderBy: [{ day: 'asc' }, { startTime: 'asc' }],
     });
 
     // Group by day for better structure
@@ -622,7 +634,9 @@ export class TimetableService {
     return {
       teacher: {
         id: teacher.id,
-        name: `${currentUser['firstName'] || ''} ${currentUser['lastName'] || ''}`.trim() || 'Teacher',
+        name:
+          `${currentUser['firstName'] || ''} ${currentUser['lastName'] || ''}`.trim() ||
+          'Teacher',
       },
       timetable: groupedByDay,
       totalEntries: timetables.length,
@@ -674,12 +688,18 @@ export class TimetableService {
 
     // RBAC: Verify access based on school
     if (currentUser.role === Role.SCHOOL_ADMIN) {
-      if (!currentUser.schoolId || timetable.class.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        timetable.class.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view timetable for classes in your school',
         );
       }
-    } else if (currentUser.schoolId && timetable.class.schoolId !== currentUser.schoolId) {
+    } else if (
+      currentUser.schoolId &&
+      timetable.class.schoolId !== currentUser.schoolId
+    ) {
       throw new ForbiddenException(
         'Access denied. You can only view timetable for classes in your school',
       );
@@ -702,7 +722,9 @@ export class TimetableService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const timetable = await this.prisma.timetable.findUnique({
@@ -835,7 +857,9 @@ export class TimetableService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const timetable = await this.prisma.timetable.findUnique({

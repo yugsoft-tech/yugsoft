@@ -36,7 +36,9 @@ export class UsersService {
     // SCHOOL_ADMIN can only see users from their school
     if (currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId) {
-        console.warn(`[UsersService] Sub-optimal security state: User ${currentUser.userId} listing users without schoolId association.`);
+        console.warn(
+          `[UsersService] Sub-optimal security state: User ${currentUser.userId} listing users without schoolId association.`,
+        );
       }
       where.schoolId = currentUser.schoolId;
     }
@@ -140,7 +142,9 @@ export class UsersService {
       currentUser.role === Role.SCHOOL_ADMIN &&
       user.schoolId !== currentUser.schoolId
     ) {
-      throw new ForbiddenException('Access denied. You can only access users from your school');
+      throw new ForbiddenException(
+        'Access denied. You can only access users from your school',
+      );
     }
 
     return user;
@@ -170,7 +174,9 @@ export class UsersService {
     // RBAC: SCHOOL_ADMIN can only create users for their school
     if (currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('School admin must be associated with a school');
+        throw new ForbiddenException(
+          'School admin must be associated with a school',
+        );
       }
       if (schoolId && schoolId !== currentUser.schoolId) {
         throw new ForbiddenException(
@@ -185,12 +191,16 @@ export class UsersService {
 
     // SUPER_ADMIN cannot create another SUPER_ADMIN
     if (role === Role.SUPER_ADMIN && currentUser.role !== Role.SUPER_ADMIN) {
-      throw new ForbiddenException('Only SUPER_ADMIN can create SUPER_ADMIN users');
+      throw new ForbiddenException(
+        'Only SUPER_ADMIN can create SUPER_ADMIN users',
+      );
     }
 
     // Validate role restrictions
     if (role === Role.SUPER_ADMIN && schoolId) {
-      throw new BadRequestException('SUPER_ADMIN cannot be associated with a school');
+      throw new BadRequestException(
+        'SUPER_ADMIN cannot be associated with a school',
+      );
     }
 
     // Non-SUPER_ADMIN roles must have a school
@@ -271,7 +281,9 @@ export class UsersService {
 
     // Prevent creating SUPER_ADMIN
     if (updateUserDto.role === Role.SUPER_ADMIN) {
-      throw new ForbiddenException('Only existing SUPER_ADMIN can be SUPER_ADMIN');
+      throw new ForbiddenException(
+        'Only existing SUPER_ADMIN can be SUPER_ADMIN',
+      );
     }
 
     // SCHOOL_ADMIN cannot change schoolId

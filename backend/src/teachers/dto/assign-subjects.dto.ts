@@ -6,4 +6,3 @@ export class AssignSubjectsDto {
   @IsNotEmpty()
   subjectIds: string[];
 }
-

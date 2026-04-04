@@ -8,11 +8,11 @@ import { Role } from '@prisma/client';
 @Controller('dashboard')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class DashboardController {
-  constructor(private readonly dashboardService: DashboardService) { }
+  constructor(private readonly dashboardService: DashboardService) {}
 
   @Get('admin')
   @Roles(Role.SCHOOL_ADMIN)
-  getAdminDashboard(@CurrentUser() user: any) { 
+  getAdminDashboard(@CurrentUser() user: any) {
     return this.dashboardService.getAdminStats({
       userId: user.userId,
       role: user.role,

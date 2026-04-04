@@ -12,7 +12,7 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Send message

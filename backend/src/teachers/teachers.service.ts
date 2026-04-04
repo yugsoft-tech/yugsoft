@@ -31,7 +31,9 @@ export class TeachersService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const {
@@ -187,7 +189,9 @@ export class TeachersService {
     }
 
     if (!currentUser.schoolId) {
-      console.warn(`[TeachersService] Sub-optimal security state: User ${currentUser.userId} listing teachers without schoolId association.`);
+      console.warn(
+        `[TeachersService] Sub-optimal security state: User ${currentUser.userId} listing teachers without schoolId association.`,
+      );
     }
 
     const { page = 1, limit = 10, search } = listTeachersDto;
@@ -313,7 +317,9 @@ export class TeachersService {
         );
       }
     } else {
-      throw new ForbiddenException('Only SCHOOL_ADMIN and TEACHER can view teacher profiles');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN and TEACHER can view teacher profiles',
+      );
     }
 
     return teacher;
@@ -333,7 +339,9 @@ export class TeachersService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const teacher = await this.prisma.teacher.findUnique({
@@ -371,9 +379,15 @@ export class TeachersService {
       await this.prisma.user.update({
         where: { id: teacher.userId },
         data: {
-          ...(updateTeacherDto.firstName && { firstName: updateTeacherDto.firstName }),
-          ...(updateTeacherDto.lastName && { lastName: updateTeacherDto.lastName }),
-          ...(updateTeacherDto.phone !== undefined && { phone: updateTeacherDto.phone }),
+          ...(updateTeacherDto.firstName && {
+            firstName: updateTeacherDto.firstName,
+          }),
+          ...(updateTeacherDto.lastName && {
+            lastName: updateTeacherDto.lastName,
+          }),
+          ...(updateTeacherDto.phone !== undefined && {
+            phone: updateTeacherDto.phone,
+          }),
         },
       });
     }
@@ -419,7 +433,9 @@ export class TeachersService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const teacher = await this.prisma.teacher.findUnique({
@@ -456,7 +472,9 @@ export class TeachersService {
     );
 
     if (invalidSubjects.length > 0) {
-      throw new ForbiddenException('All subjects must belong to the same school');
+      throw new ForbiddenException(
+        'All subjects must belong to the same school',
+      );
     }
 
     // Check if any subject is already assigned to another teacher
@@ -531,7 +549,9 @@ export class TeachersService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const teacher = await this.prisma.teacher.findUnique({

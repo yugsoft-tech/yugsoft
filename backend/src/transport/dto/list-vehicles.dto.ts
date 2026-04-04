@@ -8,4 +8,3 @@ export class ListVehiclesDto extends PaginationDto {
   @Type(() => String)
   route?: string;
 }
-

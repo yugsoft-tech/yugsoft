@@ -34,10 +34,7 @@ export class ChatController {
   }
 
   @Get()
-  findAll(
-    @Query() listMessagesDto: ListMessagesDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listMessagesDto: ListMessagesDto, @CurrentUser() user: any) {
     return this.chatService.findAll(listMessagesDto, {
       userId: user.userId,
       role: user.role,
@@ -46,10 +43,7 @@ export class ChatController {
   }
 
   @Get('conversation/:userId')
-  getConversation(
-    @Param('userId') userId: string,
-    @CurrentUser() user: any,
-  ) {
+  getConversation(@Param('userId') userId: string, @CurrentUser() user: any) {
     return this.chatService.getConversation(userId, {
       userId: user.userId,
       role: user.role,

@@ -12,7 +12,7 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class ClassesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Create class for a school
@@ -27,7 +27,9 @@ export class ClassesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { name } = createClassDto;
@@ -72,7 +74,11 @@ export class ClassesService {
    * List all classes for the school with their sections
    * Only SCHOOL_ADMIN can list classes from their school
    */
-  async findAll(currentUser: { userId: string; role: Role; schoolId?: string }) {
+  async findAll(currentUser: {
+    userId: string;
+    role: Role;
+    schoolId?: string;
+  }) {
     if (
       currentUser.role !== Role.SCHOOL_ADMIN &&
       currentUser.role !== Role.TEACHER &&
@@ -126,7 +132,9 @@ export class ClassesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const classEntity = await this.prisma.class.findUnique({
@@ -179,7 +187,9 @@ export class ClassesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const classEntity = await this.prisma.class.findUnique({
@@ -246,7 +256,9 @@ export class ClassesService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const classEntity = await this.prisma.class.findUnique({

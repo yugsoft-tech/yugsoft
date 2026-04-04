@@ -20,4 +20,3 @@ export class AttendanceReportDto {
   @IsDateString()
   endDate?: string;
 }
-

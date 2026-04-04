@@ -57,7 +57,11 @@ export class PlansController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @CurrentUser() user: any, @Request() req: any) {
+  remove(
+    @Param('id') id: string,
+    @CurrentUser() user: any,
+    @Request() req: any,
+  ) {
     const ip = req.ip || req.connection?.remoteAddress || 'unknown';
     return this.plansService.remove(id, user.userId, ip);
   }

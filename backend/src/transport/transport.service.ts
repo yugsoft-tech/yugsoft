@@ -29,7 +29,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { number, driver, route } = createVehicleDto;
@@ -77,7 +79,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { page = 1, limit = 10, route } = listVehiclesDto;
@@ -132,7 +136,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({
@@ -175,7 +181,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({
@@ -247,7 +255,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { vehicleId, studentIds } = assignRouteDto;
@@ -327,11 +337,15 @@ export class TransportService {
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
     if (currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only SCHOOL_ADMIN can view route assignments');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN can view route assignments',
+      );
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({
@@ -411,7 +425,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({

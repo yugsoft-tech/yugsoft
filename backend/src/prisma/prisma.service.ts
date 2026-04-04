@@ -1,9 +1,17 @@
-import { Injectable, OnModuleInit, OnModuleDestroy, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  OnModuleInit,
+  OnModuleDestroy,
+  Logger,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+export class PrismaService
+  extends PrismaClient
+  implements OnModuleInit, OnModuleDestroy
+{
   private readonly logger = new Logger(PrismaService.name);
 
   constructor(private configService: ConfigService) {
@@ -15,7 +23,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   async onModuleInit() {
     const maxRetries = this.configService.get<number>('DB_RETRY_ATTEMPTS') || 5;
     const retryDelay = this.configService.get<number>('DB_RETRY_DELAY') || 2000;
-    
+
     let currentAttempt = 0;
     let connected = false;
 
@@ -29,12 +37,14 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         this.logger.error(
           `Failed to connect to the database (Attempt ${currentAttempt}/${maxRetries}). Error: ${error.message}`,
         );
-        
+
         if (currentAttempt < maxRetries) {
           this.logger.log(`Retrying in ${retryDelay}ms...`);
           await new Promise((resolve) => setTimeout(resolve, retryDelay));
         } else {
-          this.logger.error('Max database connection retries reached. Exiting...');
+          this.logger.error(
+            'Max database connection retries reached. Exiting...',
+          );
           throw error;
         }
       }

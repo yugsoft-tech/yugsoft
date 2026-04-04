@@ -20,13 +20,10 @@ import { Role } from '@prisma/client';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.SUPER_ADMIN)
 export class ClassesController {
-  constructor(private readonly classesService: ClassesService) { }
+  constructor(private readonly classesService: ClassesService) {}
 
   @Post()
-  create(
-    @Body() createClassDto: CreateClassDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createClassDto: CreateClassDto, @CurrentUser() user: any) {
     return this.classesService.create(createClassDto, {
       userId: user.userId,
       role: user.role,

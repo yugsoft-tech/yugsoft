@@ -13,4 +13,3 @@ export class ListNoticesDto extends PaginationDto {
   @Type(() => String)
   classId?: string;
 }
-

@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsDateString, IsEnum, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsDateString,
+  IsEnum,
+  IsOptional,
+} from 'class-validator';
 
 export enum AttendanceStatus {
   PRESENT = 'PRESENT',
@@ -24,4 +30,3 @@ export class CreateAttendanceDto {
   @IsOptional()
   remarks?: string;
 }
-

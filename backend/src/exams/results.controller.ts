@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Param,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, UseGuards } from '@nestjs/common';
 import { ResultsService } from './results.service';
 import { ViewResultsDto } from './dto/view-results.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
@@ -16,14 +9,11 @@ import { Role } from '@prisma/client';
 @Controller('results')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ResultsController {
-  constructor(private readonly resultsService: ResultsService) { }
+  constructor(private readonly resultsService: ResultsService) {}
 
   @Post('generate/:examId')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  generateResults(
-    @Param('examId') examId: string,
-    @CurrentUser() user: any,
-  ) {
+  generateResults(@Param('examId') examId: string, @CurrentUser() user: any) {
     return this.resultsService.generateResults(examId, {
       userId: user.userId,
       role: user.role,
@@ -46,10 +36,7 @@ export class ResultsController {
 
   @Get('exam/:examId')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT, Role.PARENT)
-  getExamResults(
-    @Param('examId') examId: string,
-    @CurrentUser() user: any,
-  ) {
+  getExamResults(@Param('examId') examId: string, @CurrentUser() user: any) {
     return this.resultsService.getExamResults(examId, {
       userId: user.userId,
       role: user.role,

@@ -6,7 +6,10 @@ import {
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
-import { PaginationDto, PaginatedResult } from '../../common/utils/pagination.dto';
+import {
+  PaginationDto,
+  PaginatedResult,
+} from '../../common/utils/pagination.dto';
 import * as bcrypt from 'bcrypt';
 import { Role } from '@prisma/client';
 
@@ -34,7 +37,9 @@ export class SchoolsService {
     });
 
     if (existingSchool) {
-      throw new ConflictException('School with this email or code already exists');
+      throw new ConflictException(
+        'School with this email or code already exists',
+      );
     }
 
     // Check if admin email already exists

@@ -25,10 +25,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(
-    @Body() createUserDto: CreateUserDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createUserDto: CreateUserDto, @CurrentUser() user: any) {
     return this.usersService.create(createUserDto, {
       userId: user.userId,
       role: user.role,
@@ -37,10 +34,7 @@ export class UsersController {
   }
 
   @Get()
-  findAll(
-    @Query() listUsersDto: ListUsersDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listUsersDto: ListUsersDto, @CurrentUser() user: any) {
     return this.usersService.findAll(listUsersDto, {
       userId: user.userId,
       role: user.role,

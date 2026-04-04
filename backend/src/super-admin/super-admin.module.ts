@@ -7,4 +7,3 @@ import { SystemLogsModule } from './system-logs/system-logs.module';
   imports: [SchoolsModule, PlansModule, SystemLogsModule],
 })
 export class SuperAdminModule {}
-

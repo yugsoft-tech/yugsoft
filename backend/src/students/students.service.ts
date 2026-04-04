@@ -15,7 +15,7 @@ import { Role, Gender } from '@prisma/client';
 
 @Injectable()
 export class StudentsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Create student linked to User
@@ -30,7 +30,9 @@ export class StudentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const {
@@ -70,7 +72,6 @@ export class StudentsService {
         'Access denied. You can only create students in classes from your school',
       );
     }
-
 
     // Verify section exists and belongs to the class
     const section = await this.prisma.section.findUnique({
@@ -118,9 +119,7 @@ export class StudentsService {
       }
 
       if (parent.schoolId !== currentUser.schoolId) {
-        throw new ForbiddenException(
-          'Parent must belong to the same school',
-        );
+        throw new ForbiddenException('Parent must belong to the same school');
       }
     }
 
@@ -251,9 +250,9 @@ export class StudentsService {
   }
 
   /**
- * Get logged-in student's own profile
- * Used by Student Dashboard
- */
+   * Get logged-in student's own profile
+   * Used by Student Dashboard
+   */
   async findMe(currentUser: { userId: string; role: Role }) {
     if (currentUser.role !== Role.STUDENT) {
       throw new ForbiddenException('Only students can access this resource');
@@ -310,10 +309,18 @@ export class StudentsService {
     }
 
     if (!currentUser.schoolId && currentUser.role !== Role.SUPER_ADMIN) {
-      console.warn(`[StudentsService] Sub-optimal security state: User ${currentUser.userId} listing students without schoolId association.`);
+      console.warn(
+        `[StudentsService] Sub-optimal security state: User ${currentUser.userId} listing students without schoolId association.`,
+      );
     }
 
-    const { page = 1, limit = 10, classId, sectionId, search } = listStudentsDto;
+    const {
+      page = 1,
+      limit = 10,
+      classId,
+      sectionId,
+      search,
+    } = listStudentsDto;
     const skip = (page - 1) * limit;
 
     const where: any = {};
@@ -439,11 +446,15 @@ export class StudentsService {
       currentUser.role !== Role.SCHOOL_ADMIN &&
       currentUser.role !== Role.TEACHER
     ) {
-      throw new ForbiddenException('Insufficient permissions to view students by class');
+      throw new ForbiddenException(
+        'Insufficient permissions to view students by class',
+      );
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     // Verify class exists and belongs to the school
@@ -586,7 +597,9 @@ export class StudentsService {
         );
       }
     } else {
-      throw new ForbiddenException('Only SCHOOL_ADMIN and STUDENT can view student profiles');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN and STUDENT can view student profiles',
+      );
     }
 
     return student;
@@ -606,7 +619,9 @@ export class StudentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const student = await this.prisma.student.findUnique({
@@ -680,13 +695,23 @@ export class StudentsService {
     }
 
     // Update user info if provided
-    if (updateStudentDto.firstName || updateStudentDto.lastName || updateStudentDto.phone) {
+    if (
+      updateStudentDto.firstName ||
+      updateStudentDto.lastName ||
+      updateStudentDto.phone
+    ) {
       await this.prisma.user.update({
         where: { id: student.userId },
         data: {
-          ...(updateStudentDto.firstName && { firstName: updateStudentDto.firstName }),
-          ...(updateStudentDto.lastName && { lastName: updateStudentDto.lastName }),
-          ...(updateStudentDto.phone !== undefined && { phone: updateStudentDto.phone }),
+          ...(updateStudentDto.firstName && {
+            firstName: updateStudentDto.firstName,
+          }),
+          ...(updateStudentDto.lastName && {
+            lastName: updateStudentDto.lastName,
+          }),
+          ...(updateStudentDto.phone !== undefined && {
+            phone: updateStudentDto.phone,
+          }),
         },
       });
     }
@@ -749,7 +774,9 @@ export class StudentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const student = await this.prisma.student.findUnique({
@@ -785,7 +812,6 @@ export class StudentsService {
     });
   }
 
-
   /**
    * Promote students to a new class
    */
@@ -798,7 +824,9 @@ export class StudentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { studentIds, targetClassId } = promoteStudentsDto;
@@ -809,11 +837,15 @@ export class StudentsService {
     });
 
     if (!targetClass) {
-      throw new NotFoundException(`Target class with ID ${targetClassId} not found`);
+      throw new NotFoundException(
+        `Target class with ID ${targetClassId} not found`,
+      );
     }
 
     if (targetClass.schoolId !== currentUser.schoolId) {
-      throw new ForbiddenException('Target class must belong to the same school');
+      throw new ForbiddenException(
+        'Target class must belong to the same school',
+      );
     }
 
     // Update students

@@ -39,15 +39,11 @@ export class DocumentsController {
       throw new BadRequestException('File is required');
     }
 
-    return this.documentsService.uploadDocument(
-      uploadDocumentDto,
-      file,
-      {
-        userId: user.userId,
-        role: user.role,
-        schoolId: user.schoolId,
-      },
-    );
+    return this.documentsService.uploadDocument(uploadDocumentDto, file, {
+      userId: user.userId,
+      role: user.role,
+      schoolId: user.schoolId,
+    });
   }
 
   @Get()
@@ -75,10 +71,7 @@ export class DocumentsController {
   }
 
   @Get(':id/url')
-  getDocumentUrl(
-    @Param('id') id: string,
-    @CurrentUser() user: any,
-  ) {
+  getDocumentUrl(@Param('id') id: string, @CurrentUser() user: any) {
     return this.documentsService.getDocumentUrl(id, {
       userId: user.userId,
       role: user.role,

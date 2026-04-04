@@ -8,4 +8,3 @@ export class ListMessagesDto extends PaginationDto {
   @Type(() => String)
   receiverId?: string;
 }
-

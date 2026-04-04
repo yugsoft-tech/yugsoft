@@ -1,12 +1,13 @@
 import { LoggerService } from '@nestjs/common';
 import * as winston from 'winston';
+import * as fs from 'fs';
+import * as path from 'path';
 
 /**
  * Detect Vercel serverless environment
  */
 const isVercel =
-  process.env.VERCEL === '1' ||
-  process.env.VERCEL_ENV !== undefined;
+  process.env.VERCEL === '1' || process.env.VERCEL_ENV !== undefined;
 
 export class AppLogger implements LoggerService {
   private readonly logger: winston.Logger;
@@ -38,8 +39,6 @@ export class AppLogger implements LoggerService {
     /**
      * 🟢 LOCAL / RENDER: FILE + CONSOLE
      */
-    const fs = require('fs');
-    const path = require('path');
 
     const logDir = path.join(process.cwd(), 'logs');
     if (!fs.existsSync(logDir)) {
@@ -89,8 +88,7 @@ export class AppLogger implements LoggerService {
       const formattedMessage = this.formatMessage(message, optionalParams);
       const trace = optionalParams.find(
         (p) =>
-          typeof p === 'string' &&
-          (p.includes('at ') || p.includes('Error')),
+          typeof p === 'string' && (p.includes('at ') || p.includes('Error')),
       );
 
       trace
@@ -131,9 +129,7 @@ export class AppLogger implements LoggerService {
     if (typeof message === 'string') {
       return optionalParams.length
         ? `${message} ${optionalParams
-            .map((p) =>
-              typeof p === 'object' ? JSON.stringify(p) : String(p),
-            )
+            .map((p) => (typeof p === 'object' ? JSON.stringify(p) : String(p)))
             .join(' ')}`
         : message;
     }

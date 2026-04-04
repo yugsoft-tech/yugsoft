@@ -11,7 +11,7 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class ResultsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Calculate grade based on percentage
@@ -35,8 +35,13 @@ export class ResultsService {
     examId: string,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can generate results');
+    if (
+      currentUser.role !== Role.TEACHER &&
+      currentUser.role !== Role.SCHOOL_ADMIN
+    ) {
+      throw new ForbiddenException(
+        'Only TEACHER or SCHOOL_ADMIN can generate results',
+      );
     }
 
     if (!currentUser.schoolId) {
@@ -103,10 +108,13 @@ export class ResultsService {
     const highestMarks = Math.max(...results.map((r) => r.marks));
     const lowestMarks = Math.min(...results.map((r) => r.marks));
 
-    const gradeDistribution = results.reduce((acc, r) => {
-      acc[r.grade] = (acc[r.grade] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const gradeDistribution = results.reduce(
+      (acc, r) => {
+        acc[r.grade] = (acc[r.grade] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     return {
       exam: {
@@ -206,9 +214,7 @@ export class ResultsService {
         );
       }
     } else {
-      throw new ForbiddenException(
-        'Access denied',
-      );
+      throw new ForbiddenException('Access denied');
     }
 
     // Get all exam results for the student
@@ -238,25 +244,26 @@ export class ResultsService {
     });
 
     // Calculate grades for each result
-    const resultsWithGrades = await Promise.all(results.map(async (result) => {
-      const examDetail = await this.prisma.exam.findUnique({ where: { id: result.examId } });
-      const totalMarks = (examDetail as any)?.totalMarks || 100;
-      const percentage = (result.marks / totalMarks) * 100;
-      const grade = this.calculateGrade(percentage);
+    const resultsWithGrades = await Promise.all(
+      results.map(async (result) => {
+        const examDetail = await this.prisma.exam.findUnique({
+          where: { id: result.examId },
+        });
+        const totalMarks = (examDetail as any)?.totalMarks || 100;
+        const percentage = (result.marks / totalMarks) * 100;
+        const grade = this.calculateGrade(percentage);
 
-      return {
-        ...result,
-        percentage: percentage.toFixed(2),
-        grade,
-      };
-    }));
+        return {
+          ...result,
+          percentage: percentage.toFixed(2),
+          grade,
+        };
+      }),
+    );
 
     // Calculate overall statistics
     if (resultsWithGrades.length > 0) {
-      const totalMarks = resultsWithGrades.reduce(
-        (sum, r) => sum + r.marks,
-        0,
-      );
+      const totalMarks = resultsWithGrades.reduce((sum, r) => sum + r.marks, 0);
       const averageMarks = totalMarks / resultsWithGrades.length;
       const overallGrade = this.calculateGrade(averageMarks);
 
@@ -330,13 +337,19 @@ export class ResultsService {
 
     // RBAC checks
     if (currentUser.role === Role.TEACHER) {
-      if (!currentUser.schoolId || exam.class.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        exam.class.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view results for exams in your school',
         );
       }
     } else if (currentUser.role === Role.SCHOOL_ADMIN) {
-      if (!currentUser.schoolId || exam.class.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        exam.class.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view results for exams in your school',
         );
@@ -370,7 +383,7 @@ export class ResultsService {
       const studentClassIds = parent.students.map((s) => s.classId);
       if (!studentClassIds.includes(exam.classId)) {
         throw new ForbiddenException(
-          'Access denied. You can only view results for exams in your linked students\' classes',
+          "Access denied. You can only view results for exams in your linked students' classes",
         );
       }
     } else {
@@ -393,18 +406,18 @@ export class ResultsService {
 
     // Calculate statistics
     if (resultsWithGrades.length > 0) {
-      const totalMarks = resultsWithGrades.reduce(
-        (sum, r) => sum + r.marks,
-        0,
-      );
+      const totalMarks = resultsWithGrades.reduce((sum, r) => sum + r.marks, 0);
       const averageMarks = totalMarks / resultsWithGrades.length;
       const highestMarks = Math.max(...resultsWithGrades.map((r) => r.marks));
       const lowestMarks = Math.min(...resultsWithGrades.map((r) => r.marks));
 
-      const gradeDistribution = resultsWithGrades.reduce((acc, r) => {
-        acc[r.grade] = (acc[r.grade] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
+      const gradeDistribution = resultsWithGrades.reduce(
+        (acc, r) => {
+          acc[r.grade] = (acc[r.grade] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
 
       return {
         exam: {
@@ -474,13 +487,19 @@ export class ResultsService {
 
     // RBAC checks
     if (currentUser.role === Role.TEACHER) {
-      if (!currentUser.schoolId || classEntity.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        classEntity.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view results for classes in your school',
         );
       }
     } else if (currentUser.role === Role.SCHOOL_ADMIN) {
-      if (!currentUser.schoolId || classEntity.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        classEntity.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view results for classes in your school',
         );
@@ -514,7 +533,7 @@ export class ResultsService {
       const studentClassIds = parent.students.map((s) => s.classId);
       if (!studentClassIds.includes(classId)) {
         throw new ForbiddenException(
-          'Access denied. You can only view results for your linked students\' classes',
+          "Access denied. You can only view results for your linked students' classes",
         );
       }
     } else {

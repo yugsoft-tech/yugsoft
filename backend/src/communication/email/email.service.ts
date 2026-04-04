@@ -96,7 +96,6 @@ export class EmailService {
           },
         },
       });
-      
 
       const studentEmails = students.map((s) => s.user.email);
       recipients.push(...studentEmails);

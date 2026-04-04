@@ -1,8 +1,4 @@
-import {
-  IsNotEmpty,
-  IsUUID,
-  IsArray,
-} from 'class-validator';
+import { IsNotEmpty, IsUUID, IsArray } from 'class-validator';
 
 export class AssignRouteDto {
   @IsUUID()
@@ -14,4 +10,3 @@ export class AssignRouteDto {
   @IsNotEmpty()
   studentIds: string[];
 }
-

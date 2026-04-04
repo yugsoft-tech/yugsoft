@@ -21,4 +21,3 @@ export class CreateBookDto {
   @IsOptional()
   quantity?: number;
 }
-

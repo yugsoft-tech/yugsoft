@@ -7,4 +7,3 @@ export default registerAs('aws', () => ({
   s3Bucket: process.env.AWS_S3_BUCKET,
   s3Endpoint: process.env.AWS_S3_ENDPOINT,
 }));
-

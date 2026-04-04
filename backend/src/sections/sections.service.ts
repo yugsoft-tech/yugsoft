@@ -27,7 +27,9 @@ export class SectionsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { name, classId } = createSectionDto;
@@ -98,7 +100,9 @@ export class SectionsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     // Verify the class exists and belongs to the school
@@ -143,7 +147,9 @@ export class SectionsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const section = await this.prisma.section.findUnique({
@@ -191,7 +197,9 @@ export class SectionsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const section = await this.prisma.section.findUnique({
@@ -263,7 +271,9 @@ export class SectionsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const section = await this.prisma.section.findUnique({
