@@ -35,10 +35,10 @@ import {
 } from '@/components/ui/DropdownMenu';
 
 const vehicleSchema = z.object({
-    vehicleNo: z.string().min(3, 'Vehicle number is required'),
-    vehicleModel: z.string().min(2, 'Model name is required'),
-    driverName: z.string().min(3, 'Driver name is required'),
-    driverPhone: z.string().min(10, 'Valid phone number is required'),
+    number: z.string().min(3, 'Vehicle number is required'),
+    model: z.string().min(2, 'Model name is required'),
+    driver: z.string().min(3, 'Driver name is required'),
+    phone: z.string().min(10, 'Valid phone number is required'),
     capacity: z.number().min(1, 'Capacity is required'),
 });
 
@@ -125,7 +125,7 @@ export default function VehicleFleet() {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vehicle Number</label>
                                         <input
-                                            {...register('vehicleNo')}
+                                            {...register('number')}
                                             placeholder="UP-32-AB-1234..."
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
                                         />
@@ -133,7 +133,7 @@ export default function VehicleFleet() {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vehicle Model</label>
                                         <input
-                                            {...register('vehicleModel')}
+                                            {...register('model')}
                                             placeholder="Tata Starbus 2024..."
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
                                         />
@@ -143,7 +143,7 @@ export default function VehicleFleet() {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Driver Name</label>
                                         <input
-                                            {...register('driverName')}
+                                            {...register('driver')}
                                             placeholder="John Doe..."
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
                                         />
@@ -152,7 +152,7 @@ export default function VehicleFleet() {
                                         <div className="space-y-3">
                                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Driver Phone</label>
                                             <input
-                                                {...register('driverPhone')}
+                                                {...register('phone')}
                                                 placeholder="+91 98765 43210..."
                                                 className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
                                             />
@@ -217,10 +217,10 @@ export default function VehicleFleet() {
                                             <div className="flex justify-between items-start">
                                                 <div className="space-y-1">
                                                     <div className="flex items-center gap-2">
-                                                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{v.vehicleNo}</h3>
+                                                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{v.number}</h3>
                                                         <Badge color="emerald" className="bg-emerald-500/10 text-emerald-500 border-none text-[8px] font-black uppercase tracking-widest">Active</Badge>
                                                     </div>
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{v.vehicleModel}</p>
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{v.model}</p>
                                                 </div>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
@@ -248,7 +248,7 @@ export default function VehicleFleet() {
                                                     </div>
                                                     <div>
                                                         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Driver</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase truncate">{v.driverName}</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase truncate">{v.driver}</p>
                                                     </div>
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4">

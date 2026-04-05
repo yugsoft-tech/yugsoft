@@ -34,7 +34,7 @@ export class TransportService {
       );
     }
 
-    const { number, driver, route } = createVehicleDto;
+    const { number, driver, model, phone, capacity, route } = createVehicleDto;
 
     // Check if vehicle number already exists in the school
     const existingVehicle = await this.prisma.vehicle.findFirst({
@@ -55,6 +55,9 @@ export class TransportService {
       data: {
         number,
         driver,
+        model,
+        phone,
+        capacity,
         schoolId: currentUser.schoolId,
       },
     });
@@ -223,6 +226,9 @@ export class TransportService {
       data: {
         ...(updateVehicleDto.number && { number: updateVehicleDto.number }),
         ...(updateVehicleDto.driver && { driver: updateVehicleDto.driver }),
+        ...(updateVehicleDto.model && { model: updateVehicleDto.model }),
+        ...(updateVehicleDto.phone && { phone: updateVehicleDto.phone }),
+        ...(updateVehicleDto.capacity && { capacity: updateVehicleDto.capacity }),
       },
       include: {
         school: {

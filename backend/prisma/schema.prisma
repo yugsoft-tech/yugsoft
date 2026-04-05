@@ -367,9 +367,12 @@ model Book {
 }
 
 model Vehicle {
-  id     String @id @default(uuid())
-  number String
-  driver String
+  id       String @id @default(uuid())
+  number   String
+  driver   String
+  model    String?
+  phone    String?
+  capacity Int?
 
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])

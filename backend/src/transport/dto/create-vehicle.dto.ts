@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
 
 export class CreateVehicleDto {
   @IsString()
@@ -8,6 +8,18 @@ export class CreateVehicleDto {
   @IsString()
   @IsNotEmpty()
   driver: string;
+
+  @IsString()
+  @IsOptional()
+  model?: string;
+
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @IsInt()
+  @IsOptional()
+  capacity?: number;
 
   @IsString()
   @IsOptional()
