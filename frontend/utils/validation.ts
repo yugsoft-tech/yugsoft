@@ -8,9 +8,10 @@ export const studentSchema = z.object({
     rollNumber: z.string().min(3, 'Roll number is required'),
     dob: z.string().min(1, 'Date of birth is required'),
     gender: z.enum(['MALE', 'FEMALE', 'OTHER']),
-    classId: z.string().min(1, 'Please select a class'),
-    sectionId: z.string().min(1, 'Please select a section'),
+    classId: z.string().uuid('Invalid Class Selection'),
+    sectionId: z.string().uuid('Invalid Section Selection'),
     password: z.string().min(8, 'Password must be at least 8 characters'),
+
     parentId: z.string().optional(),
     // Parent details for new creation
     parentFirstName: z.string().optional().or(z.literal('')),

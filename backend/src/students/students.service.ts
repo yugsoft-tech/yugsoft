@@ -203,15 +203,19 @@ export class StudentsService {
       // Link or Create Parent
       let finalParentId = parentId;
 
-      if (!finalParentId && parentEmail && parentFirstName && parentLastName) {
+      if (!finalParentId && (parentEmail || parentFatherName || parentMotherName)) {
+        // Derive names for User record
+        const firstName = parentFirstName || parentFatherName?.split(' ')[0] || parentMotherName?.split(' ')[0] || 'Parent';
+        const lastName = parentLastName || parentFatherName?.split(' ').slice(1).join(' ') || parentMotherName?.split(' ').slice(1).join(' ') || 'User';
+
         // Create a new parent user
-        const parentHashedPassword = await bcrypt.hash('Parent@123', 10); // Default password for new parents
+        const parentHashedPassword = await bcrypt.hash('Parent@123', 10);
         const parentUser = await tx.user.create({
           data: {
-            email: parentEmail,
+            email: parentEmail || `parent_${Date.now()}_${Math.floor(Math.random() * 1000)}@edu.com`,
             password: parentHashedPassword,
-            firstName: parentFirstName,
-            lastName: parentLastName,
+            firstName,
+            lastName,
             phone: parentPhone,
             role: Role.PARENT,
             schoolId: currentUser.schoolId,
@@ -635,6 +639,54 @@ export class StudentsService {
     }
 
     return student;
+  }
+
+  /**
+   * Get student documents
+   * Only SCHOOL_ADMIN, TEACHER and STUDENT can view documents
+   */
+  async getDocuments(
+    id: string,
+    currentUser: { userId: string; role: Role; schoolId?: string },
+  ) {
+    const student = await this.prisma.student.findUnique({
+      where: { id },
+      select: { id: true, userId: true, schoolId: true },
+    });
+
+    if (!student) {
+      throw new NotFoundException(`Student with ID ${id} not found`);
+    }
+
+    // RBAC checks
+    if (currentUser.role === Role.SCHOOL_ADMIN || currentUser.role === Role.TEACHER) {
+      if (!currentUser.schoolId || student.schoolId !== currentUser.schoolId) {
+        throw new ForbiddenException(
+          'Access denied. You can only view documents of students from your school',
+        );
+      }
+    } else if (currentUser.role === Role.STUDENT) {
+      if (student.userId !== currentUser.userId) {
+        throw new ForbiddenException(
+          'Access denied. You can only view your own documents',
+        );
+      }
+    } else {
+      throw new ForbiddenException('Insufficient permissions to view student documents');
+    }
+
+    return this.prisma.document.findMany({
+      where: { studentId: id },
+      include: {
+        uploadedByUser: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   /**

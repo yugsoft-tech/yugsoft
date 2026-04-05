@@ -2,6 +2,8 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, INestApplication } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { join } from 'path';
+import * as express from 'express';
 
 let cachedApp: INestApplication;
 
@@ -31,6 +33,9 @@ async function bootstrap(): Promise<INestApplication> {
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
       credentials: true,
     });
+
+    // Serve static files from the 'uploads' directory
+    app.use('/uploads', express.static(join(process.cwd(), 'uploads')));
 
     await app.init();
     cachedApp = app;

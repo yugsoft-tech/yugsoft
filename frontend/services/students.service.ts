@@ -13,7 +13,12 @@ class StudentsService {
    * Get all students
    */
   async getAll(params?: PaginationParams): Promise<PaginatedResponse<Student>> {
-    const response = await apiClient.get<any>(API_ENDPOINTS.STUDENTS, { params });
+    const cleanedParams = params ? Object.fromEntries(
+      Object.entries(params).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
+    ) : undefined;
+
+    const response = await apiClient.get<any>(API_ENDPOINTS.STUDENTS, { params: cleanedParams });
+
     // response is directly the body { data: [], meta: { total: ... } }
     const data = response.data || [];
     const meta = response.meta || {};

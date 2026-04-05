@@ -11,19 +11,21 @@ import { ListDocumentsDto } from './dto/list-documents.dto';
 import { PaginatedResult } from '../common/utils/pagination.dto';
 import { Role } from '@prisma/client';
 import { randomBytes } from 'crypto';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class DocumentsService {
   constructor(private readonly prisma: PrismaService) {}
 
   /**
-   * Generate S3 key for document storage
+   * Generate local file name for document storage
    */
-  private generateS3Key(studentId: string, fileName: string): string {
+  private generateFilePath(studentId: string, fileName: string): string {
     const timestamp = Date.now();
-    const randomString = randomBytes(8).toString('hex');
+    const randomString = randomBytes(4).toString('hex');
     const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
-    return `documents/${studentId}/${timestamp}_${randomString}_${sanitizedFileName}`;
+    return `${studentId}_${timestamp}_${randomString}_${sanitizedFileName}`;
   }
 
   /**
@@ -75,81 +77,57 @@ export class DocumentsService {
       );
     }
 
-    // Validate file type matches
-    if (file.mimetype !== fileType) {
-      throw new BadRequestException(
-        `File type mismatch. Expected ${fileType}, got ${file.mimetype}`,
-      );
+    // Generate local filename
+    const localFileName = this.generateFilePath(studentId, fileName);
+    const uploadDir = path.join(process.cwd(), 'uploads', 'documents');
+    
+    // Ensure directory exists
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
     }
 
-    // Generate S3 key
-    const s3Key = this.generateS3Key(studentId, fileName);
+    const filePath = path.join(uploadDir, localFileName);
+    
+    // Write file to disk
+    fs.writeFileSync(filePath, file.buffer);
 
-    // TODO: Upload to S3
-    // const s3Result = await this.s3Service.upload({
-    //   Bucket: process.env.AWS_S3_BUCKET_NAME,
-    //   Key: s3Key,
-    //   Body: file.buffer,
-    //   ContentType: fileType,
-    // });
-
-    // TODO: Once Document model is added to schema, use this structure:
-    // const document = await this.prisma.document.create({
-    //   data: {
-    //     studentId,
-    //     fileName,
-    //     fileType,
-    //     documentType,
-    //     description: description || null,
-    //     s3Key,
-    //     s3Url: s3Result.Location,
-    //     fileSize: file.size,
-    //     uploadedBy: currentUser.userId,
-    //     schoolId: currentUser.schoolId,
-    //   },
-    //   include: {
-    //     student: {
-    //       include: {
-    //         user: {
-    //           select: {
-    //             id: true,
-    //             firstName: true,
-    //             lastName: true,
-    //           },
-    //         },
-    //       },
-    //     },
-    //     uploadedByUser: {
-    //       select: {
-    //         id: true,
-    //         firstName: true,
-    //         lastName: true,
-    //       },
-    //     },
-    //   },
-    // });
-    //
-    // return document;
-
-    // For now, return the document structure ready for S3 and schema integration
-    return {
-      studentId,
-      fileName,
-      fileType,
-      documentType,
-      description: description || null,
-      s3Key,
-      s3Url: `https://${process.env.AWS_S3_BUCKET_NAME || 'bucket'}.s3.amazonaws.com/${s3Key}`,
-      fileSize: file.size,
-      uploadedBy: currentUser.userId,
-      schoolId: currentUser.schoolId,
-      student: {
-        id: student.id,
-        name: `${student.user.firstName} ${student.user.lastName}`,
+    // Save to database
+    const document = await this.prisma.document.create({
+      data: {
+        studentId,
+        fileName,
+        fileType,
+        documentType,
+        description: description || null,
+        s3Key: localFileName,
+        s3Url: `/uploads/documents/${localFileName}`,
+        fileSize: file.size,
+        uploadedBy: currentUser.userId,
+        schoolId: currentUser.schoolId,
       },
-      createdAt: new Date(),
-      note: 'Document model needs to be added to schema.prisma for persistent storage. S3 upload structure is ready for integration.',
-    };
+      include: {
+        student: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+        uploadedByUser: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    });
+
+    return document;
   }
 
   /**
@@ -402,33 +380,23 @@ export class DocumentsService {
       }
     }
 
-    // TODO: Once Document model is added:
-    // const documents = await this.prisma.document.findMany({
-    //   where: {
-    //     studentId,
-    //     schoolId: currentUser.schoolId,
-    //   },
-    //   include: {
-    //     uploadedByUser: {
-    //       select: {
-    //         id: true,
-    //         firstName: true,
-    //         lastName: true,
-    //       },
-    //     },
-    //   },
-    //   orderBy: { createdAt: 'desc' },
-    // });
-    //
-    // return {
-    //   student: {
-    //     id: student.id,
-    //     name: `${student.user.firstName} ${student.user.lastName}`,
-    //     rollNumber: student.rollNumber,
-    //   },
-    //   documents,
-    //   total: documents.length,
-    // };
+    // Fetch documents from database
+    const documents = await this.prisma.document.findMany({
+      where: {
+        studentId,
+        schoolId: currentUser.schoolId,
+      },
+      include: {
+        uploadedByUser: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
 
     return {
       student: {
@@ -436,9 +404,8 @@ export class DocumentsService {
         name: `${student.user.firstName} ${student.user.lastName}`,
         rollNumber: student.rollNumber,
       },
-      documents: [],
-      total: 0,
-      note: 'Document model needs to be added to schema.prisma for student document viewing. Structure is ready for integration.',
+      documents,
+      total: documents.length,
     };
   }
 

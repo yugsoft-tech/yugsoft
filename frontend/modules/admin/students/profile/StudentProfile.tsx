@@ -34,8 +34,15 @@ const tabs = [
 export default function StudentProfile() {
   const router = useRouter();
   const { id } = router.query;
-  const { student, loading, error, refetch } = useStudent(id);
+  const { student, documents, loading, error, refetch } = useStudent(id);
   const [activeTab, setActiveTab] = useState('identity');
+
+  const handleDownload = (doc: any) => {
+    if (!doc.s3Url) return;
+    // For local files, the URL might need to be prefixed with the API base URL
+    const url = doc.s3Url.startsWith('http') ? doc.s3Url : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}${doc.s3Url}`;
+    window.open(url, '_blank');
+  };
 
   if (loading) {
     return (
@@ -304,13 +311,61 @@ export default function StudentProfile() {
               </div>
             )}
 
-            {['archives', 'ledger'].includes(activeTab) && (
+            {activeTab === 'archives' && (
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-10 lg:p-12 shadow-sm space-y-10">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-2xl bg-amber-500/10 text-amber-500">
+                      <FileText size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Identity & Archives</h3>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Verification Documents</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {documents && documents.length > 0 ? (
+                    documents.map((doc: any) => (
+                      <div key={doc.id} className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 flex items-center justify-between group hover:border-primary/30 transition-all">
+                        <div className="flex items-center gap-4">
+                          <div className="p-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm text-slate-400 group-hover:text-primary transition-colors">
+                            <FileText size={20} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-black text-slate-900 dark:text-white leading-none mb-1">{doc.fileName}</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{doc.documentType}</p>
+                          </div>
+                        </div>
+                        <button 
+                          onClick={() => handleDownload(doc)}
+                          className="p-3 rounded-xl bg-white dark:bg-slate-900 text-slate-400 hover:text-primary hover:shadow-lg transition-all border border-slate-200 dark:border-slate-800"
+                        >
+                          <Clock size={16} />
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="col-span-2 p-16 text-center border-4 border-dashed border-slate-100 dark:border-slate-800 rounded-[3rem] space-y-4">
+                      <FileText size={48} className="mx-auto text-slate-200" />
+                      <div className="space-y-1">
+                        <p className="text-sm font-black text-slate-800 dark:text-slate-200">No Documents Found</p>
+                        <p className="text-xs font-bold text-slate-400 italic">This student record has no associated digital identity assets.</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'ledger' && (
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-10 lg:p-12 shadow-sm flex flex-col items-center justify-center min-h-[400px]">
                 <div className="h-20 w-20 rounded-[2rem] bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center mb-6">
                   <AlertCircle size={40} />
                 </div>
                 <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2 uppercase tracking-widest">Locked</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-center max-w-xs font-medium italic">Information for the {activeTab === 'archives' ? 'Documents' : 'Fees'} section is currently being updated.</p>
+                <p className="text-slate-500 dark:text-slate-400 text-center max-w-xs font-medium italic">Information for the Fees section is currently being updated.</p>
               </div>
             )}
           </div>

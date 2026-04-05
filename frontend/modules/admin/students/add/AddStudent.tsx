@@ -42,6 +42,7 @@ export default function AddStudent() {
   const { classes, loading: classesLoading } = useClasses();
 
   const [activeTab, setActiveTab] = useState('personal');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -64,13 +65,45 @@ export default function AddStudent() {
   const selectedClass = classes.find(c => c.id === selectedClassId);
   const sections = selectedClass?.sections || [];
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedFiles(Array.from(e.target.files));
+    }
+  };
+
   const onCommit = async (data: StudentSchema) => {
+    console.log('Committing student data:', data);
     setIsSubmitting(true);
     setSubmitError(null);
     setSubmitSuccess(false);
 
     try {
-      await studentsService.create(data);
+      // 1. Create the student record
+      const student = await studentsService.create(data);
+      console.log('Student created successfully:', student);
+
+      // 2. Upload documents if any are selected
+      if (selectedFiles.length > 0 && student.id) {
+        const { documentsService } = await import('@/services/documents.service');
+        
+        for (const file of selectedFiles) {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('studentId', student.id);
+          formData.append('fileName', file.name);
+          formData.append('fileType', file.type);
+          formData.append('documentType', 'IDENTITY'); // Defaulting to IDENTITY for now
+          formData.append('description', `Uploaded during registration: ${file.name}`);
+
+          try {
+            await documentsService.upload(formData);
+            console.log(`Uploaded: ${file.name}`);
+          } catch (uploadErr) {
+            console.error(`Failed to upload ${file.name}:`, uploadErr);
+          }
+        }
+      }
+
       setSubmitSuccess(true);
       setTimeout(() => {
         router.push('/admin/students');
@@ -115,11 +148,11 @@ export default function AddStudent() {
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || classesLoading}
               className="flex items-center gap-3 px-10 py-3.5 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-2xl text-sm font-black shadow-2xl shadow-primary/30 hover:-translate-y-1 hover:shadow-primary/40 active:scale-95 transition-all disabled:opacity-50 disabled:translate-y-0"
             >
-              {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-              {isSubmitting ? 'Saving...' : 'Add Student'}
+              {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : (classesLoading ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />)}
+              {isSubmitting ? 'Saving...' : (classesLoading ? 'Loading Classes...' : 'Add Student')}
             </button>
           </div>
         </div>
@@ -329,8 +362,19 @@ export default function AddStudent() {
                     <label className="flex items-center gap-3 px-8 py-4 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-sm font-black text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary cursor-pointer transition-all active:scale-95 shadow-lg shadow-slate-200/50 dark:shadow-none">
                       <FileText size={18} />
                       Choose Files
-                      <input type="file" multiple className="hidden" />
+                      <input type="file" multiple className="hidden" onChange={handleFileChange} />
                     </label>
+
+                    {selectedFiles.length > 0 && (
+                      <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        {selectedFiles.map((file, idx) => (
+                          <div key={idx} className="px-4 py-2 bg-primary/5 border border-primary/20 rounded-xl text-[10px] font-black text-primary flex items-center gap-2">
+                            <FileText size={12} />
+                            {file.name}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
