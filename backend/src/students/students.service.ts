@@ -204,39 +204,62 @@ export class StudentsService {
       let finalParentId = parentId;
 
       if (!finalParentId && (parentEmail || parentFatherName || parentMotherName)) {
-        // Derive names for User record
-        const firstName = parentFirstName || parentFatherName?.split(' ')[0] || parentMotherName?.split(' ')[0] || 'Parent';
-        const lastName = parentLastName || parentFatherName?.split(' ').slice(1).join(' ') || parentMotherName?.split(' ').slice(1).join(' ') || 'User';
+        // 1. Check if a user with this email already exists
+        let parentUser = parentEmail ? await tx.user.findUnique({ where: { email: parentEmail } }) : null;
 
-        // Create a new parent user
-        const parentHashedPassword = await bcrypt.hash('Parent@123', 10);
-        const parentUser = await tx.user.create({
-          data: {
-            email: parentEmail || `parent_${Date.now()}_${Math.floor(Math.random() * 1000)}@edu.com`,
-            password: parentHashedPassword,
-            firstName,
-            lastName,
-            phone: parentPhone,
-            role: Role.PARENT,
-            schoolId: currentUser.schoolId,
-          },
-        });
+        if (parentUser) {
+          // 2. Existing user found, check if they have a Parent record
+          let parentRecord = await tx.parent.findUnique({ where: { userId: parentUser.id } });
+          
+          if (!parentRecord) {
+            // Create Parent record for existing user
+            parentRecord = await tx.parent.create({
+              data: {
+                userId: parentUser.id,
+                schoolId: currentUser.schoolId,
+                fatherName: parentFatherName,
+                motherName: parentMotherName,
+                address: parentAddress,
+                secondaryPhone: parentSecondaryPhone,
+              },
+            });
+          }
+          finalParentId = parentRecord.id;
+        } else {
+          // 3. No existing user, create new User and Parent
+          const firstName = parentFirstName || parentFatherName?.split(' ')[0] || parentMotherName?.split(' ')[0] || 'Parent';
+          const lastName = parentLastName || parentFatherName?.split(' ').slice(1).join(' ') || parentMotherName?.split(' ').slice(1).join(' ') || 'User';
 
-        const newParent = await tx.parent.create({
-          data: {
-            userId: parentUser.id,
-            schoolId: currentUser.schoolId,
-            fatherName: parentFatherName,
-            motherName: parentMotherName,
-            address: parentAddress,
-            secondaryPhone: parentSecondaryPhone,
-          },
-        });
+          const parentHashedPassword = await bcrypt.hash('parent@123', 10);
+          
+          parentUser = await tx.user.create({
+            data: {
+              email: parentEmail || `parent_${Date.now()}_${Math.floor(Math.random() * 1000)}@edu.com`,
+              password: parentHashedPassword,
+              firstName,
+              lastName,
+              phone: parentPhone,
+              role: Role.PARENT,
+              schoolId: currentUser.schoolId,
+            },
+          });
 
-        finalParentId = newParent.id;
+          const newParent = await tx.parent.create({
+            data: {
+              userId: parentUser.id,
+              schoolId: currentUser.schoolId,
+              fatherName: parentFatherName,
+              motherName: parentMotherName,
+              address: parentAddress,
+              secondaryPhone: parentSecondaryPhone,
+            },
+          });
+
+          finalParentId = newParent.id;
+        }
       }
 
-      // Link parent if we have one (either provided or just created)
+      // Link parent if we have one (either provided, found, or just created)
       if (finalParentId) {
         await tx.student.update({
           where: { id: student.id },
