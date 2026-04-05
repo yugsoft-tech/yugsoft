@@ -59,4 +59,37 @@ export class CreateStudentDto {
   @IsUUID()
   @IsOptional()
   parentId?: string;
+
+  // New parent creation fields
+  @IsString()
+  @IsOptional()
+  parentFirstName?: string;
+
+  @IsString()
+  @IsOptional()
+  parentLastName?: string;
+
+  @IsEmail()
+  @IsOptional()
+  parentEmail?: string;
+
+  @IsString()
+  @IsOptional()
+  parentPhone?: string;
+
+  @IsString()
+  @IsOptional()
+  parentFatherName?: string;
+
+  @IsString()
+  @IsOptional()
+  parentMotherName?: string;
+
+  @IsString()
+  @IsOptional()
+  parentAddress?: string;
+
+  @IsString()
+  @IsOptional()
+  parentSecondaryPhone?: string;
 }

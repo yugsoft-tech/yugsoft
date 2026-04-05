@@ -6,26 +6,28 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Start Seeding...');
 
-  // 0. Cleanup (Optional - uncomment if you want to clear existing data)
-  // console.log('Cleaning up database...');
-  // await prisma.auditLog.deleteMany();
-  // await prisma.message.deleteMany();
-  // await prisma.attendance.deleteMany();
-  // await prisma.examResult.deleteMany();
-  // await prisma.exam.deleteMany();
-  // await prisma.fee.deleteMany();
-  // await prisma.homework.deleteMany();
-  // await prisma.timetable.deleteMany();
-  // await prisma.subject.deleteMany();
-  // await prisma.student.deleteMany();
-  // await prisma.teacher.deleteMany();
-  // await prisma.parent.deleteMany();
-  // await prisma.section.deleteMany();
-  // await prisma.class.deleteMany();
-  // await prisma.school.deleteMany();
-  // await prisma.user.deleteMany();
+  // 0. Cleanup (Recommended to clear existing data to ensure UUID consistency)
+  console.log('Cleaning up database...');
+  await prisma.auditLog.deleteMany();
+  await prisma.message.deleteMany();
+  await prisma.attendance.deleteMany();
+  await prisma.examResult.deleteMany();
+  await prisma.exam.deleteMany();
+  await prisma.fee.deleteMany();
+  await prisma.homework.deleteMany();
+  await prisma.timetable.deleteMany();
+  await prisma.subject.deleteMany();
+  await prisma.student.deleteMany();
+  await prisma.teacher.deleteMany();
+  await prisma.parent.deleteMany();
+  await prisma.section.deleteMany();
+  await prisma.class.deleteMany();
+  await prisma.school.deleteMany();
+  await prisma.user.deleteMany();
 
   // 1. Passwords
+  const adminYugsoftPassword = await bcrypt.hash('Password@123', 10);
+  const adminSchoolPassword = await bcrypt.hash('Admin@123', 10);
   const commonPassword = await bcrypt.hash('Password@123', 10);
 
   // 2. School
@@ -43,21 +45,39 @@ async function main() {
 
   console.log('✅ School created');
 
-  // 3. Admin (1 Admin)
-  const adminUser = await prisma.user.upsert({
+  // 3. Admin (2 Admins)
+  const adminUser1 = await prisma.user.upsert({
     where: { email: 'admin@yugsoft.com' },
-    update: {},
+    update: {
+      password: adminYugsoftPassword,
+    },
     create: {
       email: 'admin@yugsoft.com',
-      password: commonPassword,
+      password: adminYugsoftPassword,
       role: Role.SCHOOL_ADMIN,
-      firstName: 'Main',
+      firstName: 'Yug',
       lastName: 'Admin',
       phone: '9000000001',
       schoolId: school.id,
     },
   });
-  console.log('✅ Admin created');
+
+  const adminUser2 = await prisma.user.upsert({
+    where: { email: 'admin@school.com' },
+    update: {
+      password: adminSchoolPassword,
+    },
+    create: {
+      email: 'admin@school.com',
+      password: adminSchoolPassword,
+      role: Role.SCHOOL_ADMIN,
+      firstName: 'Main',
+      lastName: 'Admin',
+      phone: '9000000002',
+      schoolId: school.id,
+    },
+  });
+  console.log('✅ Admins created');
 
   // 4. Classes (15 Classes: Nursery to 12th)
   const classNames = [
@@ -66,12 +86,11 @@ async function main() {
     '8th', '9th', '10th', '11th', '12th'
   ];
   const classes = [];
+  const sectionsMap: Record<string, any> = {};
+
   for (const name of classNames) {
-    const cls = await prisma.class.upsert({
-      where: { id: `class-${name.toLowerCase().replace(/\s+/g, '-')}` }, // Using deterministic IDs for seed
-      update: {},
-      create: {
-        id: `class-${name.toLowerCase().replace(/\s+/g, '-')}`,
+    const cls = await prisma.class.create({
+      data: {
         name: `Class ${name}`,
         schoolId: school.id,
       },
@@ -79,27 +98,23 @@ async function main() {
     classes.push(cls);
     
     // Each class has one section 'A'
-    await prisma.section.upsert({
-      where: { id: `section-a-${name.toLowerCase().replace(/\s+/g, '-')}` },
-      update: {},
-      create: {
-        id: `section-a-${name.toLowerCase().replace(/\s+/g, '-')}`,
+    const section = await prisma.section.create({
+      data: {
         name: 'A',
         classId: cls.id,
         schoolId: school.id,
       },
     });
+    sectionsMap[name] = section;
   }
-  console.log(`✅ ${classes.length} Classes created`);
+  console.log(`✅ ${classes.length} Classes and Sections created`);
 
   // 5. Teachers (10 Teachers)
   const teachers = [];
   for (let i = 1; i <= 10; i++) {
     const email = `teacher${i}@yugsoft.com`;
-    const user = await prisma.user.upsert({
-      where: { email },
-      update: {},
-      create: {
+    const user = await prisma.user.create({
+      data: {
         email,
         password: commonPassword,
         role: Role.TEACHER,
@@ -110,10 +125,8 @@ async function main() {
       },
     });
 
-    const teacher = await prisma.teacher.upsert({
-      where: { userId: user.id },
-      update: {},
-      create: {
+    const teacher = await prisma.teacher.create({
+      data: {
         userId: user.id,
         qualification: i % 2 === 0 ? 'M.Ed' : 'B.Ed',
         experience: 2 + i,
@@ -128,10 +141,8 @@ async function main() {
   const parentRecords = [];
   for (let i = 1; i <= 18; i++) {
     const email = `parent${i}@yugsoft.com`;
-    const user = await prisma.user.upsert({
-      where: { email },
-      update: {},
-      create: {
+    const user = await prisma.user.create({
+      data: {
         email,
         password: commonPassword,
         role: Role.PARENT,
@@ -142,10 +153,8 @@ async function main() {
       },
     });
 
-    const parent = await prisma.parent.upsert({
-      where: { userId: user.id },
-      update: {},
-      create: {
+    const parent = await prisma.parent.create({
+      data: {
         userId: user.id,
         schoolId: school.id,
       },
@@ -167,10 +176,8 @@ async function main() {
       studentCount++;
       const email = `student${studentCount}@yugsoft.com`;
       
-      const user = await prisma.user.upsert({
-        where: { email },
-        update: {},
-        create: {
+      const user = await prisma.user.create({
+        data: {
           email,
           password: commonPassword,
           role: Role.STUDENT,
@@ -184,24 +191,17 @@ async function main() {
       // Assign to a class (cycling through 15 classes)
       const classIdx = (studentCount - 1) % classes.length;
       const targetClass = classes[classIdx];
-      
-      // Get the section A of that class
-      const sectionId = `section-a-${classNames[classIdx].toLowerCase().replace(/\s+/g, '-')}`;
+      const targetSection = sectionsMap[classNames[classIdx]];
 
-      const student = await prisma.student.upsert({
-        where: { userId: user.id },
-        update: {
-          classId: targetClass.id,
-          sectionId: sectionId,
-        },
-        create: {
+      const student = await prisma.student.create({
+        data: {
           userId: user.id,
           rollNumber: `ROLL-${studentCount.toString().padStart(3, '0')}`,
           gender: studentCount % 2 === 0 ? Gender.MALE : Gender.FEMALE,
           dob: new Date(2010 + (studentCount % 5), 0, 1),
           schoolId: school.id,
           classId: targetClass.id,
-          sectionId: sectionId,
+          sectionId: targetSection.id,
           parents: {
             connect: { id: parent.id }
           }

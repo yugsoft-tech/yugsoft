@@ -1,0 +1,9 @@
+≡ƒî▒ Start Seeding...
+Cleaning up database...
+Γ£à School created
+Γ£à Admin created
+Γ£à 15 Classes and Sections created
+Γ£à 10 Teachers created
+Γ£à 18 Parents created
+Γ£à 25 Students created and linked to parents
+≡ƒî▒ Seeding finished successfully!

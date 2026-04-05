@@ -13,8 +13,10 @@ import {
   Edit3,
   Trash2,
   MoreHorizontal,
-  GraduationCap
+  GraduationCap,
+  ChevronDown
 } from 'lucide-react';
+import { useClasses } from '@/hooks/useClasses';
 
 export default function StudentsList() {
   const router = useRouter();
@@ -27,8 +29,22 @@ export default function StudentsList() {
     setPage,
     setSearch,
     setFilter,
+    toggleSort,
     deleteStudent
   } = useStudents();
+  const { classes } = useClasses();
+
+  // Get sections for the selected class
+  const selectedClass = classes.find(c => c.id === params.classId);
+  const availableSections = selectedClass?.sections || [];
+
+  const handleClassChange = (classId: string) => {
+    setFilter({ classId: classId || undefined, sectionId: undefined });
+  };
+
+  const handleSectionChange = (sectionId: string) => {
+    setFilter({ sectionId: sectionId || undefined });
+  };
 
   const handleDelete = async (id: string, name: string) => {
     if (window.confirm(`Are you sure you want to delete student ${name}?`)) {
@@ -45,26 +61,26 @@ export default function StudentsList() {
     {
       header: 'Student',
       accessor: (student) => (
-        <div className="flex items-center gap-4">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-primary/10 to-primary/5 text-primary flex items-center justify-center font-black border border-primary/10">
+        <Link href={`/admin/students/${student.id}`} className="flex items-center gap-4 group cursor-pointer">
+          <div className="h-12 w-12 rounded-xl bg-gradient-to-tr from-primary/10 to-primary/5 text-primary flex items-center justify-center font-black border border-primary/10 group-hover:scale-110 transition-transform duration-300">
             {student.firstName?.charAt(0)}{student.lastName?.charAt(0)}
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-black text-slate-900 dark:text-white tracking-tight">
+            <span className="text-sm font-black text-slate-900 dark:text-white tracking-tight group-hover:text-primary transition-colors">
               {student.firstName} {student.lastName}
             </span>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
               {student.email}
             </span>
           </div>
-        </div>
+        </Link>
       ),
     },
     {
       header: 'ID / Roll',
       accessor: (student) => (
         <span className="font-mono text-xs font-black text-slate-500 tracking-wider bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-lg">
-          {student.admissionNumber || 'N/A'}
+          {student.rollNumber || 'N/A'}
         </span>
       ),
     },
@@ -154,10 +170,42 @@ export default function StudentsList() {
             <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Students</h1>
             <p className="text-slate-500 dark:text-slate-400 font-medium italic">List of all students currently in the school.</p>
           </div>
-          <Link href="/admin/students/add" className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-black shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95 transition-all">
-            <UserPlus size={18} />
-            Add Student
-          </Link>
+          <div className="flex items-center gap-3">
+            {/* Class Filter */}
+            <div className="relative">
+              <select
+                value={params.classId || ''}
+                onChange={(e) => handleClassChange(e.target.value)}
+                className="appearance-none pl-4 pr-10 py-3 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-xl text-sm font-black text-slate-700 dark:text-slate-300 outline-none focus:border-primary transition-all cursor-pointer hover:border-primary/30 min-w-[140px]"
+              >
+                <option value="">All Classes</option>
+                {classes.map((cls) => (
+                  <option key={cls.id} value={cls.id}>{cls.name}</option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+            </div>
+
+            {/* Section Filter */}
+            <div className="relative">
+              <select
+                value={params.sectionId || ''}
+                onChange={(e) => handleSectionChange(e.target.value)}
+                disabled={!params.classId}
+                className={`appearance-none pl-4 pr-10 py-3 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-xl text-sm font-black text-slate-700 dark:text-slate-300 outline-none focus:border-indigo-500 transition-all cursor-pointer hover:border-indigo-500/30 min-w-[140px] ${!params.classId ? 'opacity-50 cursor-not-allowed bg-slate-50' : ''}`}
+              >
+                <option value="">All Sections</option>
+                {availableSections.map((sec) => (
+                  <option key={sec.id} value={sec.id}>{sec.name}</option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+            </div>
+            <Link href="/admin/students/add" className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-black shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95 transition-all">
+              <UserPlus size={18} />
+              Add Student
+            </Link>
+          </div>
         </div>
 
         {/* Search and Filters */}

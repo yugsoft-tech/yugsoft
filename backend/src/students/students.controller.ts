@@ -77,6 +77,16 @@ export class StudentsController {
     });
   }
 
+  @Get(':id/documents')
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.STUDENT)
+  getDocuments(@Param('id') id: string, @CurrentUser() user: any) {
+    return this.studentsService.getDocuments(id, {
+      userId: user.userId,
+      role: user.role,
+      schoolId: user.schoolId,
+    });
+  }
+
   @Patch(':id')
   @Roles(Role.SCHOOL_ADMIN)
   update(

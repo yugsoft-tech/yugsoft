@@ -45,7 +45,7 @@ export interface ApiResponse<T = any> {
 export interface PaginationParams {
   page?: number;
   limit?: number;
-  sortBy?: string;
+  sortBy?: 'firstName' | 'class' | 'section' | 'rollNumber' | string;
   sortOrder?: 'asc' | 'desc';
   sectionId?: string;
   classId?: string;
@@ -81,20 +81,20 @@ export interface LoginCredentials {
 export interface Student {
   id: string;
   user: User;
-  rollNumber?: string;
+  rollNumber: string;
   firstName: string;
   lastName: string;
-  email?: string;
+  email: string;
   phone?: string;
-  admissionNumber: string;
-  dateOfBirth?: string;
-  gender?: 'MALE' | 'FEMALE' | 'OTHER';
-  address?: string;
+  dob: string;
+  gender: 'MALE' | 'FEMALE' | 'OTHER';
   classId: string;
   class?: Class;
-  sectionId?: string;
+  sectionId: string;
+  section?: Section;
   parentId?: string;
-  schoolId?: string;
+  parents?: Parent[];
+  schoolId: string;
   status?: 'ACTIVE' | 'INACTIVE' | 'GRADUATED' | 'TRANSFERRED';
   createdAt?: string;
   updatedAt?: string;
@@ -103,15 +103,24 @@ export interface Student {
 export interface CreateStudentDto {
   firstName: string;
   lastName: string;
-  email?: string;
+  email: string;
+  password?: string;
   phone?: string;
-  admissionNumber: string;
-  dateOfBirth?: string;
-  gender?: 'MALE' | 'FEMALE' | 'OTHER';
-  address?: string;
-  classId?: string;
-  sectionId?: string;
+  rollNumber: string;
+  dob: string;
+  gender: 'MALE' | 'FEMALE' | 'OTHER';
+  classId: string;
+  sectionId: string;
   parentId?: string;
+  // New Parent Creation Fields
+  parentFirstName?: string;
+  parentLastName?: string;
+  parentEmail?: string;
+  parentPhone?: string;
+  parentFatherName?: string;
+  parentMotherName?: string;
+  parentAddress?: string;
+  parentSecondaryPhone?: string;
 }
 
 export interface UpdateStudentDto extends Partial<CreateStudentDto> { }
@@ -230,6 +239,9 @@ export interface Parent {
   lastName: string;
   email: string;
   phone?: string;
+  fatherName?: string;
+  motherName?: string;
+  secondaryPhone?: string;
   occupation?: string;
   address?: string;
   students?: Student[];

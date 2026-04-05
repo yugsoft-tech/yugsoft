@@ -132,10 +132,16 @@ export class DashboardService {
       where: { schoolId: currentUser.schoolId },
     });
 
+    // Get total users for this school
+    const totalUsers = await this.prisma.user.count({
+      where: { schoolId: currentUser.schoolId, isActive: true },
+    });
+
     return {
       statistics: {
         totalStudents,
         totalTeachers,
+        totalUsers,
         activeClasses,
         todayAttendance: attendancePercentage,
         totalBooks,

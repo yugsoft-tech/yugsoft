@@ -47,6 +47,14 @@ export class StudentsService {
       classId,
       sectionId,
       parentId,
+      parentFirstName,
+      parentLastName,
+      parentEmail,
+      parentPhone,
+      parentFatherName,
+      parentMotherName,
+      parentAddress,
+      parentSecondaryPhone,
     } = createStudentDto;
 
     // Check if user with email already exists
@@ -191,61 +199,119 @@ export class StudentsService {
         },
       });
 
-      // Link parent if provided
-      if (parentId) {
+      // Link or Create Parent
+      let finalParentId = parentId;
+
+      if (!finalParentId && (parentEmail || parentFatherName || parentMotherName)) {
+        // 1. Check if a user with this email already exists
+        let parentUser = parentEmail ? await tx.user.findUnique({ where: { email: parentEmail } }) : null;
+
+        if (parentUser) {
+          // 2. Existing user found, check if they have a Parent record
+          let parentRecord = await tx.parent.findUnique({ where: { userId: parentUser.id } });
+          
+          if (!parentRecord) {
+            // Create Parent record for existing user
+            parentRecord = await tx.parent.create({
+              data: {
+                userId: parentUser.id,
+                schoolId: currentUser.schoolId,
+                fatherName: parentFatherName,
+                motherName: parentMotherName,
+                address: parentAddress,
+                secondaryPhone: parentSecondaryPhone,
+              },
+            });
+          }
+          finalParentId = parentRecord.id;
+        } else {
+          // 3. No existing user, create new User and Parent
+          const firstName = parentFirstName || parentFatherName?.split(' ')[0] || parentMotherName?.split(' ')[0] || 'Parent';
+          const lastName = parentLastName || parentFatherName?.split(' ').slice(1).join(' ') || parentMotherName?.split(' ').slice(1).join(' ') || 'User';
+
+          const parentHashedPassword = await bcrypt.hash('parent@123', 10);
+          
+          parentUser = await tx.user.create({
+            data: {
+              email: parentEmail || `parent_${Date.now()}_${Math.floor(Math.random() * 1000)}@edu.com`,
+              password: parentHashedPassword,
+              firstName,
+              lastName,
+              phone: parentPhone,
+              role: Role.PARENT,
+              schoolId: currentUser.schoolId,
+            },
+          });
+
+          const newParent = await tx.parent.create({
+            data: {
+              userId: parentUser.id,
+              schoolId: currentUser.schoolId,
+              fatherName: parentFatherName,
+              motherName: parentMotherName,
+              address: parentAddress,
+              secondaryPhone: parentSecondaryPhone,
+            },
+          });
+
+          finalParentId = newParent.id;
+        }
+      }
+
+      // Link parent if we have one (either provided, found, or just created)
+      if (finalParentId) {
         await tx.student.update({
           where: { id: student.id },
           data: {
             parents: {
-              connect: { id: parentId },
-            },
-          },
-        });
-
-        // Fetch updated student with parent
-        return await tx.student.findUnique({
-          where: { id: student.id },
-          include: {
-            user: {
-              select: {
-                id: true,
-                email: true,
-                firstName: true,
-                lastName: true,
-                phone: true,
-                isActive: true,
-              },
-            },
-            class: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-            section: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-            parents: {
-              select: {
-                id: true,
-                user: {
-                  select: {
-                    id: true,
-                    firstName: true,
-                    lastName: true,
-                    email: true,
-                  },
-                },
-              },
+              connect: { id: finalParentId },
             },
           },
         });
       }
 
-      return student;
+      // Fetch refined student with parent
+      return await tx.student.findUnique({
+        where: { id: student.id },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true,
+              phone: true,
+              isActive: true,
+            },
+          },
+          class: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          section: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          parents: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  lastName: true,
+                  email: true,
+                  phone: true,
+                },
+              },
+            },
+          },
+        },
+      });
     });
   }
 
@@ -314,13 +380,7 @@ export class StudentsService {
       );
     }
 
-    const {
-      page = 1,
-      limit = 10,
-      classId,
-      sectionId,
-      search,
-    } = listStudentsDto;
+    const { page = 1, limit = 10, classId, sectionId, search, sortBy, sortOrder = 'asc' } = listStudentsDto;
     const skip = (page - 1) * limit;
 
     const where: any = {};
@@ -419,7 +479,13 @@ export class StudentsService {
             },
           },
         },
-        orderBy: { rollNumber: 'asc' },
+        orderBy: sortBy === 'class' 
+          ? { class: { name: sortOrder } }
+          : sortBy === 'section'
+          ? { section: { name: sortOrder } }
+          : sortBy === 'firstName'
+          ? { user: { firstName: sortOrder } }
+          : { rollNumber: sortOrder },
       }),
       this.prisma.student.count({ where }),
     ]);
@@ -603,6 +669,54 @@ export class StudentsService {
     }
 
     return student;
+  }
+
+  /**
+   * Get student documents
+   * Only SCHOOL_ADMIN, TEACHER and STUDENT can view documents
+   */
+  async getDocuments(
+    id: string,
+    currentUser: { userId: string; role: Role; schoolId?: string },
+  ) {
+    const student = await this.prisma.student.findUnique({
+      where: { id },
+      select: { id: true, userId: true, schoolId: true },
+    });
+
+    if (!student) {
+      throw new NotFoundException(`Student with ID ${id} not found`);
+    }
+
+    // RBAC checks
+    if (currentUser.role === Role.SCHOOL_ADMIN || currentUser.role === Role.TEACHER) {
+      if (!currentUser.schoolId || student.schoolId !== currentUser.schoolId) {
+        throw new ForbiddenException(
+          'Access denied. You can only view documents of students from your school',
+        );
+      }
+    } else if (currentUser.role === Role.STUDENT) {
+      if (student.userId !== currentUser.userId) {
+        throw new ForbiddenException(
+          'Access denied. You can only view your own documents',
+        );
+      }
+    } else {
+      throw new ForbiddenException('Insufficient permissions to view student documents');
+    }
+
+    return this.prisma.document.findMany({
+      where: { studentId: id },
+      include: {
+        uploadedByUser: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   /**

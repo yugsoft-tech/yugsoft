@@ -23,10 +23,10 @@ import {
 } from 'lucide-react';
 
 const tabs = [
-  { id: 'personal', label: 'Identity Matrix', icon: Fingerprint, color: 'primary' },
-  { id: 'academic', label: 'Academic Protocol', icon: School, color: 'info' },
-  { id: 'guardian', label: 'Nexus Contacts', icon: Users, color: 'success' },
-  { id: 'documents', label: 'Data Archives', icon: FileText, color: 'warning' },
+  { id: 'personal', label: 'Personal Information', icon: Fingerprint, color: 'primary' },
+  { id: 'academic', label: 'Academic Details', icon: School, color: 'info' },
+  { id: 'parent', label: 'Parent Information', icon: Users, color: 'success' },
+  { id: 'documents', label: 'Documents', icon: FileText, color: 'warning' },
 ];
 
 export default function EditStudent() {
@@ -58,10 +58,9 @@ export default function EditStudent() {
         lastName: student.lastName || '',
         email: student.email || '',
         phone: student.phone || '',
-        admissionNumber: student.admissionNumber || '',
-        dateOfBirth: student.dateOfBirth || '',
+        rollNumber: student.rollNumber || '',
+        dob: student.dob || '',
         gender: student.gender || 'MALE',
-        address: student.address || '',
         classId: student.classId || '',
         sectionId: student.sectionId || '',
         parentId: student.parentId || '',
@@ -136,10 +135,10 @@ export default function EditStudent() {
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-primary">
               <Fingerprint size={20} />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Administrative Override</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Student Administration</span>
             </div>
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Record Modulation</h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium italic">Adjusting established data matrices for entity {student?.admissionNumber}.</p>
+            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Edit Student</h1>
+            <p className="text-slate-500 dark:text-slate-400 font-medium italic">Update information for {student?.firstName} {student?.lastName}.</p>
           </div>
           <div className="flex items-center gap-3">
             <button
@@ -205,34 +204,29 @@ export default function EditStudent() {
             {activeTab === 'personal' && (
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-10 shadow-sm space-y-10">
                 <div className="flex items-center gap-6">
-                  <div className="relative group">
-                    <div className="size-20 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-black text-2xl text-slate-400 overflow-hidden border-2 border-slate-200 dark:border-slate-700">
-                      {student?.firstName?.charAt(0)}{student?.lastName?.charAt(0)}
-                    </div>
-                    <button type="button" className="absolute -bottom-2 -right-2 p-2 bg-primary text-white rounded-xl border-4 border-white dark:border-slate-900 shadow-lg scale-90 group-hover:scale-100 transition-transform">
-                      <Camera size={14} />
-                    </button>
+                  <div className="size-20 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-black text-2xl text-slate-400 overflow-hidden border-2 border-slate-200 dark:border-slate-700">
+                    {student?.firstName?.charAt(0)}{student?.lastName?.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Identity Matrix</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Core Registry Data</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Personal Details</h3>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Student Information</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <FormInput label="First Identifier" {...register('firstName')} error={errors.firstName?.message} />
-                  <FormInput label="Last Identifier" {...register('lastName')} error={errors.lastName?.message} />
-                  <FormInput label="Digital Endpoint (Email)" type="email" {...register('email')} error={errors.email?.message} />
-                  <FormInput label="Primary Signal (Phone)" type="tel" {...register('phone')} error={errors.phone?.message} />
-                  <FormInput label="Admission Number" {...register('admissionNumber')} error={errors.admissionNumber?.message} />
-                  <FormInput label="Temporal Origin (DOB)" type="date" {...register('dateOfBirth')} error={errors.dateOfBirth?.message} />
+                  <FormInput label="First Name" {...register('firstName')} error={errors.firstName?.message} />
+                  <FormInput label="Last Name" {...register('lastName')} error={errors.lastName?.message} />
+                  <FormInput label="Email Address" type="email" {...register('email')} error={errors.email?.message} />
+                  <FormInput label="Phone Number" type="tel" {...register('phone')} error={errors.phone?.message} />
+                  <FormInput label="Roll Number" {...register('rollNumber')} error={errors.rollNumber?.message} />
+                  <FormInput label="Date of Birth" type="date" {...register('dob')} error={errors.dob?.message} />
                   <FormSelect
-                    label="Gender Axis"
+                    label="Gender"
                     {...register('gender')}
                     options={[
                       { value: 'MALE', label: 'Male' },
                       { value: 'FEMALE', label: 'Female' },
-                      { value: 'OTHER', label: 'Non-Binary' }
+                      { value: 'OTHER', label: 'Other' }
                     ]}
                     error={errors.gender?.message}
                   />
@@ -247,37 +241,42 @@ export default function EditStudent() {
                     <School size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Academic Protocol</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">System Assignment Hierarchy</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Academic Details</h3>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">School Placement</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormSelect
-                    label="Assigned Unit (Class)"
+                    label="Select Class"
                     {...register('classId')}
                     options={classes.map(c => ({ value: c.id, label: c.name }))}
                     error={errors.classId?.message}
                     disabled={classesLoading}
                   />
-                  <FormInput label="Residency Coordinates" {...register('address')} error={errors.address?.message} />
+                  <FormSelect
+                    label="Select Section"
+                    {...register('sectionId')}
+                    options={(classes.find(c => c.id === watch('classId'))?.sections || []).map(s => ({ value: s.id, label: s.name }))}
+                    error={errors.sectionId?.message}
+                  />
                 </div>
               </div>
             )}
 
-            {activeTab === 'guardian' && (
+            {activeTab === 'parent' && (
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-10 shadow-sm space-y-10">
                 <div className="flex items-center gap-4">
                   <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500">
                     <Users size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Nexus Contacts</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Guardian Liaison Control</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Parent Information</h3>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Liaison Control</p>
                   </div>
                 </div>
                 <div className="p-12 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl">
-                  <p className="text-sm font-bold text-slate-400 italic">Advanced guardian management endpoints are being synchronized.</p>
+                  <p className="text-sm font-bold text-slate-400 italic">Parent management is handled through the main directory.</p>
                 </div>
               </div>
             )}

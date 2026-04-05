@@ -3,16 +3,25 @@ import * as z from 'zod';
 export const studentSchema = z.object({
     firstName: z.string().min(2, 'First name must be at least 2 characters'),
     lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-    email: z.string().email('Invalid email address').optional().or(z.literal('')),
+    email: z.string().email('Invalid email address'),
     phone: z.string().min(10, 'Invalid phone number').optional().or(z.literal('')),
-    admissionNumber: z.string().min(3, 'Admission number is required'),
-    dateOfBirth: z.string().optional(),
-    gender: z.enum(['MALE', 'FEMALE', 'OTHER']).optional(),
-    address: z.string().optional(),
-    classId: z.string().min(1, 'Please select a class'),
-    sectionId: z.string().min(1, 'Please select a section'),
+    rollNumber: z.string().min(3, 'Roll number is required'),
+    dob: z.string().min(1, 'Date of birth is required'),
+    gender: z.enum(['MALE', 'FEMALE', 'OTHER']),
+    classId: z.string().uuid('Invalid Class Selection'),
+    sectionId: z.string().uuid('Invalid Section Selection'),
     password: z.string().min(8, 'Password must be at least 8 characters'),
+
     parentId: z.string().optional(),
+    // Parent details for new creation
+    parentFirstName: z.string().optional().or(z.literal('')),
+    parentLastName: z.string().optional().or(z.literal('')),
+    parentEmail: z.string().email('Invalid email').optional().or(z.literal('')),
+    parentPhone: z.string().optional().or(z.literal('')),
+    parentFatherName: z.string().optional().or(z.literal('')),
+    parentMotherName: z.string().optional().or(z.literal('')),
+    parentAddress: z.string().optional().or(z.literal('')),
+    parentSecondaryPhone: z.string().optional().or(z.literal('')),
 });
 
 export type StudentSchema = z.infer<typeof studentSchema>;

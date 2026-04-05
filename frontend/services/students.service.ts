@@ -13,7 +13,12 @@ class StudentsService {
    * Get all students
    */
   async getAll(params?: PaginationParams): Promise<PaginatedResponse<Student>> {
-    const response = await apiClient.get<any>(API_ENDPOINTS.STUDENTS, { params });
+    const cleanedParams = params ? Object.fromEntries(
+      Object.entries(params).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
+    ) : undefined;
+
+    const response = await apiClient.get<any>(API_ENDPOINTS.STUDENTS, { params: cleanedParams });
+
     // response is directly the body { data: [], meta: { total: ... } }
     const data = response.data || [];
     const meta = response.meta || {};
@@ -31,8 +36,9 @@ class StudentsService {
    * Get student by ID
    */
   async getById(id: string): Promise<Student> {
-    const response = await apiClient.get(`${API_ENDPOINTS.STUDENTS}/${id}`);
-    return mapStudent(response.data) as Student;
+    const response = await apiClient.get<any>(`${API_ENDPOINTS.STUDENTS}/${id}`);
+    const data = response.data || response;
+    return mapStudent(data) as Student;
   }
 
   /**
@@ -48,15 +54,16 @@ class StudentsService {
    */
   async create(data: CreateStudentDto): Promise<Student> {
     const response = await apiClient.post(API_ENDPOINTS.STUDENTS, data);
-    return mapStudent(response.data) as Student;
+    return mapStudent(response) as Student;
   }
 
   /**
    * Update student
    */
   async update(id: string, data: UpdateStudentDto): Promise<Student> {
-    const response = await apiClient.patch(`${API_ENDPOINTS.STUDENTS}/${id}`, data);
-    return mapStudent(response.data) as Student;
+    const response = await apiClient.patch<any>(`${API_ENDPOINTS.STUDENTS}/${id}`, data);
+    const resultData = response.data || response;
+    return mapStudent(resultData) as Student;
   }
 
   /**
