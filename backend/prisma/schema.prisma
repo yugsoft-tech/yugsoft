@@ -85,30 +85,9 @@ model User {
 
   uploadedDocuments Document[] @relation("UploadedBy")
 
-  sentMessages     Message[] @relation("SentMessages")
-  receivedMessages Message[] @relation("ReceivedMessages")
-  
   notifications    Notification[]
 }
 
-model Message {
-  id      String @id @default(uuid())
-  message String
-  type    String @default("text") // text, image, file
-
-  senderId String
-  sender   User   @relation("SentMessages", fields: [senderId], references: [id])
-
-  receiverId String
-  receiver   User   @relation("ReceivedMessages", fields: [receiverId], references: [id])
-
-  schoolId String
-  school   School @relation(fields: [schoolId], references: [id])
-
-  read Boolean @default(false)
-
-  createdAt DateTime @default(now())
-}
 
 model Notification {
   id        String   @id @default(uuid())
@@ -143,7 +122,6 @@ model School {
   subjects Subject[]
   notices  Notice[]
   vehicles Vehicle[]
-  messages Message[]
   documents Document[]
 
   createdAt DateTime  @default(now())

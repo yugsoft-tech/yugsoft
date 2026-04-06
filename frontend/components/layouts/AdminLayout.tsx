@@ -65,7 +65,6 @@ const ADMIN_SECTIONS: NavSection[] = [
   {
     title: 'Office',
     items: [
-      { label: 'Communication', href: '/admin/communication', icon: MessageSquare },
       { label: 'Announcements', href: '/admin/announcements', icon: Megaphone },
       { label: 'Fees', href: '/admin/fees', icon: FileText },
     ]
