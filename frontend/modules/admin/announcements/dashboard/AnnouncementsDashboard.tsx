@@ -101,7 +101,11 @@ export default function AnnouncementsDashboard() {
                 content: selectedAnnouncement.content,
                 audience: selectedAnnouncement.audience,
                 status: status,
-                publishDate: selectedAnnouncement.publishDate,
+                // Backend validates `publishDate` as ISO 8601; `datetime-local` returns a string
+                // like `YYYY-MM-DDTHH:mm` (often without timezone), so convert to full ISO.
+                publishDate: selectedAnnouncement.publishDate
+                    ? new Date(selectedAnnouncement.publishDate).toISOString()
+                    : undefined,
                 attachments: selectedAnnouncement.attachments,
                 classId: selectedAnnouncement.classId
             };

@@ -24,7 +24,7 @@ export class NoticesController {
   constructor(private readonly noticesService: NoticesService) {}
 
   @Post()
-  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.SUPER_ADMIN)
   create(@Body() createNoticeDto: CreateNoticeDto, @CurrentUser() user: any) {
     return this.noticesService.create(createNoticeDto, {
       userId: user.userId,
@@ -52,7 +52,7 @@ export class NoticesController {
   }
 
   @Patch(':id')
-  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.SUPER_ADMIN)
   update(
     @Param('id') id: string,
     @Body() updateNoticeDto: UpdateNoticeDto,
@@ -66,7 +66,7 @@ export class NoticesController {
   }
 
   @Delete(':id')
-  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
+  @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.SUPER_ADMIN)
   remove(@Param('id') id: string, @CurrentUser() user: any) {
     return this.noticesService.remove(id, {
       userId: user.userId,
