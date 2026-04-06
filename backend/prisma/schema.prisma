@@ -48,6 +48,12 @@ enum NoticeAudience {
   PARENTS
 }
 
+enum NoticeStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+}
+
 //////////////////// CORE ////////////////////
 
 model User {
@@ -81,6 +87,8 @@ model User {
 
   sentMessages     Message[] @relation("SentMessages")
   receivedMessages Message[] @relation("ReceivedMessages")
+  
+  notifications    Notification[]
 }
 
 model Message {
@@ -99,6 +107,21 @@ model Message {
 
   read Boolean @default(false)
 
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  type      String   @default("ANNOUNCEMENT") // ANNOUNCEMENT, FEE, EXAM, SYSTEM
+  isRead    Boolean  @default(false)
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  schoolId  String?
+  
   createdAt DateTime @default(now())
 }
 
@@ -349,13 +372,18 @@ model Fee {
 model Notice {
   id       String         @id @default(uuid())
   title    String
-  message  String
-  audience NoticeAudience
+  content  String // Rich text content (formerly message)
+  audience NoticeAudience @default(ALL)
+  status   NoticeStatus   @default(PUBLISHED)
+  
+  publishDate DateTime?   @default(now())
+  attachments Json?       // Store multiple attachment metadata as JSON
 
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 

@@ -4,8 +4,9 @@ import {
   IsEnum,
   IsOptional,
   IsUUID,
+  IsDateString,
 } from 'class-validator';
-import { NoticeAudience } from '@prisma/client';
+import { NoticeAudience, NoticeStatus } from '@prisma/client';
 
 export class CreateNoticeDto {
   @IsString()
@@ -14,11 +15,22 @@ export class CreateNoticeDto {
 
   @IsString()
   @IsNotEmpty()
-  message: string;
+  content: string;
 
   @IsEnum(NoticeAudience)
-  @IsNotEmpty()
-  audience: NoticeAudience;
+  @IsOptional()
+  audience?: NoticeAudience;
+
+  @IsEnum(NoticeStatus)
+  @IsOptional()
+  status?: NoticeStatus;
+
+  @IsDateString()
+  @IsOptional()
+  publishDate?: string;
+
+  @IsOptional()
+  attachments?: any;
 
   @IsUUID()
   @IsOptional()
