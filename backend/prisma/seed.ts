@@ -10,6 +10,7 @@ async function main() {
   console.log('Cleaning up database...');
   await prisma.auditLog.deleteMany();
   await prisma.message.deleteMany();
+  await prisma.announcement.deleteMany();
   await prisma.attendance.deleteMany();
   await prisma.examResult.deleteMany();
   await prisma.exam.deleteMany();
@@ -211,6 +212,41 @@ async function main() {
     }
   }
   console.log('✅ 25 Students created and linked to parents');
+
+  // 8. Announcements
+  await prisma.announcement.createMany({
+    data: [
+      {
+        title: 'Holi Holiday Notice',
+        content: 'Dear Parents, the school will remain closed on 25th March for Holi.',
+        type: 'HOLIDAY',
+        priority: 'MEDIUM',
+        allSchool: true,
+        authorId: adminUser1.id,
+        authorName: 'Yug Admin',
+      },
+      {
+        title: 'Mid-Term Exam Schedule',
+        content: 'The mid-term exams for Class 10th will start from next Monday.',
+        type: 'EXAM',
+        priority: 'HIGH',
+        allSchool: false,
+        classId: classes.find(c => c.name === 'Class 10th')?.id,
+        authorId: adminUser1.id,
+        authorName: 'Yug Admin',
+      },
+      {
+        title: 'Annual Sports Day',
+        content: 'Get ready for the Annual Sports Day on 15th April!',
+        type: 'EVENT',
+        priority: 'LOW',
+        allSchool: true,
+        authorId: adminUser1.id,
+        authorName: 'Yug Admin',
+      }
+    ]
+  });
+  console.log('✅ 3 Announcements created');
 
   console.log('🌱 Seeding finished successfully!');
 }
