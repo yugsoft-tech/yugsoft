@@ -18,7 +18,7 @@ import { RolesGuard, Roles } from '../../common/guards/roles.guard';
 import { CurrentUser } from '../../common/decorators/user.decorator';
 import { Role } from '@prisma/client';
 
-@Controller('notices')
+@Controller('communication/notices')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class NoticesController {
   constructor(private readonly noticesService: NoticesService) {}

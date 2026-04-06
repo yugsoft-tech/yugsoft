@@ -6,7 +6,7 @@ import { RolesGuard, Roles } from '../../common/guards/roles.guard';
 import { CurrentUser } from '../../common/decorators/user.decorator';
 import { Role } from '@prisma/client';
 
-@Controller('sms')
+@Controller('communication/sms')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class SmsController {
   constructor(private readonly smsService: SmsService) {}

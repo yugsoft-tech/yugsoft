@@ -6,7 +6,7 @@ import { RolesGuard, Roles } from '../../common/guards/roles.guard';
 import { CurrentUser } from '../../common/decorators/user.decorator';
 import { Role } from '@prisma/client';
 
-@Controller('email')
+@Controller('communication/email')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}
