@@ -31,7 +31,9 @@ export class ParentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { email, password, firstName, lastName, phone, studentIds } =
@@ -93,11 +95,12 @@ export class ParentsService {
         data: {
           userId: user.id,
           schoolId: currentUser.schoolId,
-          ...(studentIds && studentIds.length > 0 && {
-            students: {
-              connect: studentIds.map((id) => ({ id })),
-            },
-          }),
+          ...(studentIds &&
+            studentIds.length > 0 && {
+              students: {
+                connect: studentIds.map((id) => ({ id })),
+              },
+            }),
         },
         include: {
           user: {
@@ -154,7 +157,9 @@ export class ParentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { page = 1, limit = 10 } = listParentsDto;
@@ -306,7 +311,9 @@ export class ParentsService {
         );
       }
     } else {
-      throw new ForbiddenException('Only SCHOOL_ADMIN and PARENT can view parent profiles');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN and PARENT can view parent profiles',
+      );
     }
 
     return parent;
@@ -316,9 +323,11 @@ export class ParentsService {
    * Get linked students for parent
    * PARENT can view their linked students
    */
-  async getLinkedStudents(
-    currentUser: { userId: string; role: Role; schoolId?: string },
-  ) {
+  async getLinkedStudents(currentUser: {
+    userId: string;
+    role: Role;
+    schoolId?: string;
+  }) {
     if (currentUser.role !== Role.PARENT) {
       throw new ForbiddenException('Only PARENT can view linked students');
     }
@@ -361,7 +370,6 @@ export class ParentsService {
         },
       },
     });
-    
 
     if (!parent) {
       throw new NotFoundException('Parent profile not found');
@@ -390,11 +398,15 @@ export class ParentsService {
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
     if (currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only SCHOOL_ADMIN can map students to parents');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN can map students to parents',
+      );
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const parent = await this.prisma.parent.findUnique({
@@ -431,7 +443,9 @@ export class ParentsService {
     );
 
     if (invalidStudents.length > 0) {
-      throw new ForbiddenException('All students must belong to the same school');
+      throw new ForbiddenException(
+        'All students must belong to the same school',
+      );
     }
 
     // Map students to parent (replace existing mappings)
@@ -497,7 +511,9 @@ export class ParentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const parent = await this.prisma.parent.findUnique({
@@ -524,9 +540,15 @@ export class ParentsService {
       await this.prisma.user.update({
         where: { id: parent.userId },
         data: {
-          ...(updateParentDto.firstName && { firstName: updateParentDto.firstName }),
-          ...(updateParentDto.lastName && { lastName: updateParentDto.lastName }),
-          ...(updateParentDto.phone !== undefined && { phone: updateParentDto.phone }),
+          ...(updateParentDto.firstName && {
+            firstName: updateParentDto.firstName,
+          }),
+          ...(updateParentDto.lastName && {
+            lastName: updateParentDto.lastName,
+          }),
+          ...(updateParentDto.phone !== undefined && {
+            phone: updateParentDto.phone,
+          }),
         },
       });
     }
@@ -587,7 +609,9 @@ export class ParentsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const parent = await this.prisma.parent.findUnique({

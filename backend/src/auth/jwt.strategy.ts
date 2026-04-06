@@ -32,11 +32,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // Check if user exists in DB to prevent "Ghost Users" (stale tokens after seed/wipe)
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },
-      select: { id: true, role: true, schoolId: true, email: true }
+      select: { id: true, role: true, schoolId: true, email: true },
     });
 
     if (!user) {
-      console.warn(`[JwtStrategy] Token valid but user ${payload.sub} not found in DB. Stale token?`);
+      console.warn(
+        `[JwtStrategy] Token valid but user ${payload.sub} not found in DB. Stale token?`,
+      );
       throw new UnauthorizedException('User no longer exists');
     }
 

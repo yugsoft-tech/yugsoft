@@ -26,10 +26,7 @@ export class ParentsController {
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN)
-  create(
-    @Body() createParentDto: CreateParentDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createParentDto: CreateParentDto, @CurrentUser() user: any) {
     return this.parentsService.create(createParentDto, {
       userId: user.userId,
       role: user.role,
@@ -39,10 +36,7 @@ export class ParentsController {
 
   @Get()
   @Roles(Role.SCHOOL_ADMIN)
-  findAll(
-    @Query() listParentsDto: ListParentsDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listParentsDto: ListParentsDto, @CurrentUser() user: any) {
     return this.parentsService.findAll(listParentsDto, {
       userId: user.userId,
       role: user.role,

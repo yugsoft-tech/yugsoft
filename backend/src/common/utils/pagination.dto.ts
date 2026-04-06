@@ -36,6 +36,3 @@ export interface PaginatedResult<T> {
   meta: PaginationMeta;
   note?: string;
 }
-
-
-

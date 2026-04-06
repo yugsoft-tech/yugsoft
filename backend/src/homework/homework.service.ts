@@ -24,10 +24,14 @@ export class HomeworkService {
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
     const isTeacher = currentUser.role === Role.TEACHER;
-    const isAdmin = currentUser.role === Role.SCHOOL_ADMIN || currentUser.role === Role.SUPER_ADMIN;
+    const isAdmin =
+      currentUser.role === Role.SCHOOL_ADMIN ||
+      currentUser.role === Role.SUPER_ADMIN;
 
     if (!isTeacher && !isAdmin) {
-      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can create homework');
+      throw new ForbiddenException(
+        'Only TEACHER or SCHOOL_ADMIN can create homework',
+      );
     }
 
     if (!currentUser.schoolId) {
@@ -91,14 +95,16 @@ export class HomeworkService {
     // If Admin is creating, use the subject's teacher or the first available teacher in the school
     if (!teacherId && isAdmin) {
       teacherId = subject.teacherId;
-      
+
       if (!teacherId) {
         // Fallback: find any teacher in the school if the subject has no teacher
         const fallbackTeacher = await this.prisma.teacher.findFirst({
-           where: { schoolId: currentUser.schoolId }
+          where: { schoolId: currentUser.schoolId },
         });
         if (!fallbackTeacher) {
-          throw new BadRequestException('No teachers found in this school to assign homework to');
+          throw new BadRequestException(
+            'No teachers found in this school to assign homework to',
+          );
         }
         teacherId = fallbackTeacher.id;
       }
@@ -167,7 +173,9 @@ export class HomeworkService {
 
     if (currentUser.role === Role.TEACHER) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('Teacher must be associated with a school');
+        throw new ForbiddenException(
+          'Teacher must be associated with a school',
+        );
       }
 
       // TEACHER can view homework they assigned
@@ -285,7 +293,9 @@ export class HomeworkService {
     } else if (currentUser.role === Role.TEACHER) {
       // TEACHER can view homework for classes in their school
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('Teacher must be associated with a school');
+        throw new ForbiddenException(
+          'Teacher must be associated with a school',
+        );
       }
 
       const classEntity = await this.prisma.class.findUnique({
@@ -388,7 +398,9 @@ export class HomeworkService {
     // RBAC checks
     if (currentUser.role === Role.TEACHER) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('Teacher must be associated with a school');
+        throw new ForbiddenException(
+          'Teacher must be associated with a school',
+        );
       }
 
       const teacher = await this.prisma.teacher.findFirst({

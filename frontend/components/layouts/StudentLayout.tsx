@@ -14,7 +14,6 @@ import {
   CheckSquare,
   ClipboardList,
   Award,
-  Library,
   UserCheck,
   MessageSquare,
   Megaphone,

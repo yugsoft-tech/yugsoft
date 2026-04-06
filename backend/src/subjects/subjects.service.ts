@@ -29,7 +29,9 @@ export class SubjectsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { name, code, teacherId } = createSubjectDto;
@@ -62,9 +64,7 @@ export class SubjectsService {
       }
 
       if (teacher.schoolId !== currentUser.schoolId) {
-        throw new ForbiddenException(
-          'Teacher must belong to the same school',
-        );
+        throw new ForbiddenException('Teacher must belong to the same school');
       }
 
       if (teacher.user.role !== Role.TEACHER) {
@@ -116,7 +116,9 @@ export class SubjectsService {
 
     if (currentUser.role === Role.SCHOOL_ADMIN) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('School admin must be associated with a school');
+        throw new ForbiddenException(
+          'School admin must be associated with a school',
+        );
       }
       // SCHOOL_ADMIN sees all subjects in their school
       where.schoolId = currentUser.schoolId;
@@ -134,7 +136,9 @@ export class SubjectsService {
 
       where.teacherId = teacher.id;
     } else {
-      throw new ForbiddenException('Only SCHOOL_ADMIN and TEACHER can view subjects');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN and TEACHER can view subjects',
+      );
     }
 
     // Note: classId filter is for future use if Subject-Class relationship is added
@@ -189,11 +193,15 @@ export class SubjectsService {
     }
 
     if (currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only SCHOOL_ADMIN can view subjects by class');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN can view subjects by class',
+      );
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     // Verify class exists and belongs to the school
@@ -304,7 +312,9 @@ export class SubjectsService {
         );
       }
     } else {
-      throw new ForbiddenException('Only SCHOOL_ADMIN and TEACHER can view subjects');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN and TEACHER can view subjects',
+      );
     }
 
     return subject;
@@ -324,7 +334,9 @@ export class SubjectsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const subject = await this.prisma.subject.findUnique({
@@ -401,7 +413,9 @@ export class SubjectsService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const subject = await this.prisma.subject.findUnique({

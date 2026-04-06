@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsEnum, IsOptional, IsDateString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  IsOptional,
+  IsDateString,
+} from 'class-validator';
 
 export enum ReportType {
   STUDENT = 'STUDENT',
@@ -24,4 +30,3 @@ export class GenerateReportDto {
   @IsOptional()
   studentId?: string;
 }
-

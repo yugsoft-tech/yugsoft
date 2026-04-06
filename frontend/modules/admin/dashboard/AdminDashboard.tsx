@@ -12,8 +12,7 @@ import {
   Clock,
   CheckCircle2,
   Activity,
-  Bus,
-  BookOpen
+  Bus
 } from 'lucide-react';
 import Link from 'next/link';
 import AdminLayout from '@/components/layouts/AdminLayout';
@@ -171,10 +170,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {[
             { label: 'Transport Vehicles', value: stats?.statistics?.totalVehicles || 0, icon: <Bus size={20} />, color: 'bg-indigo-500', max: 50 },
-            { label: 'Library Books', value: stats?.statistics?.totalBooks || 0, icon: <BookOpen size={20} />, color: 'bg-emerald-500', max: 5000 },
           ].map((item, i) => (
             <div key={i} className="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-700 transition-all hover:shadow-md">
               <div className="flex justify-between items-center mb-4">

@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { PaginationDto, PaginatedResult } from '../../common/utils/pagination.dto';
+import {
+  PaginationDto,
+  PaginatedResult,
+} from '../../common/utils/pagination.dto';
 
 @Injectable()
 export class SystemLogsService {

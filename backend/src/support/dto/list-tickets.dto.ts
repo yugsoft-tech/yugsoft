@@ -12,4 +12,3 @@ export class ListTicketsDto extends PaginationDto {
   @Type(() => String)
   priority?: string;
 }
-

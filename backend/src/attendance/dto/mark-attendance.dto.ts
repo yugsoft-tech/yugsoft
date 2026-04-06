@@ -34,4 +34,3 @@ export class MarkAttendanceDto {
   @IsNotEmpty()
   students: StudentAttendanceDto[];
 }
-

@@ -30,4 +30,3 @@ export class BulkMarksDto {
   @IsNotEmpty()
   marks: StudentMarkDto[];
 }
-

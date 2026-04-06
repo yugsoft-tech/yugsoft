@@ -25,10 +25,7 @@ export class SubjectsController {
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN)
-  create(
-    @Body() createSubjectDto: CreateSubjectDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createSubjectDto: CreateSubjectDto, @CurrentUser() user: any) {
     return this.subjectsService.create(createSubjectDto, {
       userId: user.userId,
       role: user.role,
@@ -38,10 +35,7 @@ export class SubjectsController {
 
   @Get()
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  findAll(
-    @Query() listSubjectsDto: ListSubjectsDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listSubjectsDto: ListSubjectsDto, @CurrentUser() user: any) {
     return this.subjectsService.findAll(listSubjectsDto, {
       userId: user.userId,
       role: user.role,
@@ -51,10 +45,7 @@ export class SubjectsController {
 
   @Get('class/:classId')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  findByClass(
-    @Param('classId') classId: string,
-    @CurrentUser() user: any,
-  ) {
+  findByClass(@Param('classId') classId: string, @CurrentUser() user: any) {
     return this.subjectsService.findByClass(classId, {
       userId: user.userId,
       role: user.role,

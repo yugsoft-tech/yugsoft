@@ -12,4 +12,3 @@ export class MonthlyReportDto {
   })
   month: string; // Format: YYYY-MM
 }
-

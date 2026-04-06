@@ -1,10 +1,4 @@
-import {
-  IsNotEmpty,
-  IsUUID,
-  IsNumber,
-  Min,
-  Max,
-} from 'class-validator';
+import { IsNotEmpty, IsUUID, IsNumber, Min, Max } from 'class-validator';
 
 export class CreateMarkDto {
   @IsUUID()

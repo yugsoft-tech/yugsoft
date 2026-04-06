@@ -6,4 +6,3 @@ export class MapStudentsDto {
   @IsNotEmpty()
   studentIds: string[];
 }
-

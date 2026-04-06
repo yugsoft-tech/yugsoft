@@ -25,8 +25,8 @@ import { Role } from '@prisma/client';
 export class AttendanceController {
   constructor(
     private readonly attendanceService: AttendanceService,
-    private readonly reportsService: ReportsService
-  ) { }
+    private readonly reportsService: ReportsService,
+  ) {}
 
   @Post('mark')
   @Roles(Role.TEACHER)
@@ -42,7 +42,13 @@ export class AttendanceController {
   }
 
   @Get()
-  @Roles(Role.TEACHER, Role.STUDENT, Role.PARENT, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
+  @Roles(
+    Role.TEACHER,
+    Role.STUDENT,
+    Role.PARENT,
+    Role.SCHOOL_ADMIN,
+    Role.SUPER_ADMIN,
+  )
   findAll(
     @Query() viewAttendanceDto: ViewAttendanceDto,
     @CurrentUser() user: any,
@@ -53,20 +59,17 @@ export class AttendanceController {
       schoolId: user.schoolId,
     });
   }
-  
+
   @Get('reports')
   @Roles(Role.SCHOOL_ADMIN, Role.SUPER_ADMIN, Role.TEACHER)
-  getReports(
-    @Query() query: any,
-    @CurrentUser() user: any,
-  ) {
+  getReports(@Query() query: any, @CurrentUser() user: any) {
     // Map frontend 'start/end' to 'startDate/endDate' if needed
     const reportDto = {
       ...query,
       startDate: query.startDate || query.start,
-      endDate: query.endDate || query.end
+      endDate: query.endDate || query.end,
     };
-    
+
     return this.reportsService.getAttendanceReport(reportDto, {
       userId: user.userId,
       role: user.role,

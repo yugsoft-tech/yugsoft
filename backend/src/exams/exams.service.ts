@@ -11,7 +11,7 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class ExamsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Create exam per class
@@ -21,8 +21,13 @@ export class ExamsService {
     createExamDto: CreateExamDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can create exams');
+    if (
+      currentUser.role !== Role.TEACHER &&
+      currentUser.role !== Role.SCHOOL_ADMIN
+    ) {
+      throw new ForbiddenException(
+        'Only TEACHER or SCHOOL_ADMIN can create exams',
+      );
     }
 
     if (!currentUser.schoolId) {
@@ -40,7 +45,8 @@ export class ExamsService {
       throw new NotFoundException('Teacher profile not found');
     }
 
-    const { name, type, date, classId, totalMarks, passingMarks } = createExamDto;
+    const { name, type, date, classId, totalMarks, passingMarks } =
+      createExamDto;
 
     // Verify class exists and belongs to school
     const classEntity = await this.prisma.class.findUnique({
@@ -98,7 +104,9 @@ export class ExamsService {
 
     if (currentUser.role === Role.TEACHER) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('Teacher must be associated with a school');
+        throw new ForbiddenException(
+          'Teacher must be associated with a school',
+        );
       }
 
       where.class = {
@@ -217,7 +225,10 @@ export class ExamsService {
 
     // RBAC checks
     if (currentUser.role === Role.TEACHER) {
-      if (!currentUser.schoolId || exam.class.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        exam.class.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view exams for classes in your school',
         );
@@ -251,7 +262,7 @@ export class ExamsService {
       const studentClassIds = parent.students.map((s) => s.classId);
       if (!studentClassIds.includes(exam.classId)) {
         throw new ForbiddenException(
-          'Access denied. You can only view exams for your linked students\' classes',
+          "Access denied. You can only view exams for your linked students' classes",
         );
       }
     } else {
@@ -272,8 +283,13 @@ export class ExamsService {
     updateExamDto: UpdateExamDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can update exams');
+    if (
+      currentUser.role !== Role.TEACHER &&
+      currentUser.role !== Role.SCHOOL_ADMIN
+    ) {
+      throw new ForbiddenException(
+        'Only TEACHER or SCHOOL_ADMIN can update exams',
+      );
     }
 
     if (!currentUser.schoolId) {
@@ -304,8 +320,12 @@ export class ExamsService {
         ...(updateExamDto.name && { name: updateExamDto.name }),
         ...(updateExamDto.type && { type: updateExamDto.type }),
         ...(updateExamDto.date && { date: new Date(updateExamDto.date) }),
-        ...(updateExamDto.totalMarks !== undefined && { totalMarks: updateExamDto.totalMarks }),
-        ...(updateExamDto.passingMarks !== undefined && { passingMarks: updateExamDto.passingMarks }),
+        ...(updateExamDto.totalMarks !== undefined && {
+          totalMarks: updateExamDto.totalMarks,
+        }),
+        ...(updateExamDto.passingMarks !== undefined && {
+          passingMarks: updateExamDto.passingMarks,
+        }),
       },
       include: {
         class: {
@@ -333,8 +353,13 @@ export class ExamsService {
     id: string,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only TEACHER or SCHOOL_ADMIN can delete exams');
+    if (
+      currentUser.role !== Role.TEACHER &&
+      currentUser.role !== Role.SCHOOL_ADMIN
+    ) {
+      throw new ForbiddenException(
+        'Only TEACHER or SCHOOL_ADMIN can delete exams',
+      );
     }
 
     if (!currentUser.schoolId) {

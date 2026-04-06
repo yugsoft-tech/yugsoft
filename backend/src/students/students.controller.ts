@@ -22,14 +22,11 @@ import { Role } from '@prisma/client';
 @Controller('students')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class StudentsController {
-  constructor(private readonly studentsService: StudentsService) { }
+  constructor(private readonly studentsService: StudentsService) {}
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN)
-  create(
-    @Body() createStudentDto: CreateStudentDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createStudentDto: CreateStudentDto, @CurrentUser() user: any) {
     return this.studentsService.create(createStudentDto, {
       userId: user.userId,
       role: user.role,
@@ -52,10 +49,7 @@ export class StudentsController {
 
   @Get()
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER, Role.SUPER_ADMIN)
-  findAll(
-    @Query() listStudentsDto: ListStudentsDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listStudentsDto: ListStudentsDto, @CurrentUser() user: any) {
     return this.studentsService.findAll(listStudentsDto, {
       userId: user.userId,
       role: user.role,
@@ -65,10 +59,7 @@ export class StudentsController {
 
   @Get('class/:classId')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  findByClass(
-    @Param('classId') classId: string,
-    @CurrentUser() user: any,
-  ) {
+  findByClass(@Param('classId') classId: string, @CurrentUser() user: any) {
     return this.studentsService.findByClass(classId, {
       userId: user.userId,
       role: user.role,

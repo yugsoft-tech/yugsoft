@@ -21,4 +21,3 @@ export class ViewAttendanceDto extends PaginationDto {
   @IsDateString()
   endDate?: string;
 }
-

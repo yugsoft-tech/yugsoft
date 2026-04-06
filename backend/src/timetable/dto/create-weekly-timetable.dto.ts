@@ -1,9 +1,4 @@
-import {
-  IsNotEmpty,
-  IsUUID,
-  IsArray,
-  ValidateNested,
-} from 'class-validator';
+import { IsNotEmpty, IsUUID, IsArray, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateTimetableDto } from './create-timetable.dto';
 
@@ -18,4 +13,3 @@ export class CreateWeeklyTimetableDto {
   @IsNotEmpty()
   entries: CreateTimetableDto[];
 }
-

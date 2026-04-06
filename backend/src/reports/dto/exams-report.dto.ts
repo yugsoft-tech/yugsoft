@@ -22,4 +22,3 @@ export class ExamsReportDto {
   @IsEnum(ExamType)
   examType?: ExamType;
 }
-

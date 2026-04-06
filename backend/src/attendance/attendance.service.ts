@@ -189,15 +189,23 @@ export class AttendanceService {
     viewAttendanceDto: ViewAttendanceDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ): Promise<PaginatedResult<any>> {
-    const { page = 1, limit = 10, studentId, classId, startDate, endDate } =
-      viewAttendanceDto;
+    const {
+      page = 1,
+      limit = 10,
+      studentId,
+      classId,
+      startDate,
+      endDate,
+    } = viewAttendanceDto;
     const skip = (page - 1) * limit;
 
     const where: any = {};
 
     if (currentUser.role === Role.TEACHER) {
       if (!currentUser.schoolId) {
-        throw new ForbiddenException('Teacher must be associated with a school');
+        throw new ForbiddenException(
+          'Teacher must be associated with a school',
+        );
       }
 
       // TEACHER can view attendance for classes in their school
@@ -423,7 +431,10 @@ export class AttendanceService {
           'Access denied. You can only view attendance reports for your linked students',
         );
       }
-    } else if (currentUser.role !== Role.TEACHER && currentUser.role !== Role.SCHOOL_ADMIN) {
+    } else if (
+      currentUser.role !== Role.TEACHER &&
+      currentUser.role !== Role.SCHOOL_ADMIN
+    ) {
       throw new ForbiddenException(
         'Only TEACHER, STUDENT, PARENT, and SCHOOL_ADMIN can view attendance reports',
       );

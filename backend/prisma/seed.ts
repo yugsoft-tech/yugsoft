@@ -9,8 +9,9 @@ async function main() {
   // 0. Cleanup (Recommended to clear existing data to ensure UUID consistency)
   console.log('Cleaning up database...');
   await prisma.auditLog.deleteMany();
-  await prisma.message.deleteMany();
+  await prisma.notice.deleteMany();
   await prisma.announcement.deleteMany();
+  await prisma.book.deleteMany();
   await prisma.attendance.deleteMany();
   await prisma.examResult.deleteMany();
   await prisma.exam.deleteMany();
@@ -72,7 +73,7 @@ async function main() {
       email: 'admin@school.com',
       password: adminSchoolPassword,
       role: Role.SCHOOL_ADMIN,
-      firstName: 'School',
+      firstName: 'Main',
       lastName: 'Admin',
       phone: '9000000002',
       schoolId: school.id,
@@ -86,7 +87,6 @@ async function main() {
     '3rd', '4th', '5th', '6th', '7th', 
     '8th', '9th', '10th', '11th', '12th'
   ];
-  
   const classes = [];
   const sectionsMap: Record<string, any> = {};
 
@@ -166,6 +166,7 @@ async function main() {
   console.log('✅ 18 Parents created');
 
   // 7. Students (25 Students)
+  // Logic: 7 parents have 2 children, 11 parents have 1 child. (7*2 + 11 = 25)
   const studentData = [];
   let studentCount = 0;
 

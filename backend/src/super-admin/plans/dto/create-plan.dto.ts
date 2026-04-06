@@ -17,4 +17,3 @@ export class CreatePlanDto {
   @IsOptional()
   duration?: number;
 }
-

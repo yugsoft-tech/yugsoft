@@ -33,4 +33,3 @@ export class CreateSchoolDto {
   @IsNotEmpty()
   adminPassword: string;
 }
-

@@ -37,9 +37,8 @@ const PARENT_SECTIONS: NavSection[] = [
     ]
   },
   {
-    title: 'Communication & Finance',
+    title: 'Finance',
     items: [
-      { label: 'Messages', href: '/parent/messages', icon: MessageSquare },
       { label: 'Fees & Payments', href: '/parent/fees', icon: CreditCard },
     ]
   }

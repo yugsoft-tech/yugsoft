@@ -52,10 +52,7 @@ export class TransportController {
 
   @Get('vehicles/:id')
   @Roles(Role.SCHOOL_ADMIN)
-  findOneVehicle(
-    @Param('id') id: string,
-    @CurrentUser() user: any,
-  ) {
+  findOneVehicle(@Param('id') id: string, @CurrentUser() user: any) {
     return this.transportService.findOneVehicle(id, {
       userId: user.userId,
       role: user.role,
@@ -65,10 +62,7 @@ export class TransportController {
 
   @Get('vehicles/:id/students')
   @Roles(Role.SCHOOL_ADMIN)
-  getVehicleStudents(
-    @Param('id') id: string,
-    @CurrentUser() user: any,
-  ) {
+  getVehicleStudents(@Param('id') id: string, @CurrentUser() user: any) {
     return this.transportService.getVehicleStudents(id, {
       userId: user.userId,
       role: user.role,
@@ -105,10 +99,7 @@ export class TransportController {
 
   @Delete('vehicles/:id')
   @Roles(Role.SCHOOL_ADMIN)
-  removeVehicle(
-    @Param('id') id: string,
-    @CurrentUser() user: any,
-  ) {
+  removeVehicle(@Param('id') id: string, @CurrentUser() user: any) {
     return this.transportService.removeVehicle(id, {
       userId: user.userId,
       role: user.role,

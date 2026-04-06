@@ -8,4 +8,3 @@ export class ListSubjectsDto extends PaginationDto {
   @Type(() => String)
   classId?: string;
 }
-

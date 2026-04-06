@@ -18,4 +18,3 @@ export class SettingsService {
     throw new Error('Method not implemented.');
   }
 }
-

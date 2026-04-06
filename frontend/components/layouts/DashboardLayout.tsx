@@ -4,22 +4,21 @@ import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { APP_NAME } from '@/utils/constants';
 import { getDashboardRoute } from '@/utils/role-config';
-
-import {
-    Menu,
-    X,
-    Bell,
-    Search,
-    LogOut,
-    ChevronRight,
-    Moon,
-    Sun,
-    HelpCircle,
-    GraduationCap,
-    UserCircle,
-    Settings,
-    User
+import { 
+    Menu, 
+    X, 
+    Search, 
+    LogOut, 
+    ChevronRight, 
+    Moon, 
+    Sun, 
+    HelpCircle, 
+    GraduationCap, 
+    UserCircle, 
+    Settings, 
+    User 
 } from 'lucide-react';
+import { NotificationBell } from '@/components/ui/NotificationBell';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -178,10 +177,7 @@ export default function DashboardLayout({ children, sections, role, headerExtra 
                             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
 
-                        <button className="relative p-2 text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all">
-                            <Bell size={20} />
-                            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800" />
-                        </button>
+                        <NotificationBell />
 
                         <button className="hidden sm:flex p-2 text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all">
                             <HelpCircle size={20} />

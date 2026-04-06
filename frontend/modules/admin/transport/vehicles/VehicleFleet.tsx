@@ -35,11 +35,11 @@ import {
 } from '@/components/ui/DropdownMenu';
 
 const vehicleSchema = z.object({
-    vehicleNo: z.string().min(3, 'Vehicle number is required'),
-    vehicleModel: z.string().min(2, 'Model name is required'),
-    driverName: z.string().min(3, 'Driver name is required'),
-    driverPhone: z.string().min(10, 'Valid phone number is required'),
-    capacity: z.number().min(1, 'Capacity is required'),
+    number: z.string().min(3, 'Vehicle number is required (e.g. RJ-14-LC-3754)'),
+    driver: z.string().min(3, 'Driver name is required'),
+    model: z.string().optional().or(z.literal('')),
+    phone: z.string().optional().or(z.literal('')),
+    capacity: z.number().optional().or(z.literal(NaN)).transform(v => isNaN(v as any) ? undefined : v),
 });
 
 type VehicleFormValues = z.infer<typeof vehicleSchema>;
@@ -125,46 +125,51 @@ export default function VehicleFleet() {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vehicle Number</label>
                                         <input
-                                            {...register('vehicleNo')}
+                                            {...register('number')}
                                             placeholder="UP-32-AB-1234..."
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                                            className={`w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 transition-all ${errors.number ? 'ring-2 ring-rose-500' : 'focus:ring-primary/10'}`}
                                         />
+                                        {errors.number && <p className="text-[10px] font-bold text-rose-500 pl-1">{errors.number.message}</p>}
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vehicle Model</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vehicle Model (Optional)</label>
                                         <input
-                                            {...register('vehicleModel')}
+                                            {...register('model')}
                                             placeholder="Tata Starbus 2024..."
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                                            className={`w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 transition-all ${errors.model ? 'ring-2 ring-rose-500' : 'focus:ring-primary/10'}`}
                                         />
+                                        {errors.model && <p className="text-[10px] font-bold text-rose-500 pl-1">{errors.model.message}</p>}
                                     </div>
                                 </div>
                                 <div className="space-y-6">
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Driver Name</label>
                                         <input
-                                            {...register('driverName')}
+                                            {...register('driver')}
                                             placeholder="John Doe..."
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                                            className={`w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 transition-all ${errors.driver ? 'ring-2 ring-rose-500' : 'focus:ring-primary/10'}`}
                                         />
+                                        {errors.driver && <p className="text-[10px] font-bold text-rose-500 pl-1">{errors.driver.message}</p>}
                                     </div>
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="space-y-3">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Driver Phone</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Driver Phone (Opt)</label>
                                             <input
-                                                {...register('driverPhone')}
+                                                {...register('phone')}
                                                 placeholder="+91 98765 43210..."
-                                                className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                                                className={`w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 transition-all ${errors.phone ? 'ring-2 ring-rose-500' : 'focus:ring-primary/10'}`}
                                             />
+                                            {errors.phone && <p className="text-[10px] font-bold text-rose-500 pl-1">{errors.phone.message}</p>}
                                         </div>
                                         <div className="space-y-3">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Seating Capacity</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Capacity (Opt)</label>
                                             <input
                                                 type="number"
                                                 {...register('capacity', { valueAsNumber: true })}
                                                 placeholder="56"
-                                                className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                                                className={`w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 transition-all ${errors.capacity ? 'ring-2 ring-rose-500' : 'focus:ring-primary/10'}`}
                                             />
+                                            {errors.capacity && <p className="text-[10px] font-bold text-rose-500 pl-1">{errors.capacity.message}</p>}
                                         </div>
                                     </div>
                                 </div>
@@ -217,10 +222,10 @@ export default function VehicleFleet() {
                                             <div className="flex justify-between items-start">
                                                 <div className="space-y-1">
                                                     <div className="flex items-center gap-2">
-                                                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{v.vehicleNo}</h3>
+                                                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{v.number}</h3>
                                                         <Badge color="emerald" className="bg-emerald-500/10 text-emerald-500 border-none text-[8px] font-black uppercase tracking-widest">Active</Badge>
                                                     </div>
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{v.vehicleModel}</p>
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{v.model}</p>
                                                 </div>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
@@ -248,7 +253,8 @@ export default function VehicleFleet() {
                                                     </div>
                                                     <div>
                                                         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Driver</p>
-                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase truncate">{v.driverName}</p>
+                                                        <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase truncate">{v.driver}</p>
+                                                        {v.phone && <p className="text-[8px] font-bold text-slate-400 truncate">{v.phone}</p>}
                                                     </div>
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4">

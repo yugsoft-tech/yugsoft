@@ -15,7 +15,6 @@ import { TimetableModule } from './timetable/timetable.module';
 import { ExamsModule } from './exams/exams.module';
 import { HomeworkModule } from './homework/homework.module';
 import { FeesModule } from './fees/fees.module';
-import { LibraryModule } from './library/library.module';
 import { TransportModule } from './transport/transport.module';
 import { CommunicationModule } from './communication/communication.module';
 import { DocumentsModule } from './documents/documents.module';
@@ -25,9 +24,9 @@ import { AuditModule } from './audit/audit.module';
 import { SupportModule } from './support/support.module';
 import { SuperAdminModule } from './super-admin/super-admin.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { NotificationsModule } from './notifications/notifications.module';
 import { AppController } from './app.controller';
 import authConfig from './config/auth.config';
-
 
 @Module({
   imports: [
@@ -51,7 +50,6 @@ import authConfig from './config/auth.config';
     ExamsModule,
     HomeworkModule,
     FeesModule,
-    LibraryModule,
     TransportModule,
     CommunicationModule,
     DocumentsModule,
@@ -61,10 +59,10 @@ import authConfig from './config/auth.config';
     SupportModule,
     SuperAdminModule,
     DashboardModule,
+    NotificationsModule,
     AuthModule,
     PrismaModule,
   ],
   controllers: [AppController],
 })
 export class AppModule {}
-

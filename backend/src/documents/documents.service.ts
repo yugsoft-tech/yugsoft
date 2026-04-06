@@ -524,7 +524,8 @@ export class DocumentsService {
     // };
 
     return {
-      message: 'Document model needs to be added to schema.prisma for document deletion. S3 deletion structure is ready for integration.',
+      message:
+        'Document model needs to be added to schema.prisma for document deletion. S3 deletion structure is ready for integration.',
     };
   }
 }

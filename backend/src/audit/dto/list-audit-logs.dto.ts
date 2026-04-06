@@ -20,4 +20,3 @@ export class ListAuditLogsDto extends PaginationDto {
   @IsDateString()
   endDate?: string;
 }
-

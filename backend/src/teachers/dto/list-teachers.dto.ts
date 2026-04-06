@@ -6,4 +6,3 @@ export class ListTeachersDto extends PaginationDto {
   @IsString()
   search?: string;
 }
-

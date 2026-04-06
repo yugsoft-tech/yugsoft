@@ -35,10 +35,7 @@ export class FeesController {
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN)
-  create(
-    @Body() createFeeDto: CreateFeeDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createFeeDto: CreateFeeDto, @CurrentUser() user: any) {
     return this.feesService.create(createFeeDto, {
       userId: user.userId,
       role: user.role,
@@ -48,10 +45,7 @@ export class FeesController {
 
   @Get()
   @Roles(Role.SCHOOL_ADMIN, Role.PARENT)
-  findAll(
-    @Query() listFeesDto: ListFeesDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listFeesDto: ListFeesDto, @CurrentUser() user: any) {
     return this.feesService.findAll(listFeesDto, {
       userId: user.userId,
       role: user.role,

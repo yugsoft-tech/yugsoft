@@ -31,8 +31,14 @@ export class AuditService {
       );
     }
 
-    const { page = 1, limit = 10, userId, action, startDate, endDate } =
-      listAuditLogsDto;
+    const {
+      page = 1,
+      limit = 10,
+      userId,
+      action,
+      startDate,
+      endDate,
+    } = listAuditLogsDto;
     const skip = (page - 1) * limit;
 
     const where: any = {};
@@ -164,7 +170,10 @@ export class AuditService {
 
     // SCHOOL_ADMIN can only view logs for users in their school
     if (currentUser.role === Role.SCHOOL_ADMIN) {
-      if (!currentUser.schoolId || auditLog.user.schoolId !== currentUser.schoolId) {
+      if (
+        !currentUser.schoolId ||
+        auditLog.user.schoolId !== currentUser.schoolId
+      ) {
         throw new ForbiddenException(
           'Access denied. You can only view audit logs for users in your school',
         );
@@ -212,8 +221,13 @@ export class AuditService {
       }
     }
 
-    const { page = 1, limit = 10, action, startDate, endDate } =
-      listAuditLogsDto;
+    const {
+      page = 1,
+      limit = 10,
+      action,
+      startDate,
+      endDate,
+    } = listAuditLogsDto;
     const skip = (page - 1) * limit;
 
     const where: any = {
@@ -329,12 +343,15 @@ export class AuditService {
     const totalActions = auditLogs.length;
 
     // Group by action type
-    const actionCounts = auditLogs.reduce((acc, log) => {
-      // Extract action type (CREATE, UPDATE, DELETE, etc.)
-      const actionType = log.action.split('_')[0] || log.action;
-      acc[actionType] = (acc[actionType] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const actionCounts = auditLogs.reduce(
+      (acc, log) => {
+        // Extract action type (CREATE, UPDATE, DELETE, etc.)
+        const actionType = log.action.split('_')[0] || log.action;
+        acc[actionType] = (acc[actionType] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     // Get recent activity (last 30 days)
     const thirtyDaysAgo = new Date();
@@ -433,34 +450,46 @@ export class AuditService {
     const totalActions = auditLogs.length;
 
     // Group by action type
-    const actionBreakdown = auditLogs.reduce((acc, log) => {
-      const actionType = log.action.split('_')[0] || log.action;
-      acc[actionType] = (acc[actionType] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const actionBreakdown = auditLogs.reduce(
+      (acc, log) => {
+        const actionType = log.action.split('_')[0] || log.action;
+        acc[actionType] = (acc[actionType] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     // Group by user role
-    const roleBreakdown = auditLogs.reduce((acc, log) => {
-      const role = log.user.role;
-      acc[role] = (acc[role] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const roleBreakdown = auditLogs.reduce(
+      (acc, log) => {
+        const role = log.user.role;
+        acc[role] = (acc[role] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     // Group by date (daily activity)
-    const dailyActivity = auditLogs.reduce((acc, log) => {
-      const date = log.createdAt.toISOString().split('T')[0];
-      acc[date] = (acc[date] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const dailyActivity = auditLogs.reduce(
+      (acc, log) => {
+        const date = log.createdAt.toISOString().split('T')[0];
+        acc[date] = (acc[date] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     // Get unique users count
     const uniqueUsers = new Set(auditLogs.map((log) => log.userId)).size;
 
     // Get top active users
-    const userActivityCounts = auditLogs.reduce((acc, log) => {
-      acc[log.userId] = (acc[log.userId] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const userActivityCounts = auditLogs.reduce(
+      (acc, log) => {
+        acc[log.userId] = (acc[log.userId] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     const topActiveUsers = Object.entries(userActivityCounts)
       .sort(([, a], [, b]) => b - a)

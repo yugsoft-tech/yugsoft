@@ -38,12 +38,6 @@ const TEACHER_SECTIONS: NavSection[] = [
       { label: 'Exams', href: '/teacher/exams', icon: Award },
     ]
   },
-  {
-    title: 'Office',
-    items: [
-      { label: 'Messages', href: '/teacher/messages', icon: MessageSquare },
-    ]
-  }
 ];
 
 function TeacherLayoutContent({ children }: TeacherLayoutProps) {

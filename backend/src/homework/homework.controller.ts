@@ -38,10 +38,7 @@ export class HomeworkController {
 
   @Get()
   @Roles(Role.TEACHER, Role.STUDENT, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
-  findAll(
-    @Query() listHomeworkDto: ListHomeworkDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listHomeworkDto: ListHomeworkDto, @CurrentUser() user: any) {
     return this.homeworkService.findAll(listHomeworkDto, {
       userId: user.userId,
       role: user.role,
@@ -51,10 +48,7 @@ export class HomeworkController {
 
   @Get('class/:classId')
   @Roles(Role.TEACHER, Role.STUDENT, Role.SCHOOL_ADMIN, Role.SUPER_ADMIN)
-  findByClass(
-    @Param('classId') classId: string,
-    @CurrentUser() user: any,
-  ) {
+  findByClass(@Param('classId') classId: string, @CurrentUser() user: any) {
     return this.homeworkService.findByClass(classId, {
       userId: user.userId,
       role: user.role,

@@ -24,10 +24,7 @@ export class SupportService {
     createTicketDto: CreateTicketDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (
-      currentUser.role !== Role.STUDENT &&
-      currentUser.role !== Role.PARENT
-    ) {
+    if (currentUser.role !== Role.STUDENT && currentUser.role !== Role.PARENT) {
       throw new ForbiddenException(
         'Only STUDENT and PARENT can create support tickets',
       );
@@ -384,9 +381,7 @@ export class SupportService {
       currentUser.role !== Role.SCHOOL_ADMIN &&
       currentUser.role !== Role.SUPER_ADMIN
     ) {
-      throw new ForbiddenException(
-        'Only ADMIN can update ticket status',
-      );
+      throw new ForbiddenException('Only ADMIN can update ticket status');
     }
 
     // TODO: Once SupportTicket model is added, use this structure:

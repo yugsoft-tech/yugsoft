@@ -13,4 +13,3 @@ export class ListFeesDto extends PaginationDto {
   @IsEnum(FeeStatus)
   status?: FeeStatus;
 }
-

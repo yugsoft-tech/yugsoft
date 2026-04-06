@@ -4,7 +4,7 @@ import { Role, AttendanceStatus, FeeStatus } from '@prisma/client';
 
 @Injectable()
 export class DashboardService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Get dashboard statistics for admin
@@ -101,7 +101,7 @@ export class DashboardService {
       const date = new Date();
       date.setDate(date.getDate() - i);
       date.setHours(0, 0, 0, 0);
-      
+
       const nextDay = new Date(date);
       nextDay.setDate(nextDay.getDate() + 1);
 
@@ -113,7 +113,9 @@ export class DashboardService {
       });
 
       const total = dayAttendance.length;
-      const present = dayAttendance.filter(a => a.status === AttendanceStatus.PRESENT).length;
+      const present = dayAttendance.filter(
+        (a) => a.status === AttendanceStatus.PRESENT,
+      ).length;
       const percentage = total > 0 ? Math.round((present / total) * 100) : 0;
 
       attendanceHistory.push({
@@ -123,8 +125,9 @@ export class DashboardService {
     }
 
     // Get resource counts
-    const totalBooks = await this.prisma.book.count({ where: { schoolId: currentUser.schoolId } });
-    const totalVehicles = await this.prisma.vehicle.count({ where: { schoolId: currentUser.schoolId } });
+    const totalVehicles = await this.prisma.vehicle.count({
+      where: { schoolId: currentUser.schoolId },
+    });
 
     // Get total users for this school
     const totalUsers = await this.prisma.user.count({
@@ -138,7 +141,6 @@ export class DashboardService {
         totalUsers,
         activeClasses,
         todayAttendance: attendancePercentage,
-        totalBooks,
         totalVehicles,
       },
       attendanceHistory,
@@ -188,8 +190,13 @@ export class DashboardService {
     });
 
     const totalAttendance = attendance.length;
-    const presentCount = attendance.filter(a => a.status === AttendanceStatus.PRESENT).length;
-    const attendanceRate = totalAttendance > 0 ? Math.round((presentCount / totalAttendance) * 100) : 0;
+    const presentCount = attendance.filter(
+      (a) => a.status === AttendanceStatus.PRESENT,
+    ).length;
+    const attendanceRate =
+      totalAttendance > 0
+        ? Math.round((presentCount / totalAttendance) * 100)
+        : 0;
 
     // Grade analytics (Average marks per class for this teacher)
     const gradeAnalytics = await Promise.all(
@@ -198,18 +205,21 @@ export class DashboardService {
           where: { classId },
           include: { results: true },
         });
-        
+
         let totalMarks = 0;
         let count = 0;
-        
-        exams.forEach(exam => {
-          exam.results.forEach(result => {
-             totalMarks += result.marks;
-             count++;
+
+        exams.forEach((exam) => {
+          exam.results.forEach((result) => {
+            totalMarks += result.marks;
+            count++;
           });
         });
 
-        const className = await this.prisma.class.findUnique({ where: { id: classId }, select: { name: true } });
+        const className = await this.prisma.class.findUnique({
+          where: { id: classId },
+          select: { name: true },
+        });
 
         return {
           label: className?.name || 'Class',
@@ -232,7 +242,7 @@ export class DashboardService {
         attendanceRate,
         rating: '4.9/5',
       },
-      upcomingHomework: upcomingHomework.map(h => ({
+      upcomingHomework: upcomingHomework.map((h) => ({
         id: h.id,
         title: h.title,
         dueDate: h.dueDate,
@@ -257,7 +267,9 @@ export class DashboardService {
     });
 
     if (!student) {
-      console.error(`[DashboardService] Student profile not found for userId: ${userId}`);
+      console.error(
+        `[DashboardService] Student profile not found for userId: ${userId}`,
+      );
       throw new ForbiddenException('Student profile not found');
     }
 
@@ -283,7 +295,15 @@ export class DashboardService {
         : 0;
 
     // Get today's schedule
-    const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+    const days = [
+      'SUNDAY',
+      'MONDAY',
+      'TUESDAY',
+      'WEDNESDAY',
+      'THURSDAY',
+      'FRIDAY',
+      'SATURDAY',
+    ];
     const todayDay = days[new Date().getDay()] as any;
 
     const todaySchedule = await this.prisma.timetable.findMany({
@@ -314,7 +334,7 @@ export class DashboardService {
       },
       homework,
       recentAttendance: attendanceRecords.slice(0, 5),
-      todaySchedule: todaySchedule.map(s => ({
+      todaySchedule: todaySchedule.map((s) => ({
         id: s.id,
         time: s.startTime,
         subject: s.subject.name,
@@ -340,8 +360,8 @@ export class DashboardService {
               where: { status: FeeStatus.PENDING },
             },
             attendance: {
-               orderBy: { date: 'desc' },
-               take: 30,
+              orderBy: { date: 'desc' },
+              take: 30,
             },
           },
         },
@@ -352,7 +372,7 @@ export class DashboardService {
 
     const childrenData = parent.students.map((child) => {
       const pendingFees = child.fees.reduce((sum, fee) => sum + fee.amount, 0);
-      
+
       const presentDays = child.attendance.filter(
         (a) => a.status === AttendanceStatus.PRESENT,
       ).length;
@@ -372,10 +392,10 @@ export class DashboardService {
     });
 
     // Get recent activities for all children
-    const childIds = parent.students.map(s => s.id);
+    const childIds = parent.students.map((s) => s.id);
     const recentActivities = await this.prisma.homework.findMany({
       where: {
-        classId: { in: parent.students.map(s => s.classId) },
+        classId: { in: parent.students.map((s) => s.classId) },
       },
       orderBy: { createdAt: 'desc' },
       take: 5,
@@ -388,7 +408,7 @@ export class DashboardService {
         (sum, child) => sum + child.pendingFees,
         0,
       ),
-      recentActivities: recentActivities.map(act => ({
+      recentActivities: recentActivities.map((act) => ({
         id: act.id,
         type: 'Academics',
         title: act.title,

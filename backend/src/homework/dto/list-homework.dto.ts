@@ -13,4 +13,3 @@ export class ListHomeworkDto extends PaginationDto {
   @Type(() => String)
   subjectId?: string;
 }
-

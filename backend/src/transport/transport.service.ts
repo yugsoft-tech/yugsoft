@@ -29,10 +29,12 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
-    const { number, driver, route } = createVehicleDto;
+    const { number, driver, model, phone, capacity, route } = createVehicleDto;
 
     // Check if vehicle number already exists in the school
     const existingVehicle = await this.prisma.vehicle.findFirst({
@@ -53,6 +55,9 @@ export class TransportService {
       data: {
         number,
         driver,
+        model,
+        phone,
+        capacity,
         schoolId: currentUser.schoolId,
       },
     });
@@ -77,7 +82,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { page = 1, limit = 10, route } = listVehiclesDto;
@@ -132,7 +139,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({
@@ -175,7 +184,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({
@@ -215,6 +226,9 @@ export class TransportService {
       data: {
         ...(updateVehicleDto.number && { number: updateVehicleDto.number }),
         ...(updateVehicleDto.driver && { driver: updateVehicleDto.driver }),
+        ...(updateVehicleDto.model && { model: updateVehicleDto.model }),
+        ...(updateVehicleDto.phone && { phone: updateVehicleDto.phone }),
+        ...(updateVehicleDto.capacity && { capacity: updateVehicleDto.capacity }),
       },
       include: {
         school: {
@@ -247,7 +261,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const { vehicleId, studentIds } = assignRouteDto;
@@ -327,11 +343,15 @@ export class TransportService {
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
     if (currentUser.role !== Role.SCHOOL_ADMIN) {
-      throw new ForbiddenException('Only SCHOOL_ADMIN can view route assignments');
+      throw new ForbiddenException(
+        'Only SCHOOL_ADMIN can view route assignments',
+      );
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({
@@ -411,7 +431,9 @@ export class TransportService {
     }
 
     if (!currentUser.schoolId) {
-      throw new ForbiddenException('School admin must be associated with a school');
+      throw new ForbiddenException(
+        'School admin must be associated with a school',
+      );
     }
 
     const vehicle = await this.prisma.vehicle.findUnique({

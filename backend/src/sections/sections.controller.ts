@@ -24,10 +24,7 @@ export class SectionsController {
   constructor(private readonly sectionsService: SectionsService) {}
 
   @Post()
-  create(
-    @Body() createSectionDto: CreateSectionDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createSectionDto: CreateSectionDto, @CurrentUser() user: any) {
     return this.sectionsService.create(createSectionDto, {
       userId: user.userId,
       role: user.role,
@@ -36,10 +33,7 @@ export class SectionsController {
   }
 
   @Get('class/:classId')
-  findAllByClass(
-    @Param('classId') classId: string,
-    @CurrentUser() user: any,
-  ) {
+  findAllByClass(@Param('classId') classId: string, @CurrentUser() user: any) {
     return this.sectionsService.findAllByClass(classId, {
       userId: user.userId,
       role: user.role,

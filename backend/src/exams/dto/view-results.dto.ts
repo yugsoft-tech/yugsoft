@@ -13,4 +13,3 @@ export class ViewResultsDto extends PaginationDto {
   @Type(() => String)
   classId?: string;
 }
-

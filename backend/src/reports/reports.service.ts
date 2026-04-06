@@ -179,23 +179,27 @@ export class ReportsService {
       totalRecords > 0 ? ((present / totalRecords) * 100).toFixed(2) : '0.00';
 
     // Group by student for detailed breakdown
-    const studentStats = attendanceRecords.reduce((acc, record) => {
-      const studentId = record.studentId;
-      if (!acc[studentId]) {
-        acc[studentId] = {
-          student: record.student,
-          total: 0,
-          present: 0,
-          absent: 0,
-          late: 0,
-        };
-      }
-      acc[studentId].total++;
-      if (record.status === AttendanceStatus.PRESENT) acc[studentId].present++;
-      if (record.status === AttendanceStatus.ABSENT) acc[studentId].absent++;
-      if (record.status === AttendanceStatus.LATE) acc[studentId].late++;
-      return acc;
-    }, {} as Record<string, any>);
+    const studentStats = attendanceRecords.reduce(
+      (acc, record) => {
+        const studentId = record.studentId;
+        if (!acc[studentId]) {
+          acc[studentId] = {
+            student: record.student,
+            total: 0,
+            present: 0,
+            absent: 0,
+            late: 0,
+          };
+        }
+        acc[studentId].total++;
+        if (record.status === AttendanceStatus.PRESENT)
+          acc[studentId].present++;
+        if (record.status === AttendanceStatus.ABSENT) acc[studentId].absent++;
+        if (record.status === AttendanceStatus.LATE) acc[studentId].late++;
+        return acc;
+      },
+      {} as Record<string, any>,
+    );
 
     const studentDetails = Object.values(studentStats).map((stat: any) => ({
       ...stat,
@@ -358,8 +362,9 @@ export class ReportsService {
     }));
 
     const totalFees = feesWithStatus.length;
-    const paidFees = feesWithStatus.filter((f) => f.status === FeeStatus.PAID)
-      .length;
+    const paidFees = feesWithStatus.filter(
+      (f) => f.status === FeeStatus.PAID,
+    ).length;
     const pendingFees = feesWithStatus.filter(
       (f) => f.status === FeeStatus.PENDING,
     ).length;
@@ -379,37 +384,40 @@ export class ReportsService {
       .reduce((sum, f) => sum + f.amount, 0);
 
     // Group by student for detailed breakdown
-    const studentStats = feesWithStatus.reduce((acc, fee) => {
-      const studentId = fee.studentId;
-      if (!acc[studentId]) {
-        acc[studentId] = {
-          student: fee.student,
-          totalFees: 0,
-          paidFees: 0,
-          pendingFees: 0,
-          overdueFees: 0,
-          totalAmount: 0,
-          paidAmount: 0,
-          pendingAmount: 0,
-          overdueAmount: 0,
-        };
-      }
-      acc[studentId].totalFees++;
-      acc[studentId].totalAmount += fee.amount;
-      if (fee.status === FeeStatus.PAID) {
-        acc[studentId].paidFees++;
-        acc[studentId].paidAmount += fee.amount;
-      }
-      if (fee.status === FeeStatus.PENDING) {
-        acc[studentId].pendingFees++;
-        acc[studentId].pendingAmount += fee.amount;
-      }
-      if (fee.status === FeeStatus.OVERDUE) {
-        acc[studentId].overdueFees++;
-        acc[studentId].overdueAmount += fee.amount;
-      }
-      return acc;
-    }, {} as Record<string, any>);
+    const studentStats = feesWithStatus.reduce(
+      (acc, fee) => {
+        const studentId = fee.studentId;
+        if (!acc[studentId]) {
+          acc[studentId] = {
+            student: fee.student,
+            totalFees: 0,
+            paidFees: 0,
+            pendingFees: 0,
+            overdueFees: 0,
+            totalAmount: 0,
+            paidAmount: 0,
+            pendingAmount: 0,
+            overdueAmount: 0,
+          };
+        }
+        acc[studentId].totalFees++;
+        acc[studentId].totalAmount += fee.amount;
+        if (fee.status === FeeStatus.PAID) {
+          acc[studentId].paidFees++;
+          acc[studentId].paidAmount += fee.amount;
+        }
+        if (fee.status === FeeStatus.PENDING) {
+          acc[studentId].pendingFees++;
+          acc[studentId].pendingAmount += fee.amount;
+        }
+        if (fee.status === FeeStatus.OVERDUE) {
+          acc[studentId].overdueFees++;
+          acc[studentId].overdueAmount += fee.amount;
+        }
+        return acc;
+      },
+      {} as Record<string, any>,
+    );
 
     const studentDetails = Object.values(studentStats).map((stat: any) => ({
       ...stat,
@@ -597,27 +605,30 @@ export class ReportsService {
     const totalExams = uniqueExamIds.length;
 
     // Group by exam for detailed breakdown
-    const examStats = examResults.reduce((acc, result) => {
-      const examId = result.examId;
-      if (!acc[examId]) {
-        acc[examId] = {
-          exam: result.exam,
-          totalResults: 0,
-          totalMarks: 0,
-          highestMarks: 0,
-          lowestMarks: Infinity,
-        };
-      }
-      acc[examId].totalResults++;
-      acc[examId].totalMarks += result.marks;
-      if (result.marks > acc[examId].highestMarks) {
-        acc[examId].highestMarks = result.marks;
-      }
-      if (result.marks < acc[examId].lowestMarks) {
-        acc[examId].lowestMarks = result.marks;
-      }
-      return acc;
-    }, {} as Record<string, any>);
+    const examStats = examResults.reduce(
+      (acc, result) => {
+        const examId = result.examId;
+        if (!acc[examId]) {
+          acc[examId] = {
+            exam: result.exam,
+            totalResults: 0,
+            totalMarks: 0,
+            highestMarks: 0,
+            lowestMarks: Infinity,
+          };
+        }
+        acc[examId].totalResults++;
+        acc[examId].totalMarks += result.marks;
+        if (result.marks > acc[examId].highestMarks) {
+          acc[examId].highestMarks = result.marks;
+        }
+        if (result.marks < acc[examId].lowestMarks) {
+          acc[examId].lowestMarks = result.marks;
+        }
+        return acc;
+      },
+      {} as Record<string, any>,
+    );
 
     const examDetails = Object.values(examStats).map((stat: any) => ({
       ...stat,
@@ -631,27 +642,30 @@ export class ReportsService {
     }));
 
     // Group by student for detailed breakdown
-    const studentStats = examResults.reduce((acc, result) => {
-      const studentId = result.studentId;
-      if (!acc[studentId]) {
-        acc[studentId] = {
-          student: result.student,
-          totalExams: 0,
-          totalMarks: 0,
-          highestMarks: 0,
-          lowestMarks: Infinity,
-        };
-      }
-      acc[studentId].totalExams++;
-      acc[studentId].totalMarks += result.marks;
-      if (result.marks > acc[studentId].highestMarks) {
-        acc[studentId].highestMarks = result.marks;
-      }
-      if (result.marks < acc[studentId].lowestMarks) {
-        acc[studentId].lowestMarks = result.marks;
-      }
-      return acc;
-    }, {} as Record<string, any>);
+    const studentStats = examResults.reduce(
+      (acc, result) => {
+        const studentId = result.studentId;
+        if (!acc[studentId]) {
+          acc[studentId] = {
+            student: result.student,
+            totalExams: 0,
+            totalMarks: 0,
+            highestMarks: 0,
+            lowestMarks: Infinity,
+          };
+        }
+        acc[studentId].totalExams++;
+        acc[studentId].totalMarks += result.marks;
+        if (result.marks > acc[studentId].highestMarks) {
+          acc[studentId].highestMarks = result.marks;
+        }
+        if (result.marks < acc[studentId].lowestMarks) {
+          acc[studentId].lowestMarks = result.marks;
+        }
+        return acc;
+      },
+      {} as Record<string, any>,
+    );
 
     const studentDetails = Object.values(studentStats).map((stat: any) => ({
       ...stat,

@@ -64,6 +64,12 @@ enum Priority {
   URGENT
 }
 
+enum NoticeStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+}
+
 //////////////////// CORE ////////////////////
 
 model User {
@@ -95,26 +101,22 @@ model User {
 
   uploadedDocuments Document[] @relation("UploadedBy")
 
-  sentMessages     Message[] @relation("SentMessages")
-  receivedMessages Message[] @relation("ReceivedMessages")
+  notifications    Notification[]
 }
 
-model Message {
-  id      String @id @default(uuid())
-  message String
-  type    String @default("text") // text, image, file
 
-  senderId String
-  sender   User   @relation("SentMessages", fields: [senderId], references: [id])
-
-  receiverId String
-  receiver   User   @relation("ReceivedMessages", fields: [receiverId], references: [id])
-
-  schoolId String
-  school   School @relation(fields: [schoolId], references: [id])
-
-  read Boolean @default(false)
-
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  type      String   @default("ANNOUNCEMENT") // ANNOUNCEMENT, FEE, EXAM, SYSTEM
+  isRead    Boolean  @default(false)
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  schoolId  String?
+  
   createdAt DateTime @default(now())
 }
 
@@ -135,9 +137,7 @@ model School {
   sections Section[]
   subjects Subject[]
   notices  Notice[]
-  books    Book[]
   vehicles Vehicle[]
-  messages Message[]
   documents Document[]
 
   createdAt DateTime  @default(now())
@@ -367,13 +367,18 @@ model Fee {
 model Notice {
   id       String         @id @default(uuid())
   title    String
-  message  String
-  audience NoticeAudience
+  content  String // Rich text content (formerly message)
+  audience NoticeAudience @default(ALL)
+  status   NoticeStatus   @default(PUBLISHED)
+  
+  publishDate DateTime?   @default(now())
+  attachments Json?       // Store multiple attachment metadata as JSON
 
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Announcement {
@@ -404,18 +409,15 @@ model Book {
   publisher String?
   quantity  Int     @default(1)
   category  String?
-
-  schoolId String
-  school   School @relation(fields: [schoolId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Vehicle {
-  id     String @id @default(uuid())
-  number String
-  driver String
+  id       String @id @default(uuid())
+  number   String
+  driver   String
+  model    String?
+  phone    String?
+  capacity Int?
 
   schoolId String
   school   School @relation(fields: [schoolId], references: [id])

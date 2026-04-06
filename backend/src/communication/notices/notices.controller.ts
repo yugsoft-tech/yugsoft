@@ -18,17 +18,14 @@ import { RolesGuard, Roles } from '../../common/guards/roles.guard';
 import { CurrentUser } from '../../common/decorators/user.decorator';
 import { Role } from '@prisma/client';
 
-@Controller('notices')
+@Controller('communication/notices')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class NoticesController {
   constructor(private readonly noticesService: NoticesService) {}
 
   @Post()
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  create(
-    @Body() createNoticeDto: CreateNoticeDto,
-    @CurrentUser() user: any,
-  ) {
+  create(@Body() createNoticeDto: CreateNoticeDto, @CurrentUser() user: any) {
     return this.noticesService.create(createNoticeDto, {
       userId: user.userId,
       role: user.role,
@@ -37,10 +34,7 @@ export class NoticesController {
   }
 
   @Get()
-  findAll(
-    @Query() listNoticesDto: ListNoticesDto,
-    @CurrentUser() user: any,
-  ) {
+  findAll(@Query() listNoticesDto: ListNoticesDto, @CurrentUser() user: any) {
     return this.noticesService.findAll(listNoticesDto, {
       userId: user.userId,
       role: user.role,

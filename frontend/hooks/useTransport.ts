@@ -54,7 +54,8 @@ export const useTransport = () => {
             fetchVehicles();
             return true;
         } catch (error: any) {
-            toast.error(error.message || 'Failed to add vehicle');
+            const errorMessage = error.response?.data?.message || error.message || 'Failed to add vehicle';
+            toast.error(typeof errorMessage === 'object' ? errorMessage[0] : errorMessage);
             return false;
         } finally {
             setLoading(false);
