@@ -9,7 +9,6 @@ async function main() {
   // 0. Cleanup (Recommended to clear existing data to ensure UUID consistency)
   console.log('Cleaning up database...');
   await prisma.auditLog.deleteMany();
-  await prisma.message.deleteMany();
   await prisma.attendance.deleteMany();
   await prisma.examResult.deleteMany();
   await prisma.exam.deleteMany();
