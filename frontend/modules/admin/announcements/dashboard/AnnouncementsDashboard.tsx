@@ -94,9 +94,16 @@ export default function AnnouncementsDashboard() {
 
         try {
             setSaving(true);
+            
+            // SANITIZE PAYLOAD: Only send fields the backend expects
             const payload = {
-                ...selectedAnnouncement,
-                status: status
+                title: selectedAnnouncement.title,
+                content: selectedAnnouncement.content,
+                audience: selectedAnnouncement.audience,
+                status: status,
+                publishDate: selectedAnnouncement.publishDate,
+                attachments: selectedAnnouncement.attachments,
+                classId: selectedAnnouncement.classId
             };
 
             if (selectedAnnouncement.id) {
@@ -109,9 +116,10 @@ export default function AnnouncementsDashboard() {
             
             await fetchAnnouncements();
             setSelectedAnnouncement(null);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error saving notice:', error);
-            toast.error('Failed to save announcement');
+            const errorMsg = error.response?.data?.message || 'Failed to save announcement';
+            toast.error(Array.isArray(errorMsg) ? errorMsg[0] : errorMsg);
         } finally {
             setSaving(false);
         }

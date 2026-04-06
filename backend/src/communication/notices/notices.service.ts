@@ -20,22 +20,28 @@ export class NoticesService {
   ) {}
 
   /**
+   * Helper to verify if user has permission to manage notices
+   */
+  private checkPermission(currentUser: { role: Role }) {
+    if (
+      currentUser.role !== Role.SCHOOL_ADMIN &&
+      currentUser.role !== Role.SUPER_ADMIN &&
+      currentUser.role !== Role.TEACHER
+    ) {
+      throw new ForbiddenException(
+        'Only Admin and Teachers can manage announcements',
+      );
+    }
+  }
+
+  /**
    * Create notice
-   * SCHOOL_ADMIN can send notices
-   * Target by role or class
    */
   async create(
     createNoticeDto: CreateNoticeDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
-    if (
-      currentUser.role !== Role.SCHOOL_ADMIN &&
-      currentUser.role !== Role.SUPER_ADMIN
-    ) {
-      throw new ForbiddenException(
-        'Only SCHOOL_ADMIN and SUPER_ADMIN can create notices',
-      );
-    }
+    this.checkPermission(currentUser);
 
     if (!currentUser.schoolId) {
       throw new ForbiddenException('User must be associated with a school');
@@ -65,8 +71,8 @@ export class NoticesService {
       data: {
         title,
         content,
-        audience: audience || NoticeAudience.ALL,
-        status: status || NoticeStatus.PUBLISHED,
+        audience: (audience as any) || NoticeAudience.ALL,
+        status: (status as any) || NoticeStatus.PUBLISHED,
         publishDate: publishDate ? new Date(publishDate) : new Date(),
         attachments: attachments || null,
         schoolId: currentUser.schoolId,
@@ -139,16 +145,25 @@ export class NoticesService {
       schoolId: currentUser.schoolId,
     };
 
-    // Filter by audience logic... (simplified for brevity)
     if (currentUser.role === Role.STUDENT) {
         where.audience = { in: [NoticeAudience.ALL, NoticeAudience.STUDENTS] };
         where.status = NoticeStatus.PUBLISHED;
     } else if (currentUser.role === Role.TEACHER) {
+        // Teachers see what's for them OR ALL
         where.audience = { in: [NoticeAudience.ALL, NoticeAudience.TEACHERS] };
-        where.status = NoticeStatus.PUBLISHED;
+        // Admin/Teachers usually see all statuses in dashboard? 
+        // Actually this findAll is used by dashboard too.
+        // Let's refine: if requester is admin/teacher, show all for that school.
     } else if (currentUser.role === Role.PARENT) {
         where.audience = { in: [NoticeAudience.ALL, NoticeAudience.PARENTS] };
         where.status = NoticeStatus.PUBLISHED;
+    }
+
+    // Refinement for admin/school_admin: they see everything
+    if (currentUser.role === Role.SCHOOL_ADMIN || currentUser.role === Role.SUPER_ADMIN) {
+        delete where.audience;
+        delete where.status;
+        where.schoolId = currentUser.schoolId;
     }
 
     const [data, total] = await Promise.all([
@@ -157,6 +172,9 @@ export class NoticesService {
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
+        include: {
+            school: { select: { name: true } }
+        }
       }),
       this.prisma.notice.count({ where }),
     ]);
@@ -194,8 +212,14 @@ export class NoticesService {
     updateNoticeDto: UpdateNoticeDto,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
+    this.checkPermission(currentUser);
+
     const notice = await this.prisma.notice.findUnique({ where: { id } });
     if (!notice) throw new NotFoundException('Notice not found');
+    
+    if (notice.schoolId !== currentUser.schoolId) {
+        throw new ForbiddenException('Access denied.');
+    }
 
     const updatedNotice = await this.prisma.notice.update({
       where: { id },
@@ -217,6 +241,15 @@ export class NoticesService {
     id: string,
     currentUser: { userId: string; role: Role; schoolId?: string },
   ) {
+    this.checkPermission(currentUser);
+
+    const notice = await this.prisma.notice.findUnique({ where: { id } });
+    if (!notice) throw new NotFoundException('Notice not found');
+    
+    if (notice.schoolId !== currentUser.schoolId) {
+        throw new ForbiddenException('Access denied.');
+    }
+
     await this.prisma.notice.delete({ where: { id } });
     return { message: 'Notice deleted successfully' };
   }
