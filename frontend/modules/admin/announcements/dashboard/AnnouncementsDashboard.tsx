@@ -48,8 +48,16 @@ export default function AnnouncementsDashboard() {
         try {
             setLoading(true);
             const response = await communicationService.getNotices();
-            setAnnouncements(response.data || []);
-            if (response.data?.length > 0 && !selectedAnnouncement) {
+            // Support both API shapes:
+            // - Paginated: { data: [...], meta: {...} }
+            // - Plain array: [...]
+            const list = Array.isArray(response)
+                ? response
+                : Array.isArray((response as any)?.data)
+                    ? (response as any).data
+                    : [];
+            setAnnouncements(list);
+            if (list.length > 0 && !selectedAnnouncement) {
                 // DON'T auto-select, stay in list view or wait for click
             }
         } catch (error) {
