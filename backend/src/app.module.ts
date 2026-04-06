@@ -15,7 +15,6 @@ import { TimetableModule } from './timetable/timetable.module';
 import { ExamsModule } from './exams/exams.module';
 import { HomeworkModule } from './homework/homework.module';
 import { FeesModule } from './fees/fees.module';
-import { LibraryModule } from './library/library.module';
 import { TransportModule } from './transport/transport.module';
 import { CommunicationModule } from './communication/communication.module';
 import { DocumentsModule } from './documents/documents.module';
@@ -50,7 +49,6 @@ import authConfig from './config/auth.config';
     ExamsModule,
     HomeworkModule,
     FeesModule,
-    LibraryModule,
     TransportModule,
     CommunicationModule,
     DocumentsModule,

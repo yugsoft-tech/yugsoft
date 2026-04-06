@@ -39,9 +39,7 @@ export const API_ENDPOINTS = {
   EXAMS: '/exams',
   HOMEWORK: '/homework',
   FEES: '/fees',
-  LIBRARY: '/library',
   TRANSPORT: '/transport',
-  HOSTEL: '/hostel',
   COMMUNICATION: {
     NOTICES: '/communication/notices',
     SMS: '/communication/sms',

@@ -60,9 +60,6 @@ const ADMIN_SECTIONS: NavSection[] = [
     title: 'Resource Management',
     items: [
       { label: 'Transport', href: '/admin/transport/vehicles', icon: Bus },
-      { label: 'Library', href: '/admin/library', icon: BookOpen },
-      { label: 'Hostel', href: '/admin/hostel', icon: Building },
-      { label: 'Inventory', href: '/admin/inventory', icon: Database },
     ]
   },
   {
