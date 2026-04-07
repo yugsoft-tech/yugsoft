@@ -228,7 +228,9 @@ export class TransportService {
         ...(updateVehicleDto.driver && { driver: updateVehicleDto.driver }),
         ...(updateVehicleDto.model && { model: updateVehicleDto.model }),
         ...(updateVehicleDto.phone && { phone: updateVehicleDto.phone }),
-        ...(updateVehicleDto.capacity && { capacity: updateVehicleDto.capacity }),
+        ...(updateVehicleDto.capacity && {
+          capacity: updateVehicleDto.capacity,
+        }),
       },
       include: {
         school: {

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
@@ -6,11 +10,24 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class AnnouncementsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-  async create(createAnnouncementDto: CreateAnnouncementDto, currentUser: { userId: string; firstName: string; lastName: string; role: Role }) {
-    if (currentUser.role !== Role.SCHOOL_ADMIN && currentUser.role !== Role.TEACHER) {
-      throw new ForbiddenException('Only admins and teachers can create announcements');
+  async create(
+    createAnnouncementDto: CreateAnnouncementDto,
+    currentUser: {
+      userId: string;
+      firstName: string;
+      lastName: string;
+      role: Role;
+    },
+  ) {
+    if (
+      currentUser.role !== Role.SCHOOL_ADMIN &&
+      currentUser.role !== Role.TEACHER
+    ) {
+      throw new ForbiddenException(
+        'Only admins and teachers can create announcements',
+      );
     }
 
     const { classId, ...data } = createAnnouncementDto;
@@ -34,10 +51,7 @@ export class AnnouncementsService {
     }
 
     if (classId) {
-      where.OR = [
-        { classId },
-        { allSchool: true }
-      ];
+      where.OR = [{ classId }, { allSchool: true }];
     }
 
     return this.prisma.announcement.findMany({
@@ -48,9 +62,9 @@ export class AnnouncementsService {
           select: {
             id: true,
             name: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
   }
 

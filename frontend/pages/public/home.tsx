@@ -3,6 +3,8 @@
  * Public page for home
  */
 
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -16,12 +18,12 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Welcome to School ERP</h2>
           <p className="text-xl text-gray-600 mb-8">Comprehensive School Management System</p>
           <div className="flex justify-center gap-4">
-            <a href="/auth/login" className="px-6 py-3 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+            <Link href="/auth/login" className="px-6 py-3 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
               Login
-            </a>
-            <a href="/public/about" className="px-6 py-3 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+            </Link>
+            <Link href="/public/about" className="px-6 py-3 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
               Learn More
-            </a>
+            </Link>
           </div>
         </div>
       </main>

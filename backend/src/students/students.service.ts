@@ -202,14 +202,21 @@ export class StudentsService {
       // Link or Create Parent
       let finalParentId = parentId;
 
-      if (!finalParentId && (parentEmail || parentFatherName || parentMotherName)) {
+      if (
+        !finalParentId &&
+        (parentEmail || parentFatherName || parentMotherName)
+      ) {
         // 1. Check if a user with this email already exists
-        let parentUser = parentEmail ? await tx.user.findUnique({ where: { email: parentEmail } }) : null;
+        let parentUser = parentEmail
+          ? await tx.user.findUnique({ where: { email: parentEmail } })
+          : null;
 
         if (parentUser) {
           // 2. Existing user found, check if they have a Parent record
-          let parentRecord = await tx.parent.findUnique({ where: { userId: parentUser.id } });
-          
+          let parentRecord = await tx.parent.findUnique({
+            where: { userId: parentUser.id },
+          });
+
           if (!parentRecord) {
             // Create Parent record for existing user
             parentRecord = await tx.parent.create({
@@ -226,14 +233,24 @@ export class StudentsService {
           finalParentId = parentRecord.id;
         } else {
           // 3. No existing user, create new User and Parent
-          const firstName = parentFirstName || parentFatherName?.split(' ')[0] || parentMotherName?.split(' ')[0] || 'Parent';
-          const lastName = parentLastName || parentFatherName?.split(' ').slice(1).join(' ') || parentMotherName?.split(' ').slice(1).join(' ') || 'User';
+          const firstName =
+            parentFirstName ||
+            parentFatherName?.split(' ')[0] ||
+            parentMotherName?.split(' ')[0] ||
+            'Parent';
+          const lastName =
+            parentLastName ||
+            parentFatherName?.split(' ').slice(1).join(' ') ||
+            parentMotherName?.split(' ').slice(1).join(' ') ||
+            'User';
 
           const parentHashedPassword = await bcrypt.hash('parent@123', 10);
-          
+
           parentUser = await tx.user.create({
             data: {
-              email: parentEmail || `parent_${Date.now()}_${Math.floor(Math.random() * 1000)}@edu.com`,
+              email:
+                parentEmail ||
+                `parent_${Date.now()}_${Math.floor(Math.random() * 1000)}@edu.com`,
               password: parentHashedPassword,
               firstName,
               lastName,
@@ -380,7 +397,15 @@ export class StudentsService {
       );
     }
 
-    const { page = 1, limit = 10, classId, sectionId, search, sortBy, sortOrder = 'asc' } = listStudentsDto;
+    const {
+      page = 1,
+      limit = 10,
+      classId,
+      sectionId,
+      search,
+      sortBy,
+      sortOrder = 'asc',
+    } = listStudentsDto;
     const skip = (page - 1) * limit;
 
     const where: any = {};
@@ -479,13 +504,14 @@ export class StudentsService {
             },
           },
         },
-        orderBy: sortBy === 'class' 
-          ? { class: { name: sortOrder } }
-          : sortBy === 'section'
-          ? { section: { name: sortOrder } }
-          : sortBy === 'firstName'
-          ? { user: { firstName: sortOrder } }
-          : { rollNumber: sortOrder },
+        orderBy:
+          sortBy === 'class'
+            ? { class: { name: sortOrder } }
+            : sortBy === 'section'
+              ? { section: { name: sortOrder } }
+              : sortBy === 'firstName'
+                ? { user: { firstName: sortOrder } }
+                : { rollNumber: sortOrder },
       }),
       this.prisma.student.count({ where }),
     ]);
@@ -689,7 +715,10 @@ export class StudentsService {
     }
 
     // RBAC checks
-    if (currentUser.role === Role.SCHOOL_ADMIN || currentUser.role === Role.TEACHER) {
+    if (
+      currentUser.role === Role.SCHOOL_ADMIN ||
+      currentUser.role === Role.TEACHER
+    ) {
       if (!currentUser.schoolId || student.schoolId !== currentUser.schoolId) {
         throw new ForbiddenException(
           'Access denied. You can only view documents of students from your school',
@@ -702,7 +731,9 @@ export class StudentsService {
         );
       }
     } else {
-      throw new ForbiddenException('Insufficient permissions to view student documents');
+      throw new ForbiddenException(
+        'Insufficient permissions to view student documents',
+      );
     }
 
     return this.prisma.document.findMany({

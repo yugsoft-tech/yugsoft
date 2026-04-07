@@ -88,7 +88,7 @@ export const NotificationBell = () => {
                     {notifications.length === 0 ? (
                         <div className="p-8 text-center">
                             <Info size={24} className="mx-auto text-slate-300 mb-2" />
-                            <p className="text-[10px] font-bold text-slate-400 uppercase">You're all caught up!</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase">You&apos;re all caught up!</p>
                         </div>
                     ) : (
                         notifications.map((n) => (

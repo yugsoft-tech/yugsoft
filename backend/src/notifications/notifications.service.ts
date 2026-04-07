@@ -16,13 +16,13 @@ export class NotificationsService {
     schoolId?: string;
   }) {
     return this.prisma.notification.create({
-        data: {
-            userId: data.userId,
-            title: data.title,
-            message: data.message,
-            type: data.type || 'ANNOUNCEMENT',
-            schoolId: data.schoolId,
-        }
+      data: {
+        userId: data.userId,
+        title: data.title,
+        message: data.message,
+        type: data.type || 'ANNOUNCEMENT',
+        schoolId: data.schoolId,
+      },
     });
   }
 

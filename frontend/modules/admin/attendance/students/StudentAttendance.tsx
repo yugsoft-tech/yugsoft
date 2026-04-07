@@ -56,7 +56,7 @@ export default function StudentAttendance() {
           setSelectedClassId(data[0].id);
         }
       } catch (err: any) {
-        toast.error('Sector registry sync failed');
+        toast.error('Failed to load classes');
       } finally {
         setLoading(false);
       }
@@ -76,7 +76,7 @@ export default function StudentAttendance() {
           setSelectedSectionId('');
         }
       } catch (err: any) {
-        toast.error('Cohort synchronization failure');
+        toast.error('Failed to load cohorts');
       }
     };
     fetchSections();
@@ -115,7 +115,7 @@ export default function StudentAttendance() {
         setAttendanceMap(initialMap);
       } catch (err: any) {
         console.error(err);
-        toast.error('Occupant registry retrieval failed');
+        toast.error('Failed to load students');
       } finally {
         setLoadingStudents(false);
       }
@@ -133,12 +133,12 @@ export default function StudentAttendance() {
       newMap[student.id] = status;
     });
     setAttendanceMap(newMap);
-    toast.success(`Broadcasting ${status} status to all registry occupants`);
+    toast.success(`Marked all students as ${status.toLowerCase()}`);
   };
 
   const handleSaveAttendance = async () => {
     if (!selectedSectionId || Object.keys(attendanceMap).length === 0) {
-      toast.error('Institutional registry data required');
+      toast.error('Please select class and cohort');
       return;
     }
 
@@ -159,9 +159,9 @@ export default function StudentAttendance() {
         records: attendanceData
       });
 
-      toast.success('Attendance payload successfully synchronized');
+      toast.success('Attendance saved successfully');
     } catch (err: any) {
-      toast.error(err.message || 'Transmission failure');
+      toast.error(err.message || 'Failed to save attendance');
     } finally {
       setSaving(false);
     }
@@ -176,30 +176,29 @@ export default function StudentAttendance() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-primary mb-1">
-            <UserCheck size={16} />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Deployment Verification</span>
-          </div>
-          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Registry Tracking</h1>
-          <p className="text-slate-500 font-medium italic">Synchronize daily attendance protocols for institutional sectors and cohorts.</p>
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Daily Attendance</h1>
+          <p className="text-slate-500 font-medium italic">Manage daily attendance for students by class and cohort.</p>
         </div>
 
         <div className="flex gap-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-3 flex items-center gap-4 shadow-sm">
             <Calendar size={18} className="text-primary" />
-            <input
-              type="date"
-              value={attendanceDate}
-              onChange={(e) => setAttendanceDate(e.target.value)}
-              className="bg-transparent border-none outline-none text-sm font-black text-slate-900 dark:text-white"
-            />
+            <div className="flex flex-col">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Select Date</label>
+              <input
+                type="date"
+                value={attendanceDate}
+                onChange={(e) => setAttendanceDate(e.target.value)}
+                className="bg-transparent border-none outline-none text-sm font-black text-slate-900 dark:text-white"
+              />
+            </div>
           </div>
           <button
             onClick={handleSaveAttendance}
             disabled={saving || students.length === 0}
             className="px-10 py-4 bg-primary text-white rounded-[1.5rem] font-black text-sm shadow-2xl shadow-primary/30 hover:-translate-y-1 active:scale-95 transition-all disabled:opacity-50 flex items-center gap-2"
           >
-            {saving ? 'Synchronizing...' : 'Commit Registry'}
+            {saving ? 'Saving...' : 'Save Attendance'}
           </button>
         </div>
       </div>
@@ -208,23 +207,23 @@ export default function StudentAttendance() {
         {/* Sector Selection Matrix (Left) */}
         <div className="lg:col-span-4 space-y-8">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] p-8 shadow-sm">
-            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-6">Sector Parameters</h3>
+            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-6">Select Class & Cohort</h3>
 
             <div className="space-y-6">
               <div className="space-y-3">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Target Sector</label>
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Class</label>
                 <select
                   value={selectedClassId}
                   onChange={(e) => setSelectedClassId(e.target.value)}
                   className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-3xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/20 transition-all appearance-none"
                 >
-                  <option value="" disabled>Select Sector</option>
+                  <option value="" disabled>Select Class</option>
                   {classes.map(cls => <option key={cls.id} value={cls.id}>{cls.name}</option>)}
                 </select>
               </div>
 
               <div className="space-y-3">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Target Cohort</label>
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Cohort</label>
                 <select
                   value={selectedSectionId}
                   onChange={(e) => setSelectedSectionId(e.target.value)}
@@ -243,8 +242,8 @@ export default function StudentAttendance() {
             <div className="absolute -top-10 -right-10 size-32 bg-primary/20 rounded-full blur-3xl" />
             <div className="relative z-10 space-y-6">
               <div>
-                <h3 className="text-white text-lg font-black uppercase tracking-widest mb-1">Global Protocols</h3>
-                <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Broadcast status markers across registry</p>
+                <h3 className="text-white text-lg font-black uppercase tracking-widest mb-1">Mark All Students</h3>
+                <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Quickly mark all students as present or absent</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -253,14 +252,14 @@ export default function StudentAttendance() {
                   className="p-4 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded-2xl flex items-center justify-center gap-2 text-emerald-400 font-black text-[10px] uppercase tracking-widest transition-all"
                 >
                   <CheckCircle2 size={14} />
-                  All Present
+                  Mark All Present
                 </button>
                 <button
                   onClick={() => handleMarkAll('ABSENT')}
                   className="p-4 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 rounded-2xl flex items-center justify-center gap-2 text-rose-400 font-black text-[10px] uppercase tracking-widest transition-all"
                 >
                   <XCircle size={14} />
-                  All Absent
+                  Mark All Absent
                 </button>
               </div>
             </div>
@@ -271,8 +270,8 @@ export default function StudentAttendance() {
         <div className="lg:col-span-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] shadow-sm overflow-hidden flex flex-col h-[calc(100vh-280px)]">
           <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/30">
             <div>
-              <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Occupant Matrix</h3>
-              <p className="text-lg font-black text-slate-900 dark:text-white leading-none">Verified Student Registry</p>
+              <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Student List</h3>
+              <p className="text-lg font-black text-slate-900 dark:text-white leading-none">Students</p>
             </div>
             <div className="size-12 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center text-primary shadow-sm border border-slate-100 dark:border-slate-700">
               <Users size={20} />
@@ -294,7 +293,7 @@ export default function StudentAttendance() {
                         <p className="text-lg font-black text-slate-900 dark:text-white leading-none mb-1 group-hover:text-primary transition-colors">
                           {student.firstName} {student.lastName}
                         </p>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">{student.admissionNumber}</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">{student.rollNumber || student.id}</p>
                       </div>
                     </div>
 
@@ -337,8 +336,8 @@ export default function StudentAttendance() {
                   <Database size={64} />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest leading-none">Registry Empty</h3>
-                  <p className="text-slate-500 text-sm font-medium italic max-w-sm">No institutional occupants discovered for the selected cohort synchronization criteria.</p>
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-widest leading-none">No Students Found</h3>
+                  <p className="text-slate-500 text-sm font-medium italic max-w-sm">Select a Class and Cohort to view students.</p>
                 </div>
               </div>
             )}

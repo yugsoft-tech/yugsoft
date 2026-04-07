@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Query,
+  Request,
+} from '@nestjs/common';
 import { AnnouncementsService } from './announcements.service';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
@@ -18,9 +29,16 @@ export class AnnouncementsController {
   }
 
   @Get()
-  findAll(@Query('classId') classId?: string, @Query('allSchool') allSchool?: string) {
-    const isAllSchool = allSchool === 'true' ? true : allSchool === 'false' ? false : undefined;
-    return this.announcementsService.findAll({ classId, allSchool: isAllSchool });
+  findAll(
+    @Query('classId') classId?: string,
+    @Query('allSchool') allSchool?: string,
+  ) {
+    const isAllSchool =
+      allSchool === 'true' ? true : allSchool === 'false' ? false : undefined;
+    return this.announcementsService.findAll({
+      classId,
+      allSchool: isAllSchool,
+    });
   }
 
   @Get(':id')
@@ -30,7 +48,10 @@ export class AnnouncementsController {
 
   @Patch(':id')
   @Roles(Role.SCHOOL_ADMIN, Role.TEACHER)
-  update(@Param('id') id: string, @Body() updateAnnouncementDto: UpdateAnnouncementDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAnnouncementDto: UpdateAnnouncementDto,
+  ) {
     return this.announcementsService.update(id, updateAnnouncementDto);
   }
 

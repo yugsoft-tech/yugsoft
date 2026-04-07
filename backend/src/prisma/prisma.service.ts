@@ -15,9 +15,27 @@ export class PrismaService
   private readonly logger = new Logger(PrismaService.name);
 
   constructor(private configService: ConfigService) {
+    const isLoggingEnabled =
+      configService.get<string>('PRISMA_LOGGING') === 'true';
+
     super({
-      log: ['error', 'warn'],
+      log: isLoggingEnabled
+        ? [
+            { emit: 'event', level: 'query' },
+            { emit: 'stdout', level: 'info' },
+            { emit: 'stdout', level: 'warn' },
+            { emit: 'stdout', level: 'error' },
+          ]
+        : ['error', 'warn'],
     });
+
+    if (isLoggingEnabled) {
+      (this as any).$on('query', (e: any) => {
+        this.logger.debug(`Query: ${e.query}`);
+        this.logger.debug(`Params: ${e.params}`);
+        this.logger.debug(`Duration: ${e.duration}ms`);
+      });
+    }
   }
 
   async onModuleInit() {

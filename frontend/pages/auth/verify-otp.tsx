@@ -26,7 +26,7 @@ export default function VerifyOTP() {
                         <div className="text-center mb-8">
                             <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Verify Your Identity</h1>
                             <p className="text-slate-500 dark:text-slate-400 text-base">
-                                We've sent a 6-digit verification code to <span className="font-semibold text-slate-900 dark:text-slate-200">pr*******@school.edu</span>.
+                                We&apos;ve sent a 6-digit verification code to <span className="font-semibold text-slate-900 dark:text-slate-200">pr*******@school.edu</span>.
                             </p>
                         </div>
 
@@ -52,7 +52,7 @@ export default function VerifyOTP() {
 
                         <div className="mt-8 flex flex-col items-center gap-4">
                             <p className="text-sm text-slate-500 dark:text-slate-400">
-                                Didn't receive the code?
+                                Didn&apos;t receive the code?
                                 <button className="font-bold text-primary hover:underline ml-1">Resend (00:30)</button>
                             </p>
                             <Link href="/auth/login" className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors group">

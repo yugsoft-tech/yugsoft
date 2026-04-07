@@ -80,14 +80,14 @@ export class DocumentsService {
     // Generate local filename
     const localFileName = this.generateFilePath(studentId, fileName);
     const uploadDir = path.join(process.cwd(), 'uploads', 'documents');
-    
+
     // Ensure directory exists
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
 
     const filePath = path.join(uploadDir, localFileName);
-    
+
     // Write file to disk
     fs.writeFileSync(filePath, file.buffer);
 

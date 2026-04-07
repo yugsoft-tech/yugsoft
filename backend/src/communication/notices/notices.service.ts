@@ -47,7 +47,15 @@ export class NoticesService {
       throw new ForbiddenException('User must be associated with a school');
     }
 
-    const { title, content, audience, status, classId, publishDate, attachments } = createNoticeDto;
+    const {
+      title,
+      content,
+      audience,
+      status,
+      classId,
+      publishDate,
+      attachments,
+    } = createNoticeDto;
 
     // If classId is provided, verify it belongs to school
     if (classId) {
@@ -89,7 +97,7 @@ export class NoticesService {
 
     // If published, trigger notifications
     if (notice.status === NoticeStatus.PUBLISHED) {
-        await this.triggerNotifications(notice);
+      await this.triggerNotifications(notice);
     }
 
     return notice;
@@ -100,32 +108,32 @@ export class NoticesService {
    */
   private async triggerNotifications(notice: any) {
     const { title, audience, schoolId } = notice;
-    
+
     // Find users to notify
-    let where: any = { schoolId, isActive: true };
+    const where: any = { schoolId, isActive: true };
 
     if (audience === NoticeAudience.STUDENTS) {
-        where.role = Role.STUDENT;
+      where.role = Role.STUDENT;
     } else if (audience === NoticeAudience.TEACHERS) {
-        where.role = Role.TEACHER;
+      where.role = Role.TEACHER;
     } else if (audience === NoticeAudience.PARENTS) {
-        where.role = Role.PARENT;
+      where.role = Role.PARENT;
     }
-    
+
     const usersToNotify = await this.prisma.user.findMany({
-        where,
-        select: { id: true }
+      where,
+      select: { id: true },
     });
 
     // Create notifications in bulk (non-blocking for better perf)
-    const notificationPromises = usersToNotify.map(user => 
-        this.notificationsService.create({
-            userId: user.id,
-            title: `New Announcement: ${title}`,
-            message: `A new announcement has been posted for ${audience.toLowerCase()}.`,
-            type: 'ANNOUNCEMENT',
-            schoolId: schoolId
-        })
+    const notificationPromises = usersToNotify.map((user) =>
+      this.notificationsService.create({
+        userId: user.id,
+        title: `New Announcement: ${title}`,
+        message: `A new announcement has been posted for ${audience.toLowerCase()}.`,
+        type: 'ANNOUNCEMENT',
+        schoolId: schoolId,
+      }),
     );
 
     await Promise.allSettled(notificationPromises);
@@ -146,24 +154,27 @@ export class NoticesService {
     };
 
     if (currentUser.role === Role.STUDENT) {
-        where.audience = { in: [NoticeAudience.ALL, NoticeAudience.STUDENTS] };
-        where.status = NoticeStatus.PUBLISHED;
+      where.audience = { in: [NoticeAudience.ALL, NoticeAudience.STUDENTS] };
+      where.status = NoticeStatus.PUBLISHED;
     } else if (currentUser.role === Role.TEACHER) {
-        // Teachers see what's for them OR ALL
-        where.audience = { in: [NoticeAudience.ALL, NoticeAudience.TEACHERS] };
-        // Admin/Teachers usually see all statuses in dashboard? 
-        // Actually this findAll is used by dashboard too.
-        // Let's refine: if requester is admin/teacher, show all for that school.
+      // Teachers see what's for them OR ALL
+      where.audience = { in: [NoticeAudience.ALL, NoticeAudience.TEACHERS] };
+      // Admin/Teachers usually see all statuses in dashboard?
+      // Actually this findAll is used by dashboard too.
+      // Let's refine: if requester is admin/teacher, show all for that school.
     } else if (currentUser.role === Role.PARENT) {
-        where.audience = { in: [NoticeAudience.ALL, NoticeAudience.PARENTS] };
-        where.status = NoticeStatus.PUBLISHED;
+      where.audience = { in: [NoticeAudience.ALL, NoticeAudience.PARENTS] };
+      where.status = NoticeStatus.PUBLISHED;
     }
 
     // Refinement for admin/school_admin: they see everything
-    if (currentUser.role === Role.SCHOOL_ADMIN || currentUser.role === Role.SUPER_ADMIN) {
-        delete where.audience;
-        delete where.status;
-        where.schoolId = currentUser.schoolId;
+    if (
+      currentUser.role === Role.SCHOOL_ADMIN ||
+      currentUser.role === Role.SUPER_ADMIN
+    ) {
+      delete where.audience;
+      delete where.status;
+      where.schoolId = currentUser.schoolId;
     }
 
     const [data, total] = await Promise.all([
@@ -173,8 +184,8 @@ export class NoticesService {
         take: limit,
         orderBy: { createdAt: 'desc' },
         include: {
-            school: { select: { name: true } }
-        }
+          school: { select: { name: true } },
+        },
       }),
       this.prisma.notice.count({ where }),
     ]);
@@ -216,22 +227,27 @@ export class NoticesService {
 
     const notice = await this.prisma.notice.findUnique({ where: { id } });
     if (!notice) throw new NotFoundException('Notice not found');
-    
+
     if (notice.schoolId !== currentUser.schoolId) {
-        throw new ForbiddenException('Access denied.');
+      throw new ForbiddenException('Access denied.');
     }
 
     const updatedNotice = await this.prisma.notice.update({
       where: { id },
       data: {
-          ...updateNoticeDto,
-          publishDate: updateNoticeDto.publishDate ? new Date(updateNoticeDto.publishDate) : undefined
-      }
+        ...updateNoticeDto,
+        publishDate: updateNoticeDto.publishDate
+          ? new Date(updateNoticeDto.publishDate)
+          : undefined,
+      },
     });
 
     // If status changed to PUBLISHED, trigger notifications
-    if (notice.status !== NoticeStatus.PUBLISHED && updatedNotice.status === NoticeStatus.PUBLISHED) {
-        await this.triggerNotifications(updatedNotice);
+    if (
+      notice.status !== NoticeStatus.PUBLISHED &&
+      updatedNotice.status === NoticeStatus.PUBLISHED
+    ) {
+      await this.triggerNotifications(updatedNotice);
     }
 
     return updatedNotice;
@@ -245,9 +261,9 @@ export class NoticesService {
 
     const notice = await this.prisma.notice.findUnique({ where: { id } });
     if (!notice) throw new NotFoundException('Notice not found');
-    
+
     if (notice.schoolId !== currentUser.schoolId) {
-        throw new ForbiddenException('Access denied.');
+      throw new ForbiddenException('Access denied.');
     }
 
     await this.prisma.notice.delete({ where: { id } });

@@ -89,7 +89,7 @@ export default function OTPVerificationPage() {
 
             <div className="mt-8 text-center">
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                Didn't receive the code?
+                Didn&apos;t receive the code?
                 <button className="font-medium text-primary hover:underline ml-1 focus:outline-none">
                   Resend Code
                 </button>
