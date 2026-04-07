@@ -12,7 +12,7 @@ import {
     BookOpen,
     ArrowRight,
     CreditCard,
-    DollarSign,
+    IndianRupee,
     Receipt,
     History,
     ShieldCheck,
@@ -57,11 +57,11 @@ export default function StudentFees() {
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-3 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-slate-50 dark:border-slate-800 shadow-xl">
                         <div className="size-10 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-black">
-                            <DollarSign size={20} />
+                            <IndianRupee size={20} />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-[7px] font-black uppercase tracking-widest text-slate-400">Total Due</span>
-                            <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase">$1,200.00</span>
+                            <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase">₹1,200.00</span>
                         </div>
                     </div>
                 </div>
@@ -69,8 +69,8 @@ export default function StudentFees() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: 'Paid In Full', value: '$4,500', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'PAID' },
-                    { label: 'Pending Dues', value: '$1,200', icon: <AlertCircle className="text-rose-500" />, sub: 'UNPAID' },
+                    { label: 'Paid In Full', value: '₹4,500', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'PAID' },
+                    { label: 'Pending Dues', value: '₹1,200', icon: <AlertCircle className="text-rose-500" />, sub: 'UNPAID' },
                     { label: 'Next Invoice', value: '15 NOV', icon: <Calendar className="text-primary" />, sub: 'UPCOMING' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl relative group overflow-hidden">
@@ -130,7 +130,7 @@ export default function StudentFees() {
 
                                             <div className="flex items-center gap-8">
                                                 <div className="text-right">
-                                                    <span className="block text-2xl font-black text-slate-900 dark:text-white">${fee.amount}</span>
+                                                    <span className="block text-2xl font-black text-slate-900 dark:text-white">₹{fee.amount}</span>
                                                     <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Total Amount</span>
                                                 </div>
                                                 {fee.status !== 'PAID' && (

@@ -3,6 +3,7 @@
  */
 
 export const APP_NAME = "Vikas ERP";
+export const CURRENCY_SYMBOL = "₹";
 
 const envUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000').trim();
 // Ensure no double slash or trailing /api if user accidentally added it

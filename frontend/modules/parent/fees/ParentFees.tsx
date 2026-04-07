@@ -3,7 +3,7 @@ import { useParent } from '@/contexts/ParentContext';
 import { feesService } from '@/services/fees.service';
 import {
     CreditCard,
-    DollarSign,
+    IndianRupee,
     Receipt,
     History,
     Filter,
@@ -105,11 +105,11 @@ export default function ParentFees() {
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-slate-50 dark:border-slate-800 shadow-xl">
                         <div className="size-12 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center font-black">
-                            <DollarSign size={24} />
+                            <IndianRupee size={24} />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-[7px] font-black uppercase tracking-widest text-slate-400">Total Outstanding</span>
-                            <span className="text-xl font-black text-slate-900 dark:text-white uppercase">${totalDue.toLocaleString()}</span>
+                            <span className="text-xl font-black text-slate-900 dark:text-white uppercase">₹{totalDue.toLocaleString()}</span>
                         </div>
                         <Button 
                             onClick={handlePayAll}
@@ -124,8 +124,8 @@ export default function ParentFees() {
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: 'Upcoming', value: '$1,200', icon: <Calendar className="text-primary" />, sub: 'DUE_30_DAYS' },
-                    { label: 'History', value: '$4,500', icon: <History className="text-slate-500" />, sub: 'PAID_YTD' },
+                    { label: 'Upcoming', value: '₹1,200', icon: <Calendar className="text-primary" />, sub: 'DUE_30_DAYS' },
+                    { label: 'History', value: '₹4,500', icon: <History className="text-slate-500" />, sub: 'PAID_YTD' },
                     { label: 'Payment Method', value: '**** 4242', icon: <CreditCard className="text-emerald-500" />, sub: 'PRIMARY_CARD' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl relative group overflow-hidden">
@@ -191,7 +191,7 @@ export default function ParentFees() {
 
                                             <div className="flex items-center gap-8">
                                                 <div className="text-right">
-                                                    <span className="block text-2xl font-black text-slate-900 dark:text-white">${fee.amount}</span>
+                                                    <span className="block text-2xl font-black text-slate-900 dark:text-white">₹{fee.amount}</span>
                                                     <Badge variant={fee.status === 'PAID' ? 'outline' : fee.status === 'OVERDUE' ? 'destructive' : 'secondary'} className={`text-[7px] font-black uppercase tracking-widest px-2 py-0.5 ${fee.status === 'PAID' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : ''}`}>
                                                         {fee.status}
                                                     </Badge>

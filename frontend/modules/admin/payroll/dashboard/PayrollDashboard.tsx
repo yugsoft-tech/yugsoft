@@ -6,7 +6,7 @@ import {
     Filter,
     MoreVertical,
     Activity,
-    DollarSign,
+    IndianRupee,
     TrendingUp,
     ShieldCheck,
     ChevronRight,
@@ -91,7 +91,7 @@ export default function PayrollManagement() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                    { label: 'Monthly Payload', value: '$124,500', icon: <Wallet className="text-primary" /> },
+                    { label: 'Monthly Payload', value: '₹124,500', icon: <Wallet className="text-primary" /> },
                     { label: 'Active Faculty', value: '142 Nodes', icon: <Users className="text-indigo-500" /> },
                     { label: 'Disbursal Ratio', value: '98.2%', icon: <ShieldCheck className="text-emerald-500" /> },
                     { label: 'Protocol Status', value: 'CERTIFIED', icon: <Zap className="text-amber-500" /> },
@@ -213,7 +213,7 @@ export default function PayrollManagement() {
                                                         </div>
                                                     </td>
                                                     <td className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{pay.month}</td>
-                                                    <td className="px-10 py-6 text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-tighter">${pay.amount.toLocaleString()}</td>
+                                                    <td className="px-10 py-6 text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-tighter">₹{pay.amount.toLocaleString()}</td>
                                                     <td className="px-10 py-6">
                                                         <div className="flex items-center gap-2">
                                                             <div className={`size-2 rounded-full ${pay.status === 'PAID' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`}></div>

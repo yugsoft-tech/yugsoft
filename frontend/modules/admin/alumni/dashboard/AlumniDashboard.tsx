@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 // Mock Data
 const alumniData = [
-    { id: 1, name: 'Sarah Jenkins', class: '2018', role: 'Product Designer', company: 'TechFlow Inc.', status: 'Active', donation: '$500.00', lastDonation: 'Dec 12, 2023' },
-    { id: 2, name: 'Michael Chen', class: '2015', role: 'Senior Analyst', company: 'Goldman Sachs', status: 'Review', donation: '$1,200.00', lastDonation: 'Jan 05, 2024' },
+    { id: 1, name: 'Sarah Jenkins', class: '2018', role: 'Product Designer', company: 'TechFlow Inc.', status: 'Active', donation: '₹500.00', lastDonation: 'Dec 12, 2023' },
+    { id: 2, name: 'Michael Chen', class: '2015', role: 'Senior Analyst', company: 'Goldman Sachs', status: 'Review', donation: '₹1,200.00', lastDonation: 'Jan 05, 2024' },
     { id: 3, name: 'Jessica Ross', class: '2020', role: 'Marketing Lead', company: 'Spotify', status: 'Active', donation: 'No donations', lastDonation: '-' },
-    { id: 4, name: 'David Kim', class: '2012', role: 'Founder & CEO', company: 'StartUp Labs', status: 'Inactive', donation: '$5,000.00', lastDonation: 'Aug 20, 2022' },
+    { id: 4, name: 'David Kim', class: '2012', role: 'Founder & CEO', company: 'StartUp Labs', status: 'Inactive', donation: '₹5,000.00', lastDonation: 'Aug 20, 2022' },
 ];
 
 const upcomingEvents = [
@@ -135,7 +135,7 @@ export default function AlumniDashboard() {
                                                 </span>
                                             </td>
                                             <td className="p-4">
-                                                <p className={`text-sm font-medium ${alum.donation.includes('$') ? 'text-slate-900 dark:text-white' : 'text-slate-400 italic'}`}>{alum.donation}</p>
+                                                <p className={`text-sm font-medium ${alum.donation.includes('₹') ? 'text-slate-900 dark:text-white' : 'text-slate-400 italic'}`}>{alum.donation}</p>
                                                 {alum.lastDonation !== '-' && <p className="text-xs text-slate-500">{alum.lastDonation}</p>}
                                             </td>
                                             <td className="p-4 text-right">

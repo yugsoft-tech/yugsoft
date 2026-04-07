@@ -8,7 +8,7 @@ import { useFeeDashboard } from '@/hooks/useFeeDashboard';
 import { format } from 'date-fns';
 import { 
     Plus, 
-    DollarSign, 
+    IndianRupee, 
     TrendingUp, 
     AlertCircle, 
     Calendar, 
@@ -78,21 +78,21 @@ export default function FeeDashboard() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <StatCard 
                                 label="Total Collected" 
-                                value={`$${statistics.totalCollected.toLocaleString()}`} 
-                                icon={<DollarSign className="text-emerald-500" />}
+                                value={`₹${statistics.totalCollected.toLocaleString()}`} 
+                                icon={<IndianRupee className="text-emerald-500" />}
                                 trend="+12.5%"
                                 positive={true}
                             />
                             <StatCard 
                                 label="Outstanding" 
-                                value={`$${statistics.outstandingBalance.toLocaleString()}`} 
+                                value={`₹${statistics.outstandingBalance.toLocaleString()}`} 
                                 icon={<AlertCircle className="text-rose-500" />}
                                 trend="+5.2%"
                                 positive={false}
                             />
                             <StatCard 
                                 label="Today's Intake" 
-                                value={`$${statistics.todayCollection.toLocaleString()}`} 
+                                value={`₹${statistics.todayCollection.toLocaleString()}`} 
                                 icon={<TrendingUp className="text-primary" />}
                                 trend="Today"
                             />
@@ -135,7 +135,7 @@ export default function FeeDashboard() {
                                                         style={{ height: `${Math.max(percentage, 5)}%` }}
                                                     ></div>
                                                     <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/bar:opacity-100 transition-all whitespace-nowrap z-10 font-black shadow-xl">
-                                                        ${entry.amount.toLocaleString()}
+                                                        ₹{entry.amount.toLocaleString()}
                                                     </div>
                                                 </div>
                                                 <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">{entry.month}</span>
@@ -178,7 +178,7 @@ export default function FeeDashboard() {
                                                         <p className="text-xs font-black truncate">{item.studentName}</p>
                                                         <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">{item.class}</p>
                                                     </div>
-                                                    <p className="text-xs font-black tracking-tight">${item.amount.toLocaleString()}</p>
+                                                    <p className="text-xs font-black tracking-tight">₹{item.amount.toLocaleString()}</p>
                                                 </div>
                                             ))}
                                             {(!recentTransactions || recentTransactions.length === 0) && (
@@ -257,7 +257,7 @@ export default function FeeDashboard() {
                                                         {format(new Date(trx.date), 'MMM dd, yyyy')}
                                                     </td>
                                                     <td className="px-8 py-5 font-black text-slate-900 dark:text-white">
-                                                        ${trx.amount.toLocaleString()}
+                                                        ₹{trx.amount.toLocaleString()}
                                                     </td>
                                                     <td className="px-8 py-5">
                                                         <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-[0.15em] border ${

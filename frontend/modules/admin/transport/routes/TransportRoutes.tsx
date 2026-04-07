@@ -149,7 +149,7 @@ export default function TransportRoutes() {
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Tariff Token (Fare)</label>
                             <input
                               {...register('fare')}
-                              placeholder="$45.00"
+                              placeholder="₹45.00"
                               className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-5 px-8 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-4 focus:ring-primary/10 transition-all"
                             />
                           </div>

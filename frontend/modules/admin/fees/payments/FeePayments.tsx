@@ -10,7 +10,7 @@ import {
     CheckCircle2,
     AlertCircle,
     CreditCard,
-    DollarSign
+    IndianRupee
 } from 'lucide-react';
 import { useFees } from '@/hooks/useFees';
 import Skeleton from '@/components/ui/Skeleton';
@@ -139,8 +139,8 @@ export default function FeePayments() {
                                             </div>
                                         </td>
                                         <td className="px-8 py-6">
-                                            <p className="text-sm font-black text-slate-900 dark:text-white uppercase tabular-nums">${fee.amount.toLocaleString()}</p>
-                                            <p className="text-[10px] font-medium text-slate-400 italic">Balance: $0.00</p>
+                                            <p className="text-sm font-black text-slate-900 dark:text-white uppercase tabular-nums">₹{fee.amount.toLocaleString()}</p>
+                                            <p className="text-[10px] font-medium text-slate-400 italic">Balance: ₹0.00</p>
                                         </td>
                                         <td className="px-8 py-6">
                                             <Badge variant="outline" className={`rounded-lg px-3 py-1 font-black text-[9px] uppercase tracking-widest border-2 ${fee.status === 'PAID' ? 'border-emerald-500/20 text-emerald-500 bg-emerald-500/5' :
@@ -159,7 +159,7 @@ export default function FeePayments() {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl">
                                                     <DropdownMenuItem className="gap-3 p-3 rounded-xl cursor-pointer">
-                                                        <DollarSign size={16} className="text-emerald-500" />
+                                                        <IndianRupee size={16} className="text-emerald-500" />
                                                         <span className="text-xs font-black uppercase tracking-widest">Record Payment</span>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem className="gap-3 p-3 rounded-xl cursor-pointer">

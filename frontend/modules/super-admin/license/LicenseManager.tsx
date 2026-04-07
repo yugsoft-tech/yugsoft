@@ -17,7 +17,7 @@ export default function LicenseManager() {
         {
             id: 'basic',
             name: 'Starter Plan',
-            price: '$499',
+            price: '₹499',
             period: '/mo',
             description: 'Essential features for small institutions.',
             features: ['Up to 500 Students', 'Basic Reporting', 'Email Support', 'Cloud Storage (50GB)'],
@@ -27,7 +27,7 @@ export default function LicenseManager() {
         {
             id: 'pro',
             name: 'Professional',
-            price: '$999',
+            price: '₹999',
             period: '/mo',
             description: 'Advanced tools for growing schools.',
             features: ['Up to 2,000 Students', 'Advanced Analytics', 'Priority Support', 'Cloud Storage (500GB)', 'API Access'],

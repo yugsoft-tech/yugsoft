@@ -55,7 +55,7 @@ const LicenseManagement = () => {
         },
         {
             label: 'Annual Cost',
-            value: '$14.2k',
+            value: '₹14.2k',
             icon: 'payments',
             color: 'blue',
             trend: 'Under Budget'

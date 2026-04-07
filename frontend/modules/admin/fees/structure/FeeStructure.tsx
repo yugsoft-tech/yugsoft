@@ -10,7 +10,7 @@ import {
   Layers,
   Edit2,
   Trash2,
-  DollarSign
+  IndianRupee
 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { feesService } from '@/services/fees.service';
@@ -61,7 +61,7 @@ export default function FeeStructure() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'Total Expected', value: '$452K', icon: DollarSign, color: 'text-emerald-500' },
+          { label: 'Total Expected', value: '₹452K', icon: IndianRupee, color: 'text-emerald-500' },
           { label: 'Fee Types', value: structures.length, icon: Layers, color: 'text-primary' },
           { label: 'Unpaid Months', value: '12', icon: Calendar, color: 'text-amber-500' },
           { label: 'Collection Rate', value: '98.2%', icon: Calculator, color: 'text-indigo-500' }
@@ -133,7 +133,7 @@ export default function FeeStructure() {
                       <Badge variant="secondary" className="font-black text-[9px] uppercase tracking-widest rounded-lg">{s.category}</Badge>
                     </td>
                     <td className="px-10 py-8 text-sm font-black text-slate-900 dark:text-white uppercase tabular-nums">
-                      ${s.amount.toLocaleString()}
+                      ₹{s.amount.toLocaleString()}
                     </td>
                     <td className="px-10 py-8">
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{s.frequency}</span>
