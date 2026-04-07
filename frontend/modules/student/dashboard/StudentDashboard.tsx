@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
     Activity,
@@ -29,13 +30,15 @@ export default function StudentDashboard() {
 
     if (loading) {
         return (
-            <StudentLayout>
+      <>
+        
                 <div className="h-[80vh] flex flex-col items-center justify-center space-y-4">
                     <Loader2 className="w-10 h-10 text-primary animate-spin" />
                     <p className="text-slate-500 font-medium animate-pulse">Loading your profile...</p>
                 </div>
-            </StudentLayout>
-        );
+            
+      </>
+    );
     }
 
     if (error) {
@@ -300,3 +303,8 @@ export default function StudentDashboard() {
         </StudentLayout>
     );
 }
+
+
+StudentDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <StudentLayout>{page}</StudentLayout>;
+};

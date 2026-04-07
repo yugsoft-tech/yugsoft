@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -82,7 +83,8 @@ export default function ExamForm({ initialData }: ExamFormProps) {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-                <AdminLayout title={isEdit ? "Update Examination Cycle" : "Initialize Examination Cycle"}>
+                <>
+
                     <Head>
                         <title>{isEdit ? 'Update Exam' : 'New Exam'} | School ERP</title>
                     </Head>
@@ -199,8 +201,14 @@ export default function ExamForm({ initialData }: ExamFormProps) {
                             </div>
                         </form>
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+ExamForm.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

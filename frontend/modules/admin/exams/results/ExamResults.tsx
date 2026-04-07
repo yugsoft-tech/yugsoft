@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
@@ -53,7 +54,8 @@ export default function ExamResults() {
     return (
       <AuthGuard>
         <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-          <AdminLayout title="Performance Analytics">
+          <>
+
             <div className="space-y-8 animate-in fade-in duration-500 p-8">
               <Skeleton className="h-20 w-full rounded-[2rem]" />
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -61,7 +63,8 @@ export default function ExamResults() {
               </div>
               <Skeleton className="h-96 w-full rounded-[2.5rem]" />
             </div>
-          </AdminLayout>
+          
+</>
         </RoleGuard>
       </AuthGuard>
     );
@@ -250,3 +253,8 @@ export default function ExamResults() {
     </AuthGuard>
   );
 }
+
+
+ExamResults.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

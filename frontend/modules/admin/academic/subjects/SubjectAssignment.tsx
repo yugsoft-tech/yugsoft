@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -90,7 +91,8 @@ export default function SubjectAssignment() {
 
     if (error) {
         return (
-            <AdminLayout title="System Error">
+      <>
+        
                 <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
                     <div className="p-4 rounded-full bg-rose-500/10 text-rose-500">
                         <AlertCircle size={48} />
@@ -98,8 +100,9 @@ export default function SubjectAssignment() {
                     <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Error</h2>
                     <p className="text-slate-500 max-w-sm italic">{error}</p>
                 </div>
-            </AdminLayout>
-        );
+            
+      </>
+    );
     }
 
     return (
@@ -257,3 +260,8 @@ export default function SubjectAssignment() {
         </AdminLayout>
     );
 }
+
+
+SubjectAssignment.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

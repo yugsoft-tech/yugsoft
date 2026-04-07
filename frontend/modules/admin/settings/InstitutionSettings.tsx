@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
     Settings2,
@@ -63,13 +64,15 @@ export default function InstitutionSettings() {
 
     if (loading) {
         return (
-            <AdminLayout title="School Settings">
+      <>
+        
                 <div className="space-y-8 animate-pulse p-8">
                     <Skeleton className="h-40 w-full rounded-[2.5rem]" />
                     <Skeleton className="h-96 w-full rounded-[2.5rem]" />
                 </div>
-            </AdminLayout>
-        );
+            
+      </>
+    );
     }
 
     return (
@@ -226,3 +229,8 @@ export default function InstitutionSettings() {
         </AuthGuard>
     );
 }
+
+
+InstitutionSettings.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

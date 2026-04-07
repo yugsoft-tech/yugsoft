@@ -118,6 +118,8 @@ model Notification {
   schoolId  String?
   
   createdAt DateTime @default(now())
+
+  @@index([schoolId])
 }
 
 model School {
@@ -171,6 +173,9 @@ model Student {
   documents  Document[]
 
   createdAt DateTime @default(now())
+
+  @@index([schoolId])
+  @@index([classId])
 }
 
 model Teacher {

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
@@ -97,7 +98,8 @@ export default function RolePermissions() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout title="Manage Permissions">
+                <>
+
                     <Head>
                         <title>Role Permissions | School ERP</title>
                     </Head>
@@ -202,8 +204,14 @@ export default function RolePermissions() {
                             </div>
                         </div>
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+RolePermissions.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

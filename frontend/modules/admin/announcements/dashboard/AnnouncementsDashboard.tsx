@@ -161,7 +161,8 @@ export default function AnnouncementsDashboard() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout title="Announcements Hub">
+                <>
+
                     <Head>
                         <title>Announcements | School ERP</title>
                     </Head>
@@ -347,8 +348,14 @@ export default function AnnouncementsDashboard() {
                             )}
                         </div>
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+AnnouncementsDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

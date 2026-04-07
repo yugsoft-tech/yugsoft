@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Exam Moderation Module
  * Feature container for exam moderation page
@@ -13,15 +14,22 @@ export default function ExamModeration() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Exam Moderation</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Exam moderation functionality will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+ExamModeration.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Class Sections Module
  * Feature container for class sections page
@@ -13,15 +14,22 @@ export default function ClassSections() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Class Sections</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Class sections management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+ClassSections.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

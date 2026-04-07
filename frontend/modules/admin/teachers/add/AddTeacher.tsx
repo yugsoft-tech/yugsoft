@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -67,7 +68,8 @@ export default function AddTeacher() {
     };
 
     return (
-        <AdminLayout title="Add Faculty Entity">
+      <>
+        
             <Head>
                 <title>Onboard Faculty - EduCore</title>
             </Head>
@@ -245,7 +247,8 @@ export default function AddTeacher() {
           @apply w-full px-5 py-4 bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-400 placeholder:italic placeholder:font-normal;
         }
       `}</style>
-        </AdminLayout>
+        
+      </>
     );
 }
 
@@ -266,3 +269,8 @@ function FormField({ label, icon: Icon, children, error, className = "" }: any) 
         </div>
     );
 }
+
+
+AddTeacher.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -38,7 +39,8 @@ export default function TeacherProfile() {
 
     if (loading) {
         return (
-            <AdminLayout title="Retrieiving Faculty Entity...">
+      <>
+        
                 <div className="space-y-8 animate-pulse">
                     <div className="flex flex-col md:flex-row gap-8">
                         <Skeleton className="size-48 rounded-[2.5rem]" />
@@ -54,8 +56,9 @@ export default function TeacherProfile() {
                     <Skeleton className="h-16 w-full rounded-2xl" />
                     <Skeleton className="h-[400px] w-full rounded-[2.5rem]" />
                 </div>
-            </AdminLayout>
-        );
+            
+      </>
+    );
     }
 
     if (error) {
@@ -283,3 +286,8 @@ function Metric({ icon: Icon, label, value, isPrimary, className = "" }: any) {
         </div>
     );
 }
+
+
+TeacherProfile.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

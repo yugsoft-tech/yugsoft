@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
     Users,
@@ -70,7 +71,8 @@ export default function TeacherDashboard() {
     const statistics = stats?.statistics || stats || {};
 
     return (
-        <TeacherLayout>
+      <>
+        
             <div className="space-y-8 animate-in fade-in duration-500 pb-12">
                 {/* Page Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -231,6 +233,12 @@ export default function TeacherDashboard() {
                     <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
                 </div>
             </div>
-        </TeacherLayout>
+        
+      </>
     );
 }
+
+
+TeacherDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <TeacherLayout>{page}</TeacherLayout>;
+};

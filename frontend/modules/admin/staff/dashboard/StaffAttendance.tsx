@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
     UserCheck,
@@ -71,7 +72,8 @@ export default function StaffAttendance() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-                <AdminLayout title="Staff Attendance">
+                <>
+
                     <Head>
                         <title>Staff Attendance | School ERP</title>
                     </Head>
@@ -209,8 +211,14 @@ export default function StaffAttendance() {
                 </div>
             </div>
             </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+StaffAttendance.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -53,7 +54,8 @@ export default function StudentDocuments() {
 
   if (studentLoading || loading) {
     return (
-      <AdminLayout title="Accessing Archives...">
+      <>
+        
         <div className="space-y-8">
           <Skeleton className="h-20 w-full rounded-2xl" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -62,7 +64,8 @@ export default function StudentDocuments() {
             <Skeleton className="h-64 w-full rounded-[2.5rem]" />
           </div>
         </div>
-      </AdminLayout>
+      
+      </>
     );
   }
 
@@ -186,3 +189,8 @@ export default function StudentDocuments() {
     </AdminLayout>
   );
 }
+
+
+StudentDocuments.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

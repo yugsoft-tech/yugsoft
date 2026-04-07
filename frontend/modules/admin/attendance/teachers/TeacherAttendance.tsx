@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -111,7 +112,8 @@ export default function TeacherAttendance() {
   );
 
   return (
-    <AdminLayout title="Faculty Attendance">
+      <>
+        
       <Head>
         <title>Teacher Attendance - EduCore</title>
       </Head>
@@ -307,8 +309,9 @@ export default function TeacherAttendance() {
           </div>
         </div>
       </div>
-    </AdminLayout>
-  );
+    
+      </>
+    );
 }
 
 function StatusButton({ active, onClick, color, icon: Icon, label }: any) {
@@ -330,3 +333,8 @@ function StatusButton({ active, onClick, color, icon: Icon, label }: any) {
     </button>
   );
 }
+
+
+TeacherAttendance.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

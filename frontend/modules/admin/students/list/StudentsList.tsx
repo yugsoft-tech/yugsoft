@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -135,7 +136,8 @@ export default function StudentsList() {
   ];
 
   return (
-    <AdminLayout title="Student List">
+      <>
+        
       <Head>
         <title>Student List - EduCore</title>
       </Head>
@@ -255,6 +257,12 @@ export default function StudentsList() {
           emptyMessage="No students found."
         />
       </div>
-    </AdminLayout>
-  );
+    
+      </>
+    );
 }
+
+
+StudentsList.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

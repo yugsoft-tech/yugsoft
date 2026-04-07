@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -81,7 +82,8 @@ export default function EditTeacher() {
 
     if (loading) {
         return (
-            <AdminLayout title="Retrieving Entity...">
+      <>
+        
                 <div className="space-y-8 animate-pulse">
                     <Skeleton className="h-10 w-64 rounded-xl" />
                     <div className="flex gap-4">
@@ -90,8 +92,9 @@ export default function EditTeacher() {
                     </div>
                     <Skeleton className="h-[500px] w-full rounded-[2.5rem]" />
                 </div>
-            </AdminLayout>
-        );
+            
+      </>
+    );
     }
 
     if (error) {
@@ -292,3 +295,8 @@ function FormField({ label, icon: Icon, children, error, className = "" }: any) 
         </div>
     );
 }
+
+
+EditTeacher.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

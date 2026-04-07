@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -73,7 +74,8 @@ export default function StudentPromotion() {
   };
 
   return (
-    <AdminLayout title="Promotion Protocol">
+      <>
+        
       <Head>
         <title>Promotion Protocol - EduCore</title>
       </Head>
@@ -253,6 +255,12 @@ export default function StudentPromotion() {
           </div>
         </div>
       )}
-    </AdminLayout>
-  );
+    
+      </>
+    );
 }
+
+
+StudentPromotion.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Review Homework Module
  * Feature container for review homework page
@@ -13,15 +14,22 @@ export default function ReviewHomework() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Review Homework</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Homework review functionality will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+ReviewHomework.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

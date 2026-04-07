@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
     Search,
@@ -70,7 +71,8 @@ export default function VehicleFleet() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-                <AdminLayout title="Transport">
+                <>
+
                     <Head>
                         <title>Vehicle Fleet | School ERP</title>
                     </Head>
@@ -288,8 +290,14 @@ export default function VehicleFleet() {
                 </div>
             </div>
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+VehicleFleet.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

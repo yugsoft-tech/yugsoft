@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * School Profile Module
  * Feature container for school profile page
@@ -13,15 +14,22 @@ export default function SchoolProfile() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">School Profile</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="School profile management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+SchoolProfile.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

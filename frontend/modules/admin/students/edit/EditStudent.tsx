@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -90,7 +91,8 @@ export default function EditStudent() {
 
   if (studentLoading) {
     return (
-      <AdminLayout title="Modifying Record...">
+      <>
+        
         <div className="space-y-8">
           <Skeleton className="h-20 w-full rounded-2xl" />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -104,7 +106,8 @@ export default function EditStudent() {
             </div>
           </div>
         </div>
-      </AdminLayout>
+      
+      </>
     );
   }
 
@@ -347,3 +350,8 @@ const Activity = ({ className, size }: any) => (
   </svg>
 );
 
+
+
+EditStudent.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

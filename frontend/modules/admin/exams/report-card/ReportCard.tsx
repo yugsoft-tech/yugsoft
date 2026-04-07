@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import {
@@ -69,12 +70,14 @@ export default function ReportCard() {
         return (
             <AuthGuard>
                 <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-                    <AdminLayout title="Report Generation">
+                    <>
+
                         <div className="space-y-8 animate-pulse p-8">
                             <Skeleton className="h-40 w-full rounded-[2.5rem]" />
                             <Skeleton className="h-[600px] w-full rounded-[2.5rem]" />
                         </div>
-                    </AdminLayout>
+                    
+</>
                 </RoleGuard>
             </AuthGuard>
         );
@@ -255,3 +258,8 @@ export default function ReportCard() {
         </AuthGuard>
     );
 }
+
+
+ReportCard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

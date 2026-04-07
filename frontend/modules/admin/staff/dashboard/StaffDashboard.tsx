@@ -41,7 +41,8 @@ export default function StaffDashboard() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-                <AdminLayout title="Staff Directory">
+                <>
+
                     <Head>
                         <title>Staff Directory | School ERP</title>
                     </Head>
@@ -188,8 +189,14 @@ export default function StaffDashboard() {
                 </div>
             </div>
             </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+StaffDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

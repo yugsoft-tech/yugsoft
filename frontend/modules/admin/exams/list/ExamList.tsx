@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import {
     FileText,
@@ -50,7 +51,8 @@ export default function ExamList() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout title="Exams">
+                <>
+
                     <Head>
                         <title>Exams | School ERP</title>
                     </Head>
@@ -208,8 +210,14 @@ export default function ExamList() {
                 </div>
             </div>
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+ExamList.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

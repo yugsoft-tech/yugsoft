@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   GraduationCap,
   Users,
@@ -23,7 +24,8 @@ export default function AdminDashboard() {
   const { stats, loading } = useStats();
 
   return (
-    <AdminLayout title="School Dashboard">
+      <>
+        
       <div className="space-y-8 animate-in fade-in duration-500 pb-12">
         {/* Page Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -192,6 +194,12 @@ export default function AdminDashboard() {
           ))}
         </div>
       </div>
-    </AdminLayout>
-  );
+    
+      </>
+    );
 }
+
+
+AdminDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

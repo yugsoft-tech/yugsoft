@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -39,7 +40,8 @@ export default function AddSubject() {
     };
 
     return (
-        <AdminLayout title="Initialize Curriculum">
+      <>
+        
             <Head>
                 <title>Initialize Subject - EduCore</title>
             </Head>
@@ -163,6 +165,12 @@ export default function AddSubject() {
                     </div>
                 </form>
             </div>
-        </AdminLayout>
+        
+      </>
     );
 }
+
+
+AddSubject.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

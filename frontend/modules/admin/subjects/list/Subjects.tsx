@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Subjects Module
  * Feature container for subjects list page
@@ -13,15 +14,22 @@ export default function Subjects() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Subjects</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Subjects management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+Subjects.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

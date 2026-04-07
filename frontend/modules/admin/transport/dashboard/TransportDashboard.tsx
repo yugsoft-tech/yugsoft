@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import Head from 'next/head';
 import AuthGuard from '@/components/guards/AuthGuard';
@@ -91,7 +92,8 @@ export default function TransportDashboard() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout title="Transport Logistics">
+                <>
+
                     <Head>
                         <title>Transport Logistics - EduCore</title>
                     </Head>
@@ -274,8 +276,14 @@ export default function TransportDashboard() {
                             </div>
                         </div>
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+TransportDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

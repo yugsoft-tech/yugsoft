@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Parents Module
  * Feature container for parents list page
@@ -13,15 +14,22 @@ export default function Parents() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Parents</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Parents management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+Parents.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

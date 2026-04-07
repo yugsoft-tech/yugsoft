@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParent } from '@/contexts/ParentContext';
 import {
@@ -84,13 +85,15 @@ export default function ParentDashboard() {
 
     if (loading || contextLoading) {
         return (
-            <ParentLayout>
+      <>
+        
                 <div className="h-[60vh] flex flex-col items-center justify-center space-y-4">
                     <Loader2 className="w-8 h-8 text-primary animate-spin" />
                     <p className="text-slate-500 font-medium animate-pulse uppercase tracking-widest text-xs">Loading Family Data...</p>
                 </div>
-            </ParentLayout>
-        );
+            
+      </>
+    );
     }
 
     return (
@@ -222,3 +225,8 @@ export default function ParentDashboard() {
         </ParentLayout>
     );
 }
+
+
+ParentDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <ParentLayout>{page}</ParentLayout>;
+};

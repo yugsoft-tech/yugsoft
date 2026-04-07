@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import AuthGuard from '@/components/guards/AuthGuard';
 import RoleGuard from '@/components/guards/RoleGuard';
@@ -16,7 +17,8 @@ export default function ReportsDashboard() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout>
+                <>
+
                     <Head>
                         <title>Report Card Generation - School ERP</title>
                     </Head>
@@ -301,8 +303,14 @@ export default function ReportsDashboard() {
                             </div>
                         </div>
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+ReportsDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

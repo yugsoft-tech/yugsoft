@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import AuthGuard from '@/components/guards/AuthGuard';
@@ -27,13 +28,15 @@ export default function FeeDashboard() {
 
     if (loading) {
         return (
-            <AdminLayout>
+      <>
+        
                 <div className="flex flex-col h-96 items-center justify-center gap-4">
                     <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent shadow-lg shadow-primary/20"></div>
                     <p className="text-sm font-bold text-slate-400 italic animate-pulse tracking-widest uppercase">Loading financial data...</p>
                 </div>
-            </AdminLayout>
-        );
+            
+      </>
+    );
     }
 
     const { statistics, recentTransactions, monthlyOverview } = data || {
@@ -342,3 +345,8 @@ function QuickAction({ icon, label }: any) {
         </button>
     );
 }
+
+
+FeeDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

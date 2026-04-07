@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import AuthGuard from '@/components/guards/AuthGuard';
 import RoleGuard from '@/components/guards/RoleGuard';
@@ -75,7 +76,8 @@ export default function EventsDashboard() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout>
+                <>
+
                     <Head>
                         <title>Calendar & Events - School ERP</title>
                     </Head>
@@ -234,8 +236,14 @@ export default function EventsDashboard() {
                         </div>
 
                     </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+EventsDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

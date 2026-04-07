@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -89,13 +90,15 @@ export default function UserProfile() {
 
     if (loading) {
         return (
-            <AdminLayout title="User Profile">
+      <>
+        
                 <div className="space-y-8 animate-pulse p-8">
                     <Skeleton className="h-40 w-full rounded-[2.5rem]" />
                     <Skeleton className="h-96 w-full rounded-[2.5rem]" />
                 </div>
-            </AdminLayout>
-        );
+            
+      </>
+    );
     }
 
     return (
@@ -318,3 +321,8 @@ export default function UserProfile() {
         </AuthGuard>
     );
 }
+
+
+UserProfile.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

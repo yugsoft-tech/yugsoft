@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -61,14 +62,16 @@ export default function EditSubject() {
 
     if (loading) {
         return (
-            <AdminLayout title="Retrieving Protocols">
+      <>
+        
                 <div className="max-w-4xl mx-auto space-y-8 animate-pulse">
                     <Skeleton className="h-12 w-64 rounded-xl" />
                     <Skeleton className="h-96 rounded-[3rem]" />
                     <Skeleton className="h-32 rounded-[3rem]" />
                 </div>
-            </AdminLayout>
-        );
+            
+      </>
+    );
     }
 
     if (error) {
@@ -214,3 +217,8 @@ export default function EditSubject() {
         </AdminLayout>
     );
 }
+
+
+EditSubject.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Online Payments Module
  * Feature container for online payments page
@@ -13,15 +14,22 @@ export default function OnlinePayments() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Online Payments</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Online payments management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+OnlinePayments.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

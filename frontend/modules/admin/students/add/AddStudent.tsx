@@ -119,7 +119,8 @@ export default function AddStudent() {
   };
 
   return (
-    <AdminLayout title="Add New Student">
+      <>
+        
       <Head>
         <title>Add Student - {APP_NAME}</title>
       </Head>
@@ -410,8 +411,9 @@ export default function AddStudent() {
           </div>
         </div>
       </form>
-    </AdminLayout>
-  );
+    
+      </>
+    );
 }
 
 
@@ -468,3 +470,8 @@ const FormSelect = forwardRef(({ label, options, error, ...props }: any, ref: an
 FormSelect.displayName = 'FormSelect';
 
 
+
+
+AddStudent.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

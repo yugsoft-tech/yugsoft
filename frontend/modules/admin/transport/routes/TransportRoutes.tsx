@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
   MapPin,
@@ -69,7 +70,8 @@ export default function TransportRoutes() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[USER_ROLES.SCHOOL_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-        <AdminLayout title="Transport Logistics">
+        <>
+
           <Head>
             <title>Transport Routes | School ERP</title>
           </Head>
@@ -281,8 +283,14 @@ export default function TransportRoutes() {
               </div>
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+TransportRoutes.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

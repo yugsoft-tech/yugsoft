@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Exam Schedule Module
  * Feature container for exam schedule page
@@ -13,15 +14,22 @@ export default function ExamSchedule() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Exam Schedule</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Exam schedule management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+ExamSchedule.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

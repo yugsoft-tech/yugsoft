@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Fee Refunds Module
  * Feature container for fee refunds page
@@ -13,15 +14,22 @@ export default function FeeRefunds() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Fee Refunds</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Fee refunds management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+FeeRefunds.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

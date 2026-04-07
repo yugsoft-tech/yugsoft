@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Classes Module
  * Feature container for classes list page
@@ -13,15 +14,22 @@ export default function Classes() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Classes</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Classes management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+Classes.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

@@ -467,7 +467,14 @@ export class StudentsService {
         where,
         skip,
         take: limit,
-        include: {
+        select: {
+          id: true,
+          rollNumber: true,
+          gender: true,
+          dob: true,
+          userId: true,
+          classId: true,
+          sectionId: true,
           user: {
             select: {
               id: true,

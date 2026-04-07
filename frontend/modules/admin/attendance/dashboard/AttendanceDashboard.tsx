@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -51,7 +52,8 @@ export default function AttendanceDashboard() {
     const totalAbsences = stats?.overview?.absences || 12;
 
     return (
-        <AdminLayout title="Attendance Dashboard">
+      <>
+        
             <Head>
                 <title>Attendance Dashboard - EduCore</title>
             </Head>
@@ -182,7 +184,8 @@ export default function AttendanceDashboard() {
                     </div>
                 </div>
             </div>
-        </AdminLayout>
+        
+      </>
     );
 }
 
@@ -230,3 +233,8 @@ function DepartmentStability({ label, percentage, color }: any) {
         </div>
     );
 }
+
+
+AttendanceDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

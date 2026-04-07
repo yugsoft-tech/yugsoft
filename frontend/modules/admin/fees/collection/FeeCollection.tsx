@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Fee Collection Module
  * Feature container for fee collection page
@@ -13,15 +14,22 @@ export default function FeeCollection() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Fee Collection</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Fee collection management will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+FeeCollection.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

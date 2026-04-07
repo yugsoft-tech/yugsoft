@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Bell, Check, Loader2, Info, AlertTriangle } from 'lucide-react';
 import { notificationsService } from '@/services/notifications.service';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { 
     DropdownMenu, 
     DropdownMenuContent, 
@@ -10,33 +11,25 @@ import {
 import { toast } from 'react-hot-toast';
 
 export const NotificationBell = () => {
-    const [notifications, setNotifications] = useState<any[]>([]);
-    const [unreadCount, setUnreadCount] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const queryClient = useQueryClient();
+    const [markingLoading, setMarkingLoading] = useState(false);
 
-    useEffect(() => {
-        loadNotifications();
-        // Poll for updates every 60 seconds
-        const interval = setInterval(loadNotifications, 60000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const loadNotifications = async () => {
-        try {
+    const { data: notifications = [], isLoading } = useQuery({
+        queryKey: ['notifications'],
+        queryFn: async () => {
             const data = await notificationsService.getNotifications(10);
-            setNotifications(data || []);
-            const count = data.filter((n: any) => !n.isRead).length;
-            setUnreadCount(count);
-        } catch (error) {
-            console.error('Failed to load notifications');
-        }
-    };
+            return data || [];
+        },
+        refetchInterval: 60000, // Stale-while-revalidate / Poll every 60s natively
+    });
+
+    const unreadCount = notifications.filter((n: any) => !n.isRead).length;
 
     const handleMarkAsRead = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         try {
             await notificationsService.markAsRead(id);
-            loadNotifications();
+            queryClient.invalidateQueries({ queryKey: ['notifications'] });
         } catch (error) {
             toast.error('Failed to update status');
         }
@@ -44,14 +37,14 @@ export const NotificationBell = () => {
 
     const handleMarkAllRead = async () => {
         try {
-            setLoading(true);
+            setMarkingLoading(true);
             await notificationsService.markAllAsRead();
-            loadNotifications();
+            queryClient.invalidateQueries({ queryKey: ['notifications'] });
             toast.success('All marked as read');
         } catch (error) {
             toast.error('Failed to update notifications');
         } finally {
-            setLoading(false);
+            setMarkingLoading(false);
         }
     };
 
@@ -74,10 +67,10 @@ export const NotificationBell = () => {
                     {unreadCount > 0 && (
                         <button 
                             onClick={handleMarkAllRead}
-                            disabled={loading}
+                            disabled={markingLoading}
                             className="text-[9px] font-black uppercase text-primary hover:text-blue-600 flex items-center gap-1 transition-all disabled:opacity-50"
                         >
-                            {loading ? <Loader2 size={10} className="animate-spin" /> : <Check size={10} />}
+                            {markingLoading ? <Loader2 size={10} className="animate-spin" /> : <Check size={10} />}
                             Mark all read
                         </button>
                     )}
@@ -85,13 +78,17 @@ export const NotificationBell = () => {
 
                 {/* Notifications List */}
                 <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
-                    {notifications.length === 0 ? (
+                    {isLoading ? (
+                        <div className="p-8 text-center flex items-center justify-center">
+                            <Loader2 size={24} className="animate-spin text-slate-300" />
+                        </div>
+                    ) : notifications.length === 0 ? (
                         <div className="p-8 text-center">
                             <Info size={24} className="mx-auto text-slate-300 mb-2" />
                             <p className="text-[10px] font-bold text-slate-400 uppercase">You&apos;re all caught up!</p>
                         </div>
                     ) : (
-                        notifications.map((n) => (
+                        notifications.map((n: any) => (
                             <div 
                                 key={n.id} 
                                 className={`p-4 border-b border-slate-100 dark:border-slate-800 transition-all hover:bg-slate-50 dark:hover:bg-slate-800/50 group ${!n.isRead ? 'bg-primary/5' : ''}`}

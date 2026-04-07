@@ -97,6 +97,27 @@ export class DashboardService {
 
     // Get attendance history for the last 7 days
     const attendanceHistory = [];
+    
+    // Find the start date (6 days ago, start of day)
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 6);
+    startDate.setHours(0, 0, 0, 0);
+    
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 1);
+    endDate.setHours(0, 0, 0, 0);
+
+    const fullWeekAttendance = await this.prisma.attendance.findMany({
+      where: {
+        date: { gte: startDate, lt: endDate },
+        student: { schoolId: currentUser.schoolId },
+      },
+      select: {
+        date: true,
+        status: true,
+      }
+    });
+
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
@@ -105,12 +126,7 @@ export class DashboardService {
       const nextDay = new Date(date);
       nextDay.setDate(nextDay.getDate() + 1);
 
-      const dayAttendance = await this.prisma.attendance.findMany({
-        where: {
-          date: { gte: date, lt: nextDay },
-          student: { schoolId: currentUser.schoolId },
-        },
-      });
+      const dayAttendance = fullWeekAttendance.filter(a => a.date >= date && a.date < nextDay);
 
       const total = dayAttendance.length;
       const present = dayAttendance.filter(
@@ -199,34 +215,38 @@ export class DashboardService {
         : 0;
 
     // Grade analytics (Average marks per class for this teacher)
-    const gradeAnalytics = await Promise.all(
-      classIds.slice(0, 5).map(async (classId) => {
-        const exams = await this.prisma.exam.findMany({
-          where: { classId },
-          include: { results: true },
+    const topClassIds = classIds.slice(0, 5);
+    const classesWithExams = await this.prisma.class.findMany({
+      where: { id: { in: topClassIds } },
+      select: {
+        id: true,
+        name: true,
+        exams: {
+          select: {
+            results: {
+              select: { marks: true }
+            }
+          }
+        }
+      }
+    });
+
+    const gradeAnalytics = classesWithExams.map((cls) => {
+      let totalMarks = 0;
+      let count = 0;
+
+      cls.exams.forEach((exam) => {
+        exam.results.forEach((result) => {
+          totalMarks += result.marks;
+          count++;
         });
+      });
 
-        let totalMarks = 0;
-        let count = 0;
-
-        exams.forEach((exam) => {
-          exam.results.forEach((result) => {
-            totalMarks += result.marks;
-            count++;
-          });
-        });
-
-        const className = await this.prisma.class.findUnique({
-          where: { id: classId },
-          select: { name: true },
-        });
-
-        return {
-          label: className?.name || 'Class',
-          average: count > 0 ? Math.round(totalMarks / count) : 0,
-        };
-      }),
-    );
+      return {
+        label: cls.name || 'Class',
+        average: count > 0 ? Math.round(totalMarks / count) : 0,
+      };
+    });
 
     const upcomingHomework = await this.prisma.homework.findMany({
       where: { teacherId: teacher.id },

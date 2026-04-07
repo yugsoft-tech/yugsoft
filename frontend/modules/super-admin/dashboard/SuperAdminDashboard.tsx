@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Building2,
     Users,
@@ -46,7 +47,8 @@ export default function SuperAdminDashboard() {
     };
 
     return (
-        <SuperAdminLayout>
+      <>
+        
             <div className="space-y-8 animate-in fade-in duration-500 pb-12">
                 {/* Page Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -236,6 +238,12 @@ export default function SuperAdminDashboard() {
                     </div>
                 </div>
             </div>
-        </SuperAdminLayout>
+        
+      </>
     );
 }
+
+
+SuperAdminDashboard.getLayout = function getLayout(page: React.ReactElement) {
+  return <SuperAdminLayout>{page}</SuperAdminLayout>;
+};

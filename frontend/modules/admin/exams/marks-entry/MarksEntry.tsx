@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Marks Entry Module
  * Feature container for marks entry page
@@ -13,15 +14,22 @@ export default function MarksEntry() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Marks Entry</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Marks entry functionality will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+MarksEntry.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

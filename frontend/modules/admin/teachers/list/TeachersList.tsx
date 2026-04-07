@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -55,7 +56,8 @@ export default function TeachersList() {
     };
 
     return (
-        <AdminLayout title="Teachers List">
+      <>
+        
             <Head>
                 <title>Teachers List - EduCore</title>
             </Head>
@@ -274,6 +276,12 @@ export default function TeachersList() {
                     </button>
                 </div>
             )}
-        </AdminLayout>
+        
+      </>
     );
 }
+
+
+TeachersList.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

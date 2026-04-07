@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import {
@@ -76,7 +77,8 @@ export default function SubjectsList() {
     );
 
     return (
-        <AdminLayout title="Subjects List">
+      <>
+        
             <Head>
                 <title>Subjects List - EduCore</title>
             </Head>
@@ -277,6 +279,12 @@ export default function SubjectsList() {
                     </div>
                 </div>
             </div>
-        </AdminLayout>
+        
+      </>
     );
 }
+
+
+SubjectsList.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

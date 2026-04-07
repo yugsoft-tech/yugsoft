@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
@@ -88,14 +89,16 @@ export default function TeacherDocuments() {
     );
 
     if (teacherLoading) return (
-        <AdminLayout title="Synchronizing Archives...">
+      <>
+        
             <div className="space-y-8 animate-pulse">
                 <div className="h-20 w-full bg-slate-100 dark:bg-slate-800 rounded-3xl" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[1, 2, 3].map(i => <Skeleton key={i} className="h-64 rounded-[2.5rem]" />)}
                 </div>
             </div>
-        </AdminLayout>
+        
+      </>
     );
 
     const teacherName = `${teacher?.firstName} ${teacher?.lastName}`;
@@ -246,3 +249,8 @@ export default function TeacherDocuments() {
         </AdminLayout>
     );
 }
+
+
+TeacherDocuments.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import {
@@ -63,7 +64,8 @@ export default function UsersList() {
     return (
         <AuthGuard>
             <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout title="User Management">
+                <>
+
                     <Head>
                         <title>User Management | School ERP</title>
                     </Head>
@@ -290,8 +292,14 @@ export default function UsersList() {
                 )}
             </div>
             </div>
-                </AdminLayout>
+                
+</>
             </RoleGuard>
         </AuthGuard>
     );
 }
+
+
+UsersList.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

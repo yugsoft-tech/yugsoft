@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Fee Reports Module
  * Feature container for fee reports page
@@ -13,15 +14,22 @@ export default function FeeReports() {
   return (
     <AuthGuard>
       <RoleGuard allowedRoles={[UserRole.SCHOOL_ADMIN]}>
-        <AdminLayout>
+        <>
+
           <div>
             <h1 className="text-3xl font-bold mb-6">Fee Reports</h1>
             <div className="bg-white rounded-lg shadow p-6">
               <EmptyState message="Fee reports and analytics will be available here." />
             </div>
           </div>
-        </AdminLayout>
+        
+</>
       </RoleGuard>
     </AuthGuard>
   );
 }
+
+
+FeeReports.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};

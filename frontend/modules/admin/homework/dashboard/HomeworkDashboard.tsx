@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
     FileText,
@@ -96,7 +97,8 @@ export default function HomeworkManagement() {
     };
 
     return (
-        <AdminLayout title="Homework Dashboard">
+      <>
+        
             <div className="space-y-8 animate-in fade-in duration-500 pb-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
@@ -303,6 +305,12 @@ export default function HomeworkManagement() {
                 </div>
             </div>
             </div>
-        </AdminLayout>
+        
+      </>
     );
 }
+
+
+HomeworkManagement.getLayout = function getLayout(page: React.ReactElement) {
+  return <AdminLayout>{page}</AdminLayout>;
+};
