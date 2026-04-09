@@ -113,21 +113,19 @@ export default function EditStudent() {
 
   if (studentError) {
     return (
-      <AdminLayout title="System Error">
-        <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
-          <div className="p-4 rounded-full bg-rose-500/10 text-rose-500">
-            <AlertCircle size={48} />
-          </div>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Access Denied</h2>
-          <p className="text-slate-500 max-w-sm italic">{studentError}</p>
-          <button onClick={() => refetch()} className="px-6 py-2 bg-primary text-white rounded-xl font-bold">Retry Authorization</button>
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
+        <div className="p-4 rounded-full bg-rose-500/10 text-rose-500">
+          <AlertCircle size={48} />
         </div>
-      </AdminLayout>
+        <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Access Denied</h2>
+        <p className="text-slate-500 max-w-sm italic">{studentError}</p>
+        <button onClick={() => refetch()} className="px-6 py-2 bg-primary text-white rounded-xl font-bold">Retry Authorization</button>
+      </div>
     );
   }
 
   return (
-    <AdminLayout title={`Modify Record: ${student?.firstName} ${student?.lastName}`}>
+    <>
       <Head>
         <title>Modify Record - {student?.firstName} - EduCore</title>
       </Head>
@@ -303,7 +301,7 @@ export default function EditStudent() {
           </div>
         </div>
       </form>
-    </AdminLayout>
+    </>
   );
 }
 

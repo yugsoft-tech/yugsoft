@@ -102,13 +102,11 @@ export default function UserProfile() {
     }
 
     return (
-        <AuthGuard>
-            <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout title="Manage User">
-                    <Head>
-                        <title>User Profile | School ERP</title>
-                    </Head>
-                    <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+        <div className="pb-12">
+            <Head>
+                <title>User Profile | School ERP</title>
+            </Head>
+            <div className="space-y-8 animate-in fade-in duration-500 pb-12">
                         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                             <div className="flex items-center gap-4">
                                 <Link href="/admin/users" className="size-10 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 hover:text-primary transition-colors">
@@ -316,9 +314,7 @@ export default function UserProfile() {
                 </div>
             </div>
             </div>
-                </AdminLayout>
-            </RoleGuard>
-        </AuthGuard>
+        </div>
     );
 }
 

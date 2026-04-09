@@ -99,19 +99,17 @@ export default function EditTeacher() {
 
     if (error) {
         return (
-            <AdminLayout title="System Error">
-                <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
-                    <AlertCircle size={48} className="text-rose-500" />
-                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Protocol Header Failure</h2>
-                    <p className="text-slate-500 max-w-sm italic">{error}</p>
-                    <button onClick={() => router.back()} className="px-6 py-2 bg-primary text-white rounded-xl font-bold">Return to Directory</button>
-                </div>
-            </AdminLayout>
+            <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
+                <AlertCircle size={48} className="text-rose-500" />
+                <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Protocol Header Failure</h2>
+                <p className="text-slate-500 max-w-sm italic">{error}</p>
+                <button onClick={() => router.back()} className="px-6 py-2 bg-primary text-white rounded-xl font-bold">Return to Directory</button>
+            </div>
         );
     }
 
     return (
-        <AdminLayout title={`Modify Entity: ${teacher?.firstName}`}>
+        <>
             <Head>
                 <title>Edit Faculty - {teacher?.firstName} - EduCore</title>
             </Head>
@@ -274,7 +272,7 @@ export default function EditTeacher() {
           @apply w-full px-5 py-4 bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/20 transition-all;
         }
       `}</style>
-        </AdminLayout>
+        </>
     );
 }
 

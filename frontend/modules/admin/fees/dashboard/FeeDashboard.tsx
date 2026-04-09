@@ -46,16 +46,14 @@ export default function FeeDashboard() {
     };
 
     return (
-        <AuthGuard>
-            <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.SCHOOL_ADMIN]}>
-                <AdminLayout title="Fee Management">
-                    <Head>
-                        <title>Fees - School ERP</title>
-                    </Head>
+        <>
+            <Head>
+                <title>Fees - School ERP</title>
+            </Head>
 
-                    <div className="flex flex-col gap-8 animate-in fade-in duration-500">
-                        {/* Page Header */}
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="flex flex-col gap-8 animate-in fade-in duration-500">
+                {/* Page Header */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                             <div className="space-y-1">
                                 <div className="flex items-center gap-2 text-primary">
                                     <Wallet size={20} />
@@ -299,9 +297,7 @@ export default function FeeDashboard() {
                             </div>
                         </div>
                     </div>
-                </AdminLayout>
-            </RoleGuard>
-        </AuthGuard>
+        </>
     );
 }
 
