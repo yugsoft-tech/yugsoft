@@ -23,6 +23,7 @@ import {
   Award,
   Clock
 } from 'lucide-react';
+import { format } from 'date-fns';
 
 const tabs = [
   { id: 'identity', label: 'Personal Details', icon: Fingerprint },
@@ -198,7 +199,7 @@ export default function StudentProfile() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
                   <Metric icon={Mail} label="Email Address" value={student?.email || 'N/A'} isPrimary />
                   <Metric icon={Phone} label="Phone Number" value={student?.phone || 'N/A'} />
-                  <Metric icon={Calendar} label="Date of Birth" value={student?.dob || 'N/A'} />
+                  <Metric icon={Calendar} label="Date of Birth" value={student?.dob ? format(new Date(student.dob), 'MMMM d, yyyy') : 'N/A'} />
                   <Metric icon={Activity} label="Gender" value={student?.gender || 'N/A'} />
                 </div>
               </div>
@@ -238,7 +239,7 @@ export default function StudentProfile() {
                       <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Registration Date</span>
                     </div>
                     <div className="space-y-1">
-                      <p className="text-2xl font-black text-slate-900 dark:text-white">{student?.createdAt ? new Date(student.createdAt).toLocaleDateString() : 'Unknown'}</p>
+                      <p className="text-2xl font-black text-slate-900 dark:text-white">{student?.createdAt ? format(new Date(student.createdAt), 'MMMM d, yyyy') : 'Unknown'}</p>
                       <p className="text-xs font-bold text-slate-400 italic">Date student was added.</p>
                     </div>
                   </div>

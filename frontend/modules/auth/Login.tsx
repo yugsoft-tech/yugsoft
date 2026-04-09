@@ -35,7 +35,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState<string | null>(null);
-    const [activeRole, setActiveRole] = useState<'Admin' | 'Teacher' | 'Student'>('Admin');
+    const [activeRole, setActiveRole] = useState<'Admin' | 'Teacher' | 'Student' | 'Parent'>('Admin');
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
@@ -92,8 +92,8 @@ export default function Login() {
                         <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 ml-1">
                             Choose Your Role
                         </label>
-                        <div className="grid grid-cols-3 gap-2 p-1 bg-slate-50 dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-100 dark:border-slate-800">
-                            {(['Admin', 'Teacher', 'Student'] as const).map((role) => (
+                        <div className="grid grid-cols-4 gap-2 p-1 bg-slate-50 dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-100 dark:border-slate-800">
+                            {(['Admin', 'Teacher', 'Student', 'Parent'] as const).map((role) => (
                                 <button
                                     key={role}
                                     type="button"

@@ -177,7 +177,10 @@ export default function ClassesList() {
                                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Class Information</p>
                                     </div>
                                 </div>
-                                <form onSubmit={handleSubmit(onRegister)} className="space-y-10">
+                                <form onSubmit={handleSubmit(onRegister, (errors) => {
+                                    console.error('Form validation errors:', errors);
+                                    toast.error('Please correctly fill all form fields.', { icon: '⚠️' });
+                                })} className="space-y-10">
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Class Name</label>
                                         <input

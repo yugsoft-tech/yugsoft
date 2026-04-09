@@ -190,8 +190,17 @@ export class DashboardService {
     const classIds = [...new Set(timetables.map((t) => t.classId))];
 
     // Total unique students in teacher's classes
+    let finalClassIds = classIds;
+    if (finalClassIds.length === 0) {
+      const schoolClasses = await this.prisma.class.findMany({
+        where: { schoolId: teacher.schoolId },
+        select: { id: true }
+      });
+      finalClassIds = schoolClasses.map(c => c.id);
+    }
+
     const totalStudents = await this.prisma.student.count({
-      where: { classId: { in: classIds } },
+      where: { classId: { in: finalClassIds } },
     });
 
     // Attendance rate for teacher's classes (last 30 days)
@@ -200,7 +209,7 @@ export class DashboardService {
 
     const attendance = await this.prisma.attendance.findMany({
       where: {
-        student: { classId: { in: classIds } },
+        student: { classId: { in: finalClassIds } },
         date: { gte: thirtyDaysAgo },
       },
     });
@@ -257,7 +266,7 @@ export class DashboardService {
 
     return {
       statistics: {
-        totalClasses: classIds.length,
+        totalClasses: finalClassIds.length,
         totalStudents,
         attendanceRate,
         rating: '4.9/5',

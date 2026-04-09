@@ -167,7 +167,7 @@ export default function TeacherAttendance() {
                             <input
                                 type="text"
                                 placeholder="Search Student Name or ID..."
-                                className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 dark:text-white outline-none ring-1 ring-slate-100 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all"
                             />
                         </div>
                         <div className="flex items-center gap-6">
@@ -185,7 +185,7 @@ export default function TeacherAttendance() {
                     <div className="rounded-[2.5rem] border-2 border-slate-50 dark:border-slate-800 overflow-hidden shadow-xl">
                         <table className="w-full border-collapse">
                             <thead>
-                                <tr className="bg-slate-50 dark:bg-slate-800/50 border-b-2 border-slate-100 dark:border-slate-800">
+                                <tr className="bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-800">
                                     <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Student Name</th>
                                     <th className="px-10 py-6 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
                                     <th className="px-10 py-6 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Actions</th>
@@ -202,7 +202,7 @@ export default function TeacherAttendance() {
                                     ))
                                 ) : (
                                     (students || []).filter(s => s && s.id).map((student) => (
-                                        <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+                                        <tr key={student.id} className="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
                                             <td className="px-10 py-6 text-left">
                                                 <div className="flex items-center gap-3">
                                                     <div className="size-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 font-black text-[10px]">

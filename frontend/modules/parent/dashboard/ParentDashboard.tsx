@@ -64,6 +64,14 @@ export default function ParentDashboard() {
         toast.success('Your data is now up to date.');
     };
 
+    const activeChild = selectedChildId !== 'ALL' ? childrenList.find(c => c.id === selectedChildId) : null;
+    const displayFees = activeChild ? activeChild.pendingFees : dashboardData?.totalPendingFees;
+    const displayActivities = dashboardData?.recentActivities ? (
+        activeChild 
+        ? dashboardData.recentActivities.filter((act: any) => act.detail.includes(activeChild.class))
+        : dashboardData.recentActivities
+    ) : [];
+
     const getStats = () => {
         if (!dashboardData) return [];
 
@@ -158,12 +166,12 @@ export default function ParentDashboard() {
                         </div>
 
                         <div className="space-y-8">
-                            {(dashboardData?.recentActivities || []).length > 0 ? (
-                                dashboardData.recentActivities.map((act: any, i: number) => (
+                            {displayActivities.length > 0 ? (
+                                displayActivities.map((act: any, i: number) => (
                                     <div key={i} className="flex gap-6 group">
                                         <div className="flex flex-col items-center">
                                             <div className={`size-3 rounded-full border-2 border-white dark:border-slate-900 z-10 ${i === 0 ? 'bg-primary animate-pulse' : 'bg-slate-200 dark:bg-slate-700'}`} />
-                                            {i !== (dashboardData.recentActivities.length - 1) && <div className="w-0.5 h-full bg-slate-100 dark:bg-slate-800 -mt-1" />}
+                                            {i !== (displayActivities.length - 1) && <div className="w-0.5 h-full bg-slate-100 dark:bg-slate-800 -mt-1" />}
                                         </div>
                                         <div className="pb-8 flex-1">
                                             <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 group-hover:border-primary/20 transition-all">
@@ -203,15 +211,15 @@ export default function ParentDashboard() {
                                     <div className="flex items-end justify-between mb-6">
                                         <div>
                                             <p className="text-[10px] uppercase font-black text-slate-500 tracking-widest leading-none mb-2">Current Balance</p>
-                                            <p className="text-4xl font-black italic">₹{dashboardData?.totalPendingFees?.toLocaleString() || '0'}</p>
+                                            <p className="text-4xl font-black italic">₹{displayFees?.toLocaleString() || '0'}</p>
                                         </div>
-                                        {dashboardData?.totalPendingFees > 0 && (
+                                        {displayFees > 0 && (
                                             <span className="px-3 py-1 bg-red-600 text-[10px] font-black italic rounded-lg text-white animate-pulse uppercase tracking-widest">DUE</span>
                                         )}
                                     </div>
 
                                     <button 
-                                        disabled={!dashboardData?.totalPendingFees}
+                                        disabled={!displayFees}
                                         className="w-full bg-primary text-white font-black uppercase tracking-widest text-xs py-4 rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed">
                                         Proceed to Pay
                                     </button>

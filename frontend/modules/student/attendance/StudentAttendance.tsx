@@ -43,6 +43,12 @@ export default function StudentAttendance() {
         fetchAttendance();
     }, []);
 
+    const presentCount = attendance.filter(a => a.status === 'PRESENT').length;
+    const absentCount = attendance.filter(a => a.status === 'ABSENT').length;
+    const lateCount = attendance.filter(a => a.status === 'LATE').length;
+    const total = attendance.length;
+    const percentage = total > 0 ? Math.round((presentCount / total) * 100) : 0;
+
     return (
         <div className="space-y-8 animate-in fade-in duration-500 pb-12">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -55,10 +61,10 @@ export default function StudentAttendance() {
                 </div>
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-3 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-slate-50 dark:border-slate-800 shadow-xl">
-                        <div className="size-10 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-black">95%</div>
+                        <div className="size-10 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-black">{percentage}%</div>
                         <div className="flex flex-col">
                             <span className="text-[7px] font-black uppercase tracking-widest text-slate-400">Monthly Avg</span>
-                            <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase">Optimal</span>
+                            <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{percentage >= 75 ? 'Optimal' : percentage >= 50 ? 'Average' : 'Critical'}</span>
                         </div>
                     </div>
                 </div>
@@ -66,9 +72,9 @@ export default function StudentAttendance() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: 'Present', value: '142', icon: <CheckCircle2 className="text-emerald-500" />, sub: 'Total Days' },
-                    { label: 'Absent', value: '08', icon: <XCircle className="text-rose-500" />, sub: 'Total Missed' },
-                    { label: 'Late', value: '12', icon: <Clock className="text-amber-500" />, sub: 'Total Late' },
+                    { label: 'Present', value: presentCount.toString(), icon: <CheckCircle2 className="text-emerald-500" />, sub: 'Total Days' },
+                    { label: 'Absent', value: absentCount.toString(), icon: <XCircle className="text-rose-500" />, sub: 'Total Missed' },
+                    { label: 'Late', value: lateCount.toString(), icon: <Clock className="text-amber-500" />, sub: 'Total Late' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl relative group overflow-hidden">
                         <div className="relative z-10 flex items-center justify-between mb-6">

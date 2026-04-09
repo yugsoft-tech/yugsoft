@@ -73,10 +73,11 @@ export default function ParentFees() {
     };
 
     // Mocking data if API is empty for visualization
+    const currentYear = new Date().getFullYear();
     const displayFees = fees.length > 0 ? fees : [
-        { id: 1, title: 'Term 2 Tuition', amount: 1200, dueDate: '2024-11-15', status: 'PENDING', studentId: childrenList[0]?.id },
-        { id: 2, title: 'Bus Fee', amount: 350, dueDate: '2024-11-01', status: 'OVERDUE', studentId: childrenList[1]?.id },
-        { id: 3, title: 'Lab Materials', amount: 150, dueDate: '2024-10-20', status: 'PAID', studentId: childrenList[0]?.id },
+        { id: 1, title: 'Term 2 Tuition', amount: 1200, dueDate: `${currentYear}-11-15`, status: 'PENDING', studentId: childrenList[0]?.id },
+        { id: 2, title: 'Bus Fee', amount: 350, dueDate: `${currentYear}-11-01`, status: 'OVERDUE', studentId: childrenList[1]?.id },
+        { id: 3, title: 'Lab Materials', amount: 150, dueDate: `${currentYear}-10-20`, status: 'PAID', studentId: childrenList[0]?.id },
     ];
 
     const filteredFees = selectedChildId === 'ALL'

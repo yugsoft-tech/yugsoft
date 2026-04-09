@@ -24,109 +24,61 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Initialize auth state
     useEffect(() => {
-        let mounted = true;
+        if (typeof window === 'undefined') return;
 
         const initAuth = async () => {
-            console.log('[AuthContext] Initializing Auth State');
+            const localToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+            const sessionToken = sessionStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+            const token = localToken || sessionToken;
 
-            if (typeof window === 'undefined') {
-                if (mounted) setLoading(false);
+            if (!token) {
+                setLoading(false);
+                setAuthenticated(false);
                 return;
             }
 
             try {
-                // Check both storages safely
-                const localToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
-                const sessionToken = sessionStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
-                const token = localToken || sessionToken;
+                const localUserStr = localStorage.getItem(STORAGE_KEYS.USER);
+                const sessionUserStr = sessionStorage.getItem(STORAGE_KEYS.USER);
+                const storedUserStr = localUserStr || sessionUserStr;
 
-                console.log('[AuthContext] Token found:', !!token);
-
-                if (!token) {
-                    if (mounted) {
-                        setLoading(false);
-                        setAuthenticated(false);
-                    }
-                    return;
-                }
-
-                // Verify Cache First
-                try {
-                    const localUserStr = localStorage.getItem(STORAGE_KEYS.USER);
-                    const sessionUserStr = sessionStorage.getItem(STORAGE_KEYS.USER);
-                    const storedUserStr = localUserStr || sessionUserStr;
-
-                    if (storedUserStr) {
-                        const storedUser = JSON.parse(storedUserStr);
-                        if (storedUser && storedUser.id && isValidRole(storedUser.role)) {
-                            console.log('[AuthContext] Restoring user from storage cache');
-                            if (mounted) {
-                                setUser(storedUser);
-                                setAuthenticated(true);
-                                setLoading(false); // Done!
-                            }
-                            // Optional: Background re-verification could go here
-                            return;
-                        }
-                    }
-                } catch (e) {
-                    console.warn('[AuthContext] Cache parse error, falling back to network', e);
-                }
-
-                // Call API if no cache or cache invalid
-                console.log('[AuthContext] Fetching fresh profile from API');
-                const fetchedUser = await authService.getProfile();
-
-                if (mounted) {
-                    if (fetchedUser && fetchedUser.id && isValidRole(fetchedUser.role)) {
-                        console.log('[AuthContext] Profile fetched successfully');
-                        // Update storage
-                        const storage = localToken ? localStorage : sessionStorage;
-                        storage.setItem(STORAGE_KEYS.USER, JSON.stringify(fetchedUser));
-
-                        setUser(fetchedUser);
+                if (storedUserStr) {
+                    const storedUser = JSON.parse(storedUserStr);
+                    if (storedUser && storedUser.id && isValidRole(storedUser.role)) {
+                        setUser(storedUser);
                         setAuthenticated(true);
-                    } else {
-                        console.error('[AuthContext] Invalid user data received');
-                        throw new Error('Invalid user role or data');
+                        setLoading(false);
+                        return;
                     }
                 }
+            } catch (e) {
+                console.warn('[AuthContext] Cache parse error', e);
+            }
 
+            try {
+                const fetchedUser = await authService.getProfile();
+                if (fetchedUser && fetchedUser.id && isValidRole(fetchedUser.role)) {
+                    const storage = localToken ? localStorage : sessionStorage;
+                    storage.setItem(STORAGE_KEYS.USER, JSON.stringify(fetchedUser));
+                    setUser(fetchedUser);
+                    setAuthenticated(true);
+                } else {
+                    throw new Error('Invalid user');
+                }
             } catch (error) {
                 console.error('[AuthContext] Init error:', error);
-
-                // Clear storage on error
                 localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
                 localStorage.removeItem(STORAGE_KEYS.USER);
                 sessionStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
                 sessionStorage.removeItem(STORAGE_KEYS.USER);
-
-                if (mounted) {
-                    setUser(null);
-                    setAuthenticated(false);
-                }
+                setUser(null);
+                setAuthenticated(false);
             } finally {
-                if (mounted) {
-                    console.log('[AuthContext] Initialization complete, setting loading=false');
-                    setLoading(false);
-                }
-            }
-        };
-
-        // Run initialization with immediate safety timeout
-        const timeoutId = setTimeout(() => {
-            if (mounted && loading) {
-                console.warn('[AuthContext] Initialization timeout, forcing loading=false');
                 setLoading(false);
             }
-        }, 5000); // 5 seconds safety timeout
+        };
 
         initAuth();
-
-        return () => {
-            mounted = false;
-            clearTimeout(timeoutId);
-        };
     }, []);
 
     const login = useCallback(
