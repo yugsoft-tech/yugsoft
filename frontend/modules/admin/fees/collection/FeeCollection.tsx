@@ -23,7 +23,7 @@ export default function FeeCollection() {
 
   // Filter fees client-side for immediate feedback
   const filteredFees = useMemo(() => {
-    return fees.filter((fee: any) => {
+    return (fees || []).filter((fee: any) => {
       // Status filter
       if (activeTab !== 'ALL' && fee.status !== activeTab) return false;
       
@@ -92,7 +92,7 @@ export default function FeeCollection() {
                     onClick={() => setActiveTab('PENDING')}
                     icon={<Clock size={16} />}
                     label="Pending Fees"
-                    count={fees.filter(f => f.status === 'PENDING').length}
+                    count={(fees || []).filter(f => f.status === 'PENDING').length}
                     color="text-amber-500"
                     bgActive="bg-amber-50 dark:bg-amber-500/10"
                     borderActive="border-amber-200 dark:border-amber-500/20"
@@ -102,7 +102,7 @@ export default function FeeCollection() {
                     onClick={() => setActiveTab('OVERDUE')}
                     icon={<AlertCircle size={16} />}
                     label="Overdue"
-                    count={fees.filter(f => f.status === 'OVERDUE').length}
+                    count={(fees || []).filter(f => f.status === 'OVERDUE').length}
                     color="text-rose-500"
                     bgActive="bg-rose-50 dark:bg-rose-500/10"
                     borderActive="border-rose-200 dark:border-rose-500/20"

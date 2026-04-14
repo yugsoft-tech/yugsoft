@@ -12,8 +12,15 @@ class FeesService {
    * Get all fees with optional filtering
    */
   async getFees(params?: PaginationParams & { studentId?: string; status?: string }): Promise<PaginatedResponse<Fee>> {
-    const response = await apiClient.get<PaginatedResponse<Fee>>(API_ENDPOINTS.FEES, { params });
-    return (response as any).data || response;
+    const response: any = await apiClient.get<any>(API_ENDPOINTS.FEES, { params });
+    // Map backend { data, meta } structure to PaginatedResponse structure
+    return {
+      data: response?.data || [],
+      total: response?.meta?.total || 0,
+      page: response?.meta?.page || 1,
+      limit: response?.meta?.limit || 10,
+      totalPages: response?.meta?.totalPages || 0,
+    };
   }
 
   /**
