@@ -58,8 +58,8 @@ class FeesService {
   /**
    * Record a payment for an invoice/fee
    */
-  async recordPayment(id: string, paymentData: any): Promise<void> {
-    await apiClient.post(`${API_ENDPOINTS.FEES}/${id}/payments`, paymentData);
+  async recordPayment(id: string, paymentData?: any): Promise<void> {
+    await apiClient.patch(`${API_ENDPOINTS.FEES}/${id}/mark-paid`);
   }
 
   /**
