@@ -161,10 +161,10 @@ model Student {
   school   School @relation(fields: [schoolId], references: [id])
 
   classId   String
-  sectionId String
+  sectionId String?
 
   class   Class   @relation(fields: [classId], references: [id])
-  section Section @relation(fields: [sectionId], references: [id])
+  section Section? @relation(fields: [sectionId], references: [id])
 
   attendance Attendance[]
   exams      ExamResult[]
